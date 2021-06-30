@@ -29,7 +29,7 @@ You will need a recently version of PHP. E.g. `PHP 8.0.0`
 
 Clone the source code: 
 
-    git clone https://github.com/diversen/php-project-manager
+    git clone https://github.com/diversen/ppm-project-manager
 
 Install composer packages:
 
