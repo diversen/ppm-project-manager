@@ -99,7 +99,7 @@ Remove container (you will need run 'run' command again):
 
     docker rm mysql-server
 
-# Credits
+# CSS and logo
 
 [water.css](https://watercss.kognise.dev/) (A drop-in collection of CSS styles)
 
