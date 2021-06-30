@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+require_once "vendor/autoload.php";
+require_once "autoload.php";
+
+use \Pebble\Config;
+use \Pebble\DB\Helpers;
+
+// Load config settings
+Config::readConfig('./config');
+
+// Load config settings
+Config::readConfig('./config-locale');
+
+date_default_timezone_set(Config::get('App.timezone'));
+
+$db = Config::getSection('DB');
+$ary = Helpers::parsePDOString($db['url']);
+
+$dump_name = 'backup/' . date('Y-m-d_H-i-s') . '.sql';
+$command = "mysqldump --no-data --column-statistics=0 -u $db[username] -p$db[password] -h$ary[host] $ary[dbname] > $dump_name ";
+
+// --no-data 
+
+$return_var = 0;
+passthru ( $command, $return_var);
+exit($return_var);

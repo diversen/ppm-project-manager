@@ -1,0 +1,8 @@
+.DS_Store
+vendor
+logs
+backup
+composer-master.json
+composer-master.lock
+config-locale
+rsync-live.sh

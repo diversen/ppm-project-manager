@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+// Include vendor loaded packages
+include_once "vendor/autoload.php";
+
+use Diversen\Translate\Extractor;
+
+// same pattern as above for extraction
+
+$e = new extractor();
+$e->defaultLanguage ='en';
+$e->setSingleDir("App");
+$e->updateLang();
