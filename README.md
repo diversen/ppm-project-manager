@@ -35,6 +35,10 @@ Install composer packages:
 
     cd php-project-manager && composer install
 
+Make locale config-dir (this will override any settings in `config`):
+
+    mkdir config-locale
+
 ## Create a MySQL database
 
 You will need some kind of database. I use MySQL, but maybe it will work with other databases as well. 
