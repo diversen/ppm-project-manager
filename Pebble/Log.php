@@ -27,7 +27,7 @@ class Log
     {
 
         if (!self::$dir || !is_writable(self::$dir)) {
-            throw new \Exception('\Pebble\Log tried to write to a file. Remeber to init the Log class using the call \Log::setDir($dir). This dir needs to be writable');
+            throw new Exception('\Pebble\Log tried to write to a file. Remeber to init the Log class using the call \Log::setDir($dir). This dir needs to be writable');
         }
 
         if (!is_string($message)) {
@@ -40,7 +40,7 @@ class Log
         if (!is_dir($log_dir)) {
             $res = mkdir($log_dir, 0777, true);
             if (!$res) {
-                throw new \Exception('\Pebble\Log could not make dir ' . $log_dir);
+                throw new Exception('\Pebble\Log could not make dir ' . $log_dir);
             }
         }
 
