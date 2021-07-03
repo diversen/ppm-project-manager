@@ -2,6 +2,8 @@
 
 namespace Pebble;
 
+use Exception;
+
 class Log
 {
 
@@ -24,8 +26,8 @@ class Log
     public static function error($message, string $type)
     {
 
-        if (!self::$dir) {
-            throw new \Exception('\Pebble\Log tried to write to a file. Remeber to init the Log class using the call \Log::setDir($dir)');
+        if (!self::$dir || !is_writable(self::$dir)) {
+            throw new \Exception('\Pebble\Log tried to write to a file. Remeber to init the Log class using the call \Log::setDir($dir). This dir needs to be writable');
         }
 
         if (!is_string($message)) {
@@ -36,7 +38,10 @@ class Log
         $log_dir = self::$dir . '/' . $date;
 
         if (!is_dir($log_dir)) {
-            mkdir($log_dir, 0777, true);
+            $res = mkdir($log_dir, 0777, true);
+            if (!$res) {
+                throw new \Exception('\Pebble\Log could not make dir ' . $log_dir);
+            }
         }
 
         $log_file = $log_dir . '/' . $type . '.log';

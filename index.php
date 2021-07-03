@@ -105,18 +105,19 @@ try {
 
 } catch (Throwable $e) {
 
-    $exception_str = '';
+    $error = new ErrorController();
+
+    // Log error to file
+    $exception_str = \Pebble\ExceptionTrace::get($e);
 
     // Just in case the Log class is missing a log dir. 
     // Then we use the Log class exception instead. 
     try {
         Log::error($exception_str, 'index');
-    } catch (Exception $e) {
-        
+    } catch (Exception $e) {        
+        $error->error($e->getMessage());
+        return;
     }
-    
-    // Log error to file
-    $exception_str = \Pebble\ExceptionTrace::get($e);
     
     // Display error
     $error = new ErrorController();

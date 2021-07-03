@@ -9,7 +9,7 @@ class JSON {
     /**
      * json_encode wrapper which just add content-type header
      */
-    public static function response(mixed $value, int $flags = 0, int $depth= 512 ) {
+    public static function response($value, int $flags = 0, int $depth= 512 ) {
         header('Content-Type: application/json');
         $res = json_encode($value, $flags, $depth);
         if ($res === false){
