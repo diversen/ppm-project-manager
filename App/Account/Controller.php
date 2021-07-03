@@ -13,6 +13,7 @@ use \Pebble\DBInstance;
 use \Pebble\Flash;
 use \Pebble\Config;
 use \Pebble\CSRF;
+use \Pebble\JSON;
 
 class Controller
 {
@@ -103,7 +104,7 @@ class Controller
         $csrf = new CSRF();
         if (!$csrf->validateToken()) {
             $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            echo json_encode($response);
+            echo JSON::response($response);
             return;
         }
 
@@ -128,7 +129,7 @@ class Controller
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated. ');
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
 
     }
 
@@ -191,7 +192,7 @@ class Controller
 
         $response = $validate->signup();
         if ($response['error'] === true) {
-            echo json_encode($response);
+            echo JSON::response($response);
             return;
         }
 
@@ -231,7 +232,7 @@ class Controller
             }
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
 
     /**
@@ -266,19 +267,19 @@ class Controller
         $csrf = new CSRF();
         if (!$csrf->validateToken()) {
             $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            echo json_encode($response);
+            echo JSON::response($response);
             return;
         }
 
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');
-            echo json_encode($response);
+            echo JSON::response($response);
             return;
         }
 
         if (!$captcha->validatePOST()) {
             $response['message'] = Lang::translate('Image text does not match');
-            echo json_encode($response);
+            echo JSON::response($response);
             return;
         }
 
@@ -298,7 +299,7 @@ class Controller
             }
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
         return;
     }
 

@@ -5,7 +5,7 @@ namespace App;
 use DateTime;
 use DateTimeZone;
 
-use \App\Settings\SettingsModel;
+use App\Settings\SettingsModel;
 
 class Cal
 {

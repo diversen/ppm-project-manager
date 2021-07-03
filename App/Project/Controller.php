@@ -8,6 +8,7 @@ use Exception;
 use Pebble\ACL;
 use Pebble\Auth;
 use Pebble\Template;
+use Pebble\JSON;
 
 class Controller
 {
@@ -107,7 +108,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
 
     public function put($params)
@@ -135,7 +136,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
 
     public function delete($params)
@@ -163,6 +164,6 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
 }

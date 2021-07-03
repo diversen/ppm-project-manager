@@ -2,11 +2,12 @@
 
 namespace App\Time;
 
-use \App\Project\ProjectModel;
-use \App\Task\TaskModel;
-use \App\Time\TimeModel;
-use \Pebble\Auth;
-use \Pebble\ACL;
+use App\Project\ProjectModel;
+use App\Task\TaskModel;
+use App\Time\TimeModel;
+use Pebble\Auth;
+use Pebble\ACL;
+use Pebble\JSON;
 
 class Controller
 {
@@ -68,7 +69,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
 
     }
 
@@ -96,7 +97,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
         
     }
 }

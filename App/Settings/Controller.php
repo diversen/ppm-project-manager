@@ -2,11 +2,12 @@
 
 namespace App\Settings;
 
-use \Pebble\Auth;
-use \Pebble\ACL;
-use \App\Settings\SettingsModel;
-use \Diversen\Lang;
-use \Pebble\Flash;
+use Pebble\Auth;
+use Pebble\ACL;
+use App\Settings\SettingsModel;
+use Diversen\Lang;
+use Pebble\Flash;
+use Pebble\JSON;
 
 class Controller
 {
@@ -53,7 +54,7 @@ class Controller
         }
 
         header('Content-Type: application/json');
-        echo json_encode($response);
+        echo JSON::response($response);
 
     }
 }

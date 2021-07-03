@@ -2,11 +2,11 @@
 
 namespace App\Task;
 
-
-use \App\Project\ProjectModel;
-use \App\Task\TaskModel;
-use \Pebble\Auth;
-use \Pebble\ACL;
+use App\Project\ProjectModel;
+use App\Task\TaskModel;
+use Pebble\Auth;
+use Pebble\ACL;
+use Pebble\JSON;
 
 class Controller
 {
@@ -123,7 +123,7 @@ class Controller
 
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
 
     public function put($params)
@@ -162,7 +162,7 @@ class Controller
             
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
     
     public function move_exceeded_today () {
@@ -181,7 +181,7 @@ class Controller
             
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
 
     }
 
@@ -210,6 +210,6 @@ class Controller
             
         }
 
-        echo json_encode($response);
+        echo JSON::response($response);
     }
 }
