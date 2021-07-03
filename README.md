@@ -67,19 +67,24 @@ The above setup corresponds with the default `config/DB.php`. If you have altere
 
 ## Configuration
 
-If you want to use SMTP for email confirmation, then you will need to remove `no_email_verify` in `Config/Account.php`. 
-
-And you will need to edit the `SMTP` configuration in `config/SMTP.php`. 
-
-If you need google login, you can setup google OAuth `config/Google.php`.
-
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
 
     ./serv
 
-The above command just runs the built-in PHP server. 
+The above command runs the built-in PHP server. 
 
-Point a browser to http://localhost:8000 and create an account, and log in.
+Point a browser to http://localhost:8000, create an account and log in.
+
+In the folder `config-locale` you can add any locale configuration the will override settings in `config`. 
+
+Using SMTP for email confirmation:
+
+* Remove `no_email_verify` in `Config/Account.php` or set it to false. 
+* Edit the `SMTP` configuration in `config/SMTP.php`. 
+
+Google login using OAuth:
+
+* Setup google OAuth in `config/Google.php`.
 
 ## Other useful docker commands
 
@@ -108,4 +113,3 @@ Remove container (you will need run 'run' command again):
 # License
 
 MIT © [Dennis Iversen](https://github.com/diversen)
-
