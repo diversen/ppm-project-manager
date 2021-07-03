@@ -33,7 +33,7 @@ Clone the source code:
 
 Install composer packages:
 
-    cd php-project-manager && composer install
+    cd ppm-project-manager && composer install
 
 Make locale config-dir (this will override any settings in `config`):
 
