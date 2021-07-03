@@ -25,7 +25,7 @@ There is no transpiling of the javascript.
 
 # Install
 
-You will need a recently version of PHP. E.g. `PHP 8.0.0`
+You will need a recently version of PHP.  `PHP >= 8.0.0`
 
 Clone the source code: 
 
