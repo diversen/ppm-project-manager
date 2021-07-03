@@ -13,7 +13,7 @@ It has the following features:
 - Mobile and desktop friendly
 - Fast: 100 lighthouse score
 
-Made so that you can see what you spend my spare time on. 
+Made so that you can see what you spend your spare time on. 
 
 # Usage
 
