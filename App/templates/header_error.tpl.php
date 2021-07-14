@@ -14,8 +14,6 @@ if (!isset($description)) {
     $description = '';
 }
 
-require 'App/templates/helpers.php';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,19 +27,18 @@ require 'App/templates/helpers.php';
     <?php 
     
     if ($use_theme_dark_mode): ?>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+    <link rel="stylesheet" href="/App/templates/css/water/dark.min.css">
     <?php else: ?>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="/App/templates/css/water/light.min.css">
     <?php endif; ?>
-    
 
-    <link rel="stylesheet" href="/App/templates/css/default.css">
+    <link rel="manifest" href="/App/templates/assets/manifest.json">
+    <link rel="stylesheet" href="/App/templates/css/default.css?v=3">
+    <link rel="icon" sizes="192x192" href="/App/templates/assets/ppm-logo-192x192.png">
     <script src="/App/templates/js/pebble.js"></script>
-    <meta name="google-signin-client_id" content="509607769994-8m5qbtkkg1f071eafj7slrhb9mq0a9a5.apps.googleusercontent.com">
 </head>
 <body>
-<h1><a href="/">Task Manager</a></h1>
+
+<a title="" href="/"><img src="/App/templates/assets/logo.svg"></img></a>
 
 <?php
-
-require 'App/templates/flash.tpl.php';

@@ -1,10 +1,11 @@
-<?php
+<?php declare (strict_types = 1);
 
 namespace Pebble;
 
 class Substring
 {
-    public static function get($str, $length, $minword = 3, $use_dots = true){
+    public static function get($str, $length, $minword = 3, $use_dots = true)
+    {
         $sub = '';
         $len = 0;
         foreach (explode(' ', $str) as $word) {
@@ -21,8 +22,8 @@ class Substring
         return $sub;
     }
 
-    private static function strlen ($str) {
+    private static function strlen($str)
+    {
         return mb_strlen($str, 'UTF-8');
     }
 }
-

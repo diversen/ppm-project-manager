@@ -2,7 +2,7 @@
 
 namespace Pebble;
 
-use \Pebble\Special;
+use Pebble\Special;
 
 class Template
 {

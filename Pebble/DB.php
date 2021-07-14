@@ -2,6 +2,8 @@
 
 namespace Pebble;
 
+use Exception;
+
 use PDO;
 
 /**
@@ -68,9 +70,8 @@ class DB
     public function prepareFetchAll(string $sql, array $params = [], array $options = []) : array
     {
 
-        $this->stmt = $this->dbh->prepare($sql);
-        $this->stmt->execute($params);
-        return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->getStmt($sql, $params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -80,28 +81,27 @@ class DB
     public function prepareFetch(string $sql, array $params = [], array $options = []): array
     {
 
-        $this->stmt = $this->dbh->prepare($sql);
-        $this->stmt->execute($params);
+        $stmt = $this->getStmt($sql, $params);
 
         // Fetch returns false when 0 rows. FetchAll always returns an array
-        $rows = $this->stmt->fetch(PDO::FETCH_ASSOC);
-        if (!empty($rows)) {
-            return $rows;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!empty($row)) {
+            return $row;
         }
         return [];
     }
 
     /**
-     * Fetch a PDO cursor where you can run e.g. `$cursor->fetch(PDO::FETCH_ASSOC)`;
+     * Get PDOStatement where you can run e.g. `$stmt->fetch(PDO::FETCH_ASSOC)`;
      */
-    public function fetchCursor(string $sql, array $params ) {
+    public function getStmt(string $sql, array $params = [] ) {
         $this->stmt = $this->dbh->prepare($sql);
         $this->stmt->execute($params);
         return $this->stmt;
     }
 
     /**
-     * Prepare, execute, and return number of affected rows
+     * Return number of affected rows
      * Use this with 'Delete', 'Update', 'Insert' if you need the row count.
      */
     public function rowCount(): int
@@ -109,12 +109,6 @@ class DB
         return $this->stmt->rowCount();
     }
 
-    /**
-     * Return error info
-     */
-    public function errorInfo (): array {
-        return $this->dbh->errorInfo();
-    }
     /**
      * Returns last insert ID
      */
@@ -212,9 +206,20 @@ class DB
         $sql .= " WHERE ";
 
         // Generate named WHERE parameters from where array
+        $i = 0;
         foreach ($where as $field => $value) {
-            $where_ary[] = " `$field`=" . ":$field ";
-            $final_values[$field] = $value;
+
+            // Update values may be the same as where values
+            // Ensure that all named params are unique
+            $field_key = $field;
+            if (isset($final_values[$field])) {
+                $field_key = $field . '_' . $i;
+                $i += 1;
+
+            }
+
+            $where_ary[] = " `$field`=" . ":$field_key ";
+            $final_values[$field_key] = $value;
         }
 
         $sql .= implode(' AND ', $where_ary);

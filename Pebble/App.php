@@ -10,7 +10,7 @@ class App
     /**
      * Get scheme and host from App config file
      */
-    public static function getSchemeAndHost(): string
+    public function getSchemeAndHost(): string
     {
         $server = Config::getSection('App');
         if (!$server['server_scheme']) {

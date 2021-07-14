@@ -2,7 +2,7 @@
 
 namespace App\Account;
 
-use \Pebble\DBInstance;
+use Pebble\DBInstance;
 use \Pebble\CSRF;
 use \Diversen\Lang;
 

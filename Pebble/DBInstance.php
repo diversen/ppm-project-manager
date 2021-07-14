@@ -1,15 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Pebble;
 
+use Pebble\DB;
 use Exception;
-use \Pebble\DB;
 
-/**
- * Get a single instance of \Pebble\DB in order to use a single database connection
- */
-class DBInstance
-{
+class DBInstance {
 
     private static $DB = null;
 
@@ -21,6 +17,10 @@ class DBInstance
         if (!self::$DB) {
             self::$DB = new DB($url, $username, $password, $options);
         }
+    }
+
+    public static function close() {
+        self::$DB = null;
     }
 
     /**
@@ -36,4 +36,3 @@ class DBInstance
         return self::$DB;
     }
 }
-

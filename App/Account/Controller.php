@@ -2,18 +2,17 @@
 
 namespace App\Account;
 
-use \App\Account\Mail;
-use \App\Account\Validate;
-use \App\Google\GoogleUtils;
-
-use \Diversen\Lang;
-use \Pebble\Auth;
-use \Pebble\Captcha;
-use \Pebble\DBInstance;
-use \Pebble\Flash;
-use \Pebble\Config;
-use \Pebble\CSRF;
-use \Pebble\JSON;
+use App\Account\Mail;
+use App\Account\Validate;
+use App\Google\GoogleUtils;
+use Diversen\Lang;
+use Pebble\Auth;
+use Pebble\Captcha;
+use Pebble\DBInstance;
+use Pebble\Flash;
+use Pebble\Config;
+use Pebble\CSRF;
+use Pebble\JSON;
 
 class Controller
 {

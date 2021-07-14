@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Pebble;
 
@@ -28,7 +28,7 @@ class Flash
         $messages = [];
 
         if (isset($_SESSION['flash'])) {
-            foreach ($_SESSION['flash'] as $key => $message) {
+            foreach ($_SESSION['flash'] as $message) {
                 $messages[] = $message;
             }
         }

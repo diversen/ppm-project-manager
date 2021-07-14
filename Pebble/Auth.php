@@ -2,8 +2,8 @@
 
 namespace Pebble;
 
-use \Pebble\DBInstance;
-use \Pebble\Random;
+use Pebble\DBInstance;
+use Pebble\Random;
 
 /**
  * A simple authentication class based on a single database table
@@ -152,7 +152,7 @@ class Auth
     /**
      * Get a auth id by checking the auth_cookie table for a $_COOKIE['auth'] match
      */
-    public function getAuthId () : int {
+    public function getAuthId() : int {
 
         $auth_cookie_row = $this->getAuthCookieFromDB();
         if (empty($auth_cookie_row)) {

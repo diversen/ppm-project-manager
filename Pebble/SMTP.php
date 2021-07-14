@@ -6,7 +6,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Parsedown;
 use Pebble\Config;
-use Pebble\Log;
+use Pebble\LogInstance;
+use Pebble\ExceptionTrace;
 
 
 class SMTP
@@ -92,7 +93,6 @@ class SMTP
     public function send(string $to, string $subject, string $text, string $html, array $attachments = [])
     {
 
-        
         try {
 
             $mail = $this->getPHPMailer();
@@ -112,9 +112,10 @@ class SMTP
             }
 
             $mail->send();
-
+        
         } catch (Exception $e) {
-            Log::error('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo, 'smtp');
+            LogInstance::message(ExceptionTrace::get($e), 'error');
+            
             return false;
         }
 

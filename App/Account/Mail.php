@@ -19,7 +19,7 @@ class Mail {
     {
 
         $vars = Config::getSection('App');
-        $activation_url = App::getSchemeAndHost() . '/account/verify?key=' . $row['random'];
+        $activation_url = (new App())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
 
         $text = Template::getOutput('App/Account/views/signup_email.php', $vars);
@@ -37,7 +37,7 @@ class Mail {
     {
 
         $vars = Config::getSection('App');
-        $activation_url = App::getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
+        $activation_url = (new App())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
 
         $text = Template::getOutput('App/Account/views/recover_email.php', $vars);

@@ -3,7 +3,7 @@
 namespace App\Time;
 
 use \Pebble\Auth;
-use \Pebble\DBInstance;
+use Pebble\DBInstance;
 
 class TimeModel
 {

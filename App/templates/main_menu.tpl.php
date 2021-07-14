@@ -11,7 +11,7 @@ if (Auth::getInstance()->isAuthenticated()) {
 }
 
 ?>
-<!--<h1><a href="<?=$home_url?>"><?=Config::get('App.site_name')?></a></h1>-->
+
 
 <a title="<?=Config::get('App.site_name')?>" href="<?=$home_url?>"><img src="/App/templates/assets/logo.svg"></img></a>
 

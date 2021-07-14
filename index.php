@@ -6,24 +6,28 @@ require_once "vendor/autoload.php";
 // Include app auoloaded packages
 require_once "autoload.php";
 
-use \App\Error\Controller as ErrorController;
-use \Diversen\Lang;
-use \Pebble\Config;
-use \Pebble\DBInstance;
-use \Pebble\Exception\ForbiddenException;
-use \Pebble\Exception\NotFoundException;
-use \Pebble\Log;
-use \Pebble\Router;
-use \Pebble\Session;
-use \App\Settings\SettingsModel;
+use App\Error\Controller as ErrorController;
+use Diversen\Lang;
+use Pebble\Config;
+use Pebble\DBInstance;
+use Pebble\Exception\ForbiddenException;
+use Pebble\Exception\NotFoundException;
+use Pebble\Log;
+use Pebble\LogInstance;
+use Pebble\Router;
+use Pebble\Session;
+use App\Settings\SettingsModel;
+
 
 // Run the application and check for exceptions and throwable
 try {
 
-    $base_path = dirname(__FILE__);
+    // Throw on all kind of errors and notices
+    set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
+        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+    });
 
-    // Enable first. Then everything can be logged
-    Log::setDir($base_path . "/logs");
+    $base_path = dirname(__FILE__);
 
     // Load config settings
     Config::readConfig($base_path . '/config');
@@ -31,14 +35,13 @@ try {
     // Override config settings with locale settings
     Config::readConfig($base_path . '/config-locale');
 
-    // Output all errors in on dev
-    if (Config::get('App.env') === 'dev') {
-        error_reporting(E_ALL);
-        ini_set('display_errors', '1');
-        ini_set('display_startup_errors', '1');
-    } else {
-        error_reporting(0);
-    }
+    // Make a log instance
+    $log = new Log([
+        'log_dir' => './logs',
+        'silence'  => false
+    ]);
+
+    LogInstance::init($log);
 
     // Force SSL
     if (Config::get('App.force_ssl')) {
@@ -80,15 +83,15 @@ try {
     // Define all routes
     $router = new Router();
 
-    \App\Home\Routes::setRoutes($router);
-    \App\Account\Routes::setRoutes($router);
-    \App\Google\Routes::setRoutes($router);
-    \App\Project\Routes::setRoutes($router);
-    \App\Overview\Routes::setRoutes($router);
-    \App\Task\Routes::setRoutes($router);
-    \App\Settings\Routes::setRoutes($router);
-    \App\Time\Routes::setRoutes($router);
-    \App\Test\Routes::setRoutes($router);
+    App\Home\Routes::setRoutes($router);
+    App\Account\Routes::setRoutes($router);
+    App\Google\Routes::setRoutes($router);
+    App\Project\Routes::setRoutes($router);
+    App\Overview\Routes::setRoutes($router);
+    App\Task\Routes::setRoutes($router);
+    App\Settings\Routes::setRoutes($router);
+    App\Time\Routes::setRoutes($router);
+    App\Test\Routes::setRoutes($router);
     
     $router->run();
 
@@ -96,11 +99,13 @@ try {
 } catch (NotFoundException $e) {
 
     $error = new ErrorController();
+    LogInstance::message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
     $error->notFound($e->getMessage());
 
 } catch (ForbiddenException $e) {
 
     $error = new ErrorController();
+    LogInstance::message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
     $error->forbidden($e->getMessage());
 
 } catch (Throwable $e) {
@@ -113,7 +118,7 @@ try {
     // Just in case the Log class is missing a log dir. 
     // Then we use the Log class exception instead. 
     try {
-        Log::error($exception_str, 'index');
+        LogInstance::message($exception_str, 'error');
     } catch (Exception $e) {        
         $error->error($e->getMessage());
         return;
@@ -124,7 +129,7 @@ try {
 
     // If we are not on dev display generic error message
     if (Config::get('App.env') !== 'dev') {
-        $exception_str = 'A sever error happened. The incidence has been logged.';
+        $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
     }
 
     $error->error($exception_str);

@@ -1,56 +1,89 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Pebble;
-
-use Exception;
 
 class Log
 {
 
-    /**
-     * Var holding dirs where to place log files
-     */
-    private static $dir = null;
+    public function __construct(array $options)
+    {
+        $this->options = $options;
+        $this->dir = $options['log_dir'];
+    }
+
+    public $logTypes = [
+        'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency',
+    ];
 
     /**
-     * Set path to log dir
+     * Log an message to a log file. Type will log message to a file named `$type`.log
      */
-    public static function setDir(string $dir)
+    public function message($message, string $type = 'debug', ?string $custom_log_file = null): void
     {
-        self::$dir = $dir;
+
+        $log_dir = $this->dir . '/';
+
+        if (!is_dir($log_dir)) {
+            mkdir($log_dir, 0777, true);
+        }
+
+        // Default log file
+        $log_file = $log_dir . '/main.log';
+        if ($custom_log_file) {
+            $log_file = $log_dir . '/' . $custom_log_file;
+        }
+
+        $log_message = $this->getMessage($message, $type);
+        file_put_contents($log_file, $log_message, FILE_APPEND | LOCK_EX);
+
+        $this->triggerEvents($log_message, $type);
+
     }
 
     /**
-     * Log an error to a log file. 'Type' will log message to file named `$type`.log
+     * Create log message
      */
-    public static function error($message, string $type)
+    public function getMessage($message, string $type): string
     {
-
-        if (!self::$dir || !is_writable(self::$dir)) {
-            throw new Exception('\Pebble\Log tried to write to a file. Remeber to init the Log class using the call \Log::setDir($dir). This dir needs to be writable');
-        }
-
         if (!is_string($message)) {
             $message = var_export($message, true);
         }
 
-        $date = date('Y-m-d');
-        $log_dir = self::$dir . '/' . $date;
-
-        if (!is_dir($log_dir)) {
-            $res = mkdir($log_dir, 0777, true);
-            if (!$res) {
-                throw new Exception('\Pebble\Log could not make dir ' . $log_dir);
-            }
-        }
-
-        $log_file = $log_dir . '/' . $type . '.log';
-
         // Generate message
         $time_stamp = date('Y-m-d H:i:s');
-        $log_message = $time_stamp . PHP_EOL . $message . PHP_EOL;
-        file_put_contents($log_file, $log_message, FILE_APPEND | LOCK_EX);
+        $log_message = $time_stamp . ' ' . strtoupper($type) . ' ' . $message . PHP_EOL;
+        return $log_message;
+    }
 
+    /**
+     * Trigger special log events
+     */
+    private function triggerEvents($log_message, $type)
+    {
+        foreach ($this->events as $event) {
+            if (in_array($type, $event['types'])) {
+                $callable = $event['method'];
+                $callable($log_message);
+            }
+        }
+    }
+
+    /**
+     * Varaible hold $events
+     */
+    public $events = [];
+
+    /**
+     * Add an event to a log type, e.g. 'alert' or 'emergency' using a callable
+     */
+    public function on(array $types = [], callable $method = null)
+    {
+
+        $event = [
+            'types' => $types,
+            'method' => $method,
+        ];
+
+        $this->events[] = $event;
     }
 }
-
