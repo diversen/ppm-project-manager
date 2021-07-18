@@ -2,17 +2,18 @@
 
 namespace App\Overview;
 
-use \App\Cal;
-use \App\Time\TimeModel;
-use \Pebble\URL;
-use \Pebble\ACL;
+use App\Cal;
+use App\Time\TimeModel;
+use Pebble\URL;
+use Pebble\ACL;
+use Pebble\Auth;
 
 class Controller
 {
 
     public function __construct()
     {
-        $this->auth_id = (new \Pebble\Auth())->getAuthId();
+        $this->auth_id = Auth::getInstance()->getAuthId();
     }
 
     

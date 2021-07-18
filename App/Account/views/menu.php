@@ -3,7 +3,7 @@
 use Pebble\Auth;
 use Diversen\Lang;
 
-$auth = new Auth();
+$auth = Auth::getInstance();
 
 
 ?>

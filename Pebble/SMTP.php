@@ -114,7 +114,7 @@ class SMTP
             $mail->send();
         
         } catch (Exception $e) {
-            LogInstance::message(ExceptionTrace::get($e), 'error');
+            LogInstance::get()->message(ExceptionTrace::get($e), 'error');
             
             return false;
         }

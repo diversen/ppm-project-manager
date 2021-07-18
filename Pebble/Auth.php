@@ -1,9 +1,8 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Pebble;
 
 use Pebble\DBInstance;
-use Pebble\Random;
 
 /**
  * A simple authentication class based on a single database table
@@ -13,7 +12,7 @@ class Auth
     /**
      * Authenticate a against database auth table
      */
-    public function authenticate(string $email, string $password) : array
+    public function authenticate(string $email, string $password): array
     {
 
         $sql = 'SELECT * FROM auth WHERE email = ? AND verified = 1 AND locked = 0';
@@ -26,14 +25,20 @@ class Auth
         return [];
     }
 
+    private function getRandom($len_bytes)
+    {
+        $random = bin2hex(random_bytes($len_bytes));
+        return $random;
+    }
+
     /**
      * Create a user using an email and a password
      */
-    public function create(string $email, string $password) : bool
+    public function create(string $email, string $password): bool
     {
 
         $db = DBInstance::get();
-        $random = Random::generateRandomString(64);
+        $random = $this->getRandom(32);
 
         $options = [
             'cost' => 12,
@@ -50,16 +55,16 @@ class Auth
      * Verify a auth row by a key. Set verified = 1 and generate a new key
      * if there is a match
      */
-    public function verifyKey(string $key) : bool
+    public function verifyKey(string $key): bool
     {
-        
+
         $db = DBInstance::get();
 
-        $row = $this->getByRandom($key);
+        $row = $this->getByWhere(['random' => $key]);
 
         if (!empty($row)) {
 
-            $new_key = Random::generateRandomString(64);
+            $new_key = $this->getRandom(32);
             $sql = "UPDATE auth SET `verified` = 1, `random` = ? WHERE id= ? ";
             return $db->prepareExecute($sql, [$new_key, $row['id']]);
 
@@ -71,9 +76,9 @@ class Auth
     /**
      * Check if an email is verified
      */
-    public function isVerified(string $email): bool {
-        $db = DBInstance::get();
-        $auth_row = $db->getOne('auth', ['verified' => 1, 'email' => $email]);
+    public function isVerified(string $email): bool
+    {
+        $auth_row = $this->getByWhere(['verified' => 1, 'email' => $email]);
         if (empty($auth_row)) {
             return false;
         }
@@ -81,32 +86,23 @@ class Auth
     }
 
     /**
-     * Get auth row by the random key
+     * Get auth row by 'where' condition ['id' => 10, 'random' => 'random key of sorts']
      */
-    public function getByRandom (string $key): array {
+    public function getByWhere($where)
+    {
         $db = DBInstance::get();
-        $sql = "SELECT * FROM auth WHERE `random` = ?";
-        $row = $db->prepareFetch($sql, [$key]);
-        return $row;
-    }
+        return $db->getOne('auth', $where);
 
-    /**
-     * Get auth row by email
-     */
-    public function getByEmail(?string $email): array {
-        $db = DBInstance::get();
-        $sql = 'SELECT * FROM `auth` WHERE `email` = ?';
-        return $db->prepareFetch($sql, [$email]);
     }
 
     /**
      * Update 'password', actually the 'password_hash', and the random key bu auth 'id'
      */
-    public function updatePassword(string $id, string $password) : bool
+    public function updatePassword(string $id, string $password): bool
     {
 
         $db = DBInstance::get();
-        $random = Random::generateRandomString(64);
+        $random = $this->getRandom(32);
 
         $options = [
             'cost' => 12,
@@ -119,116 +115,10 @@ class Auth
 
     }
 
-
-    /**
-     * Check if a user has a valid auth cookie by searching the auth_cookie table 
-     * by $_COOKIE['auth']
-     * @return boolean
-     */
-    public function isAuthenticated() : bool
-    {
-        if (isset($_COOKIE['auth'])) {
-            $auth = $this->getAuthCookieFromDB();
-            if (empty($auth)) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check a 'auth' row from a auth id
-     * @return array $row
-     */
-    public function getAuthRowFromAuthId(int $auth_id) : array
-    {
-
-        $db = DBInstance::get();
-        $auth_row = $db->getOne('auth', ['id' => $auth_id]);
-        return $auth_row;
-    }
-
-    /**
-     * Get a auth id by checking the auth_cookie table for a $_COOKIE['auth'] match
-     */
-    public function getAuthId() : int {
-
-        $auth_cookie_row = $this->getAuthCookieFromDB();
-        if (empty($auth_cookie_row)) {
-            return 0;
-        }
-        return (int)$auth_cookie_row['auth_id'];
-    }
-
-    /**
-     * Unsets current auth cookie. This will log out the user
-     */
-    public function unsetCurrentAuthCookie()
-    {
-
-        if (isset($_COOKIE['auth'])) {
-
-            // Delete current cookie
-            $sql = "DELETE FROM auth_cookie WHERE cookie_id = ?";
-            DBInstance::get()->prepareExecute($sql, [$_COOKIE['auth']]);
-
-            // Unset auth cookie
-            $this->setCookie("auth", "", time() - 3600);
-
-        }
-    }
-
-    /**
-     * Unset all 'auth_cookies' across different devices
-     */
-    public function unsetAllAuthCookies ($auth_id): bool {
-
-        $sql = "DELETE FROM auth_cookie WHERE auth_id = ?";
-        return DBInstance::get()->prepareExecute($sql, [$auth_id]);
-    }
-
-    /**
-     * Generate a random string. Set this as the auth cookie. 
-     * Save the random string in database with the auth id. 
-     */
-    public function setAuthCookieDB(array $auth, int $expires) : bool
-    {
-
-        $random = Random::generateRandomString(64);
-        $res = $this->setCookie('auth', $random, $expires);
-
-        if ($res) {
-
-            $db = DBInstance::get();
-            $sql = "INSERT INTO auth_cookie (`cookie_id`, `auth_id`) VALUES (?, ?) ";
-            return $db->prepareExecute($sql, [$random, $auth['id']]);
-        }
-        return false;
-    }
-
-    /**
-     * Set session cookie. This is a cookie with time 0 
-     */
-    public function setSessionAuthCookieDB (array $auth): bool {
-        $expires = 0;
-        return $this->setAuthCookieDB($auth, $expires);
-    }
-
-    /**
-     * Set a cookie that can last over days
-     * @param array $auth
-     */
-    public function setPermanentAuthCookieDB (array $auth): bool {
-        $auth_settings = Config::getSection('Auth');
-        $expires = time() + $this->getCookieTime($auth_settings['cookie_days']);
-        return $this->setAuthCookieDB($auth, $expires);
-    }
-
     /**
      * Get current users auth row from $_COOKIE['auth']
      */
-    public function getAuthCookieFromDB() : array
+    private function getValidCookieRow(): array
     {
 
         if (isset($_COOKIE['auth'])) {
@@ -242,17 +132,116 @@ class Auth
     }
 
     /**
-     * Get cookie time in seconds from days
+     * Check if a user has a valid auth cookie by searching the auth_cookie table
+     * by $_COOKIE['auth']
+     * @return boolean
      */
-    private function getCookieTime(int $days) : int
+    public function isAuthenticated(): bool
     {
-        return $days * 60 * 60 * 24;
+        $auth = $this->getValidCookieRow();
+        if (empty($auth)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get a auth id by checking the auth_cookie table for a $_COOKIE['auth'] match
+     */
+    public function getAuthId(): string
+    {
+
+        $auth_cookie_row = $this->getValidCookieRow();
+        if (empty($auth_cookie_row)) {
+            return "0";
+        }
+        return $auth_cookie_row['auth_id'];
+    }
+
+    /**
+     * Unsets current auth cookie. This will log out the user
+     */
+    public function unlinkCurrentCookie()
+    {
+
+        if (isset($_COOKIE['auth'])) {
+
+            // Delete current cookie
+            $sql = "DELETE FROM auth_cookie WHERE cookie_id = ?";
+            DBInstance::get()->prepareExecute($sql, [$_COOKIE['auth']]);
+
+        }
+    }
+
+    /**
+     * Unset all 'auth_cookies' across different devices
+     */
+    public function unlinkAllCookies($auth_id): bool
+    {
+
+        $sql = "DELETE FROM auth_cookie WHERE auth_id = ?";
+        return DBInstance::get()->prepareExecute($sql, [$auth_id]);
+
+    }
+
+    /**
+     * Generate a random string. Set this as the auth cookie.
+     * Save the random string in database with the auth id.
+     */
+    private function setCookie(array $auth, int $expires): bool
+    {
+
+        $random = $this->getRandom(32);
+        $res = $this->setBrowserCookie('auth', $random, $expires);
+
+        if ($res) {
+
+            $db = DBInstance::get();
+            $sql = "INSERT INTO auth_cookie (`cookie_id`, `auth_id`, `expires`) VALUES (?, ?, ?) ";
+            return $db->prepareExecute($sql, [$random, $auth['id'], $expires]);
+        }
+        return false;
+    }
+
+    /**
+     * Set session cookie. It is actualy not a session cookie, because session cookies are not
+     * Are not reliable across browsers 
+     */
+    public function setSessionCookie(array $auth): bool
+    {
+        $cookie_seconds = Config::get('Auth.cookie_seconds');
+        if ($cookie_seconds == 0) {
+            $expires = 0;
+        } else {
+            $expires = time() + Config::get('Auth.cookie_seconds');
+        }
+
+        return $this->setCookie($auth, $expires);
+    }
+
+    /**
+     * Set a cookie that can last over many days or years
+     * @param array $auth
+     */
+    public function setPermanentCookie(array $auth): bool
+    {
+        $expires = time() + Config::get('Auth.cookie_seconds_permanent');
+        return $this->setCookie($auth, $expires);
+    }
+
+    private function isCli()
+    {
+        if (php_sapi_name() === 'cli') {
+            return true;
+        }
+        return false;
     }
 
     /**
      * Set a cookie with key value and expire time
      */
-    private function setCookie (string $key, string $value, int $time) {
+    private function setBrowserCookie(string $key, string $value, int $time)
+    {
 
         $auth_settings = Config::getSection('Auth');
 
@@ -261,30 +250,25 @@ class Auth
         $secure = $auth_settings['cookie_secure'];
         $http_only = $auth_settings['cookie_http'];
 
-        return setcookie($key, $value, $time, $path, $domain, $secure, $http_only);
-    }
-
-    /**
-     * Create a new Auth object
-     */
-    public static function factory() {
-        return new self();
-    }
-
-    /**
-     * Variable holding an instance object
-     */
-    public static $instance = null;
-
-    /**
-     * Get the instance object
-     */
-    public static function getInstance() {
-        if (!self::$instance) {
-            self::$instance = new Auth();
+        // Little hack for unit testing
+        if ($this->isCli()) {
+            $_COOKIE['auth'] = $value;
+            return true;
         }
 
-        return self::$instance;
+        return setcookie($key, $value, $time, $path, $domain, $secure, $http_only);
 
+    }
+
+    /**
+     * @return \Pebble\Auth
+     */
+    public static function getInstance() {
+        static $instance;
+        if (!$instance) {
+            $instance = new Auth();
+        }
+
+        return $instance;
     }
 }

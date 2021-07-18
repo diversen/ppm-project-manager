@@ -29,7 +29,34 @@ class Config
     }
 
     /**
-     * Read all configuration files (php files) from dir.
+     * Get config array from a dir and a file
+     */
+    private static function getConfigArray($dir, $file) {
+        
+        $config_file = $dir . "/$file";
+        $config_array = require($config_file);
+        return $config_array;
+    }
+
+    /**
+     * Only php files a vlid from a configuration dir. 
+     * Remove everything that is not a config file.
+     */
+    private static function getCleanedFiles($files) {
+
+        $files_ret = [];
+        foreach($files as $file) {
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            if ($ext !== 'php') {
+                continue;
+            }
+            $files_ret[] = $file;
+        }
+        return $files_ret;
+    }
+
+    /**
+     * Read all configuration files (php files) from dir. 
      */
     public static function readConfig(string $dir)
     {
@@ -38,18 +65,11 @@ class Config
         }
 
         $files = File::dirToArray($dir);
+        $files = self::getCleanedFiles($files);
 
         foreach ($files as $file) {
 
-            $ext = pathinfo($file, PATHINFO_EXTENSION);
-            if ($ext !== 'php') {
-                continue;
-            }
-
-            $config_file = $dir . "/$file";
-            $config_array = require($config_file);
-
-            // var_dump($config_array);
+            $config_array = self::getConfigArray($dir, $file);
             $filename = self::getFilename($file);
             self::$sections[$filename] = $config_array;
             self::$variables = array_merge(self::$variables, self::getSectionByName($filename, $config_array));
@@ -58,8 +78,7 @@ class Config
     }
 
     /**
-     * Get config section by name, e.g. config/SMTP.php will get the section name SMTP
-     * And the array returned will be an array where 'SMTP.' is prepended
+     * get a config section. E.g. 'SMTP' will get the configuration from the file 'config/SMTP.php'
      */
     private static function getSectionByName(string $section, array $configAry) : array
     {
@@ -71,7 +90,7 @@ class Config
     }
 
     /**
-     * Get single configuration variable
+     * Get e.g. `Config::get('SMTP.username')`
      */
     public static function get(string $key)
     {
@@ -82,7 +101,7 @@ class Config
     }
 
     /**
-     * Get section of configuration, e.g. DB
+     * Get section of configuration, e.g. `Config::get('DB')`
      */
     public static function getSection(string $key) : array
     {

@@ -4,21 +4,22 @@ use Diversen\Lang;
 use Pebble\Config;
 use Pebble\Auth;
 
-if (Auth::getInstance()->isAuthenticated()) {
+$is_authenticated = Auth::getInstance()->isAuthenticated();
+if ($is_authenticated) {
     $home_url = '/overview';
 } else {
     $home_url = '/';
 }
 
 ?>
-
+<!--<h1><a href="<?=$home_url?>"><?=Config::get('App.site_name')?></a></h1>-->
 
 <a title="<?=Config::get('App.site_name')?>" href="<?=$home_url?>"><img src="/App/templates/assets/logo.svg"></img></a>
 
 <div class="project-menus">
 <?php
 
-if (!Auth::getInstance()->isAuthenticated()) {?>
+if (!$is_authenticated) {?>
 <a href="/account"><?=Lang::translate('Login')?></a>
 <a href="/account/signup"><?=Lang::translate('Email signup')?></a>
 <a href="/account/recover"><?=Lang::translate('Lost password')?></a>
@@ -33,7 +34,6 @@ if (!Auth::getInstance()->isAuthenticated()) {?>
 
 }
 
-if ( (new \Pebble\Auth)->isAuthenticated()) {
+if ($is_authenticated) {
     require 'App/templates/timer.tpl.php';
-} else {
-}
+} 

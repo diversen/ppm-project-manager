@@ -13,7 +13,10 @@ class LogInstance {
         self::$log = $log;
     }
 
-    public static function message($message, string $type = 'debug', ?string $custom_log_file = null): void {
-        self::$log->message($message, $type, $custom_log_file);
+    /**
+     * @return Pebble\Log
+     */
+    public static function get() {
+        return self::$log;
     }
 }

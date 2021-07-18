@@ -4,7 +4,7 @@ use \App\Settings\SettingsModel;
 use \Pebble\Auth;
 
 
-if (!(new Auth())->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
+if (!Auth::getInstance()->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
 } else {
     $use_theme_dark_mode = SettingsModel::getInstance()->getUserSetting('theme_dark_mode');

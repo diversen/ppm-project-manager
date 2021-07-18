@@ -2,7 +2,7 @@
 
 namespace App\Home;
 
-
+use Pebble\Auth;
 use Parsedown;
 use Pebble\Exception\NotFoundException;
 
@@ -11,7 +11,7 @@ class Controller
 
     public function __construct()
     {
-        $this->auth_id = (new \Pebble\Auth())->getAuthId();
+        $this->auth_id = Auth::getInstance()->getAuthId();
     }
 
     

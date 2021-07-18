@@ -26,7 +26,7 @@ class Controller
 
         $google_auth_url = $this->getGoogleAuthUrl();
         
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         if ($auth->isAuthenticated()) {
             $form_vars = ['title' => 'Signin'];
             \Pebble\Template::render('App/Account/views/signout.php',
@@ -63,12 +63,12 @@ class Controller
      */
     public function logout()
     {
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         if (isset($_GET['all_devices'])) {
             $auth_id = $auth->getAuthId();
-            $auth->unsetAllAuthCookies($auth_id);
+            $auth->unlinkAllCookies($auth_id);
         } else {
-            $auth->unsetCurrentAuthCookie();
+            $auth->unlinkCurrentCookie();
         }
 
 
@@ -107,7 +107,7 @@ class Controller
             return;
         }
 
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         $row = $auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
@@ -118,10 +118,10 @@ class Controller
 
             if (isset($_POST['keep_login'])) {
                 // Set a cookie that will last for days
-                $auth->setPermanentAuthCookieDB($row);
+                $auth->setPermanentCookie($row);
             } else {
                 // Set a cookie that is only valid until window is closed
-                $auth->setSessionAuthCookieDB($row, 0);
+                $auth->setSessionCookie($row);
             }
 
         } else {
@@ -155,7 +155,7 @@ class Controller
 
         $key = $_GET['key'];
 
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         $res = $auth->verifyKey($key);
 
         if ($res) {
@@ -195,7 +195,7 @@ class Controller
             return;
         }
 
-        $auth = new Auth();
+        $auth = Auth::getInstance();
 
         $db = DBInstance::get();
         $db->beginTransaction();
@@ -276,7 +276,7 @@ class Controller
             return;
         }
 
-        if (!$captcha->validatePOST()) {
+        if (!$captcha->validate($_POST['captcha'])) {
             $response['message'] = Lang::translate('Image text does not match');
             echo JSON::response($response);
             return;
@@ -310,8 +310,8 @@ class Controller
 
         $key = $_GET['key'] ? $_GET['key']: null;
 
-        $auth = new Auth();
-        $row = $auth->getByRandom($key);
+        $auth = Auth::getInstance();
+        $row = $auth->getByWhere(['random' => $key]);
 
         if (!empty($_POST) && !empty($row)) {
 
@@ -324,7 +324,7 @@ class Controller
             } else {
 
                 // Remove all cookie logins
-                $auth->unsetAllAuthCookies($row['id']);
+                $auth->unlinkAllCookies($row['id']);
 
                 $auth->updatePassword($row['id'], $_POST['password']);
                 Flash::setMessage('Your password has been updated', 'success');

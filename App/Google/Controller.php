@@ -19,9 +19,8 @@ class Controller
 
     public function signout () {
 
-
-        $auth = new Auth();
-        $auth->unsetCurrentAuthCookie();
+        $auth = Auth::getInstance();
+        $auth->unlinkCurrentCookie();
         $location = "Location: " . $this->logout_redirect;
         header($location);
 
@@ -30,7 +29,7 @@ class Controller
     public function index()
     {
 
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         
         if ($auth->isAuthenticated()) {
 
@@ -77,26 +76,26 @@ class Controller
 
     public function verifyPayload ($payload) {
         
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         if (isset($payload['email_verified']) && isset($payload['email'])) {
-            $row = $auth->getByEmail($payload['email']);
+            $row = $auth->getByWhere(['email' => $payload['email']]);
 
             if (empty($row)) {
 
                 // Create user with random password
-                $password = Random::generateRandomString(32);
+                $password = bin2hex(random_bytes(32));
                 $auth->create($payload['email'], $password);
                 
                 // Get user and verify user
-                $row = $auth->getByEmail($payload['email']);
+                $row = $auth->getByWhere(['email' => $payload['email']]);
                 $auth->verifyKey($row['random']);
 
                 // Signin and set flash message
-                $auth->setPermanentAuthCookieDB($row);
+                $auth->setPermanentCookie($row);
                 // Flash::setMessage('New user has been created from your google account. You are signed in.', 'success');
 
             } else {
-                $auth->setPermanentAuthCookieDB($row);
+                $auth->setPermanentCookie($row);
                 Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true] );
 
             }

@@ -14,7 +14,7 @@ class Controller
     public function __construct()
     {
 
-        $auth = new Auth();
+        $auth = Auth::getInstance();
         $this->auth_id = $auth->getAuthId();
 
     }

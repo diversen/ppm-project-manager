@@ -17,6 +17,7 @@ use Pebble\LogInstance;
 use Pebble\Router;
 use Pebble\Session;
 use App\Settings\SettingsModel;
+use Pebble\ExceptionTrace;
 
 
 // Run the application and check for exceptions and throwable
@@ -99,13 +100,13 @@ try {
 } catch (NotFoundException $e) {
 
     $error = new ErrorController();
-    LogInstance::message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
+    LogInstance::get()->message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
     $error->notFound($e->getMessage());
 
 } catch (ForbiddenException $e) {
 
     $error = new ErrorController();
-    LogInstance::message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
+    LogInstance::get()->message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
     $error->forbidden($e->getMessage());
 
 } catch (Throwable $e) {
@@ -113,12 +114,12 @@ try {
     $error = new ErrorController();
 
     // Log error to file
-    $exception_str = \Pebble\ExceptionTrace::get($e);
+    $exception_str = ExceptionTrace::get($e);
 
     // Just in case the Log class is missing a log dir. 
     // Then we use the Log class exception instead. 
     try {
-        LogInstance::message($exception_str, 'error');
+        LogInstance::get()->message($exception_str, 'error');
     } catch (Exception $e) {        
         $error->error($e->getMessage());
         return;

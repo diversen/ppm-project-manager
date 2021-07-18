@@ -14,7 +14,7 @@ class ACL {
      */
     public function __construct()
     {
-        $this->auth_id = Auth::factory()->getAuthId();
+        $this->auth_id = Auth::getInstance()->getAuthId();
     }
 
     /**

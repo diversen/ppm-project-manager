@@ -148,6 +148,7 @@ EOF;
         $db_config = Config::getSection('DB');
         $db = new DB($db_config['url'], $db_config['username'], $db_config['password']);
         
+        // No insertion prior to his - so we expect 0 (or false)
         $last_insert_id = $db->lastInsertId();
 
         $this->assertIsString($last_insert_id);
