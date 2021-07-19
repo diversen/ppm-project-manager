@@ -16,9 +16,10 @@ use Pebble\Log;
 use Pebble\LogInstance;
 use Pebble\Router;
 use Pebble\Session;
-use App\Settings\SettingsModel;
 use Pebble\ExceptionTrace;
+use Pebble\Headers;
 
+use App\Settings\SettingsModel;
 
 // Run the application and check for exceptions and throwable
 try {
@@ -46,7 +47,7 @@ try {
 
     // Force SSL
     if (Config::get('App.force_ssl')) {
-        \Pebble\Headers::redirectToHttps();
+        Headers::redirectToHttps();
     }
 
     // Start session. E.g. Flash messages

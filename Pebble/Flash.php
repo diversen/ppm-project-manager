@@ -8,7 +8,7 @@ class Flash
     /**
      * Set SESSION flash message
      * @param string $message
-     * @param string $type Type is one of ['info', 'success', 'warning', 'error']
+     * @param string $type Type is one of ['info', 'success', 'warning', 'error'] or any other you may use in your app. 
      * @param array  $options ['flash_remove' => true] Options. E.g. set flash_remove in order to add a css class used to remove messages using js.
      */
     public static function setMessage(string $message, string $type, array $options = [])

@@ -85,7 +85,7 @@ class TaskModel
         return DBInstance::get()->delete('task', ['id' => $id]);
     }
 
-    public function setExceededUserTasksToday(int $auth_id) {
+    public function setExceededUserTasksToday(string $auth_id) {
         $today = (new Cal())->userDate('now', 'Y-m-d 00:00:00');
         $db = DBInstance::get();
 

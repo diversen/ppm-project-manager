@@ -53,7 +53,7 @@ class DBCache
     /**
      * Get a cache result
      * @param string $id
-     * @param int $max_life_time max life time in seconds
+     * @param int $max_life_time max life time in seconds. Set to 0 if no max_life_time
      * @return mixed $res NULL if no result of if result is outdated. Else return the result
      */
     public function get($id, int $max_life_time = 0)

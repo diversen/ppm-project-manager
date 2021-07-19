@@ -2,16 +2,23 @@
 
 namespace Pebble;
 
+use Exception;
+
 class Log
 {
 
-    public function __construct(array $options)
+    public function __construct(array $options = [])
     {
+        if (!isset($options['log_dir'])) {
+            throw new Exception("The \Pebble\Log __construct method expects a 'log_dir' as an option");
+        }
         $this->options = $options;
-        $this->dir = $options['log_dir'];
     }
 
-    public $logTypes = [
+    /**
+     * Log types not used yet, but may come in handy at a time
+     */
+    private $logTypes = [
         'debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency',
     ];
 
@@ -21,7 +28,7 @@ class Log
     public function message($message, string $type = 'debug', ?string $custom_log_file = null): void
     {
 
-        $log_dir = $this->dir . '/';
+        $log_dir = $this->options['log_dir'] . '/';
 
         if (!is_dir($log_dir)) {
             mkdir($log_dir, 0777, true);
@@ -43,7 +50,7 @@ class Log
     /**
      * Create log message
      */
-    public function getMessage($message, string $type): string
+    private function getMessage($message, string $type): string
     {
         if (!is_string($message)) {
             $message = var_export($message, true);
