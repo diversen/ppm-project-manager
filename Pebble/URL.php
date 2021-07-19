@@ -9,7 +9,7 @@ class URL
 {
 
     /**
-     * Get a 'link' with current URL attached with query param 'return_to'
+     * Get a 'link' with current URL attached as query param 'return_to'
      * 
      * E.g you redirect a user, and when the user has done some action your can - from the 'return_to' query part -
      * redirect the user back to the 'link' specified as the method's param

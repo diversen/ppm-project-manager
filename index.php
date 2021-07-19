@@ -51,8 +51,7 @@ try {
     }
 
     // Start session. E.g. Flash messages
-    $session = new Session();
-    $session->setConfigSettings();
+    Session::setConfigSettings();
     session_start();
 
     // Get DB configuration
@@ -120,6 +119,7 @@ try {
     // Just in case the Log class is missing a log dir. 
     // Then we use the Log class exception instead. 
     try {
+        
         LogInstance::get()->message($exception_str, 'error');
     } catch (Exception $e) {        
         $error->error($e->getMessage());

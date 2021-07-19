@@ -252,4 +252,11 @@ final class AuthTest extends TestCase
         $res = $auth->isAuthenticated();
         $this->assertEquals(true, $res);
     }
+
+    public static function tearDownAfterClass(): void
+    {
+        $db = DBInstance::get();
+        $db->prepareExecute("DELETE FROM `auth` WHERE `email` = :email", ['email' => 'some_email@test.dk']);
+        $db->prepareExecute("DELETE FROM `auth_cookie`");
+    }
 }

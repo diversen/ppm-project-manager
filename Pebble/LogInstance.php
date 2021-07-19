@@ -14,7 +14,7 @@ class LogInstance {
     }
 
     /**
-     * @return Pebble\Log
+     * @return Log
      */
     public static function get() {
         return self::$log;

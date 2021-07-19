@@ -158,6 +158,30 @@ class Router
         ];
     }
 
+    public function getValidRoutes() {
+
+        $this->filterRouteByRequestMethod();    
+        $this->filterRoutesByPartsLength();
+        $this->filterRoutesByParts();
+
+        
+
+        $method = $_SERVER['REQUEST_METHOD'];
+        $routes = $this->routes[$method];
+        if (empty($routes)) {
+            throw new NotFoundException('The page does not exist');
+        } 
+
+        foreach($routes as $route) {
+            if (!method_exists($route['class'], $route['method'])) {
+                throw new NotFoundException("The page does not exist. No such method: {$route['class']}::{$route['method']} "); 
+            }
+        }
+        
+        return $routes;
+
+    }
+
     /**
      * When all routes are loadedm then run the application
      * `$router->run()`
@@ -165,27 +189,17 @@ class Router
     public function run()
     {
 
-        $this->filterRouteByRequestMethod();    
-        $this->filterRoutesByPartsLength();
-        $this->filterRoutesByParts();
-
-        $method = $_SERVER['REQUEST_METHOD'];
+        $routes = $this->getValidRoutes();
         
-        if (empty($this->routes[$method])) {
-            throw new NotFoundException('The page does not exist');
-        } else {
-            $routes = $this->routes[$method];
-       
-            foreach($routes as $route) {
+        foreach($routes as $route) {
 
-                $params = $route['params'];
-                $class_method = $route['method'];
-                $class = $route['class'];
-                $object = new $class();
+            $params = $route['params'];
+            $class_method = $route['method'];
+            $class = $route['class'];
+            $object = new $class();
 
-                $object->$class_method($params);                    
-                
-            }
+            $object->$class_method($params);                    
+            
         }
     }
 }

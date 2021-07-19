@@ -40,16 +40,7 @@ class SMTP
     /**
      * Constructor
      */
-    public function __construct (string $from = '', string $fromName = '' ) {
-
-        // Check constructor
-        if (!empty($from)) {
-            $this->from = $from;
-            if (empty($fromName)) {
-                $this->fromName = $from;
-            }
-            return;
-        }
+    public function __construct () {
 
         // If variables NOT SET in constructor then load from Configuration
         if (!Config::get('SMTP.DefaultFrom') || !Config::get('SMTP.DefaultFromName')) { 
@@ -86,9 +77,34 @@ class SMTP
         return $mail;
     }
 
+    /**
+     * This method sends a mail a throws an exception in case of an error
+     */
+    public function sendWithException (string $to, string $subject, string $text, string $html, array $attachments = [])
+    {
+
+        $mail = $this->getPHPMailer();
+        $mail->setFrom($this->from, $this->fromName);
+        $mail->addAddress($to);
+        $mail->addReplyTo($this->from);
+
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $html;
+        $mail->AltBody = $text;
+
+        if (!empty($attachments)) {
+            foreach ($attachments as $file) {
+                $mail->addAttachment($file);
+            }
+        }
+
+        $mail->send();
+    
+    }
 
     /**
-     * Send an email
+     * This method sends a mail but catches the exception and return a boolean
      */
     public function send(string $to, string $subject, string $text, string $html, array $attachments = [])
     {
@@ -122,7 +138,7 @@ class SMTP
         return true;
     }
 
-    public function getMarkdown (string $text) {
+    private function getMarkdown (string $text) {
 
         $parsedown = new Parsedown();
         $parsedown->setSafeMode($this->safeMode);

@@ -89,7 +89,7 @@ class ACL {
     }
 
     /**
-     * Get rigths as an array from a list, e.g. the string 'owner, user' returns ['owner', 'user']
+     * Get rights as an array from a list, e.g. the string 'owner, user' returns ['owner', 'user']
      */
     private function getRightsArray(string $rights_str): array {
         $rights_array = explode(',', $rights_str);
@@ -130,13 +130,5 @@ class ACL {
         if (!$this->hasAccessRights($ary)) {
             throw new ForbiddenException('You can not access this page');
         }
-    }
-
-    /**
-     * Get a instance of the ACL class
-     * @return \Pebble\ACL
-     */
-    public static function factory() {
-        return new self();
     }
 }

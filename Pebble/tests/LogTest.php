@@ -31,6 +31,28 @@ final class LogTest extends TestCase
 
         $log->message('Hello world', 'info');
 
+        // 2021-07-19 09:29:43 INFO Hello world
+        $this->assertStringContainsString('INFO Hello world', file_get_contents($log_dir . '/main.log'));
+
+    }
+
+    public function test_on()
+    {
+
+        $log_dir = __DIR__ . '/logs';
+        $log = new Log(['log_dir' => $log_dir]);
+
+        
+        $log->on(['info'], function ($message) use ($log) {
+            $log->message('events working', 'debug');
+        });
+
+        $log->message('Hello world', 'info');
+
+        // 2021-07-19 09:29:43 INFO Hello world
+        $this->assertStringContainsString('INFO Hello world', file_get_contents($log_dir . '/main.log'));
+        $this->assertStringContainsString('DEBUG events working', file_get_contents($log_dir . '/main.log'));
+
     }
     public static function tearDownAfterClass(): void
     {

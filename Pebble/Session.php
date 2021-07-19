@@ -1,7 +1,8 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Pebble;
 
+use Exception;
 use \Pebble\Config;
 
 /**
@@ -13,14 +14,19 @@ class Session
     /**
      * Set SESSION defaults from Session Configuration
      */
-    public function setConfigSettings()
+    public static function setConfigSettings()
     {
-        $session = Config::getSection('Session');
-        
-        foreach ($session as $key => $val) {
-            $ini = 'session.' . $key;
-            ini_set($ini, $val);
-        }
-    } 
-}
+        $session_config = Config::getSection('Session');
 
+        if ($session_config) {
+            $res = session_set_cookie_params(
+                $session_config["lifetime"],
+                $session_config["path"],
+                $session_config['domain'],
+                $session_config["secure"],
+                $session_config["httponly"]
+            );
+            return $res;
+        }
+    }
+}

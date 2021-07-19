@@ -10,11 +10,11 @@ class Template
     /**
      * Get output from a template 
      */
-    public static function getOutput (string $template, array $vars = []) {
+    public static function getOutput (string $template, array $vars = [], array $options = []): string {
         
         ob_start();
 
-        self::render($template, $vars);
+        self::render($template, $vars, $options);
 
         $content = ob_get_clean();
 
