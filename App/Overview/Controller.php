@@ -7,6 +7,7 @@ use App\Time\TimeModel;
 use Pebble\URL;
 use Pebble\ACL;
 use Pebble\Auth;
+use App\Settings\SettingsModel;
 
 class Controller
 {
@@ -26,8 +27,7 @@ class Controller
         $week_delta_current = (int) URL::getQueryPart('week_delta');
 
         // Only display current day state
-        $settings = new \App\Settings\SettingsModel();
-        $current_day_state = $settings->getUserSettingDefaultZero('overview_current_day_state');
+        $current_day_state = (new SettingsModel())->getUserSetting($this->auth_id, 'overview_current_day_state') ?? null;
 
         $week_state = [
             'week_number_delta' =>      $cal->getWeekNumberFromDelta($week_delta_current),

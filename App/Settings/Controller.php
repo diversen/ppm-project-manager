@@ -2,33 +2,39 @@
 
 namespace App\Settings;
 
+use Diversen\Lang;
 use Pebble\Auth;
 use Pebble\ACL;
 use App\Settings\SettingsModel;
-use Diversen\Lang;
-use Pebble\Flash;
 use Pebble\JSON;
+use Pebble\Exception\NotFoundException;
+use Pebble\Flash;
 
 class Controller
 {
-
-    public function __construct()
-    {
-        $auth = Auth::getInstance();
-        $this->auth_id = $auth->getAuthId();
-    }
-
-
 
     public function index() {
 
         (new ACL())->isAuthenticatedOrThrow();
 
-        $settings = new SettingsModel();
+        $settings = new SettingsModel;
+        $auth_id = Auth::getInstance()->getAuthId();
+        $user_settings = $settings->getUserSetting($auth_id, 'profile');
 
-        $user_settings = $settings->getAllUserSettings();
+        $vars['user_settings'] = $user_settings; 
+        \Pebble\Template::render('App/Settings/views/settings.tpl.php', $vars);
+    }
 
-        \Pebble\Template::render('App/Settings/settings.tpl.php', $user_settings);
+    public function user($params) {
+
+        if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {
+            throw new NotFoundException;
+        }  
+
+        $settings = new SettingsModel;
+        $user = $settings->getUserSetting($params['auth_id'], 'profile');      
+
+        \Pebble\Template::render('App/Settings/views/user.tpl.php', ['user' => $user]);
     }
 
     public function put()
@@ -38,17 +44,21 @@ class Controller
 
         $settings = new SettingsModel();
         $post = $_POST;
+        $auth_id = Auth::getInstance()->getAuthId();
 
         $response['error'] = false;
         
         try {
 
-            $settings->setUserSettings($post);
-
             // Do not display message on 'overview' page
-            if (!isset($post['overview_current_day_state'])) {
+            if (isset($post['overview_current_day_state'])) {
+                $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
                 Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
+            } else {
+
+                $settings->setUserSetting($auth_id, 'profile', $post);
             }
+
         } catch (\Exception $e) {
             $response['error'] = $e->getMessage();
         }

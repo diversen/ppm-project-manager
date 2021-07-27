@@ -7,25 +7,25 @@ require_once "vendor/autoload.php";
 require_once "autoload.php";
 
 use App\Error\Controller as ErrorController;
+use App\Settings\SettingsModel;
 use Diversen\Lang;
 use Pebble\Config;
 use Pebble\DBInstance;
+use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\NotFoundException;
+use Pebble\Headers;
 use Pebble\Log;
 use Pebble\LogInstance;
 use Pebble\Router;
 use Pebble\Session;
-use Pebble\ExceptionTrace;
-use Pebble\Headers;
-
-use App\Settings\SettingsModel;
+use Pebble\Auth;
 
 // Run the application and check for exceptions and throwable
 try {
 
     // Throw on all kind of errors and notices
-    set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
+    set_error_handler(function ($errno, $errstr, $errfile, $errline) {
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     });
 
@@ -40,7 +40,7 @@ try {
     // Make a log instance
     $log = new Log([
         'log_dir' => './logs',
-        'silence'  => false
+        'silence' => false,
     ]);
 
     LogInstance::init($log);
@@ -62,24 +62,21 @@ try {
 
     // Connect to DB and create an instance
     DBInstance::connect($db_config['url'], $db_config['username'], $db_config['password']);
-    
-    $user_time_zone = SettingsModel::getInstance()->getUserDefaultTimeZone();
-    if ($user_time_zone) {
-        date_default_timezone_set($user_time_zone);
-    } else {
-        date_default_timezone_set(Config::get('App.timezone'));
-    } 
 
-    // Check user language
-    $user_language = SettingsModel::getInstance()->getUserSetting('language');
-    if (!$user_language) {
-        $user_language = Config::get('Language.default');
-    }
+    // Set timezone and language. Use defaults if not set.
+    $settings = new SettingsModel;
+    $auth_id = Auth::getInstance()->getAuthId();
+    $user_settings = $settings->getUserSetting($auth_id, 'profile');
+
+    $timezone = $user_settings['timezone'] ?? Config::get('App.timezone');
+    $language = $user_settings['language'] ?? Config::get('Language.default');
+
+    date_default_timezone_set($timezone);
 
     // Setup translations
     $l = new Lang();
     $l->setSingleDir("App");
-    $l->loadLanguage($user_language);
+    $l->loadLanguage($language);
 
     // Define all routes
     $router = new Router();
@@ -93,9 +90,8 @@ try {
     App\Settings\Routes::setRoutes($router);
     App\Time\Routes::setRoutes($router);
     App\Test\Routes::setRoutes($router);
-    
-    $router->run();
 
+    $router->run();
 
 } catch (NotFoundException $e) {
 
@@ -116,16 +112,16 @@ try {
     // Log error to file
     $exception_str = ExceptionTrace::get($e);
 
-    // Just in case the Log class is missing a log dir. 
-    // Then we use the Log class exception instead. 
+    // Just in case the Log class is missing a log dir.
+    // Then we use the Log class exception instead.
     try {
-        
+
         LogInstance::get()->message($exception_str, 'error');
-    } catch (Exception $e) {        
+    } catch (Exception $e) {
         $error->error($e->getMessage());
         return;
     }
-    
+
     // Display error
     $error = new ErrorController();
 
@@ -136,4 +132,4 @@ try {
 
     $error->error($exception_str);
 
-} 
+}

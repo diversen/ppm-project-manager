@@ -8,7 +8,7 @@ class Routes
     {
 
         $router->add('GET', '/settings', \App\Settings\Controller::class, 'index');
-        $router->add('GET', '/settings/test', \App\Settings\Controller::class, 'test');
+        $router->add('GET', '/user/:auth_id', \App\Settings\Controller::class, 'user');
         $router->add('POST', '/settings/put', \App\Settings\Controller::class, 'put');
 
     }
