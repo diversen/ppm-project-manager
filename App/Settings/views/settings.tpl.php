@@ -69,13 +69,6 @@ $languages = \Pebble\Config::get('Language.enabled');
         let formData = new FormData(document.getElementById('seetings'));
         let res;
 
-        /*
-        // Unchecked gets a value of 0
-        if (!formData.has('theme_dark_mode')){
-            formData.set('theme_dark_mode', '0');
-        }
-        */
-
         try {
             res = await Pebble.asyncPost('/settings/put/', formData);
             if (res.error === false) {
@@ -84,8 +77,7 @@ $languages = \Pebble\Config::get('Language.enabled');
                 Pebble.setFlashMessage(res.error, 'error');
             }
             console.log(res);
-        } catch (e) {
-            
+        } catch (e) {           
             console.log(e)
         }
 
