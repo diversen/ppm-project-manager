@@ -52,7 +52,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
         </td>
 
         <td class='td-overflow'>
-            <a title="<?=$project_title?>" href='/project/view/<?=$task['project_id']?>'><?=$project['title']?></a>
+            <a title="<?=$project['title']?>" href='/project/view/<?=$task['project_id']?>'><?=$project['title']?></a>
         </td>
 
         <td class='xs-hide'><?=$task['task_time_total']?></td>
