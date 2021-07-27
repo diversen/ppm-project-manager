@@ -1,5 +1,6 @@
 <?php declare (strict_types = 1);
 
+// This we can trust
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(false);
 
