@@ -26,6 +26,9 @@ class SettingsModel {
         return $cache->set($key, $value);
     }
 
+    /**
+     * Get a single setting from the 'profile' settings
+     */
     public function getSingleProfileSetting($auth_id, $profile_setting, $default) {
         $profile = $this->getUserSetting($auth_id, 'profile');
 

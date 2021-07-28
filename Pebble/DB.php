@@ -93,6 +93,7 @@ class DB
 
     /**
      * Get PDOStatement where you can run e.g. `$stmt->fetch(PDO::FETCH_ASSOC)`;
+     * @return \PDOStatement
      */
     public function getStmt(string $sql, array $params = [] ) {
         $this->stmt = $this->dbh->prepare($sql);
@@ -259,7 +260,8 @@ class DB
         $sql.= $this->getWhereSql($where);
 
         $where = $this->generateNamedParams($where);
-        return $this->prepareExecute($sql, $where);
+        $res = $this->prepareExecute($sql, $where);
+        return $res;
 
     }
     
@@ -272,7 +274,8 @@ class DB
         $sql = "SELECT * FROM `$table` ";  
         $sql.= $this->getWhereSql($where);
         
-        return $this->prepareFetch($sql, $where);
+        $row = $this->prepareFetch($sql, $where);
+        return $row;
 
     }
 
@@ -285,6 +288,7 @@ class DB
         $sql = "SELECT * FROM `$table` ";
         $sql.= $this->getWhereSql($where);
 
-        return $this->prepareFetchAll($sql, $where);
+        $rows = $this->prepareFetchAll($sql, $where);
+        return $rows;
     }
 }

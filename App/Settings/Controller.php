@@ -53,10 +53,11 @@ class Controller
             // Do not display message on 'overview' page
             if (isset($post['overview_current_day_state'])) {
                 $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
-                Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
+                
             } else {
 
                 $settings->setUserSetting($auth_id, 'profile', $post);
+                Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
             }
 
         } catch (\Exception $e) {

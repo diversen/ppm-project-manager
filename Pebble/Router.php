@@ -164,8 +164,6 @@ class Router
         $this->filterRoutesByPartsLength();
         $this->filterRoutesByParts();
 
-        
-
         $method = $_SERVER['REQUEST_METHOD'];
         $routes = $this->routes[$method];
         if (empty($routes)) {

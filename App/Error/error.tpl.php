@@ -6,7 +6,7 @@ require 'App/templates/header_error.tpl.php';
 
 <h3><?=$title?></h3>
 
-<pre><?=$message?> </pre>
+<?=$message?>
 
 <?php
 
