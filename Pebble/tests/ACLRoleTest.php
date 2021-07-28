@@ -97,7 +97,6 @@ final class ACLRoleTest extends TestCase
             'auth_id' => $row['id']
         ];
 
-        // $this->expectException(ForbiddenException::class);
         $res = $acl->hasRoleOrThrow($role);
         $this->assertEquals(true, $res);
 
