@@ -27,8 +27,6 @@ final class ACLTest extends TestCase
         
     }
 
-
-
     private function create() {
 
         $auth = Auth::getInstance();
@@ -41,7 +39,6 @@ final class ACLTest extends TestCase
         $row = $auth->getByWhere(['email' => 'some_email@test.dk']);
 
         return $auth->verifyKey($row['random']);
-
 
     }
 
@@ -105,7 +102,6 @@ final class ACLTest extends TestCase
 
         $acl = new ACL();
         
-        // ['entity', 'entity_id', 'right', 'auth_id']
         $rights = [
             'entity' => 'test_entity',
             'entity_id' => 42,
@@ -138,7 +134,7 @@ final class ACLTest extends TestCase
         $rights = [
             'entity' => 'test_entity',
             'entity_id' => 42,
-            'right' => 'read,write', // It has read so it is ok.
+            'right' => 'read,write', // It has read among others, so it is ok.
             'auth_id' => $row['id']
         ];
 
@@ -148,7 +144,6 @@ final class ACLTest extends TestCase
 
     }
 
-
     public function test_hasAccessRightsOrThrow_throw() {
         $row = $this->createVerifyLoginUser();
 
@@ -157,7 +152,7 @@ final class ACLTest extends TestCase
         $rights = [
             'entity' => 'test_entity',
             'entity_id' => 42,
-            'right' => 'read',
+            'right' => 'read', // This is read
             'auth_id' => $row['id']
         ];
 
@@ -166,7 +161,7 @@ final class ACLTest extends TestCase
         $rights = [
             'entity' => 'test_entity',
             'entity_id' => 42,
-            'right' => 'write', // THIS IS WRITE NOW
+            'right' => 'write', // But we are testing for write
             'auth_id' => $row['id']
         ];
 

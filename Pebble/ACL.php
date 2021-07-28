@@ -1,13 +1,14 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Pebble;
 
-use Pebble\DBInstance;
-use Pebble\Auth;
-use Pebble\Exception\ForbiddenException;
 use InvalidArgumentException;
+use Pebble\Auth;
+use Pebble\DBInstance;
+use Pebble\Exception\ForbiddenException;
 
-class ACL {
+class ACL
+{
 
     /**
      * Just set the auth id of the current user
@@ -20,7 +21,8 @@ class ACL {
     /**
      * Check if there is a valid auth id
      */
-    private function isAuthenticated() {
+    private function isAuthenticated()
+    {
 
         if (!$this->auth_id) {
             return false;
@@ -31,7 +33,8 @@ class ACL {
     /**
      * Check if user is authenticated or throw a ForbiddenException
      */
-    public function isAuthenticatedOrThrow() {
+    public function isAuthenticatedOrThrow()
+    {
         if (!$this->isAuthenticated()) {
             throw new ForbiddenException('You can not access this page');
         }
@@ -56,21 +59,22 @@ class ACL {
         return true;
     }
 
-
     /**
      * create access rights ['entity', 'entity_id', 'right', 'auth_id'] row in `acl` table
      */
-    public function setAccessRights(array $access_rights) {
+    public function setAccessRights(array $access_rights)
+    {
         $this->validateAccessAry($access_rights);
         $db = DBInstance::get();
         return $db->insert('acl', $access_rights);
-        
+
     }
 
     /**
      * Remove access rights ['entity', 'entity_id', 'right', 'auth_id'] from `acl` table
      */
-    public function removeAccessRights($where_access_rights) {
+    public function removeAccessRights($where_access_rights)
+    {
 
         $db = DBInstance::get();
         return $db->delete('acl', $where_access_rights);
@@ -79,7 +83,8 @@ class ACL {
     /**
      * Check for valid access rights ['entity', 'entity_id', 'right', 'auth_id'] in `acl` table
      */
-    private function hasRights(array $where_access_rights): bool {
+    private function hasRights(array $where_access_rights): bool
+    {
         $db = DBInstance::get();
         $row = $db->getOne('acl', $where_access_rights);
         if (empty($row)) {
@@ -91,10 +96,11 @@ class ACL {
     /**
      * Get rights as an array from a list, e.g. the string 'owner, user' returns ['owner', 'user']
      */
-    private function getRightsArray(string $rights_str): array {
+    private function getRightsArray(string $rights_str): array
+    {
         $rights_array = explode(',', $rights_str);
         $ret_ary = [];
-        foreach($rights_array as $right) {
+        foreach ($rights_array as $right) {
             $ret_ary[] = trim($right);
         }
         return $ret_ary;
@@ -103,7 +109,8 @@ class ACL {
     /**
      * Check for a valid access rights ary
      */
-    protected function validateAccessAry(array $ary) {
+    protected function validateAccessAry(array $ary)
+    {
         if (!isset($ary['entity'], $ary['entity_id'], $ary['right'], $ary['auth_id'])) {
             throw new InvalidArgumentException('Invalid data for ACL::validateAccessAry');
         }
@@ -113,11 +120,12 @@ class ACL {
      * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
      * then he will be allowed. He just needs one 'right' in a list of rights.
      */
-    protected function hasAccessRights(array $ary) {
+    protected function hasAccessRights(array $ary)
+    {
         $this->validateAccessAry($ary);
 
         $rights_ary = $this->getRightsArray($ary['right']);
-        foreach($rights_ary as $right) {
+        foreach ($rights_ary as $right) {
 
             $ary['right'] = $right;
 
@@ -132,7 +140,8 @@ class ACL {
      * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
      * then he will be allowed. He just needs one 'right' in a list of rights.
      */
-    public function hasAccessRightsOrThrow(array $ary) {
+    public function hasAccessRightsOrThrow(array $ary)
+    {
 
         $has_access_rights = $this->hasAccessRights($ary);
         if (!$has_access_rights) {
