@@ -4,8 +4,152 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "972043e6aa27579f2e27d5e56efe68de",
+    "content-hash": "54d087faff0ca6accf958fb8e1059ef6",
     "packages": [
+        {
+            "name": "diversen/console-padding",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/diversen/console-padding.git",
+                "reference": "06c157d9a2d4525838b745f95549806d2f0ded7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/diversen/console-padding/zipball/06c157d9a2d4525838b745f95549806d2f0ded7d",
+                "reference": "06c157d9a2d4525838b745f95549806d2f0ded7d",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "diversen\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dennis Iversen",
+                    "email": "dennis.iversen@gmail.com"
+                }
+            ],
+            "description": "Very basic console padding",
+            "homepage": "http://github.com/diversen/console-padding",
+            "keywords": [
+                "console",
+                "padding"
+            ],
+            "support": {
+                "issues": "https://github.com/diversen/console-padding/issues",
+                "source": "https://github.com/diversen/console-padding/tree/master"
+            },
+            "time": "2016-12-12T19:55:34+00:00"
+        },
+        {
+            "name": "diversen/minimal-cli-framework",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/diversen/minimal-cli-framework.git",
+                "reference": "a990562f0047ce197e77e37c9581f9f382e91ae7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/a990562f0047ce197e77e37c9581f9f382e91ae7",
+                "reference": "a990562f0047ce197e77e37c9581f9f382e91ae7",
+                "shasum": ""
+            },
+            "require": {
+                "diversen/console-padding": "^1.0",
+                "diversen/parse-argv": "^1.2",
+                "php-parallel-lint/php-console-color": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "diversen\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dennis Iversen",
+                    "email": "dennis.iversen@gmail.com"
+                }
+            ],
+            "description": "A very fast and simple CLI framework",
+            "support": {
+                "issues": "https://github.com/diversen/minimal-cli-framework/issues",
+                "source": "https://github.com/diversen/minimal-cli-framework/tree/v2.0.1"
+            },
+            "time": "2021-07-20T12:30:54+00:00"
+        },
+        {
+            "name": "diversen/parse-argv",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/diversen/parse-argv.git",
+                "reference": "f87be758b9e15f5b3c84a425124c430287cba9ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/diversen/parse-argv/zipball/f87be758b9e15f5b3c84a425124c430287cba9ae",
+                "reference": "f87be758b9e15f5b3c84a425124c430287cba9ae",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "v1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "diversen\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dennis Iversen",
+                    "email": "dennis.iversen@gmail.com",
+                    "homepage": "http://www.coscms.org/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Parse argv and get - and -- flags and values, and get any value without a flag.",
+            "homepage": "http://github.com/diversen/parse-argv",
+            "keywords": [
+                "argv",
+                "cli",
+                "console"
+            ],
+            "support": {
+                "issues": "https://github.com/diversen/parse-argv/issues",
+                "source": "https://github.com/diversen/parse-argv/tree/master"
+            },
+            "time": "2016-12-14T18:19:27+00:00"
+        },
         {
             "name": "diversen/simple-php-translation",
             "version": "v2.0.2",
@@ -839,6 +983,56 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "php-parallel-lint/php-console-color",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-parallel-lint/PHP-Console-Color.git",
+                "reference": "9b67e6458a1ec1e1b03fa247a15d41aea0021ab3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Console-Color/zipball/9b67e6458a1ec1e1b03fa247a15d41aea0021ab3",
+                "reference": "9b67e6458a1ec1e1b03fa247a15d41aea0021ab3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "jakub-onderka/php-console-color": "*"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-code-style": "1.0",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
+                "php-parallel-lint/php-var-dump-check": "0.*",
+                "phpunit/phpunit": "^4.8.36 || ^5.0 || ^6.0 || ^7.0",
+                "squizlabs/php_codesniffer": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHP_Parallel_Lint\\PhpConsoleColor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Onderka",
+                    "email": "jakub.onderka@gmail.com"
+                }
+            ],
+            "description": "Simple library for creating colored console ouput.",
+            "support": {
+                "issues": "https://github.com/php-parallel-lint/PHP-Console-Color/issues",
+                "source": "https://github.com/php-parallel-lint/PHP-Console-Color/tree/v1.0"
+            },
+            "time": "2020-10-31T08:10:16+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
