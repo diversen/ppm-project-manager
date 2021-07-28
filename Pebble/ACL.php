@@ -103,13 +103,17 @@ class ACL {
     /**
      * Check for a valid access rights ary
      */
-    private function validateAccessAry(array $ary) {
+    protected function validateAccessAry(array $ary) {
         if (!isset($ary['entity'], $ary['entity_id'], $ary['right'], $ary['auth_id'])) {
             throw new InvalidArgumentException('Invalid data for ACL::validateAccessAry');
         }
     }
 
-    public function hasAccessRights(array $ary) {
+    /**
+     * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
+     * then he will be allowed. He just needs one 'right' in a list of rights.
+     */
+    protected function hasAccessRights(array $ary) {
         $this->validateAccessAry($ary);
 
         $rights_ary = $this->getRightsArray($ary['right']);
@@ -124,11 +128,16 @@ class ACL {
         return false;
     }
 
-
+    /**
+     * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
+     * then he will be allowed. He just needs one 'right' in a list of rights.
+     */
     public function hasAccessRightsOrThrow(array $ary) {
 
-        if (!$this->hasAccessRights($ary)) {
+        $has_access_rights = $this->hasAccessRights($ary);
+        if (!$has_access_rights) {
             throw new ForbiddenException('You can not access this page');
         }
+        return true;
     }
 }

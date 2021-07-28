@@ -119,11 +119,9 @@ final class ACLTest extends TestCase
         $res = $acl->removeAccessRights(['auth_id' => $row['id']]);
         $this->assertEquals(true, $res);
 
-        
     }
 
-    public function test_hasAccessRights() {
-
+    public function test_hasAccessRightsOrThrow() {
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACL();
@@ -137,8 +135,16 @@ final class ACLTest extends TestCase
 
         $acl->setAccessRights($rights);
 
-        $res = $acl->hasAccessRights($rights);
+        $rights = [
+            'entity' => 'test_entity',
+            'entity_id' => 42,
+            'right' => 'read,write', // It has read so it is ok.
+            'auth_id' => $row['id']
+        ];
+
+        $res = $acl->hasAccessRightsOrThrow($rights);
         $this->assertEquals(true, $res);
+
 
     }
 
