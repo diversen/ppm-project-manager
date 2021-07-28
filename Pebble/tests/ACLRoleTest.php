@@ -93,7 +93,7 @@ final class ACLRoleTest extends TestCase
         $acl->setRole($role);
 
         $role = [
-            'right' => 'admin', // THIS IS WRITE NOW
+            'right' => 'admin', // This is still admin, so ok.
             'auth_id' => $row['id']
         ];
 
@@ -110,14 +110,14 @@ final class ACLRoleTest extends TestCase
         $acl = new ACLRole();
 
         $role = [
-            'right' => 'admin',
+            'right' => 'admin', // This is 'admin'
             'auth_id' => $row['id']
         ];
 
         $acl->setRole($role);
 
         $role = [
-            'right' => 'super', // THIS IS WRITE NOW
+            'right' => 'super', // This is 'super' now
             'auth_id' => $row['id']
         ];
 
