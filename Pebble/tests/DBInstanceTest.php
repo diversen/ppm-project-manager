@@ -10,20 +10,23 @@ Config::readConfig($config_dir);
 final class DBInstanceTest extends TestCase
 {
 
-    /*
-    private function getDB()
+
+    public function test_get()
     {
+        DBInstance::close();
         $db_config = Config::getSection('DB');
         DBInstance::connect($db_config['url'], $db_config['username'], $db_config['password']);
-        return DBInstance::get();
-    }*/
+        $db = DBInstance::get();
+        $this->assertInstanceOf(Pebble\DB::class, $db);
+        DBInstance::close();
+    }
 
     public function test_connect_invalid()
     {
 
+        DBInstance::close();
         $this->expectException(Exception::class);
         $db_config = Config::getSection('DB');
-        DBInstance::close();
         DBInstance::connect($db_config['url'] . 'wrong_url', $db_config['username'], $db_config['password']);
 
     }
@@ -31,14 +34,17 @@ final class DBInstanceTest extends TestCase
     public function test_connect_valid()
     {
 
-        $db_config = Config::getSection('DB');
         DBInstance::close();
+        $db_config = Config::getSection('DB');
+        
         $res = DBInstance::connect($db_config['url'], $db_config['username'], $db_config['password']);
 
         $this->assertEquals(
             $res,
             null
         );
+
+        DBInstance::close();
     }
 
 }

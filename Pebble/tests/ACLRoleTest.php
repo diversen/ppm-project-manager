@@ -1,9 +1,9 @@
 <?php declare (strict_types = 1);
 
 use Pebble\ACLRole;
+use Pebble\Auth;
 use Pebble\Config;
 use Pebble\DBInstance;
-use Pebble\Auth;
 use Pebble\Exception\ForbiddenException;
 use PHPUnit\Framework\TestCase;
 
@@ -24,29 +24,28 @@ final class ACLRoleTest extends TestCase
 
         $acl = new ACLRole();
         $acl->removeAccessRights(['entity' => 'test_entity']);
-        
+
     }
 
-
-
-    private function create() {
+    private function create()
+    {
 
         $auth = Auth::getInstance();
         $res = $auth->create('some_email@test.dk', 'some_password');
         return $res;
     }
 
-    private function verify() {
+    private function verify()
+    {
         $auth = Auth::getInstance();
         $row = $auth->getByWhere(['email' => 'some_email@test.dk']);
 
         return $auth->verifyKey($row['random']);
 
-
     }
 
-
-    public function createVerifyLoginUser() {
+    public function createVerifyLoginUser()
+    {
         $this->dbConnect();
         $this->cleanup();
         $this->create();
@@ -58,43 +57,47 @@ final class ACLRoleTest extends TestCase
         return $row;
     }
 
-
-    public function test_setRole_removeRole() {
+    public function test_setRole_removeRole()
+    {
 
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACLRole();
-        
-        // ['entity', 'entity_id', 'right', 'auth_id']
+
         $role = [
             'right' => 'admin',
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $res = $acl->setRole($role);
         $this->assertEquals(true, $res);
 
+        $acl->hasRoleOrThrow($role);
+
         $res = $acl->removeRole(['auth_id' => $row['id']]);
         $this->assertEquals(true, $res);
 
-        
+        $this->expectException(ForbiddenException::class);
+        $acl->hasRoleOrThrow($role);
+
     }
 
-    public function test_hasRoleOrThrow() {
+    public function test_hasRoleOrThrow()
+    {
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACLRole();
 
         $role = [
             'right' => 'admin',
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $acl->setRole($role);
 
         $role = [
             'right' => 'admin', // This is still admin, so ok.
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $res = $acl->hasRoleOrThrow($role);
@@ -102,22 +105,22 @@ final class ACLRoleTest extends TestCase
 
     }
 
-
-    public function test_hasRoleOrThrow_throw() {
+    public function test_hasRoleOrThrow_throw()
+    {
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACLRole();
 
         $role = [
             'right' => 'admin', // This is 'admin'
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $acl->setRole($role);
 
         $role = [
             'right' => 'super', // This is 'super' now
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $this->expectException(ForbiddenException::class);

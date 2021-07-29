@@ -3,7 +3,6 @@
 namespace Pebble;
 
 use Pebble\ACL;
-use Pebble\DBInstance;
 use Pebble\Exception\ForbiddenException;
 
 class ACLRole extends ACL
@@ -15,42 +14,39 @@ class ACLRole extends ACL
     }
 
     /**
-     * create access rights ['NONE', '0', 'right', 'auth_id'] row in `acl` table
-     * A role does not have a real entity BUT 'NONE' and the 'entity_id' is '0'
+     * Sets a user role ['right => 'admin', 'auth_id' => '1234']
+	 * `$aclr->setRole(['right' => 'admin', 'auth_id' => '1234'])`
      */
     public function setRole(array $role)
     {
 
-        $role['entity'] = 'NONE';
+        $role['entity'] = 'ROLE';
         $role['entity_id'] = '0';
 
-        $this->validateAccessAry($role);
-        $db = DBInstance::get();
-        return $db->insert('acl', $role);
+        return $this->setAccessRights($role);
     }
 
     /**
-     * Remove access rights ['right', 'auth_id'] from `acl` table
-     * e.g. ['right => 'admin', 'auth_id' => '1234']
+     * Remove a role
+     * `$aclr->removeRole(['right => 'admin', 'auth_id' => '1234'])`
      */
     public function removeRole(array $role)
     {
 
-        $role['entity'] = 'NONE';
+        $role['entity'] = 'ROLE';
         $role['entity_id'] = '0';
 
-        $db = DBInstance::get();
-        return $db->insert('acl', $role);
+        return $this->removeAccessRights($role);
     }
 
     /**
-     * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
-     * then he will be allowed. He just needs one 'right' of a list of rights.
+     * Checks if a user has a role, e.g. ['right => 'admin', 'auth_id' => '1234']
+	 * `$aclr->hasRoleOrThrow(['right => 'admin', 'auth_id' => '1234'])`
      */
     public function hasRoleOrThrow(array $role)
     {
 
-        $role['entity'] = 'NONE';
+        $role['entity'] = 'ROLE';
         $role['entity_id'] = '0';
 
         $has_role = $this->hasAccessRights($role);

@@ -1,9 +1,9 @@
 <?php declare (strict_types = 1);
 
 use Pebble\ACL;
+use Pebble\Auth;
 use Pebble\Config;
 use Pebble\DBInstance;
-use Pebble\Auth;
 use Pebble\Exception\ForbiddenException;
 use PHPUnit\Framework\TestCase;
 
@@ -24,17 +24,19 @@ final class ACLTest extends TestCase
 
         $acl = new ACL();
         $acl->removeAccessRights(['entity' => 'test_entity']);
-        
+
     }
 
-    private function create() {
+    private function create()
+    {
 
         $auth = Auth::getInstance();
         $res = $auth->create('some_email@test.dk', 'some_password');
         return $res;
     }
 
-    private function verify() {
+    private function verify()
+    {
         $auth = Auth::getInstance();
         $row = $auth->getByWhere(['email' => 'some_email@test.dk']);
 
@@ -42,7 +44,8 @@ final class ACLTest extends TestCase
 
     }
 
-    public function test_isAuthenticatedOrThrow_throw() {
+    public function test_isAuthenticatedOrThrow_throw()
+    {
 
         $this->expectException(ForbiddenException::class);
         $acl = new ACL();
@@ -50,7 +53,8 @@ final class ACLTest extends TestCase
 
     }
 
-    public function createVerifyLoginUser() {
+    public function createVerifyLoginUser()
+    {
         $this->dbConnect();
         $this->cleanup();
         $this->create();
@@ -62,23 +66,24 @@ final class ACLTest extends TestCase
         return $row;
     }
 
-    public function test_isAuthenticatedOrThrow() {
+    public function test_isAuthenticatedOrThrow()
+    {
 
         $this->createVerifyLoginUser();
 
         $acl = new ACL();
-        
+
         $res = $acl->isAuthenticatedOrThrow();
 
         $this->assertEquals(null, $res);
 
     }
 
+    public function test_isAuthenticatedOrJSONError_throw()
+    {
 
-    public function test_isAuthenticatedOrJSONError_throw() {
-        
         $this->cleanup();
-        
+
         $acl = new ACL();
         $res = $acl->isAuthenticatedOrJSONError();
         $this->assertEquals(false, $res);
@@ -86,7 +91,8 @@ final class ACLTest extends TestCase
 
     }
 
-    public function test_isAuthenticatedOrJSONError() {
+    public function test_isAuthenticatedOrJSONError()
+    {
 
         $this->createVerifyLoginUser();
 
@@ -96,28 +102,36 @@ final class ACLTest extends TestCase
 
     }
 
-    public function test_setAccessRights_removeAccessRights() {
+    public function test_setAccessRights_removeAccessRights()
+    {
 
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACL();
-        
+
         $rights = [
             'entity' => 'test_entity',
             'entity_id' => 42,
             'right' => 'read',
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $res = $acl->setAccessRights($rights);
         $this->assertEquals(true, $res);
 
+        $res = $acl->hasAccessRightsOrThrow($rights);
+        $this->assertEquals(true, $res);
+
         $res = $acl->removeAccessRights(['auth_id' => $row['id']]);
         $this->assertEquals(true, $res);
 
+        $this->expectException(ForbiddenException::class);
+        $acl->hasAccessRightsOrThrow($rights);
+
     }
 
-    public function test_hasAccessRightsOrThrow() {
+    public function test_hasAccessRightsOrThrow()
+    {
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACL();
@@ -126,7 +140,7 @@ final class ACLTest extends TestCase
             'entity' => 'test_entity',
             'entity_id' => 42,
             'right' => 'read',
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $acl->setAccessRights($rights);
@@ -135,16 +149,16 @@ final class ACLTest extends TestCase
             'entity' => 'test_entity',
             'entity_id' => 42,
             'right' => 'read,write', // It has read among others, so it is ok.
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $res = $acl->hasAccessRightsOrThrow($rights);
         $this->assertEquals(true, $res);
 
-
     }
 
-    public function test_hasAccessRightsOrThrow_throw() {
+    public function test_hasAccessRightsOrThrow_throw()
+    {
         $row = $this->createVerifyLoginUser();
 
         $acl = new ACL();
@@ -153,7 +167,7 @@ final class ACLTest extends TestCase
             'entity' => 'test_entity',
             'entity_id' => 42,
             'right' => 'read', // This is read
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $acl->setAccessRights($rights);
@@ -162,7 +176,7 @@ final class ACLTest extends TestCase
             'entity' => 'test_entity',
             'entity_id' => 42,
             'right' => 'write', // But we are testing for write
-            'auth_id' => $row['id']
+            'auth_id' => $row['id'],
         ];
 
         $this->expectException(ForbiddenException::class);

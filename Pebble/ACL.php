@@ -19,6 +19,13 @@ class ACL
     }
 
     /**
+     * Gets the auth id
+     */
+    public function getAuthId(): string {
+        return $this->auth_id;
+    }
+
+    /**
      * Check if there is a valid auth id
      */
     private function isAuthenticated()
@@ -41,7 +48,7 @@ class ACL
     }
 
     /**
-     * Check if a user can access a page and output json error if not
+     * Check if a user can access a page and output JSON error if not
      */
     public function isAuthenticatedOrJSONError(): bool
     {
@@ -60,7 +67,7 @@ class ACL
     }
 
     /**
-     * create access rights ['entity', 'entity_id', 'right', 'auth_id'] row in `acl` table
+     * Create access right ['entity', 'entity_id', 'right', 'auth_id'] row in `acl` table
      */
     public function setAccessRights(array $access_rights)
     {
@@ -71,17 +78,27 @@ class ACL
     }
 
     /**
-     * Remove access rights ['entity', 'entity_id', 'right', 'auth_id'] from `acl` table
+     * Remove access right ['entity', 'entity_id', 'right', 'auth_id'] from `acl` table
+     * But it could also just be ['entity' => 'blog']
      */
-    public function removeAccessRights($where_access_rights)
+    public function removeAccessRights(array $where_access_rights)
     {
-
         $db = DBInstance::get();
         return $db->delete('acl', $where_access_rights);
     }
 
     /**
-     * Check for valid access rights ['entity', 'entity_id', 'right', 'auth_id'] in `acl` table
+     * Check for a valid access rights ary
+     */
+    protected function validateAccessAry(array $ary)
+    {
+        if (!isset($ary['entity'], $ary['entity_id'], $ary['right'], $ary['auth_id'])) {
+            throw new InvalidArgumentException('Invalid data for ACL::validateAccessAry');
+        }
+    }
+
+    /**
+     * Check for valid access right ['entity', 'entity_id', 'right', 'auth_id'] in `acl` table
      */
     private function hasRights(array $where_access_rights): bool
     {
@@ -107,16 +124,6 @@ class ACL
     }
 
     /**
-     * Check for a valid access rights ary
-     */
-    protected function validateAccessAry(array $ary)
-    {
-        if (!isset($ary['entity'], $ary['entity_id'], $ary['right'], $ary['auth_id'])) {
-            throw new InvalidArgumentException('Invalid data for ACL::validateAccessAry');
-        }
-    }
-
-    /**
      * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
      * then he will be allowed. He just needs one 'right' in a list of rights.
      */
@@ -139,6 +146,7 @@ class ACL
     /**
      * If a user has the right 'owner', then if we test for 'owner,admin', using e.g. hasAccessRightsOrThrow,
      * then he will be allowed. He just needs one 'right' in a list of rights.
+     * 
      */
     public function hasAccessRightsOrThrow(array $ary)
     {

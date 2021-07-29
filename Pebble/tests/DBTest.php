@@ -1,15 +1,12 @@
 <?php declare (strict_types = 1);
 
-use PHPUnit\Framework\TestCase;
 use Pebble\Config;
 use Pebble\DB;
+use Pebble\DBInstance;
+use PHPUnit\Framework\TestCase;
 
 $config_dir = dirname(__FILE__) . '/../../config';
 Config::readConfig($config_dir);
-
-
-
-use \Pebble\DBInstance;
 
 final class DBTest extends TestCase
 {
@@ -59,8 +56,6 @@ EOF;
 
         $db->prepareExecute($bad_sql);
     }
-
-
 
     public function test_prepareExecute_GoodSQL()
     {
@@ -130,8 +125,8 @@ EOF;
         $last_insert_id = $db->lastInsertId();
 
         $this->assertIsString($last_insert_id);
-        $this->assertGreaterThan(0, (int)$last_insert_id);
-        
+        $this->assertGreaterThan(0, (int) $last_insert_id);
+
     }
 
     /**
@@ -147,29 +142,29 @@ EOF;
 
         $db_config = Config::getSection('DB');
         $db = new DB($db_config['url'], $db_config['username'], $db_config['password']);
-        
+
         // No insertion prior to his - so we expect 0 (or false)
         $last_insert_id = $db->lastInsertId();
 
         $this->assertIsString($last_insert_id);
-        $this->assertEquals( (int)$last_insert_id, 0);
+        $this->assertEquals((int) $last_insert_id, 0);
 
     }
 
     /**
      * Utils method that just adds three rows
      */
-    private function addRows() {
-
+    private function addRows()
+    {
 
         $values = [
             ['test@test.dk', 'secret'],
             ['test2@test.dk', 'secret2'],
-            ['test3@test.dk', 'secret3']
+            ['test3@test.dk', 'secret3'],
         ];
 
         $db = $this->getDB();
-        foreach($values as $value) {
+        foreach ($values as $value) {
             $sql = "INSERT INTO account_test (`email`, `password`) VALUES (?, ?)";
             $db->prepareExecute($sql, $value);
         }
@@ -183,10 +178,10 @@ EOF;
         $this->addRows();
 
         $db = $this->getDB();
-        
+
         $rows = $db->prepareFetchAll("SELECT * FROM account_test LIMIT 0, 2");
         $this->assertIsArray($rows);
-        $this->assertEquals( count($rows), 2);
+        $this->assertEquals(count($rows), 2);
 
     }
 
@@ -198,13 +193,13 @@ EOF;
         $this->addRows();
 
         $db = $this->getDB();
-        
+
         $row = $db->prepareFetch("SELECT * FROM account_test");
 
         $rows[] = $row;
-        
+
         $this->assertIsArray($row);
-        $this->assertEquals( count($rows), 1);
+        $this->assertEquals(count($rows), 1);
 
     }
 
@@ -216,10 +211,9 @@ EOF;
         $this->addRows();
 
         $db = $this->getDB();
-        
+
         $stmt = $db->getStmt("SELECT * FROM account_test");
         $this->assertEquals(get_class($stmt), 'PDOStatement');
-
 
     }
 
@@ -232,10 +226,9 @@ EOF;
 
         $db = $this->getDB();
         $db->prepareExecute("UPDATE account_test SET `email` = 'some_test_email@test.dk'");
-        
+
         $rows_affected = $db->rowCount();
         $this->assertEquals($rows_affected, 3);
-
 
     }
 
@@ -250,11 +243,11 @@ EOF;
         $db = $this->getDB();
         $res = $db->beginTransaction();
         $this->assertEquals(true, $res);
-        
+
         $this->addRows();
         $res = $db->rollback();
         $this->assertEquals(true, $res);
-        
+
         $rows = $db->prepareFetchAll("SELECT * FROM account_test");
         $num_rows = count($rows);
         $this->assertEquals($num_rows, 0);
@@ -270,11 +263,11 @@ EOF;
         $db = $this->getDB();
         $res = $db->beginTransaction();
         $this->assertEquals(true, $res);
-        
+
         $this->addRows();
         $res = $db->commit();
         $this->assertEquals(true, $res);
-        
+
         $rows = $db->prepareFetchAll("SELECT * FROM account_test");
         $num_rows = count($rows);
         $this->assertEquals($num_rows, 3);
@@ -288,12 +281,12 @@ EOF;
         $this->createTestTable();
 
         $db = $this->getDB();
-        $res = $db->insert('account_test',  ['email' => 'test4@test.dk', 'password' => 'secret4']);
+        $res = $db->insert('account_test', ['email' => 'test4@test.dk', 'password' => 'secret4']);
         $this->assertEquals(true, $res);
 
         $row = $db->getOne('account_test', ['email' => 'test4@test.dk']);
         $this->assertEquals($row['email'], 'test4@test.dk');
-        
+
     }
 
     public function test_update()
@@ -305,18 +298,17 @@ EOF;
 
         $db = $this->getDB();
         $res = $db->update(
-            'account_test',  
-            ['email' => 'test_update_zxc@test.dk', 'password' => 'update_very_secret'], 
+            'account_test',
+            ['email' => 'test_update_zxc@test.dk', 'password' => 'update_very_secret'],
             ['email' => 'test@test.dk']
         );
 
         $this->assertEquals(true, $res);
 
-
         $row = $db->getOne('account_test', ['email' => 'test_update_zxc@test.dk']);
         $this->assertEquals($row['email'], 'test_update_zxc@test.dk');
         $this->assertEquals($row['password'], 'update_very_secret');
-        
+
     }
 
     public function test_getOne()
@@ -326,11 +318,11 @@ EOF;
         $this->createTestTable();
 
         $db = $this->getDB();
-        $res = $db->insert('account_test',  ['email' => 'test4@test.dk', 'password' => 'secret4']);
+        $res = $db->insert('account_test', ['email' => 'test4@test.dk', 'password' => 'secret4']);
         $this->assertEquals(true, $res);
 
         $row = $db->getOne('account_test', ['email' => 'test4@test.dk']);
-        $this->assertEquals($row['email'], 'test4@test.dk');        
+        $this->assertEquals($row['email'], 'test4@test.dk');
 
     }
 
@@ -346,16 +338,17 @@ EOF;
         $rows = $db->getAll('account_test', ['email' => 'test@test.dk']);
         $this->assertIsArray($rows);
         $row = $rows[0];
-        
-        $this->assertEquals($row['email'], 'test@test.dk');        
+
+        $this->assertEquals($row['email'], 'test@test.dk');
 
     }
 
-    public function test_getWhereSql() {
+    public function test_getWhereSql()
+    {
 
         $db = $this->getDB();
         $where = $db->getWhereSql(['id' => 100, 'test' => 'this is a test']);
         $this->assertEquals($where, " WHERE  `id`=:id  AND  `test`=:test  ");
-        
+
     }
 }
