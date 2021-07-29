@@ -36,4 +36,10 @@ class Controller
         $aclr->hasRoleOrThrow(['auth_id' => $aclr->getAuthId(), 'right' => 'admin']);
         // $aclr->setRole(['auth_id' => $aclr->getAuthId(), 'right' => 'admin'] );
     }
+
+    public function phpinfo() {
+        // phpinfo();
+
+        // 7.2.24
+    }
 }

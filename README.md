@@ -23,9 +23,11 @@ It only works with `await / async` and some other 'modern' features enabled in t
 
 There is no transpiling of the javascript. 
 
+If you have updated you browser the last couple of years you will be good to go. 
+
 # Install
 
-You will need a recently version of PHP.  `PHP >= 8.0.0`
+Known to work on:  `PHP >= 7.2.24`
 
 Clone the source code: 
 
