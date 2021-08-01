@@ -116,9 +116,7 @@ try {
     $error = new ErrorController();
 
     // Log error to file
-    var_dump($e);
-    echo $exception_str = ExceptionTrace::get($e);
-    die;
+    $exception_str = ExceptionTrace::get($e);
 
     // Just in case the Log class is missing a log dir.
     // Then we use the Log class exception instead.
