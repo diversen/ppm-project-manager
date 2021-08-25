@@ -67,7 +67,16 @@ Load SQL:
 
 The above setup corresponds with the default `config/DB.php`. If you have altered the database name or the server user or the server password, you will need to edit it in this file. 
 
+## logs
+
+    mkdir logs
+
+
 ## Configuration
+
+You should create a `config-locale` dir which you can make different from machine to machine. 
+
+The `config-locale` dir will override settings in `config`.  
 
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
 

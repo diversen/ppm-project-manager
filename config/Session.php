@@ -6,7 +6,7 @@ return [
     'lifetime' => $lifetime,
     'path' => '/',
     // prefix with a dot to use all domains e.g. .php.net
-    'domain' => $_SERVER['HTTP_HOST'] ?? '',
+    'domain' => $_SERVER['SERVER_NAME'] ?? '',
     'secure' => false,
     'httponly' => true,
 ];

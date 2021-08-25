@@ -7,7 +7,7 @@
         "google/apiclient": "^2.2",
         "diversen/simple-php-translation": "^2.0.2",
 		    "diversen/minimal-cli-framework": "^2.0",
-        "diversen/pebble-framework": "^0.0.3"
+        "diversen/pebble-framework": "dev-main"
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",
