@@ -9,8 +9,9 @@ use Pebble\ACL;
 use Pebble\Auth;
 use Pebble\Template;
 use Pebble\JSON;
+use App\AppACL;
 
-class Controller
+class ProjectController
 {
 
     public function __construct()
@@ -36,14 +37,8 @@ class Controller
     public function view(array $params)
     {
 
-        $access_ary = [
-            'entity' => 'project', 
-            'entity_id' => $params['project_id'], 
-            'right' => 'owner',
-            'auth_id' => $this->auth_id,
-        ];
-
-        (new ACL())->hasAccessRightsOrThrow($access_ary);
+        $app_acl = new AppAcl;
+        $app_acl->authUserIsProjectOwner($params['project_id']);
 
         $template_data = (new ProjectModel())->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
@@ -69,14 +64,8 @@ class Controller
 
     public function edit($params)
     {
-        $access_ary = [
-            'entity' => 'project', 
-            'entity_id' => $params['project_id'], 
-            'right' => 'owner',
-            'auth_id' => $this->auth_id,
-        ];
-
-        (new ACL())->hasAccessRightsOrThrow($access_ary);
+        $app_acl = new AppAcl;
+        $app_acl->authUserIsProjectOwner($params['project_id']);
 
         $project = (new ProjectModel())->getOne($params['project_id']);
 
@@ -94,12 +83,14 @@ class Controller
     public function post()
     {
 
-        $project_model = new ProjectModel();
+        
         $response['error'] = false;
 
         try {
             (new ACL())->isAuthenticatedOrThrow();
             $_POST['auth_id'] = $this->auth_id;
+
+            $project_model = new ProjectModel();
             $project_model->create($_POST);
             $response['project_redirect'] = "/project";
 
@@ -115,19 +106,13 @@ class Controller
     {
 
         $response['error'] = false;
-        $project_model = new ProjectModel();
-
+        
         try {
 
-            $access_ary = [
-                'entity' => 'project', 
-                'entity_id' => $params['project_id'], 
-                'right' => 'owner',
-                'auth_id' => $this->auth_id,
-            ];
+            $app_acl = new AppAcl;
+            $app_acl->authUserIsProjectOwner($params['project_id']);
 
-            (new ACL())->hasAccessRightsOrThrow($access_ary);
-
+            $project_model = new ProjectModel();
             $project_model->update($_POST, $params['project_id']);
             $response['project_redirect'] = "/project";
 
@@ -143,19 +128,13 @@ class Controller
     {
 
         $response['error'] = false;
-        $project_model = new ProjectModel();
-
+        
         try {
 
-            $access_ary = [
-                'entity' => 'project', 
-                'entity_id' => $params['project_id'], 
-                'right' => 'owner',
-                'auth_id' => $this->auth_id,
-            ];
+            $app_acl = new AppAcl;
+            $app_acl->authUserIsProjectOwner($params['project_id']);
 
-            (new ACL())->hasAccessRightsOrThrow($access_ary);
-
+            $project_model = new ProjectModel();
             $project_model->delete($params['project_id']);
             $response['project_redirect'] = "/project";
 
