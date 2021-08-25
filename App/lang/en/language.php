@@ -95,6 +95,12 @@ $LANG['You have connected with the following site and requested an account'] = '
 $LANG['In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line'] = 'In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line';
 $LANG['Kind Regards'] = 'Kind Regards';
 
+// Translation of file App/AppACL.php
+
+$LANG['You are not the owner of this project'] = 'You are not the owner of this project';
+$LANG['There is no such task ID'] = 'There is no such task ID';
+$LANG['There is no such time ID'] = 'There is no such time ID';
+
 // Translation of file App/Error/Controller.php
 
 $LANG['Page not found. If this page has existed then it has been deleted'] = 'Page not found. If this page has existed then it has been deleted';
@@ -202,18 +208,23 @@ $LANG['Completed tasks'] = 'Completed tasks';
 
 $LANG['Settings have been updated'] = 'Settings have been updated';
 
-// Translation of file App/Settings/settings.tpl.php
+// Translation of file App/Settings/views/settings.tpl.php
 
 $LANG['Settings'] = 'Settings';
 $LANG['Organization'] = 'Organization';
 $LANG['Your name'] = 'Your name';
-$LANG['Phone number'] = 'Phone number';
 $LANG['Bio'] = 'Bio';
 $LANG['Add a bio'] = 'Add a bio';
 $LANG['Select your timezone'] = 'Select your timezone';
 $LANG['Select language'] = 'Select language';
 $LANG['Theme. Use dark mode'] = 'Theme. Use dark mode';
 $LANG['Update'] = 'Update';
+
+// Translation of file App/Settings/views/user.tpl.php
+
+$LANG['User has not entered any user info yet'] = 'User has not entered any user info yet';
+$LANG['User'] = 'User';
+$LANG['No user info'] = 'No user info';
 
 // Translation of file App/Task/TaskModel.php
 
@@ -297,6 +308,7 @@ $LANG['Add an optional note'] = 'Add an optional note';
 $LANG['Pick date'] = 'Pick date';
 $LANG['Submit'] = 'Submit';
 $LANG['Submit and stay'] = 'Submit and stay';
+$LANG['Submit and close task'] = 'Submit and close task';
 $LANG['Time'] = 'Time';
 $LANG['Delete'] = 'Delete';
 $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to delete time entry?';

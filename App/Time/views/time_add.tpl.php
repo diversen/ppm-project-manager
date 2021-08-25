@@ -21,11 +21,11 @@ require 'App/templates/flash.tpl.php';
     <label for="begin_data">Date</label>
     <input id="begin_date" type="date" name="begin_date" placeholder="<?=Lang::translate('Pick date')?>" value="<?=date('Y-m-d')?>">
     
-    <input id="project_id" type="hidden" name="project_id" value="<?=$project['id']?>">
     <input id="task_id" type="hidden" name="task_id" value="<?=$task['id']?>">
 
     <button id="time_add_submit" type="submit" name="submit" value="submit"><?=Lang::translate('Submit')?></button>
     <button id="time_add_submit_and_stay" type="submit" name="submit" value="submit"><?=Lang::translate('Submit and stay')?></button>
+	<button id="time_add_submit_and_close" type="submit" name="submit" value="submit"><?=Lang::translate('Submit and close task')?></button>
     <div class="loadingspinner hidden"></div>
 
 </form>
@@ -63,7 +63,7 @@ foreach ($time_rows as $key => $val):
                 <td title="<?=$val['note']?>" class="td-overflow"><?=$val['note']?></td>
                 <td>
                     <div class="action-links">
-                        <a class='time_delete' data-id="<?=$val['id']?>" data-task="<?=$val['task_id']?>" href="#"><?=Lang::translate('Delete')?></a>
+                        <a class='time_delete' data-id="<?=$val['id']?>" href="#"><?=Lang::translate('Delete')?></a>
                     </div>
                 <td>
             </tr>
@@ -82,7 +82,7 @@ let spinner = document.querySelector('.loadingspinner');
 
 document.addEventListener('click', async function(event) {
 
-	if (event.target.matches('#time_add_submit') || event.target.matches('#time_add_submit_and_stay')) {
+	if (event.target.matches('#time_add_submit') || event.target.matches('#time_add_submit_and_stay') || event.target.matches('#time_add_submit_and_close') ) {
 
 		event.preventDefault();
 
@@ -91,6 +91,10 @@ document.addEventListener('click', async function(event) {
 		let form = document.getElementById('time_add');
 		let data = new FormData(form);
 		let return_to = Pebble.getQueryVariable('return_to');
+
+		if (event.target.matches('#time_add_submit_and_close')) {
+			data.append('close', 'true');
+		}
 
 		let res;
 		try {

@@ -2,8 +2,11 @@
 
 namespace App\Time;
 
-use \Pebble\Auth;
+use Pebble\Auth;
 use Pebble\DBInstance;
+use App\Task\TaskModel;
+use Pebble\Exception\ForbiddenException;
+use Diversen\Lang;
 
 class TimeModel
 {
@@ -108,8 +111,16 @@ class TimeModel
         $post = $this->sanitize($post);
 
         $db = DBInstance::get();
+        $db->beginTransaction();
+
+        if (isset($post['close'])) {
+            $task = new TaskModel();
+            $task->close($post['task_id']);
+            unset($post['close']);
+        }
+        
         $db->insert('time', $post);
-        return $db->lastInsertId();
+        return $db->commit();
 
     }
 

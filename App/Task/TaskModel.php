@@ -115,4 +115,9 @@ class TaskModel
         $db = DBInstance::get();
         return $db->update('task', $post, $where);
     }
+
+    public function close(string $task_id) {
+        $db = DBInstance::get();
+        return $db->update('task', ['status' => self::TASK_CLOSED], ['id' => $task_id]);
+    }
 }
