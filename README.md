@@ -27,7 +27,7 @@ If you have updated you browser the last couple of years you will be good to go.
 
 # Install
 
-Known to work on:  `PHP >= 7.2.24`
+Known to work on:  `PHP >= 7.4.3`
 
 Clone the source code: 
 
@@ -36,10 +36,6 @@ Clone the source code:
 Install composer packages:
 
     cd ppm-project-manager && composer install
-
-Make locale config-dir (this will override any settings in `config`):
-
-    mkdir config-locale
 
 ## Create a MySQL database
 
@@ -67,22 +63,21 @@ Load SQL:
 
 The above setup corresponds with the default `config/DB.php`. If you have altered the database name or the server user or the server password, you will need to edit it in this file. 
 
-## logs
-
-    mkdir logs
-
-
 ## Configuration
 
 You should create a `config-locale` dir which you can make different from machine to machine. 
 
-The `config-locale` dir will override settings in `config`.  
+The `config-locale` dir will override settings in `config`.
+
+    mkdir config-locale
 
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
 
     ./serv
 
-The above command runs the built-in PHP server. 
+The above command runs the built-in PHP server.
+
+## Login
 
 Point a browser to http://localhost:8000, create an account and log in.
 
