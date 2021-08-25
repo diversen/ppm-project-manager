@@ -230,6 +230,7 @@ $LANG['No user info'] = 'No user info';
 
 $LANG['Title is required'] = 'Title is required';
 $LANG['The end date can not be before the begin date'] = 'The end date can not be before the begin date';
+$LANG['There is no such task'] = 'There is no such task';
 
 // Translation of file App/Task/views/task_add.tpl.php
 

@@ -118,6 +118,7 @@ $LANG['User has not entered any user info yet'] = 'Bruger har ikke indtastet nog
 $LANG['User'] = 'Bruger';
 $LANG['No user info'] = 'Ingen brugerinformation';
 $LANG['The end date can not be before the begin date'] = 'Slutdatoen kan ikke være før startdatoen';
+$LANG['There is no such task'] = 'Der er ingen sådan opgave';
 $LANG['Add note'] = 'Tilføj note';
 $LANG['Add an optional task note'] = 'Tilføj en valgfri opgavenote';
 $LANG['Priority'] = 'Prioritet';

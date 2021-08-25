@@ -74,6 +74,10 @@ class TaskModel
     public function getOne($id) {
         $time_model = new TimeModel();
         $task = DBInstance::get()->getOne('task', ['id' => $id]);
+
+        if (empty($task)) {
+            throw new Exception(Lang::translate('There is no such task'));
+        }
         
         $task_time_total = $time_model->sumTime(['task_id' => $task['id']]);
         $task['task_time_total'] = $time_model->minutesToHoursMinutes($task_time_total); 

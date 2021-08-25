@@ -7,8 +7,9 @@ use App\Task\TaskModel;
 use Pebble\Auth;
 use Pebble\ACL;
 use Pebble\JSON;
+use App\AppACL;
 
-class Controller
+class TaskController
 {
 
     public function __construct()
@@ -19,18 +20,14 @@ class Controller
 
     }
 
-
+    /**
+     * GET
+     */
     public function add($params)
     {
 
-        $access_ary = [
-            'entity' => 'project', 
-            'entity_id' => $params['project_id'], 
-            'right' => 'owner',
-            'auth_id' => $this->auth_id,
-        ];
-
-        (new ACL())->hasAccessRightsOrThrow($access_ary);
+        $app_acl = new AppACL();
+        $app_acl->authUserIsProjectOwner($params['project_id']);
 
         $project = (new ProjectModel())->getOne($params['project_id']);
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
@@ -45,21 +42,18 @@ class Controller
 
     }
 
+    /**
+     * GET
+     */
     public function edit($params)
     {
 
-        $task = (new TaskModel())->getOne($params['task_id']);
+        
+        $app_acl = new AppACL();
+        $task = $app_acl->getTask($params['task_id']);     
+        $app_acl->authUserIsProjectOwner($task['project_id']);
+
         $project = (new ProjectModel())->getOne($task['project_id']);
-
-        $access_ary = [
-            'entity' => 'project', 
-            'entity_id' => $task['project_id'], 
-            'right' => 'owner',
-            'auth_id' => $this->auth_id,
-        ];
-
-        (new ACL())->hasAccessRightsOrThrow($access_ary);
-
 
         $vars = [
             'task' => $task,
@@ -71,20 +65,17 @@ class Controller
 
     }
 
+    /**
+     * GET
+     */
     public function view($params)
     {
         
-        $task = (new TaskModel())->getOne($params['task_id']);
+        $app_acl = new AppACL();
+        $task = $app_acl->getTask($params['task_id']);
+        $app_acl->authUserIsProjectOwner($task['project_id']);
+
         $project = (new ProjectModel())->getOne($task['project_id']);
-
-        $access_ary = [
-            'entity' => 'project', 
-            'entity_id' => $task['project_id'], 
-            'right' => 'owner',
-            'auth_id' => $this->auth_id,
-        ];
-
-        (new ACL())->hasAccessRightsOrThrow($access_ary);
 
         $vars = [
             'task' => $task,
@@ -95,25 +86,24 @@ class Controller
         );
 
     }
-
+    
+    /**
+     * POST
+     */
     public function post()
     {
 
-        $task_model = new TaskModel();
+        
         $response['error'] = false;
 
         try {
 
-            $access_ary = [
-                'entity' => 'project', 
-                'entity_id' => $_POST['project_id'], 
-                'right' => 'owner',
-                'auth_id' => $this->auth_id,
-            ];
-    
-            (new ACL())->hasAccessRightsOrThrow($access_ary);
+            $app_acl = new AppACL();
+            $app_acl->authUserIsProjectOwner($_POST['project_id']);
 
             $_POST['auth_id'] = $this->auth_id;
+
+            $task_model = new TaskModel();
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
 
@@ -126,33 +116,29 @@ class Controller
         echo JSON::response($response);
     }
 
+    /**
+     * POST
+     */
     public function put($params)
     {
-
-        $task = (new TaskModel())->getOne($params['task_id']);
-
-        // 'now' updates a tasks begin_date to 'today'
-        // Used on overview page
-        // It unsets the 'begin_date' because if there is no date then 'today' date will be used. 
-        // If 'end_date' < 'begin_date' then 'end_date' will be updated to the same as 'begin_date' 
-        if (isset($_POST['now'])) {
-            unset($task['begin_date']);    
-            $_POST = $task;
-        }
 
         $response['error'] = false;
         $response['post'] = $_POST;
 
         try {
 
-            $access_ary = [
-                'entity' => 'project', 
-                'entity_id' => $task['project_id'], 
-                'right' => 'owner',
-                'auth_id' => $this->auth_id,
-            ];
-    
-            (new ACL())->hasAccessRightsOrThrow($access_ary);
+            $app_acl = new AppACL();
+            $task = $app_acl->getTask($params['task_id']);
+            $app_acl->authUserIsProjectOwner($task['project_id']);
+
+            // 'now' updates a tasks begin_date to 'today'
+            // Used on overview page
+            // It unsets the 'begin_date' because if there is no date then 'today' date will be used. 
+            // If 'end_date' < 'begin_date' then 'end_date' will be updated to the same as 'begin_date' 
+            if (isset($_POST['now'])) {
+                unset($task['begin_date']);    
+                $_POST = $task;
+            }
 
             (new TaskModel())->update($_POST, ['id' => $params['task_id']]);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
@@ -164,7 +150,10 @@ class Controller
 
         echo JSON::response($response);
     }
-    
+
+    /**
+     * POST
+     */
     public function move_exceeded_today () {
 
         (new ACL())->isAuthenticatedOrThrow();
@@ -185,22 +174,19 @@ class Controller
 
     }
 
+    /**
+     * POST
+     */
     public function delete($params)
     {
 
-        $task = (new TaskModel())->getOne($params['task_id']);
         $response['error'] = false;
 
         try {
 
-            $access_ary = [
-                'entity' => 'project', 
-                'entity_id' => $task['project_id'], 
-                'right' => 'owner',
-                'auth_id' => $this->auth_id,
-            ];
-    
-            (new ACL())->hasAccessRightsOrThrow($access_ary);
+            $app_acl = new AppACL();
+            $task = $app_acl->getTask($params['task_id']);
+            $app_acl->authUserIsProjectOwner($task['project_id']);
 
             (new TaskModel())->delete($params['task_id']);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
