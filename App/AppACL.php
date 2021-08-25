@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App;
 
-use Pebble\DBInstance;
 use Pebble\Exception\ForbiddenException;
 use Pebble\ACL;
 use Pebble\Auth;

@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Time;
 
 use Pebble\Auth;
 use Pebble\DBInstance;
 use App\Task\TaskModel;
-use Pebble\Exception\ForbiddenException;
-use Diversen\Lang;
 
 class TimeModel
 {
