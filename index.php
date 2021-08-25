@@ -14,6 +14,7 @@ use Pebble\DBInstance;
 use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\NotFoundException;
+use Pebble\Exception\TemplateException;
 use Pebble\Headers;
 use Pebble\Log;
 use Pebble\LogInstance;
@@ -93,6 +94,20 @@ try {
     App\Test\Routes::setRoutes($router);
 
     $router->run();
+
+} catch (TemplateException $e) {
+
+    // If it is a template error then content most likely has been sent to the browser
+    // And therefor we can not send a 5xx header.
+    $exception_str = ExceptionTrace::get($e);
+    LogInstance::get()->message($exception_str, 'error');
+
+    // If we are not on dev display generic error message
+    if (Config::get('App.env') !== 'dev') {
+        $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
+    }
+    echo "<pre>" . $exception_str . "</pre>";
+
 
 } catch (NotFoundException $e) {
 

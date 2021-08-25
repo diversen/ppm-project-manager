@@ -40,7 +40,7 @@ function render_projects($projects)
 		<tr>
 			<td class="td-overflow"><a title="<?=$project['note']?>" href='/project/view/<?=$project['id']?>'><?=$project['title']?></a></td>
 			<td><?=$created?></td>
-			<td class="xs-hide"><?=$project['project_time_total']?></td>
+			<td class="xs-hide"><?=$project['project_time_total_human']?></td>
 			<td>
 			<div class="project-menus">
 				<a href="/project/edit/<?=$project['id']?>"><?=Lang::translate('Edit')?></a>
@@ -71,11 +71,25 @@ function render_projects_inactive_link($inactive)
 	endif;
 }
 
+function render_projects_total_time($total_time_human)
+{ 
+	?>
+<div>
+	<p><?=Lang::translate('Total time used on all projects')?> <?=$total_time_human?></p>
+</div>
+	<?php
+
+}
+
+
 if (isset($_GET['inactive'])) {
 	render_projects($inactive);
 } else {
 	render_projects($projects);
 	render_projects_inactive_link($inactive);
 }
+
+render_projects_total_time($total_time_human);
+
 
 require 'App/templates/footer.tpl.php';

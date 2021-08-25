@@ -116,22 +116,30 @@ class ProjectModel
 
         $time_model = new TimeModel();
 
+        $total_time = 0;
+
         // Active
         foreach ($projects as $key => $project) {
             $project_time = $time_model->sumTime(['project_id' => $project['id']]);
-            $projects[$key]['project_time_total'] = $time_model->minutesToHoursMinutes($project_time);
+            $total_time += $project_time;
+            $projects[$key]['project_time_total'] = $project_time;
+            $projects[$key]['project_time_total_human'] = $time_model->minutesToHoursMinutes($project_time);
         }
 
         // Inactive
         $inactive = $this->getAll(['auth_id' => $auth_id, 'status' => ProjectModel::PROJECT_CLOSED]);
         foreach ($inactive as $key => $project) {
             $project_time = $time_model->sumTime(['project_id' => $project['id']]);
-            $inactive[$key]['project_time_total'] = $time_model->minutesToHoursMinutes($project_time);
+            $projects[$key]['project_time_total'] = $project_time;
+            $inactive[$key]['project_time_total_human'] = $time_model->minutesToHoursMinutes($project_time);
+            $total_time += $project_time;
         }
 
         $data = [
             'projects' => $projects,
             'inactive' => $inactive,
+            'total_time' => $total_time,
+            'total_time_human' => $time_model->minutesToHoursMinutes($total_time),
         ];
 
 		return $data;

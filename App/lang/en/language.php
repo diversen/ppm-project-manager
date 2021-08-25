@@ -146,7 +146,7 @@ $LANG['Show today'] = 'Show today';
 $LANG['Move exceeded to today'] = 'Move exceeded to today';
 $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
 
-// Translation of file App/Project/Controller.php
+// Translation of file App/Project/ProjectController.php
 
 $LANG['All projects'] = 'All projects';
 $LANG['View project'] = 'View project';
@@ -188,6 +188,7 @@ $LANG['Time used'] = 'Time used';
 $LANG['Edit'] = 'Edit';
 $LANG['New task '] = 'New task ';
 $LANG['View inactive projects'] = 'View inactive projects';
+$LANG['Total time used on all projects'] = 'Total time used on all projects';
 
 // Translation of file App/Project/views/project_view.tpl.php
 
@@ -313,6 +314,10 @@ $LANG['Submit and close task'] = 'Submit and close task';
 $LANG['Time'] = 'Time';
 $LANG['Delete'] = 'Delete';
 $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to delete time entry?';
+
+// Translation of file App/TranslateStr.php
+
+$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
 
 // Translation of file App/templates/main_menu.tpl.php
 
