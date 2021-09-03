@@ -124,6 +124,11 @@ $LANG['Click the image and sign-in using google'] = 'Click the image and sign-in
 $LANG['You are signed in'] = 'You are signed in';
 $LANG['Sign out'] = 'Sign out';
 
+// Translation of file App/Overview/Controller.php
+
+$LANG['Overview'] = 'Overview';
+$LANG['Overview by week'] = 'Overview by week';
+
 // Translation of file App/Overview/overview.tpl.php
 
 $LANG['Total time used on project: '] = 'Total time used on project: ';

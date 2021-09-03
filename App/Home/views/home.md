@@ -1,6 +1,6 @@
 **PPM (PPM Project Mangement)**
 
-PPM (PPM project mangement) is a single user project, task, and time management system. 
+PPM (PPM project mangement) is a project, task, and time management system. 
 
 It has the following features:
 
@@ -8,9 +8,8 @@ It has the following features:
 - Create tasks connected to projects
 - Add time entries on tasks
 - Overview of time used per week / task / project
-- Fast: 100 lighthouse score
 
-Made so that you can see what you spend my spare time on.
+Made so that you can see what you spend your spare time on.
 
 **Quotes about time**
 

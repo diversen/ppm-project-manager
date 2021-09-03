@@ -8,6 +8,7 @@ use Pebble\URL;
 use Pebble\ACL;
 use Pebble\Auth;
 use App\Settings\SettingsModel;
+use Diversen\Lang;
 
 class Controller
 {
@@ -51,6 +52,8 @@ class Controller
             'week_state' =>             $week_state,
             'week_user_day_times' =>    $week_time['week_user_day_times'],
             'week_user_total' =>        $week_time['week_user_total'],
+            'title' => Lang::translate('Overview'),
+            'description' => Lang::translate('Overview by week'), 
         ];
 
         \Pebble\Template::render('App/Overview/overview.tpl.php', $data);

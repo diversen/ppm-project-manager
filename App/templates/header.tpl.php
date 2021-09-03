@@ -17,7 +17,7 @@ if (!isset($title)) {
 }
 
 if (!isset($description)) {
-    $description = '';
+    $description = $title;
 }
 
 require 'App/templates/helpers.php';

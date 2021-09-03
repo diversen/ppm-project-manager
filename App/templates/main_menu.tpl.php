@@ -12,9 +12,9 @@ if ($is_authenticated) {
 }
 
 ?>
-<!--<h1><a href="<?=$home_url?>"><?=Config::get('App.site_name')?></a></h1>-->
-
-<a title="<?=Config::get('App.site_name')?>" href="<?=$home_url?>"><img src="/App/templates/assets/logo.svg"></img></a>
+<a title="<?=Config::get('App.site_name')?>" href="<?=$home_url?>">
+    <img src="/App/templates/assets/logo.svg" title="<?=Config::get('App.site_name')?>" width="184" height="74"></img>
+</a>
 
 <div class="project-menus">
 <?php
