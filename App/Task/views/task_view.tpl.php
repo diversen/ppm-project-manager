@@ -61,7 +61,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
         <div class="action-links">
             <a title="<?=Lang::translate('Edit task')?>" href="<?=URL::returnTo("/task/edit/$task[id]")?>"><?=Lang::translate('Edit')?></a>
             <a title="<?=Lang::translate('Add new task to project')?>" class="xs-hide" href='<?=URL::returnTo("/task/add/$task[project_id]")?>'><?=Lang::translate('New')?></a>
-            <a title="<?=Lang::translate('Add time to task')?>" href='<?=URL::returnTo("/time/add/$task[id]")?>'><?=Lang::translate('Time')?></a>
+            <a title="<?=Lang::translate('Add time to task')?>" class="xs-hide" href='<?=URL::returnTo("/time/add/$task[id]")?>'><?=Lang::translate('Time')?></a>
 
             <?php
 

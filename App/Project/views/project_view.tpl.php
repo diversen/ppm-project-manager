@@ -75,7 +75,7 @@ function render_project_tasks ($tasks) { ?>
             <?php
 
             if (!$is_today): ?>
-            <a title="<?=Lang::translate('Move to today')?>" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::Translate('Today')?></a>
+            <a title="<?=Lang::translate('Move to today')?>" class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::Translate('Today')?></a>
             <?php endif;?>
         </td>
     </tr>
