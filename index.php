@@ -83,6 +83,8 @@ try {
     // Define all routes
     $router = new Router();
 
+    $router->addClass(App\Account\Controller::class);
+
     App\Home\Routes::setRoutes($router);
     App\Account\Routes::setRoutes($router);
     App\Google\Routes::setRoutes($router);

@@ -18,8 +18,8 @@ class Controller
 {
 
     /**
-     * Login
-     * /account
+     * @route /account
+     * @verbs GET
      */
     public function index()
     {
@@ -58,8 +58,8 @@ class Controller
     }
 
     /**
-     * Direct logout
-     * /account/logout
+     * @route /account/logout
+     * @verbs GET
      */
     public function logout()
     {
@@ -78,8 +78,8 @@ class Controller
     }
 
     /**
-     * Indirect logout (signout). User will need to press alink
-     * /account/logout
+     * @route /account/signout
+     * @verbs GET
      */
     public function signout()
     {
@@ -90,8 +90,8 @@ class Controller
     }
 
     /**
-     * Used for ajax request
-     * /account/postlogin
+     * @route /account/post_login
+     * @verbs POST
      */
     public function post_login()
     {
@@ -133,7 +133,8 @@ class Controller
     }
 
     /**
-     * /acccount/signup
+     * @route /account/signup
+     * @verbs GET
      */
     public function signup()
     {
@@ -148,12 +149,13 @@ class Controller
     }
 
     /**
-     * /account/verify
+     * @route /account/verify
+     * @verbs GET
      */
     public function verify()
     {
 
-        $key = $_GET['key'];
+        $key = $_GET['key'] ?? '';
 
         $auth = Auth::getInstance();
         $res = $auth->verifyKey($key);
@@ -170,7 +172,8 @@ class Controller
     }
 
     /**
-     * /account/captcha
+     * @route /account/captcha
+     * @verbs GET
      */
     public function captcha()
     {
@@ -179,8 +182,8 @@ class Controller
     }
 
     /**
-     * Used for ajax request
-     * /account/postlogin
+     * @route /account/post_signup
+     * @verbs POST
      */
     public function post_signup()
     {
@@ -235,7 +238,8 @@ class Controller
     }
 
     /**
-     * /account/recover
+     * @route /account/recover
+     * @verbs GET
      */
     public function recover()
     {
@@ -253,6 +257,10 @@ class Controller
 
     }
 
+    /**
+     * @route /account/post_recover
+     * @verbs POST
+     */
     public function post_recover()
     {
 
@@ -303,12 +311,13 @@ class Controller
     }
 
     /**
-     * /account/newpassword
+     * @route /account/newpassword
+     * @verbs GET,POST
      */
     public function newpassword()
     {
 
-        $key = $_GET['key'] ? $_GET['key']: null;
+        $key = $_GET['key'] ?? null;
 
         $auth = Auth::getInstance();
         $row = $auth->getByWhere(['random' => $key]);
