@@ -18,7 +18,10 @@ class Controller
         $this->auth_id = Auth::getInstance()->getAuthId();
     }
 
-    
+    /**
+     * @route /overview
+     * @verbs GET
+     */
     public function index()
     {
 

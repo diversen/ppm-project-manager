@@ -11,7 +11,7 @@ use Pebble\Template;
 use Pebble\JSON;
 use App\AppACL;
 
-class ProjectController
+class Controller
 {
 
     public function __construct()
@@ -20,6 +20,10 @@ class ProjectController
         $this->auth_id = $auth->getAuthId();
     }
 
+    /**
+     * @route /project
+     * @verbs GET
+     */
     public function index()
     {
 
@@ -34,6 +38,10 @@ class ProjectController
 
     }
 
+    /**
+     * @route /project/view/:project_id
+     * @verbs GET
+     */
     public function view(array $params)
     {
 
@@ -48,6 +56,10 @@ class ProjectController
         );
     }
 
+    /**
+     * @route /project/add
+     * @verbs GET
+     */
     public function add()
     {
         (new ACL())->isAuthenticatedOrThrow();
@@ -62,6 +74,10 @@ class ProjectController
 
     }
 
+    /**
+     * @route /project/edit/:project_id
+     * @verbs GET
+     */
     public function edit($params)
     {
         $app_acl = new AppAcl;
@@ -80,10 +96,13 @@ class ProjectController
 
     }
 
+    /**
+     * @route /project/post
+     * @verbs POST
+     */
     public function post()
     {
 
-        
         $response['error'] = false;
 
         try {
@@ -102,6 +121,10 @@ class ProjectController
         echo JSON::response($response);
     }
 
+    /**
+     * @route /project/put/:project_id
+     * @verbs POST
+     */
     public function put($params)
     {
 
@@ -124,6 +147,10 @@ class ProjectController
         echo JSON::response($response);
     }
 
+    /**
+     * @route /project/delete/:project_id
+     * @verbs POST
+     */
     public function delete($params)
     {
 

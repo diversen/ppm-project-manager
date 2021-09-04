@@ -84,14 +84,13 @@ try {
     $router = new Router();
 
     $router->addClass(App\Account\Controller::class);
+    $router->addClass(App\Home\Controller::class);
+    $router->addClass(App\Google\Controller::class);
+    $router->addClass(App\Overview\Controller::class);
+    $router->addClass(App\Project\Controller::class);
+    $router->addClass(App\Settings\Controller::class);
+    $router->addClass(App\Task\Controller::class);
 
-    App\Home\Routes::setRoutes($router);
-    App\Account\Routes::setRoutes($router);
-    App\Google\Routes::setRoutes($router);
-    App\Project\Routes::setRoutes($router);
-    App\Overview\Routes::setRoutes($router);
-    App\Task\Routes::setRoutes($router);
-    App\Settings\Routes::setRoutes($router);
     App\Time\Routes::setRoutes($router);
     App\Test\Routes::setRoutes($router);
 

@@ -2,6 +2,7 @@
 
 namespace App\Settings;
 
+
 use Diversen\Lang;
 use Pebble\Auth;
 use Pebble\ACL;
@@ -13,6 +14,10 @@ use Pebble\Flash;
 class Controller
 {
 
+    /**
+     * @route /settings
+     * @verbs GET
+     */
     public function index() {
 
         (new ACL())->isAuthenticatedOrThrow();
@@ -25,6 +30,10 @@ class Controller
         \Pebble\Template::render('App/Settings/views/settings.tpl.php', $vars);
     }
 
+    /**
+     * @route /user/:auth_id
+     * @verbs GET
+     */
     public function user($params) {
 
         if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {
@@ -37,6 +46,10 @@ class Controller
         \Pebble\Template::render('App/Settings/views/user.tpl.php', ['user' => $user]);
     }
 
+    /**
+     * @route /settings/put
+     * @verbs POST
+     */
     public function put()
     {
 

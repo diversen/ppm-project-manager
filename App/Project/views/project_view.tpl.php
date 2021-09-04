@@ -75,7 +75,7 @@ function render_project_tasks ($tasks) { ?>
             <?php
 
             if (!$is_today): ?>
-            <a title="<?=Lang::translate('Move to today')?>" class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::Translate('Today')?></a>
+            <a title="<?=Lang::translate('Move to today')?>" class="move_to_today xs-hide" href='#' data-id="<?=$task['id']?>"><?=Lang::Translate('Today')?></a>
             <?php endif;?>
         </td>
     </tr>
@@ -107,7 +107,6 @@ if (!empty($tasks_completed)) {
   document.addEventListener('click', async function (event) {
 
     if (!event.target.matches('.move_to_today')) return;
-
     event.preventDefault();
 
     let todayElem = document.getElementById(event.target);
@@ -120,7 +119,7 @@ if (!empty($tasks_completed)) {
     formData.append('id', task_id);
 
     try {
-      res = await Pebble.asyncPost('/task/_put/' + task_id, formData);
+      res = await Pebble.asyncPost('/task/put/' + task_id, formData);
       if (res.error === false) {
         location.reload();
       } else {

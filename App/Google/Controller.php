@@ -17,6 +17,10 @@ class Controller
         $this->logout_redirect = Config::get('App.logout_redirect');
     }
 
+    /**
+     * @route /google/signout
+     * @verbs GET
+     */
     public function signout () {
 
         $auth = Auth::getInstance();
@@ -26,6 +30,10 @@ class Controller
 
     }
 
+    /**
+     * @route /google
+     * @verbs GET
+     */
     public function index()
     {
 

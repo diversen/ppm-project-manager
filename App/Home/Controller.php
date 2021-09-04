@@ -14,7 +14,10 @@ class Controller
         $this->auth_id = Auth::getInstance()->getAuthId();
     }
 
-    
+    /**
+     * @route /
+     * @verbs GET
+     */
     public function index()
     {
 
@@ -27,6 +30,10 @@ class Controller
 
     }
 
+    /**
+     * @route /terms/:document
+     * @verbs GET,POST
+     */
     public function terms($params) {
         
         $markdown_file = 'App/Home/views/' . $params['document'] . '.md';

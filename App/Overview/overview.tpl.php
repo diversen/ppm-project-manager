@@ -43,7 +43,7 @@ function render_task($task, $today)
             <?php
 
             if (!$today): ?>
-            <a title="<?=Lang::translate('Move to today')?>" class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::translate('Today')?></a>
+            <a title="<?=Lang::translate('Move to today')?>" class="move_to_today xs-hide" href='#' data-id="<?=$task['id']?>"><?=Lang::translate('Today')?></a>
             <?php endif;?>
         </td>
     </tr>
@@ -154,7 +154,6 @@ render_week($week_data, $week_state, $week_user_day_times);
     document.addEventListener('click', async function(event) {
 
         if (!event.target.matches('.move_to_today')) return;
-
         event.preventDefault();
 
         let todayElem = document.getElementById(event.target);

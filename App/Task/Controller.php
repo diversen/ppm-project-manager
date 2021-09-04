@@ -9,7 +9,7 @@ use Pebble\ACL;
 use Pebble\JSON;
 use App\AppACL;
 
-class TaskController
+class Controller
 {
 
     public function __construct()
@@ -21,7 +21,8 @@ class TaskController
     }
 
     /**
-     * GET
+     * @route /task/add/:project_id
+     * @verbs GET
      */
     public function add($params)
     {
@@ -43,7 +44,8 @@ class TaskController
     }
 
     /**
-     * GET
+     * @route /task/edit/:task_id
+     * @verbs GET
      */
     public function edit($params)
     {
@@ -66,7 +68,8 @@ class TaskController
     }
 
     /**
-     * GET
+     * @route /task/view/:task_id
+     * @verbs GET
      */
     public function view($params)
     {
@@ -88,7 +91,8 @@ class TaskController
     }
     
     /**
-     * POST
+     * @route /task/post
+     * @verbs POST
      */
     public function post()
     {
@@ -117,7 +121,8 @@ class TaskController
     }
 
     /**
-     * POST
+     * @route /task/put/:task_id
+     * @verbs POST
      */
     public function put($params)
     {
@@ -152,7 +157,8 @@ class TaskController
     }
 
     /**
-     * POST
+     * @route /task/put/exceeded/today
+     * @verbs POST
      */
     public function move_exceeded_today () {
 
@@ -175,7 +181,8 @@ class TaskController
     }
 
     /**
-     * POST
+     * @route /task/delete/:task_id
+     * @verbs POST
      */
     public function delete($params)
     {
