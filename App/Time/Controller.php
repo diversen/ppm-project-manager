@@ -7,9 +7,13 @@ use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use Pebble\JSON;
 
-class TimeController
+class Controller
 {
 
+    /**
+     * @route /time/add/:task_id
+     * @verbs GET
+     */
     public function add($params) {
 
         $app_acl = new AppACL();
@@ -30,6 +34,10 @@ class TimeController
         );
     }
 
+    /**
+     * @route /time/post
+     * @verbs POST
+     */
     public function post() {
 
         $response['error'] = false;
@@ -56,6 +64,10 @@ class TimeController
 
     }
 
+    /**
+     * @route /time/delete/:id
+     * @verbs POST
+     */
     public function delete($params) {
 
         $response['error'] = false;

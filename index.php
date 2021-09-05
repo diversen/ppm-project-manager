@@ -22,6 +22,8 @@ use Pebble\Router;
 use Pebble\Session;
 use Pebble\Auth;
 
+$error = new ErrorController();
+
 // Run the application and check for exceptions and throwable
 try {
 
@@ -90,9 +92,7 @@ try {
     $router->addClass(App\Project\Controller::class);
     $router->addClass(App\Settings\Controller::class);
     $router->addClass(App\Task\Controller::class);
-
-    App\Time\Routes::setRoutes($router);
-    App\Test\Routes::setRoutes($router);
+    $router->addClass(App\Time\Controller::class);
 
     $router->run();
 
@@ -112,19 +112,15 @@ try {
 
 } catch (NotFoundException $e) {
 
-    $error = new ErrorController();
     LogInstance::get()->message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
     $error->notFound($e->getMessage());
 
 } catch (ForbiddenException $e) {
 
-    $error = new ErrorController();
     LogInstance::get()->message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
     $error->forbidden($e->getMessage());
 
 } catch (Throwable $e) {
-
-    $error = new ErrorController();
 
     // Log error to file
     $exception_str = ExceptionTrace::get($e);
@@ -138,9 +134,6 @@ try {
         $error->error($e->getMessage());
         return;
     }
-
-    // Display error
-    $error = new ErrorController();
 
     // If we are not on dev display generic error message
     if (Config::get('App.env') !== 'dev') {

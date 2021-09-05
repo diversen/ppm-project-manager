@@ -7,6 +7,22 @@ use Diversen\Lang;
 class Controller
 {
 
+    private function baseError(string $title, string $error_message) {
+
+        if (empty($error_message)) {
+            $error_message = Lang::translate('Page not found. If this page has existed then it has been deleted');
+        }
+
+        $error_vars = [
+            'title' => $title,
+            'message' => $error_message,
+        ];
+
+        \Pebble\Template::render('App/Error/error.tpl.php',
+            $error_vars
+        );
+    }
+
     /**
      * Not found errror
      */
@@ -14,20 +30,7 @@ class Controller
     {
 
         header('HTTP/1.0 404 Not Found');
-
-        if (empty($error_message)) {
-            $error_message = Lang::translate('Page not found. If this page has existed then it has been deleted');
-        }
-
-        $error_vars = [
-            'title' => Lang::translate('404 Page not found'),
-            'message' => $error_message,
-        ];
-
-        \Pebble\Template::render('App/Error/error.tpl.php',
-            $error_vars
-        );
-
+        $this->baseError(Lang::translate('404 Page not found'), $error_message);
     }
 
     /**
@@ -37,19 +40,7 @@ class Controller
     {
 
         header('HTTP/1.0 403 Forbidden');
-
-        if (empty($error_message)) {
-            $error_message = Lang::translate('Access denied. If you are not signed-in, then please sign in. If you are signed in, then you do not have the rights to view this page.');
-        }
-
-        $error_vars = [
-            'title' => '403 Forbidden',
-            'message' => $error_message,
-        ];
-
-        \Pebble\Template::render('App/Error/error.tpl.php',
-            $error_vars
-        );
+        $this->baseError(Lang::translate('403 Forbidden'), $error_message);
 
     }
 
@@ -60,18 +51,6 @@ class Controller
     {
 
         header('HTTP/1.0 500 Internal Server Error');
-
-        if (empty($error_message)) {
-            $error_message = Lang::translate('Something went wrong. We will look into it.');
-        }
-
-        $error_vars = [
-            'title' => '500 Internal Server Error',
-            'message' => $error_message,
-        ];
-
-        \Pebble\Template::render('App/Error/error.tpl.php',
-            $error_vars
-        );
+        $this->baseError(Lang::translate('500 Internal Server Error'), $error_message);
     }
 }
