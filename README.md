@@ -73,7 +73,7 @@ The `config-locale` dir will override settings in `config`.
 
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
 
-    cd www && ./serv
+    ./serv
 
 The above command runs the built-in PHP server.
 
