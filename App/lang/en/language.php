@@ -105,8 +105,8 @@ $LANG['There is no such time ID'] = 'There is no such time ID';
 
 $LANG['Page not found. If this page has existed then it has been deleted'] = 'Page not found. If this page has existed then it has been deleted';
 $LANG['404 Page not found'] = '404 Page not found';
-$LANG['Access denied. If you are not signed-in, then please sign in. If you are signed in, then you do not have the rights to view this page.'] = 'Access denied. If you are not signed-in, then please sign in. If you are signed in, then you do not have the rights to view this page.';
-$LANG['Something went wrong. We will look into it.'] = 'Something went wrong. We will look into it.';
+$LANG['403 Forbidden'] = '403 Forbidden';
+$LANG['500 Internal Server Error'] = '500 Internal Server Error';
 
 // Translation of file App/Google/Controller.php
 
@@ -151,7 +151,7 @@ $LANG['Show today'] = 'Show today';
 $LANG['Move exceeded to today'] = 'Move exceeded to today';
 $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
 
-// Translation of file App/Project/ProjectController.php
+// Translation of file App/Project/Controller.php
 
 $LANG['All projects'] = 'All projects';
 $LANG['View project'] = 'View project';
@@ -299,10 +299,6 @@ $LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Today'] = 'Today';
 $LANG['Note'] = 'Note';
-
-// Translation of file App/Test/views/index.tpl.php
-
-$LANG['test'] = 'test';
 
 // Translation of file App/Time/views/time_add.tpl.php
 
