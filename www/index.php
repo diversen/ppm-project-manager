@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Example of an index.php where all files are placed outside the server root. 
- * In this case the server root is 'www'
- * It will run if '../App' is moved to this dir
- */
-
 // Include vendor loaded packages
 require_once "../vendor/autoload.php";
 
-// Include app auoloaded packages
-require_once "../autoload.php";
+use Pebble\Autoloader;
+
+$autoload = new Autoloader();
+$autoload->setPath(__DIR__);
 
 use App\Error\Controller as ErrorController;
 use App\Settings\SettingsModel;
@@ -20,12 +16,15 @@ use Pebble\DBInstance;
 use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\NotFoundException;
+use Pebble\Exception\TemplateException;
 use Pebble\Headers;
 use Pebble\Log;
 use Pebble\LogInstance;
 use Pebble\Router;
 use Pebble\Session;
 use Pebble\Auth;
+
+$error = new ErrorController();
 
 // Run the application and check for exceptions and throwable
 try {
@@ -35,18 +34,18 @@ try {
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     });
 
-    $base_path = dirname(__FILE__);
+    $base_path = dirname(__DIR__);
 
     // Load config settings
-    Config::readConfig($base_path . '/../config');
+    Config::readConfig($base_path . '/config');
 
     // Override config settings with locale settings
-    Config::readConfig($base_path . '/../config-locale');
+    Config::readConfig($base_path . '/config-locale');
 
     // Make a log instance
     $log = new Log([
-        'log_dir' => '../logs',
-        'silence' => false,
+        // 'stream' => 'php://stderr',
+        'log_dir' => $base_path . '/logs',
     ]);
 
     LogInstance::init($log);
@@ -87,33 +86,44 @@ try {
     // Define all routes
     $router = new Router();
 
-    App\Home\Routes::setRoutes($router);
-    App\Account\Routes::setRoutes($router);
-    App\Google\Routes::setRoutes($router);
-    App\Project\Routes::setRoutes($router);
-    App\Overview\Routes::setRoutes($router);
-    App\Task\Routes::setRoutes($router);
-    App\Settings\Routes::setRoutes($router);
-    App\Time\Routes::setRoutes($router);
-    App\Test\Routes::setRoutes($router);
+    $router->addClass(App\Account\Controller::class);
+    $router->addClass(App\Home\Controller::class);
+    $router->addClass(App\Google\Controller::class);
+    $router->addClass(App\Overview\Controller::class);
+    $router->addClass(App\Project\Controller::class);
+    $router->addClass(App\Settings\Controller::class);
+    $router->addClass(App\Task\Controller::class);
+    $router->addClass(App\Time\Controller::class);
 
     $router->run();
 
+} catch (TemplateException $e) {
+
+    // If it is a template error then content most likely has been sent to the browser
+    // And therefor we can not send a 5xx header.
+    $exception_str = ExceptionTrace::get($e);
+    LogInstance::get()->message($exception_str, 'error');
+
+    // If we are not on dev display generic error message
+    if (Config::get('App.env') !== 'dev') {
+        $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
+    }
+    echo "<pre>" . $exception_str . "</pre>";
+
+
 } catch (NotFoundException $e) {
 
-    $error = new ErrorController();
     LogInstance::get()->message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
     $error->notFound($e->getMessage());
 
 } catch (ForbiddenException $e) {
 
-    $error = new ErrorController();
     LogInstance::get()->message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
     $error->forbidden($e->getMessage());
 
 } catch (Throwable $e) {
 
-    $error = new ErrorController();
+    
 
     // Log error to file
     $exception_str = ExceptionTrace::get($e);
@@ -127,9 +137,6 @@ try {
         $error->error($e->getMessage());
         return;
     }
-
-    // Display error
-    $error = new ErrorController();
 
     // If we are not on dev display generic error message
     if (Config::get('App.env') !== 'dev') {

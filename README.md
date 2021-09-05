@@ -73,7 +73,7 @@ The `config-locale` dir will override settings in `config`.
 
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
 
-    ./serv
+    cd www && ./serv
 
 The above command runs the built-in PHP server.
 
@@ -110,11 +110,16 @@ Remove container (you will need run 'run' command again):
 
     docker rm mysql-server
 
-# CSS and logo
+# CSS
 
 [water.css](https://watercss.kognise.dev/) (A drop-in collection of CSS styles)
 
+## Build svg logo
+
 [logo.svg](https://github.com/bubkoo/logo.svg) (Create svg logos)
+
+    npm install logo.svg -g
+    scripts/build_logo.sh
 
 # License
 

@@ -2,13 +2,12 @@
 
 namespace App;
 
-use Pebble\Exception\ForbiddenException;
 use Pebble\ACL;
 use Pebble\Auth;
 use App\Task\TaskModel;
 use App\Time\TimeModel;
 use Diversen\Lang;
-
+use Pebble\Exception\NotFoundException;
 
 class AppACL
 {
@@ -39,11 +38,13 @@ class AppACL
      */
     public function getTask($task_id)
     {
+        
         // Check if there is a task
         $task = (new TaskModel())->getOne($task_id);
         if (empty($task)) {
-            throw new ForbiddenException(Lang::translate('There is no such task ID'));
+            throw new NotFoundException(Lang::translate('There is no such task ID'));
         }
+
         return $task;
     }
 

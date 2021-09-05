@@ -11,7 +11,7 @@ putenv("GOOGLE_APPLICATION_CREDENTIALS=config-locale/pebble-2c949028ebcc.json");
 // Extract first
 $e = new extractor();
 $e->defaultLanguage ='en';
-$e->setSingleDir("App");
+$e->setSingleDir("www/App");
 $e->updateLang();
 
 // Extract using google
@@ -19,5 +19,5 @@ $t = new GoogleTranslate();
 $t->target = 'da'; // danish
 $t->source = 'en';
 
-$t->setSingleDir("App");
+$t->setSingleDir("www/App");
 $t->updateLang();

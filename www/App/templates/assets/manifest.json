@@ -6,7 +6,7 @@
     "background_color": "#000",
     "description": "Small time and project manager",
     "icons": [{
-      "src": "logo.svg",
+      "src": "/App/templates/assets/logo.svg",
       "sizes": "192x192",
       "type": "image/svg+xml"
     }]

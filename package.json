@@ -4,7 +4,7 @@
     "logo": {
         "font": "Origami-Mommy-Pixellated.ttf",
         "fontSzie": 72,
-        "output": "App/templates/assets/logo.svg",
+        "output": "www/App/templates/assets/logo.svg",
         "path": {
             "fill": "#1c76c5",
             "stroke": "#41adff"

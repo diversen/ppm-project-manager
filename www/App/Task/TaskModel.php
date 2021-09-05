@@ -8,6 +8,7 @@ use App\Cal;
 use Diversen\Lang;
 use Exception;
 use DateTime;
+use Pebble\Exception\NotFoundException;
 
 class TaskModel
 {
@@ -76,7 +77,7 @@ class TaskModel
         $task = DBInstance::get()->getOne('task', ['id' => $id]);
 
         if (empty($task)) {
-            throw new Exception(Lang::translate('There is no such task'));
+            throw new NotFoundException(Lang::translate('There is no such task'));
         }
         
         $task_time_total = $time_model->sumTime(['task_id' => $task['id']]);
