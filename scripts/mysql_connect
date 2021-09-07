@@ -2,10 +2,13 @@
 <?php
 
 require_once "vendor/autoload.php";
-require_once "autoload.php";
 
-use \Pebble\Config;
+use Pebble\Autoloader;
+use Pebble\Config;
 use Pebble\DB\Helpers;
+
+$autoloader = new Autoloader();
+$autoloader->setPath(__DIR__);
 
 // Load config settings
 Config::readConfig('./config');

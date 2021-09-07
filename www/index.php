@@ -123,8 +123,6 @@ try {
 
 } catch (Throwable $e) {
 
-    
-
     // Log error to file
     $exception_str = ExceptionTrace::get($e);
 
