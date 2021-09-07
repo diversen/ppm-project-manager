@@ -55,6 +55,7 @@ $LANG['There is no such time ID'] = 'Der findes ikke et sådant tids -id';
 $LANG['Page not found. If this page has existed then it has been deleted'] = 'Siden blev ikke fundet. Hvis denne side har eksisteret, er den blevet slettet';
 $LANG['404 Page not found'] = '404 Side ikke fundet';
 $LANG['403 Forbidden'] = '403 forbudt';
+$LANG['Hello world'] = 'Hej Verden';
 $LANG['500 Internal Server Error'] = '500 Intern serverfejl';
 $LANG['Error trying to signin using Google'] = 'Fejl ved forsøg på at logge på med Google';
 $LANG['No auth token. Try again later'] = 'Intet godkendelsestoken. Prøv igen senere';

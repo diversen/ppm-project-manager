@@ -156,12 +156,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "0e92e0eaba906e11935f1c4bb33997d22228a3b9"
+                "reference": "ad28ebd72bf3f0f2fa9b1539b9c0229709736bfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/0e92e0eaba906e11935f1c4bb33997d22228a3b9",
-                "reference": "0e92e0eaba906e11935f1c4bb33997d22228a3b9",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/ad28ebd72bf3f0f2fa9b1539b9c0229709736bfa",
+                "reference": "ad28ebd72bf3f0f2fa9b1539b9c0229709736bfa",
                 "shasum": ""
             },
             "require": {
@@ -203,7 +203,7 @@
                 "issues": "https://github.com/diversen/pebble-framework/issues",
                 "source": "https://github.com/diversen/pebble-framework/tree/main"
             },
-            "time": "2021-09-03T13:50:30+00:00"
+            "time": "2021-09-05T14:25:33+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
@@ -437,16 +437,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.210.0",
+            "version": "v0.211.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "2be187c5c7c6b6325ddc99015ac6b00ebb8ec764"
+                "reference": "01b020d4d7f120a5ac3c12e1d7e3a6067bc93881"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/2be187c5c7c6b6325ddc99015ac6b00ebb8ec764",
-                "reference": "2be187c5c7c6b6325ddc99015ac6b00ebb8ec764",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/01b020d4d7f120a5ac3c12e1d7e3a6067bc93881",
+                "reference": "01b020d4d7f120a5ac3c12e1d7e3a6067bc93881",
                 "shasum": ""
             },
             "require": {
@@ -475,9 +475,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.210.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.211.0"
             },
-            "time": "2021-08-29T11:20:24+00:00"
+            "time": "2021-09-03T11:20:26+00:00"
         },
         {
             "name": "google/auth",

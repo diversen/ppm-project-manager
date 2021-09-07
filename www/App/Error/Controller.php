@@ -49,7 +49,7 @@ class Controller
      */
     public function error(string $error_message = '')
     {
-
+        Lang::translate('Hello world');
         header('HTTP/1.0 500 Internal Server Error');
         $this->baseError(Lang::translate('500 Internal Server Error'), $error_message);
     }
