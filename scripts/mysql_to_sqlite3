@@ -1,2 +1,0 @@
-#!/bin/sh
-./scripts/vendor/mysql2sqlite SQL/mysql.sql | sqlite3 sqlite3.db

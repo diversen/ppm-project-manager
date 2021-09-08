@@ -1,3 +1,0 @@
-#!/bin/sh
-rsync -arv --exclude=logs --exclude=config-locale -e ssh ./ dennis@159.69.152.206:www/project-manager/htdocs/ --progress --
-
