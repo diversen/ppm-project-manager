@@ -1,13 +1,15 @@
 {
-    "name": "PPM project manager",
-    "short_name": "PPM",
-    "start_url": "https://ppm.10kilobyte.com/",
-    "display": "standalone",
-    "background_color": "#000",
-    "description": "Small time and project manager",
-    "icons": [{
+  "name": "PPM project manager",
+  "short_name": "PPM",
+  "start_url": "https://ppm.10kilobyte.com/",
+  "display": "standalone",
+  "background_color": "#000",
+  "description": "Small time and project manager",
+  "icons": [
+    {
       "src": "/App/templates/assets/logo.svg",
-      "sizes": "192x192",
+      "sizes": "184x74",
       "type": "image/svg+xml"
-    }]
-  }
+    }
+  ]
+}
