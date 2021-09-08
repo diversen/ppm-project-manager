@@ -1,6 +1,6 @@
 # README
 
-![logo.svg](logo.svg)
+![logo.svg](logo/logo.svg)
 
 PPM (PPM project mangement) is a single user project, task, and time management system. 
 

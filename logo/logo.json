@@ -1,7 +1,7 @@
 {
     "text": "PPM",
     "font": "logo/Origami-Mommy-Pixellated.ttf",
-    "save_path": "./logo.svg",
+    "save_path": "logo/logo.svg",
     "options": { 
         "x": 0, 
         "y": 0, 
