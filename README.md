@@ -118,8 +118,10 @@ Remove container (you will need run 'run' command again):
 
 [logo.svg](https://github.com/bubkoo/logo.svg) (Create svg logos)
 
-    npm install logo.svg -g
-    scripts/build_logo.sh
+    
+    npm install text-to-svg-cli -g
+    text-to-svg-cli --config=logo.json
+    scripts/logo.sh
 
 # License
 
