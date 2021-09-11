@@ -34,9 +34,15 @@ Install composer packages:
 
     cd ppm-project-manager && composer install
 
+Create a `config-locale` dir were you can different settings from machine to machine. 
+
+The `config-locale` dir will override settings in `config`.
+
+    mkdir config-locale
+
 ## Load MySQL DB
 
-Change the settings in `config/DB.php`. 
+Create a database and change the settings in `config/DB.php` 
 
 Check if you can connect:
 
@@ -49,25 +55,19 @@ Load the sql files found in `migration` into a database.
 
 ## Configuration
 
-You should create a `config-locale` dir which you can make different from machine to machine. 
-
-The `config-locale` dir will override settings in `config`.
-
-    mkdir config-locale
-
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
 
     ./serv
 
-If you are running on a apache2 server something like the following in your configuration, e.g. in a  `.htaccess` file placed in `www` 
+The above command runs the built-in PHP server.
+
+On a apache2 server you need something like the following added to your configuration, e.g. in a  `.htaccess` file placed in `www` 
 
     RewriteEngine on
     RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
-
-The above command runs the built-in PHP server.
 
 ## Login
 
