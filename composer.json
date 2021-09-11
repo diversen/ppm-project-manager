@@ -1,12 +1,11 @@
 {
-
     "require": {
         "erusev/parsedown": "^1.7",
         "phpmailer/phpmailer": "^6.0",
         "gregwar/captcha": "^1.1",
         "google/apiclient": "^2.2",
         "diversen/simple-php-translation": "^2.0.2",
-	"diversen/minimal-cli-framework": "^2.0",
+        "diversen/minimal-cli-framework": "^2.0",
         "diversen/pebble-framework": "dev-main"
     },
     "require-dev": {

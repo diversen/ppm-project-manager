@@ -4,8 +4,24 @@ require_once "vendor/autoload.php";
 
 use diversen\MinimalCli;
 use Pebble\CLI\User;
+use Pebble\CLI\DB;
+use Pebble\Autoloader;
+use Pebble\Config;
+
+$autoloader = new Autoloader();
+$autoloader->setPath(__DIR__);
+
+// Load config settings
+Config::readConfig('./config');
+
+// Load config settings
+Config::readConfig('./config-locale');
 
 $cli = new MinimalCli();
 $user_command = new User();
-$cli->commands = ['user' => $user_command];
+$cli->commands = [
+    'user' => new User(),
+    'db' => new DB(),
+];
+
 $cli->runMain();

@@ -36,11 +36,11 @@ Install composer packages:
 
 ## Load MySQL DB
 
-You can do it like this:
+Change the settings in `config/DB.php`. 
 
 Load the `./sql/mysql.sql` into a database. 
 
-Change the settings in `config/DB.php`. 
+
 
 ## Configuration
 
