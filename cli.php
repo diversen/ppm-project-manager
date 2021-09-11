@@ -2,7 +2,7 @@
 
 require_once "vendor/autoload.php";
 
-use diversen\MinimalCli;
+use Diversen\MinimalCli;
 use Pebble\CLI\User;
 use Pebble\CLI\DB;
 use Pebble\CLI\Migrate;
