@@ -49,19 +49,19 @@ Check if you can connect:
     ./cli.sh db --connect
     exit
 
+You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
+
 Load the sql files found in `migration` into a database. 
 
     ./cli.sh migrate --up
 
-## Configuration
+## Run
 
-You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
+Runs the built-in PHP server:
 
     ./serv
 
-The above command runs the built-in PHP server.
-
-On a apache2 server you need something like the following added to your configuration, e.g. in a  `.htaccess` file placed in `www` 
+On an apache2 server you will need something like the following added to your configuration, e.g. in a  `.htaccess` file placed in `www` 
 
     RewriteEngine on
     RewriteBase /
