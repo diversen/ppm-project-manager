@@ -11,9 +11,6 @@ It has the following features:
 - Add time entries on tasks
 - Overview of time used per week / task / project
 - Mobile and desktop friendly
-- Fast: 100 lighthouse score
-
-Made so that you can see what you spend your spare time on. 
 
 # Usage
 
@@ -37,31 +34,13 @@ Install composer packages:
 
     cd ppm-project-manager && composer install
 
-## Create a MySQL database
+## Load MySQL DB
 
-You will need some kind of database. I use MySQL, but maybe it will work with other databases as well. 
+You can do it like this:
 
-You don't have to use docker - this is just for ease of setup if you don't have a database server. 
+Load the `./sql/mysql.sql` into a database. 
 
-Using docker for the database:
-
-Install (run) a MySQL image that will work:
-
-    docker run -p 3306:3306 --name mysql-server -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7
-
-Connect using bash and create a database:
-
-    docker exec -it mysql-server bash
-    mysql -uroot -ppassword
-    create database ppm;
-    exit; # exit from mysql-server 
-    exit; # exit from container
-
-Load SQL:
-
-    docker exec -i mysql-server mysql -uroot -ppassword ppm  < ./sql/mysql.sql 
-
-The above setup corresponds with the default `config/DB.php`. If you have altered the database name or the server user or the server password, you will need to edit it in this file. 
+Change the settings in `config/DB.php`. 
 
 ## Configuration
 
@@ -92,7 +71,25 @@ Google login using OAuth:
 
 * Setup google OAuth in `config/Google.php`.
 
-## Other useful docker commands
+# Docker commands
+
+## MySQL
+
+Install (run) a MySQL image that will work:
+
+    docker run -p 3306:3306 --name mysql-server -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7
+
+Connect using bash and create a database:
+
+    docker exec -it mysql-server bash
+    mysql -uroot -ppassword
+    create database ppm;
+    exit; # exit from mysql-server 
+    exit; # exit from container
+
+Load SQL:
+
+    docker exec -i mysql-server mysql -uroot -ppassword ppm  < ./sql/mysql.sql 
 
 List conainers 
 
@@ -114,11 +111,10 @@ Remove container (you will need run 'run' command again):
 
 [water.css](https://watercss.kognise.dev/) (A drop-in collection of CSS styles)
 
-## Build svg logo
+# Build svg logo
 
 [text-to-svg-cli](https://github.com/diversen/text-to-svg-cli/) (Create svg logos)
 
-    
     npm install text-to-svg-cli -g
     text-to-svg-cli --config=logo.json
     scripts/logo.sh
