@@ -54,7 +54,7 @@ You can look at the other `config/` files, but you don't need to change these in
 
     ./serv
 
-If you are running on a apache2 server something like the following in your configuratin, e.g. in a  `.htaccess` file placed in `www` 
+If you are running on a apache2 server something like the following in your configuration, e.g. in a  `.htaccess` file placed in `www` 
 
     RewriteEngine on
     RewriteBase /
