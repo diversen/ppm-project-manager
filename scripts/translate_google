@@ -9,7 +9,7 @@ include_once "vendor/autoload.php";
 putenv("GOOGLE_APPLICATION_CREDENTIALS=config-locale/pebble-2c949028ebcc.json");
 
 // Extract first
-$e = new extractor();
+$e = new Extractor();
 $e->defaultLanguage ='en';
 $e->setSingleDir("www/App");
 $e->updateLang();
