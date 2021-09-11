@@ -54,6 +54,14 @@ You can look at the other `config/` files, but you don't need to change these in
 
     ./serv
 
+If you are running on a apache2 server something like the following in your configuratin, e.g. in a  `.htaccess` file placed in `www` 
+
+    RewriteEngine on
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+
 The above command runs the built-in PHP server.
 
 ## Login
