@@ -38,9 +38,14 @@ Install composer packages:
 
 Change the settings in `config/DB.php`. 
 
-Load the `./sql/mysql.sql` into a database. 
+Check if you can connect:
 
+    ./cli.sh db --connect
+    exit
 
+Load the sql files found in `migration` into a database. 
+
+    ./cli.sh migrate --up
 
 ## Configuration
 

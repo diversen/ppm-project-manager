@@ -1,10 +1,11 @@
-<?php
+<?php declare (strict_types = 1);
 
 require_once "vendor/autoload.php";
 
 use diversen\MinimalCli;
 use Pebble\CLI\User;
 use Pebble\CLI\DB;
+use Pebble\CLI\Migrate;
 use Pebble\Autoloader;
 use Pebble\Config;
 
@@ -22,6 +23,7 @@ $user_command = new User();
 $cli->commands = [
     'user' => new User(),
     'db' => new DB(),
+    'migrate' => new Migrate(),
 ];
 
 $cli->runMain();
