@@ -1,4 +1,4 @@
-var setFlashMessage = function (str, type) {
+var setFlashMessage = function (str, type, remove_after) {
     var messageElem = document.querySelector(".flash-messages");
     messageElem.innerHTML = '';
 
@@ -6,7 +6,16 @@ var setFlashMessage = function (str, type) {
         type = 'notice';
     }
 
-    var html = `<div class="flash flash-${type}"> ${str} </div>`;
+    let class_random = '';
+    if (remove_after) {
+        class_random = 'random_' + (Math.random() + 1).toString(36).substring(2);
+        setTimeout(function () {
+            console.log(class_random)
+            document.querySelector('.' + class_random).remove();
+        }, remove_after)
+    }
+
+    var html = `<div class="flash flash-${type} ${class_random}">${str}</div>`;
     messageElem.insertAdjacentHTML('afterbegin', html);
     messageElem.scrollIntoView();
 }
@@ -111,6 +120,12 @@ async function asyncRequest(url, formData, method) {
     return rawResponse;
 }
 
+async function asyncPostError(endpoint, error) {
+    const error_data = new FormData();
+    error_data.set('error', error);
+    return Pebble.asyncPost(endpoint, error_data);
+} 
+
 function removeFlashMessages() {
     let elems = document.querySelectorAll('.flash-remove')
     elems.forEach(function (elem) {
@@ -128,6 +143,8 @@ var Pebble = {
     asyncPost: asyncPost,
     logFormdata: logFormdata,
     asyncRequest: asyncRequest,
+    asyncPostError: asyncPostError,
+
 }
 
 /**

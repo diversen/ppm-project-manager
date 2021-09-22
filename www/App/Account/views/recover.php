@@ -35,26 +35,23 @@ use Diversen\Lang;
 
     document.getElementById('submit').addEventListener("click", async function(e) {
 
-
         e.preventDefault();
-
         spinner.classList.toggle('hidden');
 
-        var form = document.getElementById('signup-form');
-        var data = new FormData(form);
+        const form = document.getElementById('signup-form');
+        const data = new FormData(form);
 
-        let res;
         try {
-            res = await Pebble.asyncPost('/account/post_recover', data);
 
+            const res = await Pebble.asyncPost('/account/post_recover', data);
             if (res.error === false) {
                 window.location.replace('/account');
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }
-            console.log(res);
+
         } catch (e) {
-            console.log(e)
+            await Pebble.asyncPostError('/error/log', e.stack);
         }
 
         spinner.classList.toggle('hidden');
