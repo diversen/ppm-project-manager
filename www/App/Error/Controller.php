@@ -3,9 +3,24 @@
 namespace App\Error;
 
 use Diversen\Lang;
+use Pebble\LogInstance;
+use Pebble\JSON;
 
 class Controller
 {
+
+    /**
+     * A route for logging e.g. JS errors using a POST request
+     * @route /error/log
+     * @verbs POST
+     */
+    public function ajaxError() {
+
+        $error = $_POST['error'] ?? '';
+        LogInstance::get()->message($error, 'error');
+        echo JSON::responseAddRequest(['logged' => true]);
+
+    }
 
     private function baseError(string $title, string $error_message) {
 
@@ -49,7 +64,6 @@ class Controller
      */
     public function error(string $error_message = '')
     {
-        Lang::translate('Hello world');
         header('HTTP/1.0 500 Internal Server Error');
         $this->baseError(Lang::translate('500 Internal Server Error'), $error_message);
     }

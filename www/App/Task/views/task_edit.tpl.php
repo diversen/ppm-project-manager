@@ -76,20 +76,20 @@ $is_selected = function($priority, $value) {
 <script type="module">
 	
 	import {Pebble} from '/App/js/pebble.js';
+
 	var spinner = document.querySelector('.loadingspinner');
 
 	async function deleteTask(status) {
 		spinner.classList.toggle('hidden');
 
-		var form = document.getElementById('task_edit');
-		var data = new FormData(form);
-
-		let res;
-		let task_id = document.getElementById('id').value;
-		let return_to = Pebble.getQueryVariable('return_to');
+		const form = document.getElementById('task_edit');
+		const data = new FormData(form);
+		const task_id = document.getElementById('id').value;
+		const return_to = Pebble.getQueryVariable('return_to');
 
 		try {
-			res = await Pebble.asyncPost('/task/delete/' + task_id, data);
+
+			const res = await Pebble.asyncPost('/task/delete/' + task_id, data);
 			spinner.classList.toggle('hidden');
 
 			if (res.error === false) {
@@ -102,7 +102,7 @@ $is_selected = function($priority, $value) {
 				Pebble.setFlashMessage(res.error, 'error');
 			}
 		} catch (e) {
-			console.log(e)
+			Pebble.asyncPostError('/error/log', e.stack)
 		}
 	}
 
@@ -110,8 +110,8 @@ $is_selected = function($priority, $value) {
 	async function updateTask(status) {
 		spinner.classList.toggle('hidden');
 
-		var form = document.getElementById('task_edit');
-		var data = new FormData(form);
+		const form = document.getElementById('task_edit');
+		const data = new FormData(form);
 
 		if (status == 'complete') {
 			data.append('status', '0')
@@ -121,12 +121,11 @@ $is_selected = function($priority, $value) {
 			data.append('status', '1')
 		}
 
-		let res;
-		let task_id = document.getElementById('id').value;
-		let return_to = Pebble.getQueryVariable('return_to');
+		const task_id = document.getElementById('id').value;
+		const return_to = Pebble.getQueryVariable('return_to');
 
 		try {
-			res = await Pebble.asyncPost('/task/put/' + task_id, data);
+			const res = await Pebble.asyncPost('/task/put/' + task_id, data);
 			spinner.classList.toggle('hidden');
 
 			if (res.error === false) {
@@ -139,43 +138,43 @@ $is_selected = function($priority, $value) {
 				Pebble.setFlashMessage(res.error, 'error');
 			}
 		} catch (e) {
-			console.log(e)
+			Pebble.asyncPostError('/error/log', e.stack)
 		}
 	}
 
-	var task_update = document.getElementById('task_update');
+	const task_update = document.getElementById('task_update');
 	task_update.addEventListener('click', async function (e) {
 		e.preventDefault();
 		updateTask();
 	})
 
-	var task_complete = document.getElementById('task_complete');
+	const task_complete = document.getElementById('task_complete');
 	if (task_complete) {
 		task_complete.addEventListener('click', async function (e) {
 			e.preventDefault();
-			var complete_confirm = confirm('<?=Lang::translate('Complete this task?')?>')
+			const complete_confirm = confirm('<?=Lang::translate('Complete this task?')?>')
 			if (complete_confirm) {
 				updateTask('complete');
 			}
 		})
 	}
 
-	var task_delete = document.getElementById('task_delete');
+	const task_delete = document.getElementById('task_delete');
 	if (task_delete) {
 		task_delete.addEventListener('click', async function (e) {
 			e.preventDefault();
-			var complete_confirm = confirm('<?=Lang::translate('Delete this task.Registered time entries will be removed?')?>')
+			const complete_confirm = confirm('<?=Lang::translate('Delete this task.Registered time entries will be removed?')?>')
 			if (complete_confirm) {
 				deleteTask();
 			}
 		})
 	}
 
-	var task_open = document.getElementById('task_open');
+	const task_open = document.getElementById('task_open');
 	if (task_open) {
 		task_open.addEventListener('click', async function (e) {
 			e.preventDefault();
-			var complete_confirm = confirm('<?=Lang::translate('Open this task?')?>')
+			const complete_confirm = confirm('<?=Lang::translate('Open this task?')?>')
 			if (complete_confirm) {
 				updateTask('open');
 			}

@@ -43,10 +43,10 @@ if ($project['status'] == 1) {
 	async function updateProject() {
 		spinner.classList.toggle('hidden');
 
-		var form = document.getElementById('project_edit');
-		var data = new FormData(form);
+		const form = document.getElementById('project_edit');
+		const data = new FormData(form);
 
-		let project_id = document.getElementById('id').value;
+		const project_id = document.getElementById('id').value;
 
 		// Manipulate status so we can send it to the same endpoint
 		if (!data.has('status')) {
@@ -54,59 +54,60 @@ if ($project['status'] == 1) {
 		}
 
 		try {
-			let res = await Pebble.asyncPost('/project/put/' + project_id, data);
-			// spinner.classList.toggle('hidden');
 
+			const res = await Pebble.asyncPost('/project/put/' + project_id, data);
 			if (res.error === false) {
 				window.location.replace(res.project_redirect);
 			} else {
-				spinner.classList.toggle('hidden');
 				Pebble.setFlashMessage(res.error, 'error');
 			}
 		} catch (e) {
-			console.log(e)
+			Pebble.asyncPostError('/error/log', e.stack)
 		}
+
+		spinner.classList.toggle('hidden');
 	}
 
 	async function deleteProject() {
 		spinner.classList.toggle('hidden');
 
-		var form = document.getElementById('project_edit');
-		var data = new FormData(form);
+		const form = document.getElementById('project_edit');
+		const data = new FormData(form);
 
 		// Manipulate status so we can send it to the same endpoint
 		if (!data.has('status')) {
 			data.set('status', '0');
 		}
 
-		let project_id = document.getElementById('id').value;
+		const project_id = document.getElementById('id').value;
 
 		try {
-			let res = await Pebble.asyncPost('/project/delete/' + project_id, data);
-			spinner.classList.toggle('hidden');
+
+			const res = await Pebble.asyncPost('/project/delete/' + project_id, data);
 
 			if (res.error === false) {
 				window.location.replace(res.project_redirect);
 			} else {
-				spinner.classList.toggle('hidden');
 				Pebble.setFlashMessage(res.error, 'error');
 			}
 		} catch (e) {
-			console.log(e)
+			Pebble.asyncPostError('/error/log', e.stack)
 		}
+
+		spinner.classList.toggle('hidden');
 	}
 
-	var project_submit = document.getElementById('project_submit');
+	const project_submit = document.getElementById('project_submit');
 	project_submit.addEventListener('click', async function(e) {
 		e.preventDefault();
 		updateProject()
 	})
 
-	var project_delete = document.getElementById('project_delete');
+	const project_delete = document.getElementById('project_delete');
 	project_delete.addEventListener('click', async function(e) {
 
 		e.preventDefault();
-		var confirm_res = confirm('<?= Lang::translate('Are you sure want to delete this project? All tasks and all time entries will be deleted!') ?>');
+		const confirm_res = confirm('<?= Lang::translate('Are you sure want to delete this project? All tasks and all time entries will be deleted!') ?>');
 		if (!confirm_res) {
 			return;
 		}

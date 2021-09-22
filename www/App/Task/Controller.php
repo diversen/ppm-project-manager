@@ -97,7 +97,6 @@ class Controller
     public function post()
     {
 
-        
         $response['error'] = false;
 
         try {
@@ -113,8 +112,6 @@ class Controller
 
         } catch (\Exception $e) {
             $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
-
         }
 
         echo JSON::responseAddRequest($response);

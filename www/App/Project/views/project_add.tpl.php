@@ -20,9 +20,9 @@ require 'App/templates/header.tpl.php';
 </form>
 
 <script type="module">
+	
 	import {Pebble} from '/App/js/pebble.js';
 
-	
 	let return_to = Pebble.getQueryVariable('return_to');
 	var spinner = document.querySelector('.loadingspinner');
 
@@ -32,12 +32,11 @@ require 'App/templates/header.tpl.php';
 
 		spinner.classList.toggle('hidden');
 
-		var form = document.getElementById('project_add');
-		var data = new FormData(form);
+		const form = document.getElementById('project_add');
+		const data = new FormData(form);
 
-		let res;
 		try {
-			res = await Pebble.asyncPost('/project/post', data);
+			const res = await Pebble.asyncPost('/project/post', data);
 			spinner.classList.toggle('hidden');
 			if (res.error === false) {
 				if (return_to) {
@@ -48,10 +47,9 @@ require 'App/templates/header.tpl.php';
 			} else {
 				Pebble.setFlashMessage(res.error, 'error');
 			}
-			console.log(res);
 		} catch (e) {
 			spinner.classList.toggle('hidden');
-			console.log(e)
+			Pebble.asyncPostError('/error/log', e.stack)
 		}
 	})
 </script>

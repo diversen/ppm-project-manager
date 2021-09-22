@@ -157,24 +157,22 @@ render_week($week_data, $week_state, $week_user_day_times);
         if (!event.target.matches('.move_to_today')) return;
         event.preventDefault();
 
-        let todayElem = document.getElementById(event.target);
-        let task_id = event.target.dataset.id
+        const todayElem = document.getElementById(event.target);
+        const task_id = event.target.dataset.id
 
-        let res;
-
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append('now', 'true')
         formData.append('id', task_id);
 
 		try {
-			res = await Pebble.asyncPost('/task/put/' + task_id, formData);
+			const res = await Pebble.asyncPost('/task/put/' + task_id, formData);
 			if (res.error === false) {
                 location.reload();
 			} else {
 				Pebble.setFlashMessage(res.error, 'error');
 			}
 		} catch (e) {
-			console.log(e)
+			Pebble.asyncPostError('/error/log', e.stack)
 		}
     });
 
@@ -186,19 +184,17 @@ render_week($week_data, $week_state, $week_user_day_times);
 
         const todayElem = document.getElementById(event.target);
         const task_id = event.target.dataset.id
-
-        let res;
         const formData = new FormData();
 
         try {
-            res = await Pebble.asyncPost('/task/put/exceeded/today', formData);
+            const res = await Pebble.asyncPost('/task/put/exceeded/today', formData);
             if (res.error === false) {
                 location.reload();
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }
         } catch (e) {
-            console.log(e)
+            Pebble.asyncPostError('/error/log', e.stack)
         }
     });
 
@@ -216,17 +212,15 @@ render_week($week_data, $week_state, $week_user_day_times);
             formData.append('overview_current_day_state', '0')
         }
 
-        let res;
-
         try {
-            res = await Pebble.asyncPost('/settings/put/', formData);
+            const res = await Pebble.asyncPost('/settings/put/', formData);
             if (res.error === false) {
                 location.reload();
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }
         } catch (e) {
-            console.log(e)
+            Pebble.asyncPostError('/error/log', e.stack)
         }
     });
 	

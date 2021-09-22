@@ -85,30 +85,29 @@ echo $note_markdown;
 <script type="module">
 
 import {Pebble} from '/App/js/pebble.js';
+
 document.addEventListener('click', async function(event) {
 
     if (!event.target.matches('.move_to_today')) return;
 
     event.preventDefault();
 
-    let todayElem = document.getElementById(event.target);
-    let task_id = event.target.dataset.id
-
-    let res;
-
-    let formData = new FormData();
+    const todayElem = document.getElementById(event.target);
+    const task_id = event.target.dataset.id
+    
+    const formData = new FormData();
     formData.append('now', 'true')
     formData.append('id', task_id);
 
     try {
-        res = await Pebble.asyncPost('/task/put/' + task_id, formData);
+        const res = await Pebble.asyncPost('/task/put/' + task_id, formData);
         if (res.error === false) {
             location.reload();
         } else {
             Pebble.setFlashMessage(res.error, 'error');
         }
     } catch (e) {
-        console.log(e)
+        Pebble.asyncPostError('/error/log', e.stack)
     }
 });
 </script>

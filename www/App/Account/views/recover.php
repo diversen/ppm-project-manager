@@ -31,7 +31,7 @@ use Diversen\Lang;
 <script type="module">
     import {Pebble} from '/App/js/pebble.js';
 
-    var spinner = document.querySelector('.loadingspinner');
+    const spinner = document.querySelector('.loadingspinner');
 
     document.getElementById('submit').addEventListener("click", async function(e) {
 

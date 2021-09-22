@@ -94,6 +94,7 @@ try {
     $router->addClass(App\Settings\Controller::class);
     $router->addClass(App\Task\Controller::class);
     $router->addClass(App\Time\Controller::class);
+    $router->addClass(App\Error\Controller::class);
 
     $router->run();
 

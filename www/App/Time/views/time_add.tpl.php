@@ -77,6 +77,7 @@ require 'App/templates/flash.tpl.php';
 </div>
 
 <script type="module">
+	
 	import {Pebble} from '/App/js/pebble.js';
 	
 	let spinner = document.querySelector('.loadingspinner');
@@ -89,18 +90,16 @@ require 'App/templates/flash.tpl.php';
 
 			spinner.classList.toggle('hidden');
 
-			let form = document.getElementById('time_add');
-			let data = new FormData(form);
-			let return_to = Pebble.getQueryVariable('return_to');
+			const form = document.getElementById('time_add');
+			const data = new FormData(form);
+			const return_to = Pebble.getQueryVariable('return_to');
 
 			if (event.target.matches('#time_add_submit_and_close')) {
 				data.append('close', 'true');
 			}
 
-			let res;
 			try {
-				res = await Pebble.asyncPost('/time/post', data);
-				spinner.classList.toggle('hidden');
+				const res = await Pebble.asyncPost('/time/post', data);
 				if (res.error === false) {
 					if (event.target.matches('#time_add_submit_and_stay')) {
 						location.reload();
@@ -115,28 +114,29 @@ require 'App/templates/flash.tpl.php';
 					Pebble.setFlashMessage(res.error, 'error');
 				}
 			} catch (e) {
-				spinner.classList.toggle('hidden');
-				Pebble.setFlashMessage(e.message, 'error');
+				Pebble.asyncPostError('/error/log', e.stack)
 			}
+
+			spinner.classList.toggle('hidden');
 		}
 
 		if (event.target.matches('.time_delete')) {
 
 			event.preventDefault();
 
-			let item = event.target;
-			let data = new FormData();
-			let id = item.getAttribute('data-id')
-			let return_to = Pebble.getQueryVariable('return_to');
-			let res;
+			const item = event.target;
+			const data = new FormData();
+			const id = item.getAttribute('data-id')
+			const return_to = Pebble.getQueryVariable('return_to');
 
-			spinner.classList.toggle('hidden');
 
-			let confirm_res = confirm('<?= Lang::translate('Are you sure you want to delete time entry?') ?>');
+			const confirm_res = confirm('<?= Lang::translate('Are you sure you want to delete time entry?') ?>');
 			if (confirm_res) {
+
+				spinner.classList.toggle('hidden');
 				try {
-					res = await Pebble.asyncPost('/time/delete/' + id, data);
-					spinner.classList.toggle('hidden');
+					const res = await Pebble.asyncPost('/time/delete/' + id, data);
+					
 					if (res.error === false) {
 						location.reload();
 
@@ -145,10 +145,8 @@ require 'App/templates/flash.tpl.php';
 					}
 
 				} catch (e) {
-					spinner.classList.toggle('hidden');
-					Pebble.setFlashMessage(e.message, 'error');
+					Pebble.asyncPostError('/error/log', e.stack)
 				}
-			} else {
 				spinner.classList.toggle('hidden');
 			}
 		}

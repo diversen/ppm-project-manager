@@ -59,26 +59,24 @@ endif;
 
     document.getElementById('login').addEventListener("click", async function(e) {
 
-
         e.preventDefault();
 
         spinner.classList.toggle('hidden');
 
-        var form = document.getElementById('login-form');
-        var data = new FormData(form);
+        const form = document.getElementById('login-form');
+        const data = new FormData(form);
 
-        let res;
         try {
-            res = await Pebble.asyncPost('/account/post_login', data);
+            const res = await Pebble.asyncPost('/account/post_login', data);
             
             if (res.error === false) {
                 window.location.replace(res.redirect);
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }
-            console.log(res);
+
         } catch (e) {
-            console.log(e)
+            await Pebble.asyncPostError('/error/log', e.stack);
         }
 
         spinner.classList.toggle('hidden');
