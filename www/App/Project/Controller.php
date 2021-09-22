@@ -118,7 +118,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 
     /**
@@ -144,7 +144,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 
     /**
@@ -170,6 +170,6 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 }

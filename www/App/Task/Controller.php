@@ -117,7 +117,7 @@ class Controller
 
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 
     /**
@@ -153,7 +153,7 @@ class Controller
             
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 
     /**
@@ -176,7 +176,7 @@ class Controller
             
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
 
     }
 
@@ -203,6 +203,6 @@ class Controller
             
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 }

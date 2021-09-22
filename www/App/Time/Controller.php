@@ -60,7 +60,7 @@ class Controller
 
         $response['project_redirect'] = '/project/view/' . $task['project_id'];
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
 
     }
 
@@ -86,7 +86,7 @@ class Controller
             $response['post'] = $_POST;
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
         
     }
 }
