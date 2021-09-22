@@ -53,7 +53,10 @@ use \Diversen\Lang;
     <div class="loadingspinner hidden"></div>
 
 </form>
-<script>
+<script type="module">
+
+    import {Pebble} from '/App/js/pebble.js';
+    
     var spinner = document.querySelector('.loadingspinner');
     document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById('task_submit').addEventListener("click", async function (e) {

@@ -7,6 +7,20 @@ use \Pebble\CSRF;
 use \Diversen\Lang;
 
 class Validate {
+
+    public function postLogin() {
+        $response = ['error' => true];
+
+        if (!$this->token()) {
+            http_response_code(403);
+            $response['message'] = Lang::translate('Invalid Request. We will look in to this');
+            return $response;
+        }
+
+        $response['error'] = false;
+        return $response;
+
+    }
     
     /**
      * Get 'Auth' row by email
@@ -54,16 +68,24 @@ class Validate {
         return true;
     }
 
+    private function token() {
+        $csrf = new CSRF();
+        if (!$csrf->validateToken()) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Validate signup form from $_POST
      */
-    public function signup() : array
+    public function postSignup() : array
     {
-        $csrf = new CSRF();
-
+        
         $response = ['error' => true];
 
-        if (!$csrf->validateToken()) {
+        if (!$this->token()) {
+            http_response_code(403);
             $response['message'] = Lang::translate('Invalid Request. We will look in to this');
             return $response;
         }

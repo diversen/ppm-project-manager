@@ -142,3 +142,5 @@ document.addEventListener('DOMContentLoaded', function (e) {
         removeFlashMessages();
     }, 5000);
 })
+
+export {Pebble}

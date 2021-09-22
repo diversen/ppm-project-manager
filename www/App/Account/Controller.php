@@ -4,7 +4,6 @@ namespace App\Account;
 
 use App\Account\Mail;
 use App\Account\Validate;
-use App\Google\GoogleUtils;
 use Diversen\Lang;
 use Pebble\Auth;
 use Pebble\Captcha;
@@ -17,26 +16,30 @@ use Pebble\JSON;
 class Controller
 {
 
+    public function __construct()
+    {
+        $this->auth = Auth::getInstance();
+    }
+    
+
     /**
      * @route /account
      * @verbs GET
      */
+    
     public function index()
     {
-
-        $google_auth_url = $this->getGoogleAuthUrl();
         
-        $auth = Auth::getInstance();
-        if ($auth->isAuthenticated()) {
-            $form_vars = ['title' => 'Signin'];
+        $this->auth = Auth::getInstance();
+        if ($this->auth->isAuthenticated()) {
+            $form_vars = ['title' => Lang::translate('Signin')];
             \Pebble\Template::render('App/Account/views/signout.php',
                 $form_vars
             );
         } else {
 
             $form_vars = [
-                'google_auth_url' => $google_auth_url,
-                'title' => 'Signin',
+                'title' => Lang::translate('Signin'),
                 'csrf_token' => (new CSRF())->getToken(),
             ];
 
@@ -46,31 +49,20 @@ class Controller
         }
     }
 
-    private function getGoogleAuthUrl() {
-        if (!Config::get('Account.google')) {
-            return false;
-        }
-
-        $google_helpers = new GoogleUtils();
-        $google_auth_url = $google_helpers->getAuthUrl();
-        return $google_auth_url;
-        
-    }
-
     /**
+     * Log the user out and redirect
      * @route /account/logout
      * @verbs GET
      */
     public function logout()
     {
-        $auth = Auth::getInstance();
-        if (isset($_GET['all_devices'])) {
-            $auth_id = $auth->getAuthId();
-            $auth->unlinkAllCookies($auth_id);
-        } else {
-            $auth->unlinkCurrentCookie();
-        }
 
+        if (isset($_GET['all_devices'])) {
+            $auth_id = $this->auth->getAuthId();
+            $this->auth->unlinkAllCookies($auth_id);
+        } else {
+            $this->auth->unlinkCurrentCookie();
+        }
 
         $redirect = \Pebble\Config::get('App.logout_redirect');
         header("Location: $redirect");
@@ -78,6 +70,7 @@ class Controller
     }
 
     /**
+     * Page with link to logout route
      * @route /account/signout
      * @verbs GET
      */
@@ -98,37 +91,37 @@ class Controller
 
         usleep(100000);
 
-        $response = ['error' => true, 'request' => $_POST];
-
-        $csrf = new CSRF();
-        if (!$csrf->validateToken()) {
-            $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            echo JSON::response($response);
+        $validate = new Validate();
+        $response = $validate->postLogin();
+        if ($response['error'] === true) {
+            echo JSON::responseAddRequest($response);
             return;
         }
-
-        $auth = Auth::getInstance();
-        $row = $auth->authenticate($_POST['email'], $_POST['password']);
+        
+        $response['error'] = true;
+        
+        $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
             
             $response['error'] = false;
             $response['redirect'] = \Pebble\Config::get('App.login_redirect');
-            Flash::setMessage('You are logged in', 'success');
+
+            Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
 
             if (isset($_POST['keep_login'])) {
                 // Set a cookie that will last for days
-                $auth->setPermanentCookie($row);
+                $this->auth->setPermanentCookie($row);
             } else {
                 // Set a cookie that is only valid until window is closed
-                $auth->setSessionCookie($row);
+                $this->auth->setSessionCookie($row);
             }
 
         } else {
-            $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated. ');
+            $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
 
     }
 
@@ -157,14 +150,13 @@ class Controller
 
         $key = $_GET['key'] ?? '';
 
-        $auth = Auth::getInstance();
-        $res = $auth->verifyKey($key);
+        $res = $this->auth->verifyKey($key);
 
         if ($res) {
-            Flash::setMessage('Your account has been verified. You may log in', 'success');
+            Flash::setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
 
         } else {
-            Flash::setMessage('The key supplied has already been used', 'error');
+            Flash::setMessage(Lang::translate('The key supplied has already been used'), 'error');
         }
 
         header('Location: /account');
@@ -191,19 +183,16 @@ class Controller
         usleep(100000);
 
         $validate = new Validate();
-
-        $response = $validate->signup();
+        $response = $validate->postSignup();
         if ($response['error'] === true) {
-            echo JSON::response($response);
+            echo JSON::responseAddRequest($response);
             return;
         }
-
-        $auth = Auth::getInstance();
 
         $db = DBInstance::get();
         $db->beginTransaction();
 
-        $res = $auth->create($_POST['email'], $_POST['password']);
+        $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
 
             // Create account without verification using mail
@@ -221,20 +210,17 @@ class Controller
             if (!$mail_res) {
                 $db->rollback();
                 $response['error'] = true;
-                $response['message'] =  Lang::translate('Could not create account. Please try again another time');
+                $response['message'] =  Lang::translate('The system could not create an account. Please try again another time');
             } else {
                 $db->commit();
 
-                Flash::setMessage(
-                    $message,
-                    'success'
-                );
+                Flash::setMessage($message, 'success');
                 $response['error'] = false;
                 $response['redirect'] = '/account';
             }
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
     }
 
     /**
@@ -269,8 +255,6 @@ class Controller
 
         $response = ['error' => true];
 
-        $row = $validate->getByEmail($_POST['email']);
-
         $csrf = new CSRF();
         if (!$csrf->validateToken()) {
             $response['message'] = Lang::translate('Invalid Request. We will look in to this');
@@ -278,15 +262,18 @@ class Controller
             return;
         }
 
+        $row = $validate->getByEmail($_POST['email']);
+
+        
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');
-            echo JSON::response($response);
+            echo JSON::responseAddRequest($response);
             return;
         }
 
         if (!$captcha->validate($_POST['captcha'])) {
-            $response['message'] = Lang::translate('Image text does not match');
-            echo JSON::response($response);
+            $response['message'] = Lang::translate('The image text does not match your submission');
+            echo JSON::responseAddRequest($response);
             return;
         }
 
@@ -306,7 +293,7 @@ class Controller
             }
         }
 
-        echo JSON::response($response);
+        echo JSON::responseAddRequest($response);
         return;
     }
 
@@ -319,8 +306,7 @@ class Controller
 
         $key = $_GET['key'] ?? null;
 
-        $auth = Auth::getInstance();
-        $row = $auth->getByWhere(['random' => $key]);
+        $row = $this->auth->getByWhere(['random' => $key]);
 
         if (!empty($_POST) && !empty($row)) {
 
@@ -332,11 +318,11 @@ class Controller
                 header("Location: $_SERVER[REQUEST_URI]");
             } else {
 
-                // Remove all cookie logins
-                $auth->unlinkAllCookies($row['id']);
+                // Remove all cookie logins if the user is logged in
+                $this->auth->unlinkAllCookies($row['id']);
+                $this->auth->updatePassword($row['id'], $_POST['password']);
 
-                $auth->updatePassword($row['id'], $_POST['password']);
-                Flash::setMessage('Your password has been updated', 'success');
+                Flash::setMessage(Lang::translate('Your password has been updated'), 'success');
                 header("Location: /account");
             }
 

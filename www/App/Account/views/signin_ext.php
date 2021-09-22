@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php 
+
+declare (strict_types = 1);
 
 require 'App/templates/header.tpl.php'; 
 
@@ -14,6 +16,20 @@ use Diversen\Lang;
     <a href="/terms/privacy-policy"><?=Lang::translate('Privacy policy')?></a> |
     <a href="/terms/disclaimer"><?=Lang::translate('Disclaimer')?></a>
 </p>
+
+<?php
+
+if ($google_auth_url): ?>
+
+<div class="row">
+    <p><a href="<?=$google_auth_url?>"><img src="/App/templates/assets/google-signin.png" /></a></p>
+</div>
+
+<?php
+
+endif;
+
+?>
 
 <form id="login-form">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>" />

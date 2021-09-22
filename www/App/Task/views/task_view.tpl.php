@@ -82,8 +82,9 @@ endif;
 echo $note_markdown;
 
 ?>
-<script>
+<script type="module">
 
+import {Pebble} from '/App/js/pebble.js';
 document.addEventListener('click', async function(event) {
 
     if (!event.target.matches('.move_to_today')) return;

@@ -86,7 +86,7 @@ try {
     // Define all routes
     $router = new Router();
 
-    $router->addClass(App\Account\Controller::class);
+    $router->addClass(App\Account\ControllerExt::class);
     $router->addClass(App\Home\Controller::class);
     $router->addClass(App\Google\Controller::class);
     $router->addClass(App\Overview\Controller::class);

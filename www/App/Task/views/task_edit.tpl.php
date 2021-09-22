@@ -73,7 +73,9 @@ $is_selected = function($priority, $value) {
 
 </form>
 
-<script>
+<script type="module">
+	
+	import {Pebble} from '/App/js/pebble.js';
 	var spinner = document.querySelector('.loadingspinner');
 
 	async function deleteTask(status) {

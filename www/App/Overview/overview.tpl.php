@@ -149,7 +149,8 @@ render_week_nav($week_state, $week_user_total);
 render_week($week_data, $week_state, $week_user_day_times);
 
 ?>
-<script>
+<script type="module">
+    import {Pebble} from '/App/js/pebble.js';
 
     document.addEventListener('click', async function(event) {
 
