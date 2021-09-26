@@ -4,19 +4,28 @@ $LANG = array();
 
 // Translation of file www/App/Account/Controller.php
 
-$LANG['Invalid Request. We will look in to this'] = 'Invalid Request. We will look in to this';
-$LANG['Wrong email or password. Or your account has not been activated. '] = 'Wrong email or password. Or your account has not been activated. ';
+$LANG['Signin'] = 'Signin';
+$LANG['You are logged in'] = 'You are logged in';
+$LANG['Wrong email or password. Or your account has not been activated.'] = 'Wrong email or password. Or your account has not been activated.';
 $LANG['Signup'] = 'Signup';
+$LANG['Your account has been verified. You may log in'] = 'Your account has been verified. You may log in';
+$LANG['The key supplied has already been used'] = 'The key supplied has already been used';
 $LANG['Account has been created. You may log in'] = 'Account has been created. You may log in';
 $LANG['User created. An activation link has been sent to your email. Press the link and your account will be activated'] = 'User created. An activation link has been sent to your email. Press the link and your account will be activated';
-$LANG['Could not create account. Please try again another time'] = 'Could not create account. Please try again another time';
+$LANG['The system could not create an account. Please try again another time'] = 'The system could not create an account. Please try again another time';
 $LANG['Recover account'] = 'Recover account';
+$LANG['Invalid Request. We will look in to this'] = 'Invalid Request. We will look in to this';
 $LANG['No such email in our system'] = 'No such email in our system';
-$LANG['Image text does not match'] = 'Image text does not match';
+$LANG['The image text does not match your submission'] = 'The image text does not match your submission';
 $LANG['A notification email has been sent with instructions to create a new password'] = 'A notification email has been sent with instructions to create a new password';
 $LANG['E-mail could not be sent. Try again later.'] = 'E-mail could not be sent. Try again later.';
+$LANG['Your password has been updated'] = 'Your password has been updated';
 $LANG['Create new password'] = 'Create new password';
 $LANG['No such account connected to supplied key'] = 'No such account connected to supplied key';
+
+// Translation of file www/App/Account/ControllerExt.php
+
+$LANG['Signin'] = 'Signin';
 
 // Translation of file www/App/Account/Mail.php
 
@@ -48,7 +57,7 @@ $LANG['Send'] = 'Send';
 
 $LANG['E-mail'] = 'E-mail';
 $LANG['Click to get a new image'] = 'Click to get a new image';
-$LANG['Enter above image text (click to get a new image)'] = 'Enter above image text (click to get a new image)';
+$LANG['Enter above image text (click to get a new image). Case of the text does not matter'] = 'Enter above image text (click to get a new image). Case of the text does not matter';
 $LANG['Send'] = 'Send';
 
 // Translation of file www/App/Account/views/recover_email.php
@@ -60,6 +69,17 @@ $LANG['In order to reset your password you just have to press the following link
 $LANG['Kind Regards'] = 'Kind Regards';
 
 // Translation of file www/App/Account/views/signin.php
+
+$LANG['By signing in you agree to the following terms of service, privacy policy, and disclaimer'] = 'By signing in you agree to the following terms of service, privacy policy, and disclaimer';
+$LANG['Terms of service'] = 'Terms of service';
+$LANG['Privacy policy'] = 'Privacy policy';
+$LANG['Disclaimer'] = 'Disclaimer';
+$LANG['E-mail'] = 'E-mail';
+$LANG['Password'] = 'Password';
+$LANG['Keep me signed in'] = 'Keep me signed in';
+$LANG['Send'] = 'Send';
+
+// Translation of file www/App/Account/views/signin_ext.php
 
 $LANG['By signing in you agree to the following terms of service, privacy policy, and disclaimer'] = 'By signing in you agree to the following terms of service, privacy policy, and disclaimer';
 $LANG['Terms of service'] = 'Terms of service';
@@ -85,7 +105,7 @@ $LANG['E-mail'] = 'E-mail';
 $LANG['Password'] = 'Password';
 $LANG['Repeat password'] = 'Repeat password';
 $LANG['Click to get a new image'] = 'Click to get a new image';
-$LANG['Enter above image text (click to get a new image)'] = 'Enter above image text (click to get a new image)';
+$LANG['Enter above image text (click to get a new image). Case of the text does not matter'] = 'Enter above image text (click to get a new image). Case of the text does not matter';
 $LANG['Send'] = 'Send';
 
 // Translation of file www/App/Account/views/signup_email.php
@@ -106,7 +126,6 @@ $LANG['There is no such time ID'] = 'There is no such time ID';
 $LANG['Page not found. If this page has existed then it has been deleted'] = 'Page not found. If this page has existed then it has been deleted';
 $LANG['404 Page not found'] = '404 Page not found';
 $LANG['403 Forbidden'] = '403 Forbidden';
-$LANG['Hello world'] = 'Hello world';
 $LANG['500 Internal Server Error'] = '500 Internal Server Error';
 
 // Translation of file www/App/Google/Controller.php
@@ -332,3 +351,7 @@ $LANG['Settings'] = 'Settings';
 $LANG['Sign out'] = 'Sign out';
 $LANG['Toggle timer'] = 'Toggle timer';
 $LANG['Timer'] = 'Timer';
+
+// Translation of file www/index.php
+
+$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';

@@ -6,6 +6,7 @@ use Diversen\MinimalCli;
 use Pebble\CLI\User;
 use Pebble\CLI\DB;
 use Pebble\CLI\Migrate;
+use Pebble\CLI\Translate;
 use Pebble\Autoloader;
 use Pebble\Config;
 
@@ -24,6 +25,7 @@ $cli->commands = [
     'user' => new User(),
     'db' => new DB(),
     'migrate' => new Migrate(),
+    'translate' => new Translate(),
 ];
 
 $cli->runMain();
