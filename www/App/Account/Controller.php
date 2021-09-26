@@ -216,7 +216,7 @@ class Controller
 
                 Flash::setMessage($message, 'success');
                 $response['error'] = false;
-                $response['redirect'] = '/account';
+                $response['redirect'] = '/account/signin';
             }
         }
 

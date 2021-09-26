@@ -66,7 +66,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
             <?php
 
             if (!$today): ?>
-            <a title="<?=Lang::translate('Move to today')?>" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::translate('Today')?></a>
+            <a title="<?=Lang::translate('Move to today')?>"  class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::translate('Today')?></a>
             <?php endif;?>
         </td>
     </tr>

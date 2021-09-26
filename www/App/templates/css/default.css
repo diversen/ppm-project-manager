@@ -5,6 +5,7 @@
     --flash-error-color:  #d73a49;
 }
 
+
 .flash {
     padding:10px;
 }
@@ -127,6 +128,8 @@ span.loadingspinner {
 
 table {
     font-size: 1em;
+    margin-top: 10px;
+    border: 1px solid transparent;
     
 }
 
@@ -150,9 +153,7 @@ table {
 }
 
 @media only screen and (max-width: 576px) {
-    table {
-        /* font-size: 0.7em; */
-    }
+
 
     td > .action-links>a {
         padding: 1px;

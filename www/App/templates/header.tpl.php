@@ -28,7 +28,7 @@ require 'App/templates/helpers.php';
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?=$title?></title>
     <meta name="description" content="<?=$description?>">
@@ -43,7 +43,7 @@ require 'App/templates/helpers.php';
     <?php endif; ?>
 
     <link rel="manifest" href="/App/templates/assets/manifest.json">
-    <link rel="stylesheet" href="/App/templates/css/default.css?v=0.1">
+    <link rel="stylesheet" href="/App/templates/css/default.css?v=0.8">
     <link rel="icon" sizes="192x192" href="/App/templates/assets/ppm-logo-192x192.png">
     <script type="module">
     	import {GlobalEvents} from '/App/js/global_events.js';
