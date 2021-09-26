@@ -82,9 +82,8 @@ $languages = \Pebble\Config::get('Language.enabled');
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }
-            console.log(res);
         } catch (e) {
-            console.log(e)
+            await Pebble.asyncPostError('/error/log', e.stack);
         }
 
         spinner.classList.toggle('hidden');

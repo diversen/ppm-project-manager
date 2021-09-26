@@ -126,7 +126,7 @@ if (!empty($tasks_completed)) {
 				Pebble.setFlashMessage(res.error, 'error');
 			}
 		} catch (e) {
-			console.log(e)
+			await Pebble.asyncPostError('/error/log', e.stack);
 		}
 	});
 </script>

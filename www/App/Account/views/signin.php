@@ -36,6 +36,7 @@ use Diversen\Lang;
 </form>
 
 <script type="module">
+    
 
     import {Pebble} from '/App/js/pebble.js';
     
