@@ -21,7 +21,7 @@ class ControllerExt extends Controller
     }
 
     /**
-     * @route /account
+     * @route /account/signin
      * @verbs GET
      */
     public function index()

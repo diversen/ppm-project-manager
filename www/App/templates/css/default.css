@@ -5,31 +5,6 @@
     --flash-error-color:  #d73a49;
 }
 
-html {
-    overflow-y: scroll;
-    min-height:100%;
-}
-
-body {
-    max-width: 1200px;
-}
-
-.main-menu {
-    font-size: 125%;
-    text-transform: uppercase;
-    padding: 10px;
-    padding-left: 0;
-}
-
-.sub-menu {
-    font-size: 105%;
-}
-
-.page-title {
-
-}
-
-
 .flash {
     padding:10px;
 }
@@ -107,21 +82,16 @@ span.loadingspinner {
     align-items: center; 
 }
 
-.task-done, .task-done>a {
+.task-done, .task-done > a {
     color: grey;
     font-style:oblique;
     text-decoration: none;
 
 }
 
-
-.action-links {
-    margin-bottom: 8px;
-}
-
 .action-links>a {
     color: var(--text-main);
-    font-size: 0.8em;
+    font-size: 0.95em;
     padding: 4px;
     margin-right: 4px;
     text-decoration: none;
@@ -137,8 +107,8 @@ span.loadingspinner {
     font-size: 1.2em;
 }
 
-.project-menus>a {
-    color: var(--form-text);
+.app-menu>a {
+    color: var(--text-muted);
     font-size: 0.9em;
     padding: 4px;
     margin-right: 4px;
@@ -147,23 +117,19 @@ span.loadingspinner {
     background-color: var(--background-alt);
 }
 
-.project-menus>a:hover {
+.app-menu>a:hover {
     background: var(--button-hover);
+}
+
+.app-menu> a.active {
+    color: var(--form-text);
 }
 
 table {
     font-size: 1em;
+    
 }
 
-/*
-tr {
-    border-left:4px solid transparent;
-}
-
-tbody > tr:hover {
-    border-left:4px solid var(--focus);
-}
-*/
 
 .button-small {
     margin: 2px;
@@ -239,6 +205,8 @@ tbody > tr:hover {
 }
 
 
-
+.clear {
+    padding: 5px;
+}
 
 

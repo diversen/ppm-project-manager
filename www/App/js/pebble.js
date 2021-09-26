@@ -42,7 +42,7 @@ var logFormdata = function (data) {
         let value = p[1];
         console.log(name, value)
     }
-} 
+}
 
 // Show an element
 var show = function (elem) {
@@ -99,7 +99,7 @@ async function asyncPost(url, formData) {
     }).then(function (response) {
         return response;
     });
-    
+
     return rawResponse;
 }
 
@@ -116,7 +116,7 @@ async function asyncRequest(url, formData, method) {
     }).then(function (response) {
         return response;
     });
-    
+
     return rawResponse;
 }
 
@@ -124,7 +124,7 @@ async function asyncPostError(endpoint, error) {
     const error_data = new FormData();
     error_data.set('error', error);
     return Pebble.asyncPost(endpoint, error_data);
-} 
+}
 
 function removeFlashMessages() {
     let elems = document.querySelectorAll('.flash-remove')
@@ -136,6 +136,7 @@ function removeFlashMessages() {
 var Pebble = {
     getPathPart: getPathPart,
     setFlashMessage: setFlashMessage,
+    removeFlashMessages: removeFlashMessages,
     toggleVisible: toggleVisible,
     toggleHide: toggleHide,
     toggleDisplay: toggleDisplay,
@@ -147,17 +148,4 @@ var Pebble = {
 
 }
 
-/**
- * DOMContentLoaded events
- */
-
-/**
- * Remove flash messages after some seconds
- */
-document.addEventListener('DOMContentLoaded', function (e) {
-    setTimeout(function() {
-        removeFlashMessages();
-    }, 5000);
-})
-
-export {Pebble}
+export { Pebble }

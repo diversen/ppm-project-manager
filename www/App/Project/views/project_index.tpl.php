@@ -42,9 +42,9 @@ function render_projects($projects)
 			<td><?=$created?></td>
 			<td class="xs-hide"><?=$project['project_time_total_human']?></td>
 			<td>
-			<div class="project-menus">
+			<div class="action-links">
 				<a href="/project/edit/<?=$project['id']?>"><?=Lang::translate('Edit')?></a>
-				<a class="xs-hide" href="/task/add/<?=$project['id']?>"><?=Lang::translate('New task ')?></a>
+				<a  href="/task/add/<?=$project['id']?>"><?=Lang::translate('New')?></a>
 			</div>
 			</td>
 		</tr>

@@ -45,6 +45,7 @@ function render_task($task, $today)
             if (!$today): ?>
             <a title="<?=Lang::translate('Move to today')?>" class="move_to_today xs-hide" href='#' data-id="<?=$task['id']?>"><?=Lang::translate('Today')?></a>
             <?php endif;?>
+        </div>
         </td>
     </tr>
 <?php
@@ -116,7 +117,7 @@ function render_week_nav($week_state, $week_user_total)
     
 
 ?>
-<h3 class="sub-menu"><?=Lang::translate('Week')?> <?=$week_state['week_number_delta']?></h3>
+<h3><?=Lang::translate('Week')?> <?=$week_state['week_number_delta']?></h3>
 <div class="action-links">
     <a href="/overview?week_delta=<?=$week_state['prev']?>"><?=Lang::translate('Show week')?> <?=$week_state['week_number_delta_prev']?></a>
     <a href="/overview?week_delta=<?=$week_state['next']?>"><?=Lang::translate('Show week')?> <?=$week_state['week_number_delta_next']?></a>
@@ -134,6 +135,7 @@ if ($week_state['current_day_state'] == '1') {
 }
 
 ?>
+<div class="clear"></div>
 <div class="action-links">
     <a href="/overview" class="move_exceeded_today" ><?=Lang::translate('Move exceeded to today')?></a>
     <?php if ($week_state['current'] == '0'): ?>

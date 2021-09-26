@@ -23,7 +23,7 @@ class Controller
     
 
     /**
-     * @route /account
+     * @route /account/signin
      * @verbs GET
      */
     

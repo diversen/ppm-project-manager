@@ -6,7 +6,7 @@ return [
 	'site_name' => 'PPM',
 	'timezone' => 'Europe/Copenhagen',
 	'login_redirect' => '/overview',
-	'logout_redirect' => '/account',
+	'logout_redirect' => '/account/signin',
 	'env' => 'dev',
 	'base_path' => dirname(__FILE__) . '/..',
 	'server_url' => 'http://localhost:8000',	

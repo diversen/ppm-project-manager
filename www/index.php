@@ -80,7 +80,7 @@ try {
 
     // Setup translations
     $l = new Lang();
-    $l->setSingleDir("App");
+    $l->setSingleDir(".");
     $l->loadLanguage($language);
 
     // Define all routes
