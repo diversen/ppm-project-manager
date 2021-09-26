@@ -20,7 +20,6 @@ Config::readConfig('./config');
 Config::readConfig('./config-locale');
 
 $cli = new MinimalCli();
-$user_command = new User();
 $cli->commands = [
     'user' => new User(),
     'db' => new DB(),
