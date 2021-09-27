@@ -7,10 +7,10 @@ use App\Account\Validate;
 use Diversen\Lang;
 use Pebble\Auth;
 use Pebble\Captcha;
-use Pebble\DBInstance;
-use Pebble\Flash;
 use Pebble\Config;
 use Pebble\CSRF;
+use Pebble\DBInstance;
+use Pebble\Flash;
 use Pebble\JSON;
 
 class Controller
@@ -20,16 +20,15 @@ class Controller
     {
         $this->auth = Auth::getInstance();
     }
-    
 
     /**
      * @route /account/signin
      * @verbs GET
      */
-    
+
     public function index()
     {
-        
+
         $this->auth = Auth::getInstance();
         if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];
@@ -88,7 +87,6 @@ class Controller
      */
     public function post_login()
     {
-
         usleep(100000);
 
         $validate = new Validate();
@@ -97,13 +95,13 @@ class Controller
             echo JSON::responseAddRequest($response);
             return;
         }
-        
+
         $response['error'] = true;
-        
+
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
-            
+
             $response['error'] = false;
             $response['redirect'] = \Pebble\Config::get('App.login_redirect');
 
@@ -159,7 +157,7 @@ class Controller
             Flash::setMessage(Lang::translate('The key supplied has already been used'), 'error');
         }
 
-        header('Location: /account');
+        header("Location: /account/signin");
 
     }
 
@@ -210,7 +208,7 @@ class Controller
             if (!$mail_res) {
                 $db->rollback();
                 $response['error'] = true;
-                $response['message'] =  Lang::translate('The system could not create an account. Please try again another time');
+                $response['message'] = Lang::translate('The system could not create an account. Please try again another time');
             } else {
                 $db->commit();
 
@@ -264,7 +262,6 @@ class Controller
 
         $row = $validate->getByEmail($_POST['email']);
 
-        
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');
             echo JSON::responseAddRequest($response);
@@ -323,7 +320,8 @@ class Controller
                 $this->auth->updatePassword($row['id'], $_POST['password']);
 
                 Flash::setMessage(Lang::translate('Your password has been updated'), 'success');
-                header("Location: /account");
+                
+                header("Location: /account/signin");
             }
 
             return;
@@ -333,12 +331,12 @@ class Controller
         if (!empty($row)) {
             $vars['error'] = 0;
         } else {
-            Flash::setMessage(Lang::translate('No such account connected to supplied key') , 'error');
+            Flash::setMessage(Lang::translate('No such account connected to supplied key'), 'error');
             $vars['error'] = 1;
         }
 
         $vars['token'] = (new CSRF())->getToken();
-        
+
         \Pebble\Template::render('App/Account/views/newpassword.php',
             $vars
         );

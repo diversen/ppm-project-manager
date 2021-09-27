@@ -45,7 +45,7 @@ use Diversen\Lang;
 
             const res = await Pebble.asyncPost('/account/post_recover', data);
             if (res.error === false) {
-                window.location.replace('/account');
+                window.location.replace('/account/signin');
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }
