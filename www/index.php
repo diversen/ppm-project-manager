@@ -44,7 +44,6 @@ try {
 
     // Make a log instance
     $log = new Log([
-        // 'stream' => 'php://stderr',
         'log_dir' => $base_path . '/logs',
     ]);
 
