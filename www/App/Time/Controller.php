@@ -12,19 +12,20 @@ class Controller extends AppCommon
 {
 
     public function __construct()
-	{
-		parent::__construct();
-	}
+    {
+        parent::__construct();
+    }
 
     /**
      * @route /time/add/:task_id
      * @verbs GET
      */
-    public function add($params) {
+    public function add($params)
+    {
 
         $app_acl = new AppACL();
-        $task = $app_acl->getTask($params['task_id']);            
-        $app_acl->authUserIsProjectOwner($task['project_id']); 
+        $task = $app_acl->getTask($params['task_id']);
+        $app_acl->authUserIsProjectOwner($task['project_id']);
 
         $project = (new ProjectModel())->getOne($task['project_id']);
         $time_rows = (new TimeModel())->getAll(['task_id' => $task['id']]);
@@ -35,7 +36,8 @@ class Controller extends AppCommon
             'time_rows' => $time_rows,
         ];
 
-        \Pebble\Template::render('App/Time/views/time_add.tpl.php',
+        \Pebble\Template::render(
+            'App/Time/views/time_add.tpl.php',
             $time_vars
         );
     }
@@ -44,21 +46,21 @@ class Controller extends AppCommon
      * @route /time/post
      * @verbs POST
      */
-    public function post() {
+    public function post()
+    {
 
         $response['error'] = false;
-        
+
         try {
 
             $app_acl = new AppACL();
-            $task = $app_acl->getTask($_POST['task_id']);            
-            $app_acl->authUserIsProjectOwner($task['project_id']);    
+            $task = $app_acl->getTask($_POST['task_id']);
+            $app_acl->authUserIsProjectOwner($task['project_id']);
 
             // POST time
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
             (new TimeModel())->create($post);
-
         } catch (\Exception $e) {
             $response['error'] = $e->getMessage();
             $response['post'] = $_POST;
@@ -67,14 +69,14 @@ class Controller extends AppCommon
         $response['project_redirect'] = '/project/view/' . $task['project_id'];
 
         echo JSON::responseAddRequest($response);
-
     }
 
     /**
      * @route /time/delete/:id
      * @verbs POST
      */
-    public function delete($params) {
+    public function delete($params)
+    {
 
         $response['error'] = false;
         $response['post'] = $_POST;
@@ -83,16 +85,14 @@ class Controller extends AppCommon
 
             $app_acl = new AppACL();
             $time = $app_acl->getTime($params['id']);
-            $app_acl->authUserIsProjectOwner($time['project_id']); 
-    
-            (new TimeModel())->delete(['id' => $params['id']]);
+            $app_acl->authUserIsProjectOwner($time['project_id']);
 
+            (new TimeModel())->delete(['id' => $params['id']]);
         } catch (\Exception $e) {
             $response['error'] = $e->getMessage();
             $response['post'] = $_POST;
         }
 
         echo JSON::responseAddRequest($response);
-        
     }
 }

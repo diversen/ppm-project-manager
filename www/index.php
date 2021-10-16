@@ -96,7 +96,6 @@ try {
     $router->addClass(App\Error\Controller::class);
 
     $router->run();
-
 } catch (TemplateException $e) {
 
     // If it is a template error then content most likely has been sent to the browser
@@ -109,18 +108,14 @@ try {
         $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
     }
     echo "<pre>" . $exception_str . "</pre>";
-
-
 } catch (NotFoundException $e) {
 
     LogInstance::get()->message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
     $error->notFound($e->getMessage());
-
 } catch (ForbiddenException $e) {
 
     LogInstance::get()->message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
     $error->forbidden($e->getMessage());
-
 } catch (Throwable $e) {
 
     // Log error to file
@@ -142,5 +137,4 @@ try {
     }
 
     $error->error($exception_str);
-
 }

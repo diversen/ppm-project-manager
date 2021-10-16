@@ -12,177 +12,177 @@ use App\AppCommon;
 
 class Controller extends AppCommon
 {
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * @route /task/add/:project_id
-	 * @verbs GET
-	 */
-	public function add($params)
-	{
+    /**
+     * @route /task/add/:project_id
+     * @verbs GET
+     */
+    public function add($params)
+    {
 
-		$this->app_acl->authUserIsProjectOwner($params['project_id']);
+        $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-		$project = (new ProjectModel())->getOne($params['project_id']);
-		$task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
-		$vars = [
-			'project' => $project,
-			'task' => $task,
-		];
+        $project = (new ProjectModel())->getOne($params['project_id']);
+        $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
+        $vars = [
+            'project' => $project,
+            'task' => $task,
+        ];
 
-		\Pebble\Template::render(
-			'App/Task/views/task_add.tpl.php',
-			$vars
-		);
-	}
+        \Pebble\Template::render(
+            'App/Task/views/task_add.tpl.php',
+            $vars
+        );
+    }
 
-	/**
-	 * @route /task/edit/:task_id
-	 * @verbs GET
-	 */
-	public function edit($params)
-	{
+    /**
+     * @route /task/edit/:task_id
+     * @verbs GET
+     */
+    public function edit($params)
+    {
 
-		$task = $this->app_acl->getTask($params['task_id']);
-		$this->app_acl->authUserIsProjectOwner($task['project_id']);
+        $task = $this->app_acl->getTask($params['task_id']);
+        $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-		$project = (new ProjectModel())->getOne($task['project_id']);
+        $project = (new ProjectModel())->getOne($task['project_id']);
 
-		$vars = [
-			'task' => $task,
-			'project' => $project
-		];
+        $vars = [
+            'task' => $task,
+            'project' => $project
+        ];
 
-		\Pebble\Template::render(
-			'App/Task/views/task_edit.tpl.php',
-			$vars
-		);
-	}
+        \Pebble\Template::render(
+            'App/Task/views/task_edit.tpl.php',
+            $vars
+        );
+    }
 
-	/**
-	 * @route /task/view/:task_id
-	 * @verbs GET
-	 */
-	public function view($params)
-	{
+    /**
+     * @route /task/view/:task_id
+     * @verbs GET
+     */
+    public function view($params)
+    {
 
-		$task = $this->app_acl->getTask($params['task_id']);
-		$this->app_acl->authUserIsProjectOwner($task['project_id']);
+        $task = $this->app_acl->getTask($params['task_id']);
+        $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-		$project = (new ProjectModel())->getOne($task['project_id']);
+        $project = (new ProjectModel())->getOne($task['project_id']);
 
-		$vars = [
-			'task' => $task,
-			'project' => $project
-		];
+        $vars = [
+            'task' => $task,
+            'project' => $project
+        ];
 
-		\Pebble\Template::render(
-			'App/Task/views/task_view.tpl.php',
-			$vars
-		);
-	}
+        \Pebble\Template::render(
+            'App/Task/views/task_view.tpl.php',
+            $vars
+        );
+    }
 
-	/**
-	 * @route /task/post
-	 * @verbs POST
-	 */
-	public function post()
-	{
+    /**
+     * @route /task/post
+     * @verbs POST
+     */
+    public function post()
+    {
 
-		$response['error'] = false;
-		try {
+        $response['error'] = false;
+        try {
 
-			$this->app_acl->authUserIsProjectOwner($_POST['project_id']);
+            $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
 
-			$_POST['auth_id'] = $this->app_acl->getAuthId();
+            $_POST['auth_id'] = $this->app_acl->getAuthId();
 
-			$task_model = new TaskModel();
-			$task_model->create($_POST);
-			$response['project_redirect'] = "/project/view/" . $_POST['project_id'];
-		} catch (\Exception $e) {
-			$response['error'] = $e->getMessage();
-		}
+            $task_model = new TaskModel();
+            $task_model->create($_POST);
+            $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
+        } catch (\Exception $e) {
+            $response['error'] = $e->getMessage();
+        }
 
-		echo JSON::responseAddRequest($response);
-	}
+        echo JSON::responseAddRequest($response);
+    }
 
-	/**
-	 * @route /task/put/:task_id
-	 * @verbs POST
-	 */
-	public function put($params)
-	{
+    /**
+     * @route /task/put/:task_id
+     * @verbs POST
+     */
+    public function put($params)
+    {
 
-		$response['error'] = false;
-		$response['post'] = $_POST;
+        $response['error'] = false;
+        $response['post'] = $_POST;
 
-		try {
+        try {
 
-			$task = $this->app_acl->getTask($params['task_id']);
-			$this->app_acl->authUserIsProjectOwner($task['project_id']);
+            $task = $this->app_acl->getTask($params['task_id']);
+            $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-			// 'now' updates a tasks begin_date to 'today'
-			// Used on overview page
-			// It unsets the 'begin_date' because if there is no date then 'today' date will be used. 
-			// If 'end_date' < 'begin_date' then 'end_date' will be updated to the same as 'begin_date' 
-			if (isset($_POST['now'])) {
-				unset($task['begin_date']);
-				$_POST = $task;
-			}
+            // 'now' updates a tasks begin_date to 'today'
+            // Used on overview page
+            // It unsets the 'begin_date' because if there is no date then 'today' date will be used. 
+            // If 'end_date' < 'begin_date' then 'end_date' will be updated to the same as 'begin_date' 
+            if (isset($_POST['now'])) {
+                unset($task['begin_date']);
+                $_POST = $task;
+            }
 
-			(new TaskModel())->update($_POST, ['id' => $params['task_id']]);
-			$response['project_redirect'] = "/project/view/" . $task['project_id'];
-		} catch (\Exception $e) {
-			$response['error'] = $e->getMessage();
-		}
+            (new TaskModel())->update($_POST, ['id' => $params['task_id']]);
+            $response['project_redirect'] = "/project/view/" . $task['project_id'];
+        } catch (\Exception $e) {
+            $response['error'] = $e->getMessage();
+        }
 
-		echo JSON::responseAddRequest($response);
-	}
+        echo JSON::responseAddRequest($response);
+    }
 
-	/**
-	 * @route /task/put/exceeded/today
-	 * @verbs POST
-	 */
-	public function move_exceeded_today()
-	{
+    /**
+     * @route /task/put/exceeded/today
+     * @verbs POST
+     */
+    public function move_exceeded_today()
+    {
 
-		$this->app_acl->isAuthenticatedOrThrow();
-		$response['error'] = false;
+        $this->app_acl->isAuthenticatedOrThrow();
+        $response['error'] = false;
 
-		try {
+        try {
 
-			(new TaskModel())->setExceededUserTasksToday($this->app_acl->getAuthId());
-			$response['project_redirect'] = '/overview';
-		} catch (\Exception $e) {
-			$response['error'] = $e->getMessage();
-		}
+            (new TaskModel())->setExceededUserTasksToday($this->app_acl->getAuthId());
+            $response['project_redirect'] = '/overview';
+        } catch (\Exception $e) {
+            $response['error'] = $e->getMessage();
+        }
 
-		echo JSON::responseAddRequest($response);
-	}
+        echo JSON::responseAddRequest($response);
+    }
 
-	/**
-	 * @route /task/delete/:task_id
-	 * @verbs POST
-	 */
-	public function delete($params)
-	{
+    /**
+     * @route /task/delete/:task_id
+     * @verbs POST
+     */
+    public function delete($params)
+    {
 
-		$response['error'] = false;
+        $response['error'] = false;
 
-		try {
+        try {
 
-			$task = $this->app_acl->getTask($params['task_id']);
-			$this->app_acl->authUserIsProjectOwner($task['project_id']);
+            $task = $this->app_acl->getTask($params['task_id']);
+            $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-			(new TaskModel())->delete($params['task_id']);
-			$response['project_redirect'] = "/project/view/" . $task['project_id'];
-		} catch (\Exception $e) {
-			$response['error'] = $e->getMessage();
-		}
+            (new TaskModel())->delete($params['task_id']);
+            $response['project_redirect'] = "/project/view/" . $task['project_id'];
+        } catch (\Exception $e) {
+            $response['error'] = $e->getMessage();
+        }
 
-		echo JSON::responseAddRequest($response);
-	}
+        echo JSON::responseAddRequest($response);
+    }
 }
