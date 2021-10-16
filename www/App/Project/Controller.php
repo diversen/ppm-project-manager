@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Project;
 
@@ -12,157 +14,155 @@ use App\AppCommon;
 class Controller extends AppCommon
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    /**
-     * @route /project
-     * @verbs GET
-     */
-    public function index()
-    {
+	/**
+	 * @route /project
+	 * @verbs GET
+	 */
+	public function index()
+	{
 
-        $this->app_acl->isAuthenticatedOrThrow();
+		$this->app_acl->isAuthenticatedOrThrow();
 
-        $template_data = (new ProjectModel())->getIndexData($this->app_acl->getAuthId());
-        $template_data['title'] = Lang::translate('All projects');
+		$template_data = (new ProjectModel())->getIndexData($this->app_acl->getAuthId());
+		$template_data['title'] = Lang::translate('All projects');
 
-        Template::render('App/Project/views/project_index.tpl.php',
-            $template_data
-        );
+		Template::render(
+			'App/Project/views/project_index.tpl.php',
+			$template_data
+		);
+	}
 
-    }
+	/**
+	 * @route /project/view/:project_id
+	 * @verbs GET
+	 */
+	public function view(array $params)
+	{
 
-    /**
-     * @route /project/view/:project_id
-     * @verbs GET
-     */
-    public function view(array $params)
-    {
+		$this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-        $this->app_acl->authUserIsProjectOwner($params['project_id']);
+		$template_data = (new ProjectModel())->getViewData($params);
+		$template_data['title'] = Lang::translate('View project');
 
-        $template_data = (new ProjectModel())->getViewData($params);
-        $template_data['title'] = Lang::translate('View project');
+		Template::render(
+			'App/Project/views/project_view.tpl.php',
+			$template_data
+		);
+	}
 
-        Template::render('App/Project/views/project_view.tpl.php',
-            $template_data
-        );
-    }
+	/**
+	 * @route /project/add
+	 * @verbs GET
+	 */
+	public function add()
+	{
+		$this->app_acl->isAuthenticatedOrThrow();
 
-    /**
-     * @route /project/add
-     * @verbs GET
-     */
-    public function add()
-    {
-        $this->app_acl->isAuthenticatedOrThrow();
+		$form_vars = [
+			'title' => Lang::translate('Add project'),
+		];
 
-        $form_vars = [
-            'title' => Lang::translate('Add project'),
-        ];
+		Template::render(
+			'App/Project/views/project_add.tpl.php',
+			$form_vars
+		);
+	}
 
-        Template::render('App/Project/views/project_add.tpl.php',
-            $form_vars
-        );
+	/**
+	 * @route /project/edit/:project_id
+	 * @verbs GET
+	 */
+	public function edit($params)
+	{
+		$this->app_acl->authUserIsProjectOwner($params['project_id']);
+		$project = (new ProjectModel())->getOne($params['project_id']);
 
-    }
+		$form_vars = [
+			'title' => Lang::translate('Edit project'),
+			'project' => $project,
+		];
 
-    /**
-     * @route /project/edit/:project_id
-     * @verbs GET
-     */
-    public function edit($params)
-    {
-        $this->app_acl->authUserIsProjectOwner($params['project_id']);
-        $project = (new ProjectModel())->getOne($params['project_id']);
+		Template::render(
+			'App/Project/views/project_edit.tpl.php',
+			$form_vars
+		);
+	}
 
-        $form_vars = [
-            'title' => Lang::translate('Edit project'),
-            'project' => $project,
-        ];
+	/**
+	 * @route /project/post
+	 * @verbs POST
+	 */
+	public function post()
+	{
 
-        Template::render('App/Project/views/project_edit.tpl.php',
-            $form_vars
-        );
+		$response['error'] = false;
 
-    }
+		try {
+			$this->app_acl->isAuthenticatedOrThrow();
+			$_POST['auth_id'] = $this->app_acl->getAuthId();
 
-    /**
-     * @route /project/post
-     * @verbs POST
-     */
-    public function post()
-    {
+			$project_model = new ProjectModel();
+			$project_model->create($_POST);
+			$response['project_redirect'] = "/project";
+		} catch (Exception $e) {
+			$response['error'] = $e->getMessage();
+			$response['post'] = $_POST;
+		}
 
-        $response['error'] = false;
+		echo JSON::responseAddRequest($response);
+	}
 
-        try {
-            $this->app_acl->isAuthenticatedOrThrow();
-            $_POST['auth_id'] = $this->app_acl->getAuthId();
+	/**
+	 * @route /project/put/:project_id
+	 * @verbs POST
+	 */
+	public function put($params)
+	{
 
-            $project_model = new ProjectModel();
-            $project_model->create($_POST);
-            $response['project_redirect'] = "/project";
+		$response['error'] = false;
 
-        } catch (Exception $e) {
-            $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
-        }
+		try {
 
-        echo JSON::responseAddRequest($response);
-    }
+			$this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-    /**
-     * @route /project/put/:project_id
-     * @verbs POST
-     */
-    public function put($params)
-    {
+			$project_model = new ProjectModel();
+			$project_model->update($_POST, $params['project_id']);
 
-        $response['error'] = false;
-        
-        try {
+			$response['project_redirect'] = "/project";
+		} catch (Exception $e) {
+			$response['error'] = $e->getMessage();
+			$response['post'] = $_POST;
+		}
 
-            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+		echo JSON::responseAddRequest($response);
+	}
 
-            $project_model = new ProjectModel();
-            $project_model->update($_POST, $params['project_id']);
-            
-            $response['project_redirect'] = "/project";
+	/**
+	 * @route /project/delete/:project_id
+	 * @verbs POST
+	 */
+	public function delete($params)
+	{
 
-        } catch (Exception $e) {
-            $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
-        }
+		$response['error'] = false;
 
-        echo JSON::responseAddRequest($response);
-    }
+		try {
 
-    /**
-     * @route /project/delete/:project_id
-     * @verbs POST
-     */
-    public function delete($params)
-    {
+			$this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-        $response['error'] = false;
-        
-        try {
+			$project_model = new ProjectModel();
+			$project_model->delete($params['project_id']);
+			$response['project_redirect'] = "/project";
+		} catch (Exception $e) {
+			$response['error'] = $e->getMessage();
+			$response['post'] = $_POST;
+		}
 
-            $this->app_acl->authUserIsProjectOwner($params['project_id']);
-
-            $project_model = new ProjectModel();
-            $project_model->delete($params['project_id']);
-            $response['project_redirect'] = "/project";
-
-        } catch (Exception $e) {
-            $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
-        }
-
-        echo JSON::responseAddRequest($response);
-    }
+		echo JSON::responseAddRequest($response);
+	}
 }
