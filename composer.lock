@@ -100,12 +100,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "bee2d0b9fa02fec014c1985ff786a9f3b6df05fc"
+                "reference": "7ee80acd824abe56e10dda81fad2014f93b6d06a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/bee2d0b9fa02fec014c1985ff786a9f3b6df05fc",
-                "reference": "bee2d0b9fa02fec014c1985ff786a9f3b6df05fc",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/7ee80acd824abe56e10dda81fad2014f93b6d06a",
+                "reference": "7ee80acd824abe56e10dda81fad2014f93b6d06a",
                 "shasum": ""
             },
             "require": {
@@ -148,7 +148,7 @@
                 "issues": "https://github.com/diversen/pebble-framework/issues",
                 "source": "https://github.com/diversen/pebble-framework/tree/main"
             },
-            "time": "2021-10-16T11:06:57+00:00"
+            "time": "2021-10-16T11:14:37+00:00"
         },
         {
             "name": "diversen/simple-php-translation",

@@ -1,10 +1,8 @@
-<?php
+<?php declare (strict_types = 1);
 
 namespace App\Settings;
 
-
 use Diversen\Lang;
-use Pebble\Auth;
 use Pebble\ACL;
 use App\Settings\SettingsModel;
 use Pebble\JSON;
@@ -14,6 +12,9 @@ use Pebble\Flash;
 class Controller
 {
 
+    public function __construct() {
+        $this->acl = new ACL();
+    }
     /**
      * @route /settings
      * @verbs GET
@@ -21,11 +22,10 @@ class Controller
     public function index()
     {
 
-        (new ACL())->isAuthenticatedOrThrow();
+        $this->acl->isAuthenticatedOrThrow();
 
-        $settings = new SettingsModel;
-        $auth_id = Auth::getInstance()->getAuthId();
-        $user_settings = $settings->getUserSetting($auth_id, 'profile');
+        $settings = new SettingsModel();
+        $user_settings = $settings->getUserSetting($this->acl->getAuthId(), 'profile');
 
         $vars['user_settings'] = $user_settings;
         \Pebble\Template::render('App/Settings/views/settings.tpl.php', $vars);
@@ -42,7 +42,7 @@ class Controller
             throw new NotFoundException;
         }
 
-        $settings = new SettingsModel;
+        $settings = new SettingsModel();
         $user = $settings->getUserSetting($params['auth_id'], 'profile');
 
         \Pebble\Template::render('App/Settings/views/user.tpl.php', ['user' => $user]);
@@ -55,11 +55,11 @@ class Controller
     public function put()
     {
 
-        (new ACL())->isAuthenticatedOrThrow();
+        $this->acl->isAuthenticatedOrThrow();
 
         $settings = new SettingsModel();
         $post = $_POST;
-        $auth_id = Auth::getInstance()->getAuthId();
+        $auth_id = $this->acl->getAuthId();
 
         $response['error'] = false;
 

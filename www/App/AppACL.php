@@ -3,19 +3,16 @@
 namespace App;
 
 use Pebble\ACL;
-use Pebble\Auth;
 use App\Task\TaskModel;
 use App\Time\TimeModel;
 use Diversen\Lang;
 use Pebble\Exception\NotFoundException;
+use Exception;
 
-class AppACL
+class AppACL extends ACL 
 {
 
-    public function __construct()
-    {
-        $this->auth_id = Auth::getInstance()->getAuthId();
-    }
+    public function __construct(){}
 
     /**
      * Checks if a current authenticated user is the owner of a project
@@ -27,10 +24,28 @@ class AppACL
             'entity' => 'project',
             'entity_id' => $project_id,
             'right' => 'owner',
-            'auth_id' => $this->auth_id,
+            'auth_id' => $this->getAuthId(),
         ];
 
-        (new ACL())->hasAccessRightsOrThrow($access_ary, Lang::translate('You are not the owner of this project'));
+        $this->hasAccessRightsOrThrow($access_ary, Lang::translate('You are not the owner of this project'));
+    }
+
+
+    public function setProjectRights($project_id) {
+
+        $access_rights = [
+            'entity' => 'project',
+            'entity_id' => $project_id,
+            'right' => 'owner',
+            'auth_id' => $this->getAuthId(),
+        ];
+
+        return $this->setAccessRights($access_rights);
+    }
+
+    public function removeProjectRights ($project_id) {
+        $access_rights = ['entity' => 'project', 'entity_id' => $project_id];
+        return $this->removeAccessRights($access_rights);
     }
 
     /**
@@ -55,7 +70,7 @@ class AppACL
     {
         $time = (new TimeModel())->getOne(['id' => $time_id]);
         if (empty($time)) {
-            throw new \Exception(Lang::translate('There is no such time ID'));
+            throw new Exception(Lang::translate('There is no such time ID'));
         }
         return $time;
     }

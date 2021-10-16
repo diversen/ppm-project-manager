@@ -3,12 +3,18 @@
 namespace App\Time;
 
 use App\AppACL;
+use App\AppCommon;
 use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use Pebble\JSON;
 
-class Controller
+class Controller extends AppCommon
 {
+
+    public function __construct()
+	{
+		parent::__construct();
+	}
 
     /**
      * @route /time/add/:task_id

@@ -5,19 +5,16 @@ namespace App\Project;
 use App\Project\ProjectModel;
 use Diversen\Lang;
 use Exception;
-use Pebble\ACL;
-use Pebble\Auth;
 use Pebble\Template;
 use Pebble\JSON;
-use App\AppACL;
+use App\AppCommon;
 
-class Controller
+class Controller extends AppCommon
 {
 
     public function __construct()
     {
-        $auth = Auth::getInstance();
-        $this->auth_id = $auth->getAuthId();
+        parent::__construct();
     }
 
     /**
@@ -27,9 +24,9 @@ class Controller
     public function index()
     {
 
-        (new ACL())->isAuthenticatedOrThrow();
+        $this->app_acl->isAuthenticatedOrThrow();
 
-        $template_data = (new ProjectModel())->getIndexData($this->auth_id);
+        $template_data = (new ProjectModel())->getIndexData($this->app_acl->getAuthId());
         $template_data['title'] = Lang::translate('All projects');
 
         Template::render('App/Project/views/project_index.tpl.php',
@@ -45,8 +42,7 @@ class Controller
     public function view(array $params)
     {
 
-        $app_acl = new AppAcl;
-        $app_acl->authUserIsProjectOwner($params['project_id']);
+        $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
         $template_data = (new ProjectModel())->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
@@ -62,7 +58,7 @@ class Controller
      */
     public function add()
     {
-        (new ACL())->isAuthenticatedOrThrow();
+        $this->app_acl->isAuthenticatedOrThrow();
 
         $form_vars = [
             'title' => Lang::translate('Add project'),
@@ -80,9 +76,7 @@ class Controller
      */
     public function edit($params)
     {
-        $app_acl = new AppAcl;
-        $app_acl->authUserIsProjectOwner($params['project_id']);
-
+        $this->app_acl->authUserIsProjectOwner($params['project_id']);
         $project = (new ProjectModel())->getOne($params['project_id']);
 
         $form_vars = [
@@ -106,8 +100,8 @@ class Controller
         $response['error'] = false;
 
         try {
-            (new ACL())->isAuthenticatedOrThrow();
-            $_POST['auth_id'] = $this->auth_id;
+            $this->app_acl->isAuthenticatedOrThrow();
+            $_POST['auth_id'] = $this->app_acl->getAuthId();
 
             $project_model = new ProjectModel();
             $project_model->create($_POST);
@@ -132,11 +126,11 @@ class Controller
         
         try {
 
-            $app_acl = new AppAcl;
-            $app_acl->authUserIsProjectOwner($params['project_id']);
+            $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
             $project_model = new ProjectModel();
             $project_model->update($_POST, $params['project_id']);
+            
             $response['project_redirect'] = "/project";
 
         } catch (Exception $e) {
@@ -158,8 +152,7 @@ class Controller
         
         try {
 
-            $app_acl = new AppAcl;
-            $app_acl->authUserIsProjectOwner($params['project_id']);
+            $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
             $project_model = new ProjectModel();
             $project_model->delete($params['project_id']);
