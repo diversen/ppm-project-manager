@@ -18,7 +18,7 @@ use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\NotFoundException;
 use Pebble\Exception\TemplateException;
 use Pebble\Headers;
-use Pebble\Log;
+use Pebble\Log\File as Log;
 use Pebble\LogInstance;
 use Pebble\Router;
 use Pebble\Session;
