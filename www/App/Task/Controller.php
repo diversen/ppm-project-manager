@@ -7,14 +7,19 @@ namespace App\Task;
 use App\Project\ProjectModel;
 use App\Task\TaskModel;
 use Pebble\JSON;
-use App\AppACL;
 use App\AppCommon;
+use Exception;
+use Pebble\LogInstance;
 
 class Controller extends AppCommon
 {
+    public $project_model;
+    public $task_model;
     public function __construct()
     {
         parent::__construct();
+        $this->project_model = new ProjectModel();
+        $this->task_model = new TaskModel();
     }
 
     /**
@@ -26,7 +31,7 @@ class Controller extends AppCommon
 
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-        $project = (new ProjectModel())->getOne($params['project_id']);
+        $project = $this->project_model->getOne($params['project_id']);
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
         $vars = [
             'project' => $project,
@@ -49,11 +54,13 @@ class Controller extends AppCommon
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-        $project = (new ProjectModel())->getOne($task['project_id']);
+        $project = $this->project_model->getOne($task['project_id']);
+        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()]);
 
         $vars = [
             'task' => $task,
-            'project' => $project
+            'project' => $project,
+            'all_projects' => $projects,
         ];
 
         \Pebble\Template::render(
@@ -72,7 +79,7 @@ class Controller extends AppCommon
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-        $project = (new ProjectModel())->getOne($task['project_id']);
+        $project = $this->project_model->getOne($task['project_id']);
 
         $vars = [
             'task' => $task,
@@ -102,7 +109,7 @@ class Controller extends AppCommon
             $task_model = new TaskModel();
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response['error'] = $e->getMessage();
         }
 
@@ -133,9 +140,12 @@ class Controller extends AppCommon
                 $_POST = $task;
             }
 
-            (new TaskModel())->update($_POST, ['id' => $params['task_id']]);
+            // Is a new project chosen for the task
+            $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
+
+            $this->task_model->update($_POST, ['id' => $params['task_id']]);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response['error'] = $e->getMessage();
         }
 
@@ -154,9 +164,9 @@ class Controller extends AppCommon
 
         try {
 
-            (new TaskModel())->setExceededUserTasksToday($this->app_acl->getAuthId());
+            $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['project_redirect'] = '/overview';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response['error'] = $e->getMessage();
         }
 
@@ -177,9 +187,9 @@ class Controller extends AppCommon
             $task = $this->app_acl->getTask($params['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-            (new TaskModel())->delete($params['task_id']);
+            $this->task_model->delete($params['task_id']);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $response['error'] = $e->getMessage();
         }
 

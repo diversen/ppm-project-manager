@@ -13,7 +13,9 @@ $is_selected = function ($priority, $value) {
         return 'selected';
     }
     return '';
-}
+};
+
+
 
 ?>
 
@@ -31,6 +33,18 @@ $is_selected = function ($priority, $value) {
     <label for="note"><?= Lang::translate('Add note') ?></label>
     <textarea name="note" placeholder="<?= Lang::translate('Add an optional task note') ?>"><?= $task['note'] ?></textarea>
 
+    <label for="project_id"><?= Lang::translate('Project') ?></label>
+    <select name="project_id">
+    <?php
+    foreach($all_projects as $_project): ?>
+    <option value="<?=$_project['id']?>" <?= $is_selected($_project['id'], $project['id']) ?>><?= $_project['title'] ?></option>
+    <?php
+
+    endforeach;
+    
+    ?>
+    </select>
+    <label for="priority"><?= Lang::translate('Priority') ?></label>
     <select name="priority">
         <option value="4" <?= $is_selected('4', $task['priority']) ?>><?= Lang::translate('Urgent') ?></option>
         <option value="3" <?= $is_selected('3', $task['priority']) ?>><?= Lang::translate('High') ?></option>
