@@ -105,11 +105,7 @@ $is_selected = function ($priority, $value) {
             spinner.classList.toggle('hidden');
 
             if (res.error === false) {
-                if (return_to) {
-                    window.location.replace(return_to);
-                } else {
-                    window.location.replace(res.project_redirect);
-                }
+                window.location.replace(res.project_redirect);
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }
