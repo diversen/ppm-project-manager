@@ -12,7 +12,9 @@ use Exception;
 class AppACL extends ACL 
 {
 
-    public function __construct(){}
+    public function __construct(){
+        parent::__construct();
+    }
 
     /**
      * Checks if a current authenticated user is the owner of a project
