@@ -14,7 +14,7 @@ It has the following features:
 
 # Usage
 
-You can try it or use it on https://ppm.10kilobyte.com/account
+You can try it or use it on https://ppm.10kilobyte.com/
 
 It only works with `await / async` and some other 'modern' features enabled in the browser. 
 
