@@ -56,23 +56,24 @@ use \Diversen\Lang;
 <script type="module">
 
     import {Pebble} from '/App/js/pebble.js';
+
+    const title = document.getElementById('title');
+    title.focus();
     
-    var spinner = document.querySelector('.loadingspinner');
+    const spinner = document.querySelector('.loadingspinner');
     document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById('task_submit').addEventListener("click", async function (e) {
             e.preventDefault();
             spinner.classList.toggle('hidden');
 
-            var form = document.getElementById('task_add');
-            var data = new FormData(form);
+            const form = document.getElementById('task_add');
+            const data = new FormData(form);
             data.append('status', '1');
 
-
-            let res;
-            let return_to = Pebble.getQueryVariable('return_to');
+            const return_to = Pebble.getQueryVariable('return_to');
 
             try {
-                res = await Pebble.asyncPost('/task/post', data);
+                const res = await Pebble.asyncPost('/task/post', data);
                 spinner.classList.toggle('hidden');
 
                 if (res.error === false) {

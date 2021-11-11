@@ -40,7 +40,11 @@ if ($project['status'] == 1) {
     import {
         Pebble
     } from '/App/js/pebble.js';
-    var spinner = document.querySelector('.loadingspinner');
+
+    const title = document.getElementById('title');
+    title.focus();
+    
+    const spinner = document.querySelector('.loadingspinner');
 
     async function updateProject() {
         spinner.classList.toggle('hidden');

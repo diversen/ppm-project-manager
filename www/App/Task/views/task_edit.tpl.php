@@ -89,7 +89,11 @@ $is_selected = function ($priority, $value) {
         Pebble
     } from '/App/js/pebble.js';
 
-    var spinner = document.querySelector('.loadingspinner');
+    const return_to = Pebble.getQueryVariable('return_to');
+    const title = document.getElementById('title');
+    title.focus();
+
+    const spinner = document.querySelector('.loadingspinner');
 
     async function deleteTask(status) {
         spinner.classList.toggle('hidden');
@@ -105,7 +109,11 @@ $is_selected = function ($priority, $value) {
             spinner.classList.toggle('hidden');
 
             if (res.error === false) {
-                window.location.replace(res.project_redirect);
+                if (return_to) {
+                    window.location.replace(return_to);
+                } else {
+                    window.location.replace(res.project_redirect);
+                }
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }
@@ -130,7 +138,6 @@ $is_selected = function ($priority, $value) {
         }
 
         const task_id = document.getElementById('id').value;
-        const return_to = Pebble.getQueryVariable('return_to');
 
         try {
             const res = await Pebble.asyncPost('/task/put/' + task_id, data);

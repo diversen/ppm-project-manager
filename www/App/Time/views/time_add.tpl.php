@@ -81,7 +81,10 @@ require 'App/templates/flash.tpl.php';
         Pebble
     } from '/App/js/pebble.js';
 
-    let spinner = document.querySelector('.loadingspinner');
+    const minutes = document.getElementById('minutes');
+    minutes.focus();
+
+    const spinner = document.querySelector('.loadingspinner');
 
     document.addEventListener('click', async function(event) {
 
@@ -129,9 +132,8 @@ require 'App/templates/flash.tpl.php';
             const data = new FormData();
             const id = item.getAttribute('data-id')
             const return_to = Pebble.getQueryVariable('return_to');
-
-
             const confirm_res = confirm('<?= Lang::translate('Are you sure you want to delete time entry?') ?>');
+            
             if (confirm_res) {
 
                 spinner.classList.toggle('hidden');

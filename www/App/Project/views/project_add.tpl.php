@@ -24,8 +24,11 @@ require 'App/templates/header.tpl.php';
         Pebble
     } from '/App/js/pebble.js';
 
-    let return_to = Pebble.getQueryVariable('return_to');
-    var spinner = document.querySelector('.loadingspinner');
+    const title = document.getElementById('title');
+    title.focus();
+
+    const return_to = Pebble.getQueryVariable('return_to');
+    const spinner = document.querySelector('.loadingspinner');
 
     var elem = document.getElementById('project_submit');
     elem.addEventListener('click', async function(e) {
