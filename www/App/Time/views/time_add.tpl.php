@@ -30,6 +30,10 @@ require 'App/templates/flash.tpl.php';
 
 </form>
 
+<?php
+
+function output_time_table ($time_rows) { ?>
+
 <div>
     <table>
         <thead>
@@ -75,6 +79,17 @@ require 'App/templates/flash.tpl.php';
         </tbody>
     </table>
 </div>
+
+<?php
+
+}
+
+if(!empty($time_rows)) {
+    output_time_table($time_rows);
+}
+
+?>
+
 
 <script type="module">
     import {
