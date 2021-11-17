@@ -5,4 +5,4 @@
     <button id="timer_reset" class="button-small" href="#">Reset</button>
 </div>
 
-<script src="/App/js/timer.js"></script>
+<script src="/App/js/timer.js?v=1"></script>

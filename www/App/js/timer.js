@@ -116,9 +116,10 @@ function Timer() {
     }
 
     function resetTimer() {
-        timer_start.removeAttribute('disabled')
+        timer_start.removeAttribute('disabled');
         timer_reset.setAttribute('disabled', true);
         timer_pause.setAttribute('disabled', true);
+        timer_pause.innerText = 'Pause';
 
         sessionStorage.setItem('timer_state', 'stopped');
 

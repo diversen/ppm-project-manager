@@ -37,9 +37,9 @@ require 'App/templates/helpers.php';
     <?php 
     
     if ($use_theme_dark_mode): ?>
-    <link rel="stylesheet" href="/App/templates/css/water/dark.min.css">
+    <link rel="stylesheet" id="js-startup-stylesheet" href="/App/templates/css/water/dark.min.css">
     <?php else: ?>
-    <link rel="stylesheet" href="/App/templates/css/water/light.min.css">
+    <link rel="stylesheet" id="js-startup-stylesheet" href="/App/templates/css/water/light.min.css">
     <?php endif; ?>
 
     <link rel="manifest" href="/App/templates/assets/manifest.json">
@@ -50,6 +50,7 @@ require 'App/templates/helpers.php';
     </script>
 </head>
 <body>
+    <div class="page">
 
 <?php
 

@@ -106,7 +106,6 @@ $LANG['Are you sure want to delete this project? All tasks and all time entries 
 $LANG['Your have no projects yet'] = 'Du har endnu ingen projekter';
 $LANG['Date'] = 'Dato';
 $LANG['Time used'] = 'Brugt tid';
-$LANG['New task '] = 'Ny opgave';
 $LANG['View inactive projects'] = 'Se inaktive projekter';
 $LANG['Total time used on all projects'] = 'Samlet tid brugt på alle projekter';
 $LANG['Add task'] = 'Tilføj opgave';

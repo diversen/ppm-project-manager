@@ -205,9 +205,13 @@ table {
     background-color: #eee;;
 }
 
+.page {
+    min-height: calc(100vh - 100px);
+}
 
-.clear {
-    padding: 5px;
+.footer {
+    background-color: var(--background-alt);
+
 }
 
 

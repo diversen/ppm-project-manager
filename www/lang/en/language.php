@@ -211,7 +211,7 @@ $LANG['Title'] = 'Title';
 $LANG['Date'] = 'Date';
 $LANG['Time used'] = 'Time used';
 $LANG['Edit'] = 'Edit';
-$LANG['New task '] = 'New task ';
+$LANG['New'] = 'New';
 $LANG['View inactive projects'] = 'View inactive projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
 
@@ -287,6 +287,8 @@ $LANG['Title'] = 'Title';
 $LANG['Enter title'] = 'Enter title';
 $LANG['Add note'] = 'Add note';
 $LANG['Add an optional task note'] = 'Add an optional task note';
+$LANG['Project'] = 'Project';
+$LANG['Priority'] = 'Priority';
 $LANG['Urgent'] = 'Urgent';
 $LANG['High'] = 'High';
 $LANG['Normal'] = 'Normal';
