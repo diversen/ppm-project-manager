@@ -10,6 +10,7 @@ use App\Cal;
 use Diversen\Lang;
 use Exception;
 use DateTime;
+use PDOException;
 use Pebble\Exception\NotFoundException;
 
 class TaskModel extends AppCommon
@@ -77,11 +78,11 @@ class TaskModel extends AppCommon
         return $tasks;
     }
 
-    public function getOne($id)
+    public function getOne($where)
     {
 
         $time_model = new TimeModel();
-        $task = $this->db->getOne('task', ['id' => $id]);
+        $task = $this->db->getOne('task', $where);
 
         if (empty($task)) {
             throw new NotFoundException(Lang::translate('There is no such task'));
@@ -123,7 +124,19 @@ class TaskModel extends AppCommon
     {
         $post = $this->sanitize($post);
         $this->validate($post);
-        return $this->db->update('task', $post, $where);
+        $task = $this->getOne($where);
+    
+        $this->db->beginTransaction();
+        
+        if ($task['project_id'] !== $post['project_id']) {
+            $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
+        }
+        
+        
+        $this->db->update('task', $post, $where);
+        return $this->db->commit();
+        
+
     }
 
     public function close(string $task_id)

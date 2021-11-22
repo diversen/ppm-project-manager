@@ -57,7 +57,7 @@ class AppACL extends ACL
     {
         
         // Check if there is a task
-        $task = (new TaskModel())->getOne($task_id);
+        $task = (new TaskModel())->getOne(['id' => $task_id]);
         if (empty($task)) {
             throw new NotFoundException(Lang::translate('There is no such task ID'));
         }
