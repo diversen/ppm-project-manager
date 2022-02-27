@@ -5,14 +5,17 @@ namespace App\Google;
 use \Pebble\Config;
 use \Pebble\Auth;
 use \Pebble\Flash;
-use \Pebble\Random;
+use \Pebble\SessionTimed;
 use \Diversen\Lang;
 use \App\Google\GoogleUtils;
+use \App\TwoFactor\TwoFactorModel;
 
 class Controller
 {
-
+    
+    private $auth;
     public function __construct () {
+        $this->auth = Auth::getInstance();
         $this->login_redirect = Config::get('App.login_redirect');
         $this->logout_redirect = Config::get('App.logout_redirect');
     }
@@ -22,9 +25,8 @@ class Controller
      * @verbs GET
      */
     public function signout () {
-
-        $auth = Auth::getInstance();
-        $auth->unlinkCurrentCookie();
+           
+        $this->auth->unlinkCurrentCookie();
         $location = "Location: " . $this->logout_redirect;
         header($location);
 
@@ -35,15 +37,13 @@ class Controller
      * @verbs GET
      */
     public function index()
-    {
+    {   
+    
+        if ($this->auth->isAuthenticated()) {
 
-        $auth = Auth::getInstance();
-        
-        if ($auth->isAuthenticated()) {
-
-            $twig_vars = [];
+            $vars = [];
             \Pebble\Template::render('App/Google/sign_out.tpl.php',
-                $twig_vars
+                $vars
             );
 
             return;
@@ -66,53 +66,73 @@ class Controller
                     Flash::setMessage(Lang::translate('Error trying to signin using Google'), 'error');
                     header("Location: " . $this->login_redirect);
                     return;
-                }
+                }   
             } else {
-                Flash::setMessage(Lang::translate('No auth token. Try again later'), 'error');
+                Flash::setMessage(Lang::translate('No ID token. Try again later'), 'error');
                 header("Location: " . $this->login_redirect);
                 return;
             }
         } else {
             $authUrl = $client->createAuthUrl();
-            $twig_vars = ['auth_url' => $authUrl];
+            $vars = ['auth_url' => $authUrl];
             \Pebble\Template::render('App/Google/sign_in.tpl.php',
-                $twig_vars, ['raw' => true] 
+                $vars, ['raw' => true] 
             );
         }
     }
 
 
-    public function verifyPayload ($payload) {
+    private function verifyPayload (array $payload): void {
         
-        $auth = Auth::getInstance();
         if (isset($payload['email_verified']) && isset($payload['email'])) {
-            $row = $auth->getByWhere(['email' => $payload['email']]);
-
+            $row = $this->auth->getByWhere(['email' => $payload['email']]);
             if (empty($row)) {
-
-                // Create user with random password
-                $password = bin2hex(random_bytes(32));
-                $auth->create($payload['email'], $password);
-                
-                // Get user and verify user
-                $row = $auth->getByWhere(['email' => $payload['email']]);
-                $auth->verifyKey($row['random']);
-
-                // Signin and set flash message
-                $auth->setPermanentCookie($row);
-                // Flash::setMessage('New user has been created from your google account. You are signed in.', 'success');
-
+                $this->createUser($payload);
             } else {
-                $auth->setPermanentCookie($row);
-                Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true] );
-
+                $this->loginUser($row);
             }
-
-
-        } else {
-            Flash::setMessage(Lang::translate('Error trying to signin using Google. You will need to give this application access to your email'), 'error');
+            return;
         }
 
+        Flash::setMessage(Lang::translate('Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'), 'error');
         header("Location: " . $this->login_redirect);
+    }
+
+    private function createUser($payload) {
+
+        $password = bin2hex(random_bytes(32));
+        $this->auth->create($payload['email'], $password);
+            
+        // Verify
+        $row = $this->auth->getByWhere(['email' => $payload['email']]);
+        $this->auth->verifyKey($row['random']);
+        
+        // Signin and redirect
+        $this->auth->setPermanentCookie($row);
+        Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
+        header("Location: " . $this->login_redirect);
+
+    }
+
+    private function loginUser($row) {
+
+        // Verify using two factor
+        if(Config::get('TwoFactor.enabled')) {
+
+            $two_factor = new TwoFactorModel();
+            if ($two_factor->isTwoFactorEnabled($row['id'])) {
+                $session_timed = new SessionTimed();
+                $session_timed->setValue('auth_id_to_login', $row['id'], Config::get('TwoFactor.time_to_verify'));
+                $session_timed->setValue('keep_login', true, Config::get('TwoFactor.time_to_verify'));
+                Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
+                header("Location: " . '/2fa/verify');
+                return;
+            }       
+        }
+
+        $this->auth->setPermanentCookie($row);
+        Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
+        header("Location: " . $this->login_redirect);
+        return;
     }
 }

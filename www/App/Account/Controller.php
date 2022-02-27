@@ -2,8 +2,6 @@
 
 namespace App\Account;
 
-use App\Account\Mail;
-use App\Account\Validate;
 use Diversen\Lang;
 use Pebble\Auth;
 use Pebble\Captcha;
@@ -12,6 +10,11 @@ use Pebble\CSRF;
 use Pebble\DBInstance;
 use Pebble\Flash;
 use Pebble\JSON;
+use Pebble\SessionTimed;
+
+use App\Account\Mail;
+use App\Account\Validate;
+use App\TwoFactor\TwoFactorModel;
 
 class Controller
 {
@@ -97,23 +100,34 @@ class Controller
         }
 
         $response['error'] = true;
-
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
-
         if (!empty($row)) {
 
             $response['error'] = false;
-            $response['redirect'] = \Pebble\Config::get('App.login_redirect');
 
-            Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
+            // Verify using two factor
+            if(Config::get('TwoFactor.enabled')) {
 
+                $two_factor = new TwoFactorModel();
+                if ($two_factor->isTwoFactorEnabled($row['id'])) {
+                    $session_timed = new SessionTimed();
+                    $session_timed->setValue('auth_id_to_login', $row['id'], Config::get('TwoFactor.time_to_verify'));
+                    $session_timed->setValue('keep_login', isset($_POST['keep_login']), Config::get('TwoFactor.time_to_verify'));
+                    Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
+                    $response['redirect'] = '/2fa/verify';
+                    echo JSON::response($response);
+                    return;
+                }
+            }
+
+            $response['redirect'] = Config::get('App.login_redirect');
             if (isset($_POST['keep_login'])) {
-                // Set a cookie that will last for days
                 $this->auth->setPermanentCookie($row);
             } else {
-                // Set a cookie that is only valid until window is closed
                 $this->auth->setSessionCookie($row);
             }
+
+            Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
 
         } else {
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');

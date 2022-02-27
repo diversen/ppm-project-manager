@@ -9,11 +9,13 @@ use Pebble\JSON;
 use Pebble\Exception\NotFoundException;
 use Pebble\Flash;
 
+
 class Controller
 {
 
     public function __construct() {
         $this->acl = new ACL();
+
     }
     /**
      * @route /settings
@@ -28,10 +30,12 @@ class Controller
         $user_settings = $settings->getUserSetting($this->acl->getAuthId(), 'profile');
 
         $vars['user_settings'] = $user_settings;
+
         \Pebble\Template::render('App/Settings/views/settings.tpl.php', $vars);
     }
 
     /**
+     * Public route
      * @route /user/:auth_id
      * @verbs GET
      */

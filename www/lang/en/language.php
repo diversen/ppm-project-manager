@@ -131,9 +131,10 @@ $LANG['500 Internal Server Error'] = '500 Internal Server Error';
 // Translation of file www/App/Google/Controller.php
 
 $LANG['Error trying to signin using Google'] = 'Error trying to signin using Google';
-$LANG['No auth token. Try again later'] = 'No auth token. Try again later';
+$LANG['No ID token. Try again later'] = 'No ID token. Try again later';
+$LANG['Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'] = 'Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified';
 $LANG['You are signed in.'] = 'You are signed in.';
-$LANG['Error trying to signin using Google. You will need to give this application access to your email'] = 'Error trying to signin using Google. You will need to give this application access to your email';
+$LANG['Verify your login.'] = 'Verify your login.';
 
 // Translation of file www/App/Google/sign_in.tpl.php
 
@@ -237,6 +238,7 @@ $LANG['Settings have been updated'] = 'Settings have been updated';
 // Translation of file www/App/Settings/views/settings.tpl.php
 
 $LANG['Settings'] = 'Settings';
+$LANG['Two factor authentication'] = 'Two factor authentication';
 $LANG['Organization'] = 'Organization';
 $LANG['Your name'] = 'Your name';
 $LANG['Bio'] = 'Bio';
@@ -341,6 +343,37 @@ $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to
 // Translation of file www/App/TranslateStr.php
 
 $LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
+
+// Translation of file www/App/TwoFactor/Controller.php
+
+$LANG['New QR code has been created'] = 'New QR code has been created';
+$LANG['The code could not be verified. Try again.'] = 'The code could not be verified. Try again.';
+$LANG['The code is verified. Two factor is enabled.'] = 'The code is verified. Two factor is enabled.';
+$LANG['You were to slow to enter two factor code. You will need to login again.'] = 'You were to slow to enter two factor code. You will need to login again.';
+$LANG['The code is verified. You are logged in.'] = 'The code is verified. You are logged in.';
+$LANG['You are signed in.'] = 'You are signed in.';
+
+// Translation of file www/App/TwoFactor/views/enable.tpl.php
+
+$LANG['Enable two factor authentication'] = 'Enable two factor authentication';
+$LANG['You will need a two factor app on your mobile phone'] = 'You will need a two factor app on your mobile phone';
+$LANG['Download a two factor app in your app store'] = 'Download a two factor app in your app store';
+$LANG['1. Scan the QR code to get started'] = '1. Scan the QR code to get started';
+$LANG['2. Enter code as seen on your phone'] = '2. Enter code as seen on your phone';
+$LANG['Submit'] = 'Submit';
+$LANG['You can use the following apps and many others'] = 'You can use the following apps and many others';
+
+// Translation of file www/App/TwoFactor/views/is_enabled.tpl.php
+
+$LANG['Enable two factor authentication'] = 'Enable two factor authentication';
+$LANG['Two factor is already enabled'] = 'Two factor is already enabled';
+$LANG['Get a new QR code'] = 'Get a new QR code';
+
+// Translation of file www/App/TwoFactor/views/verify.tpl.php
+
+$LANG['Verify login using two factor authentication'] = 'Verify login using two factor authentication';
+$LANG['1. Enter code as seen on your phone'] = '1. Enter code as seen on your phone';
+$LANG['Submit'] = 'Submit';
 
 // Translation of file www/App/templates/main_menu.tpl.php
 

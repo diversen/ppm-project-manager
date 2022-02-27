@@ -38,7 +38,15 @@ $languages = \Pebble\Config::get('Language.enabled');
 ?>
 
 <h3 class="sub-menu"><?= Lang::translate('Settings') ?></h3>
+<?php
 
+if (Config::get('TwoFactor.enabled')){ ?>
+<p><a href="/2fa/enable"><?=Lang::translate('Two factor authentication')?></a></p>
+<?php 
+
+} 
+
+?>
 <form name="settings" id="seetings" method="post">
 
     <label for="company"><?= Lang::translate('Organization') ?></label>

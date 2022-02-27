@@ -94,7 +94,7 @@ try {
     $router->addClass(App\Task\Controller::class);
     $router->addClass(App\Time\Controller::class);
     $router->addClass(App\Error\Controller::class);
-
+    $router->addClass(App\TwoFactor\Controller::class);
     $router->run();
 } catch (TemplateException $e) {
 

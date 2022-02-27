@@ -127,12 +127,9 @@ class TaskModel extends AppCommon
         $task = $this->getOne($where);
     
         $this->db->beginTransaction();
-        
-        if ($task['project_id'] !== $post['project_id']) {
-            $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
-        }
-        
-        
+
+        // Update time in case project_id has changed
+        $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
         $this->db->update('task', $post, $where);
         return $this->db->commit();
         
