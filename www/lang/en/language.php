@@ -5,6 +5,7 @@ $LANG = array();
 // Translation of file www/App/Account/Controller.php
 
 $LANG['Signin'] = 'Signin';
+$LANG['Verify your login.'] = 'Verify your login.';
 $LANG['You are logged in'] = 'You are logged in';
 $LANG['Wrong email or password. Or your account has not been activated.'] = 'Wrong email or password. Or your account has not been activated.';
 $LANG['Signup'] = 'Signup';
@@ -368,6 +369,7 @@ $LANG['You can use the following apps and many others'] = 'You can use the follo
 $LANG['Enable two factor authentication'] = 'Enable two factor authentication';
 $LANG['Two factor is already enabled'] = 'Two factor is already enabled';
 $LANG['Get a new QR code'] = 'Get a new QR code';
+$LANG['If you create a new QR code then the old code will be deleted'] = 'If you create a new QR code then the old code will be deleted';
 
 // Translation of file www/App/TwoFactor/views/verify.tpl.php
 

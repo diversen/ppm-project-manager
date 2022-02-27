@@ -3,6 +3,7 @@
 $LANG = array();
 
 $LANG['Signin'] = 'Log ind';
+$LANG['Verify your login.'] = 'Bekræft dit login.';
 $LANG['You are logged in'] = 'Du er logget ind';
 $LANG['Wrong email or password. Or your account has not been activated.'] = 'Forkert email eller adgangskode. Eller din konto er ikke blevet aktiveret.';
 $LANG['Signup'] = 'Tilmelde';
@@ -65,7 +66,6 @@ $LANG['Error trying to signin using Google'] = 'Fejl ved forsøg på at logge p�
 $LANG['No ID token. Try again later'] = 'Ingen ID-token. Prøv igen senere';
 $LANG['Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'] = 'Fejl under forsøg på at logge ind med Google. Du skal give denne applikation adgang til din e-mail, og e-mailen skal bekræftes';
 $LANG['You are signed in.'] = 'Du er logget ind.';
-$LANG['Verify your login.'] = 'Bekræft dit login.';
 $LANG['Click the image and sign-in using google'] = 'Klik på billedet og log ind med google';
 $LANG['You are signed in'] = 'Du er logget ind';
 $LANG['Overview'] = 'Oversigt';
@@ -168,6 +168,7 @@ $LANG['2. Enter code as seen on your phone'] = '2. Indtast koden som vist på di
 $LANG['You can use the following apps and many others'] = 'Du kan bruge følgende apps og mange andre';
 $LANG['Two factor is already enabled'] = 'To faktor er allerede aktiveret';
 $LANG['Get a new QR code'] = 'Få en ny QR-kode';
+$LANG['If you create a new QR code then the old code will be deleted'] = 'Hvis du opretter en ny QR-kode, vil den gamle kode blive slettet';
 $LANG['Verify login using two factor authentication'] = 'Bekræft login ved hjælp af tofaktorautentificering';
 $LANG['1. Enter code as seen on your phone'] = '1. Indtast koden som vist på din telefon';
 $LANG['Login'] = 'Log på';
