@@ -3,21 +3,23 @@
 namespace App\Google;
 
 use \Pebble\Config;
-use \Pebble\Auth;
 use \Pebble\Flash;
 use \Pebble\SessionTimed;
 use \Diversen\Lang;
 use \App\Google\GoogleUtils;
 use \App\TwoFactor\TwoFactorModel;
+use \App\AppMain;
 
 class Controller
 {
     
     private $auth;
     public function __construct () {
-        $this->auth = Auth::getInstance();
-        $this->login_redirect = Config::get('App.login_redirect');
-        $this->logout_redirect = Config::get('App.logout_redirect');
+        $app_main = new AppMain();
+        $this->auth = $app_main->getAuth();
+        $this->config = $app_main->getConfig();
+        $this->login_redirect = $this->config->get('App.login_redirect');
+        $this->logout_redirect = $this->config->get('App.logout_redirect');
     }
 
     /**
@@ -117,20 +119,20 @@ class Controller
     private function loginUser($row) {
 
         // Verify using two factor
-        if(Config::get('TwoFactor.enabled')) {
+        if($this->config->get('TwoFactor.enabled')) {
 
             $two_factor = new TwoFactorModel();
             if ($two_factor->isTwoFactorEnabled($row['id'])) {
                 $session_timed = new SessionTimed();
-                $session_timed->setValue('auth_id_to_login', $row['id'], Config::get('TwoFactor.time_to_verify'));
-                $session_timed->setValue('keep_login', true, Config::get('TwoFactor.time_to_verify'));
+                $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
+                $session_timed->setValue('keep_login', true, $this->config->get('TwoFactor.time_to_verify'));
                 Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
                 header("Location: " . '/2fa/verify');
                 return;
             }       
         }
 
-        $this->auth->setPermanentCookie($row);
+        $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
         Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
         return;

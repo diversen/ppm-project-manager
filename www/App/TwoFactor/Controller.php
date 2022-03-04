@@ -11,10 +11,13 @@ use BaconQrCode\Writer;
 use Pebble\Config;
 use Diversen\Lang;
 
-use App\TwoFactor\TwoFactorModel;
+
 use Pebble\ACL;
 use Pebble\Flash;
 use Pebble\SessionTimed;
+
+use App\TwoFactor\TwoFactorModel;
+use App\AppMain;
 
 class Controller
 {
@@ -22,8 +25,10 @@ class Controller
     private $acl;
 
     public function __construct() {
+        $app_main = new AppMain();
         $this->twoFactorModel = new TwoFactorModel();
-        $this->acl = new ACL();
+        $this->acl = $app_main->getAppACL();
+        $this->config = $app_main->getConfig();
     }
 
     private function getOtpAuthUrl(string $label, string $key): string
@@ -78,7 +83,7 @@ class Controller
             $secret = $otp->getSecret();
             $otp = TOTP::create($secret);
 
-            $label = Config::get('TwoFactor.totp_label');
+            $label = $this->config->get('TwoFactor.totp_label');
 
             $otp_auth_url = $this->getOtpAuthUrl($label, $secret);
             $qr_image = $this->getQRCode($otp_auth_url);
@@ -150,17 +155,17 @@ class Controller
             
         } else {
             
-            $login_redirect = Config::get('App.login_redirect');
+            $login_redirect = $this->config->get('App.login_redirect');
             $res['message'] = Lang::translate('The code is verified. You are logged in.');
             $res['redirect'] = $login_redirect;
 
             $row = $this->acl->getByWhere(['id' => $auth_id]);
 
-            $response['redirect'] = Config::get('App.login_redirect');
+            $response['redirect'] = $this->config->get('App.login_redirect');
             if ($keep_login) {
-                $this->acl->setPermanentCookie($row);
+                $this->acl->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
             } else {
-                $this->acl->setSessionCookie($row);
+                $this->acl->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
             
             Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);

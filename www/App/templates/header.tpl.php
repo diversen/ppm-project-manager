@@ -1,10 +1,10 @@
 <?php declare (strict_types = 1);
 
 use \App\Settings\SettingsModel;
-use \Pebble\Auth;
+use \App\AppMain;
 
 $settings = new SettingsModel;
-$auth = Auth::getInstance();
+$auth = (new AppMain())->getAuth();
 if (!$auth->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
 } else {

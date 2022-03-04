@@ -1,6 +1,6 @@
 <?php
 
-// COnfiguration for PHPMailer
+// Configuration for PHPMailer
 return [
     'DefaultFrom' => 'mail@10kilobyte.com',
     'DefaultFromName' => 'Time Manager',

@@ -1,9 +1,9 @@
 <?php
 
-use Pebble\Auth;
 use Diversen\Lang;
+use App\AppMain;
 
-$auth = Auth::getInstance();
+$auth = (new AppMain())->getAuth();
 
 ?>
 <div class="app-menu">

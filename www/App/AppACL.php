@@ -8,12 +8,13 @@ use App\Time\TimeModel;
 use Diversen\Lang;
 use Pebble\Exception\NotFoundException;
 use Exception;
+use Pebble\DB;
 
 class AppACL extends ACL 
 {
 
-    public function __construct(){
-        parent::__construct();
+    public function __construct(DB $db, array $auth_cookie_settings){
+        parent::__construct($db, $auth_cookie_settings);
     }
 
     /**

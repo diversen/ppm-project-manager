@@ -13,18 +13,19 @@ use Pebble\Config;
 $autoloader = new Autoloader();
 $autoloader->setPath(__DIR__);
 
+$config = new Config();
 // Load config settings
-Config::readConfig('./config');
+$config->readConfig('./config');
 
 // Load config settings
-Config::readConfig('./config-locale');
+$config->readConfig('./config-locale');
 
 $cli = new MinimalCli();
 $cli->commands = [
-    'user' => new User(),
-    'db' => new DB(),
-    'migrate' => new Migrate(),
-    'translate' => new Translate(),
+    'user' => new User($config),
+    'db' => new DB($config),
+    'migrate' => new Migrate($config),
+    'translate' => new Translate($config),
 ];
 
 $cli->runMain();

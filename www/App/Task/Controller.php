@@ -7,17 +7,17 @@ namespace App\Task;
 use App\Project\ProjectModel;
 use App\Task\TaskModel;
 use Pebble\JSON;
-use App\AppCommon;
+use App\AppMain;
 use Exception;
-use Pebble\LogInstance;
 
-class Controller extends AppCommon
+class Controller
 {
     public $project_model;
     public $task_model;
     public function __construct()
     {
-        parent::__construct();
+        $app_main = new AppMain();
+        $this->app_acl = $app_main->getAppACL();
         $this->project_model = new ProjectModel();
         $this->task_model = new TaskModel();
     }

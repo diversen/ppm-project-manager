@@ -4,21 +4,26 @@ namespace App;
 
 use DateTime;
 use DateTimeZone;
-use Pebble\Auth;
-use Pebble\Config;
+use App\AppMain;
 
 use App\Settings\SettingsModel;
 
 class Cal
 {
 
+    public function __construct() {
+        $app_main = new AppMain();
+        $this->auth = $app_main->getAuth();
+        $this->config = $app_main->getConfig();
+    }
+
     private function getUserTimeZone() {
 
         $settings_model = new SettingsModel;
-        $auth_id = Auth::getInstance()->getAuthId();
+        $auth_id = $this->auth->getAuthId();
         $timezone = $settings_model->getSingleProfileSetting($auth_id, 'timezone', null);
         if (!$timezone) {
-            $timezone = Config::get('App.timezone');
+            $timezone = $this->config->get('App.timezone');
         }
         return $timezone;
 
@@ -59,7 +64,6 @@ class Cal
      
     public function getCurrentWeekDays(int $week_delta, string $format = 'Y-m-d H:i:s')
     {
-
         
         $week_delta_str = $this->getWeekDeltaStr($week_delta);
 

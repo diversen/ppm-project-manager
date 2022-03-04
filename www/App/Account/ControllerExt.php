@@ -7,7 +7,9 @@ use Pebble\Auth;
 use Pebble\Config;
 use Pebble\CSRF;
 
+
 use App\Google\GoogleUtils;
+use App\Account\Controller;
 
 /**
  * Extends the normal controler to include google auth 
@@ -28,9 +30,7 @@ class ControllerExt extends Controller
     {
 
         $google_auth_url = $this->getGoogleAuthUrl();
-        
-        $auth = Auth::getInstance();
-        if ($auth->isAuthenticated()) {
+        if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];
             \Pebble\Template::render('App/Account/views/signout.php',
                 $form_vars
@@ -50,7 +50,7 @@ class ControllerExt extends Controller
     }
 
     private function getGoogleAuthUrl() {
-        if (!Config::get('Account.google')) {
+        if (!$this->config->get('Account.google')) {
             return false;
         }
 

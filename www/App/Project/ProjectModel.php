@@ -9,12 +9,12 @@ use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
 use Exception;
-use App\AppCommon;
+use App\AppMain;
 
 /**
  * Project related model
  */
-class ProjectModel extends AppCommon
+class ProjectModel
 {
 
     const PROJECT_CLOSED = 0;
@@ -23,7 +23,9 @@ class ProjectModel extends AppCommon
 
     public function __construct()
     {
-        parent::__construct();
+        $app_main = new AppMain();
+        $this->db = $app_main->getDB();
+        $this->app_acl = $app_main->getAppACL();
     }
 
     /**
@@ -90,12 +92,11 @@ class ProjectModel extends AppCommon
     public function update($post, $project_id)
     {
         $this->validate($post);
-        $db = DBInstance::get();
 
         // Forcde update even when noting has been updated
         $post['updated'] = date('Y-m-d H:i:s');
 
-        return $db->update('project', $post, ['id' => $project_id]);
+        return $this->db->update('project', $post, ['id' => $project_id]);
     }
 
 

@@ -2,7 +2,7 @@
 
 namespace App\TwoFactor;
 
-use Pebble\DBInstance;
+use App\AppMain;
 
 class TwoFactorModel {
     
@@ -10,7 +10,7 @@ class TwoFactorModel {
     public $db;
     public function __construct()
     {
-        $this->db = DBInstance::get();
+        $this->db = (new AppMain())->getDB();
     }
 
     public function getUserRow(array $where): array {

@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Time;
 
-use App\AppCommon;
-use Pebble\DBInstance;
+use App\AppMain;
 use App\Task\TaskModel;
 
-class TimeModel extends AppCommon
+class TimeModel
 {
 
     public function __construct()
     {
-        parent::__construct();
+        $app_main = new AppMain();
+        $this->db = $app_main->getDB();
+        $this->app_acl = $app_main->getAppACL();
     }
 
     /**
@@ -87,7 +88,7 @@ class TimeModel extends AppCommon
     public function getAll($where)
     {
 
-        $time_rows = DBInstance::get()->getAll('time', $where);
+        $time_rows = $this->db->getAll('time', $where);
 
         foreach ($time_rows as $key => $time) {
             $time_rows[$key]['minutes_hours'] = $this->minutesToHoursMinutes($time['minutes']);
@@ -100,7 +101,7 @@ class TimeModel extends AppCommon
 
     public function getOne($where)
     {
-        return DBInstance::get()->getOne('time', $where);
+        return $this->db->getOne('time', $where);
     }
 
     /**

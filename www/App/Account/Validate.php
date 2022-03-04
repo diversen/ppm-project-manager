@@ -2,12 +2,16 @@
 
 namespace App\Account;
 
-use Pebble\DBInstance;
-use \Pebble\CSRF;
-use \Diversen\Lang;
+use Pebble\CSRF;
+use Diversen\Lang;
+use App\AppMain;
 
 class Validate {
 
+
+    public function __construct() {
+        $this->db = (new AppMain())->getDB();
+    }
     public function postLogin() {
         $response = ['error' => true];
 
@@ -28,7 +32,7 @@ class Validate {
     public function getByEmail(string $email) : array
     {
         $sql = "SELECT * FROM auth WHERE email = ?";
-        $row = DBInstance::get()->prepareFetch($sql, [$email]);
+        $row = $this->db->prepareFetch($sql, [$email]);
         return $row;
     }
 

@@ -2,11 +2,11 @@
 
 namespace App\Overview;
 
+use App\AppMain;
 use App\Cal;
 use App\Time\TimeModel;
 use Pebble\URL;
-use Pebble\ACL;
-use Pebble\Auth;
+
 use App\Settings\SettingsModel;
 use Diversen\Lang;
 
@@ -15,7 +15,8 @@ class Controller
 
     public function __construct()
     {
-        $this->auth_id = Auth::getInstance()->getAuthId();
+        $this->app_main = new AppMain();
+        $this->auth_id = $this->app_main->getAuth()->getAuthId();
     }
 
     /**
@@ -25,7 +26,7 @@ class Controller
     public function index()
     {
 
-        (new ACL())->isAuthenticatedOrThrow();
+        $this->app_main->getAppACL()->isAuthenticatedOrThrow();
 
         $cal = new Cal();
         $week_delta_current = (int) URL::getQueryPart('week_delta');

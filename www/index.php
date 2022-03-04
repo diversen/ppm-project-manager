@@ -8,21 +8,22 @@ use Pebble\Autoloader;
 $autoload = new Autoloader();
 $autoload->setPath(__DIR__);
 
-use App\Error\Controller as ErrorController;
-use App\Settings\SettingsModel;
 use Diversen\Lang;
-use Pebble\Config;
-use Pebble\DBInstance;
+
 use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\NotFoundException;
 use Pebble\Exception\TemplateException;
 use Pebble\Headers;
-use Pebble\Log\File as Log;
-use Pebble\LogInstance;
+use Pebble\JSON;
 use Pebble\Router;
 use Pebble\Session;
-use Pebble\Auth;
+
+use App\AppMain;
+use App\Error\Controller as ErrorController;
+use App\Settings\SettingsModel;
+
+$app_main = new AppMain();
 
 $error = new ErrorController();
 
@@ -34,46 +35,23 @@ try {
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     });
 
-    $base_path = dirname(__DIR__);
-
-    // Load config settings
-    Config::readConfig($base_path . '/config');
-
-    // Override config settings with locale settings
-    Config::readConfig($base_path . '/config-locale');
-
-    // Make a log instance
-    $log = new Log([
-        'log_dir' => $base_path . '/logs',
-    ]);
-
-    LogInstance::init($log);
-
-    // Force SSL
-    if (Config::get('App.force_ssl')) {
+    if ($app_main->getConfig()->get('App.force_ssl')) {
         Headers::redirectToHttps();
     }
 
     // Start session. E.g. Flash messages
-    Session::setConfigSettings();
+    Session::setConfigSettings($app_main->getConfig()->getSection('Session'));
     session_start();
-
-    // Get DB configuration
-    $db_config = Config::getSection('DB');
-    if (!$db_config) {
-        throw new Error('You will need to create a DB.php in a loaded cofiguration folder');
-    }
-
-    // Connect to DB and create an instance
-    DBInstance::connect($db_config['url'], $db_config['username'], $db_config['password']);
 
     // Set timezone and language. Use defaults if not set.
     $settings = new SettingsModel;
-    $auth_id = Auth::getInstance()->getAuthId();
+
+    
+    $auth_id = $app_main->getAuth()->getAuthId();
     $user_settings = $settings->getUserSetting($auth_id, 'profile');
 
-    $timezone = $user_settings['timezone'] ?? Config::get('App.timezone');
-    $language = $user_settings['language'] ?? Config::get('Language.default');
+    $timezone = $user_settings['timezone'] ?? $app_main->getConfig()->get('App.timezone');
+    $language = $user_settings['language'] ?? $app_main->getConfig()->get('Language.default');
 
     date_default_timezone_set($timezone);
 
@@ -81,6 +59,10 @@ try {
     $l = new Lang();
     $l->setSingleDir(".");
     $l->loadLanguage($language);
+
+    if ($app_main->getConfig()->get('App.env') === 'dev') {
+        JSON::$debug = true;
+    } 
 
     // Define all routes
     $router = new Router();
@@ -96,26 +78,31 @@ try {
     $router->addClass(App\Error\Controller::class);
     $router->addClass(App\TwoFactor\Controller::class);
     $router->run();
-} catch (TemplateException $e) {
 
+    
+} catch (TemplateException $e) {
+    
     // If it is a template error then content most likely has been sent to the browser
     // And therefor we can not send a 5xx header.
     $exception_str = ExceptionTrace::get($e);
-    LogInstance::get()->message($exception_str, 'error');
+    $app_main->getLog()->message($exception_str, 'error');
 
     // If we are not on dev display generic error message
-    if (Config::get('App.env') !== 'dev') {
+    if ($app_main->getConfig()->get('App.env') !== 'dev') {
         $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
     }
     echo "<pre>" . $exception_str . "</pre>";
+
 } catch (NotFoundException $e) {
 
-    LogInstance::get()->message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
+    $app_main->getLog()->message("Page not found: " . $_SERVER['REQUEST_URI'], 'info');
     $error->notFound($e->getMessage());
+
 } catch (ForbiddenException $e) {
 
-    LogInstance::get()->message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
+    $app_main->getLog()->message("Access denied: " . $_SERVER['REQUEST_URI'], 'warning');
     $error->forbidden($e->getMessage());
+    
 } catch (Throwable $e) {
 
     // Log error to file
@@ -125,14 +112,14 @@ try {
     // Then we use the Log class exception instead.
     try {
 
-        LogInstance::get()->message($exception_str, 'error');
+        $app_main->getLog()->message($exception_str, 'error');
     } catch (Exception $e) {
         $error->error($e->getMessage());
         return;
     }
 
     // If we are not on dev display generic error message
-    if (Config::get('App.env') !== 'dev') {
+    if ($app_main->getConfig()->get('App.env') !== 'dev') {
         $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
     }
 

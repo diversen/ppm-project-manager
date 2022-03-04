@@ -1,6 +1,7 @@
 <?php
 
 use Pebble\Config;
+use App\AppMain;
 
 require 'App/templates/header_error.tpl.php'; 
 
@@ -10,7 +11,7 @@ require 'App/templates/header_error.tpl.php';
 
 <?php
 
-if (Config::get('App.env') !== 'live'): 
+if ((new AppMain())->getConfig()->get('App.env') !== 'live'): 
     $message = "<pre>$message</pre";
 endif; ?>
 

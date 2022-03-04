@@ -8,13 +8,14 @@ use App\Settings\SettingsModel;
 use Pebble\JSON;
 use Pebble\Exception\NotFoundException;
 use Pebble\Flash;
+use App\AppMain;
 
 
 class Controller
 {
 
     public function __construct() {
-        $this->acl = new ACL();
+        $this->acl = (new AppMain())->getAppACL();
 
     }
     /**

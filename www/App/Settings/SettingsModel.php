@@ -3,17 +3,22 @@
 namespace App\Settings;
 
 use Pebble\DBCache;
+use App\AppMain;
 
 class SettingsModel {
 
+    private $cache = null;
+    public function __construct() {
+        $db = (new AppMain())->getDB();
+        $this->cache = new DBCache($db);
+    }
 
     /**
      * Get a user setting
      */
     public function getUserSetting($auth_id, $setting) {
-        $cache = new DBCache();
         $key = $auth_id . '_settings_' . $setting;
-        return $cache->get($key);
+        return $this->cache->get($key);
     }
 
     /**
@@ -22,8 +27,7 @@ class SettingsModel {
     
     public function setUserSetting($auth_id, $setting, $value) {
         $key = $auth_id . '_settings_' . $setting;
-        $cache = new DBCache();
-        return $cache->set($key, $value);
+        return $this->cache->set($key, $value);
     }
 
     /**

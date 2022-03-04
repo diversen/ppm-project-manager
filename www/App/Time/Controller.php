@@ -2,18 +2,18 @@
 
 namespace App\Time;
 
-use App\AppACL;
-use App\AppCommon;
+use App\AppMain;
 use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use Pebble\JSON;
 
-class Controller extends AppCommon
+class Controller
 {
 
     public function __construct()
     {
-        parent::__construct();
+        $app_main = new AppMain();
+        $this->app_acl = $app_main->getAppACL();
     }
 
     /**
@@ -23,9 +23,8 @@ class Controller extends AppCommon
     public function add($params)
     {
 
-        $app_acl = new AppACL();
-        $task = $app_acl->getTask($params['task_id']);
-        $app_acl->authUserIsProjectOwner($task['project_id']);
+        $task = $this->app_acl->getTask($params['task_id']);
+        $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
         $project = (new ProjectModel())->getOne($task['project_id']);
         $time_rows = (new TimeModel())->getAll(['task_id' => $task['id']]);
@@ -53,9 +52,8 @@ class Controller extends AppCommon
 
         try {
 
-            $app_acl = new AppACL();
-            $task = $app_acl->getTask($_POST['task_id']);
-            $app_acl->authUserIsProjectOwner($task['project_id']);
+            $task = $this->app_acl->getTask($_POST['task_id']);
+            $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
             // POST time
             $post = $_POST;
@@ -83,9 +81,8 @@ class Controller extends AppCommon
 
         try {
 
-            $app_acl = new AppACL();
-            $time = $app_acl->getTime($params['id']);
-            $app_acl->authUserIsProjectOwner($time['project_id']);
+            $time = $this->app_acl->getTime($params['id']);
+            $this->app_acl->authUserIsProjectOwner($time['project_id']);
 
             (new TimeModel())->delete(['id' => $params['id']]);
         } catch (\Exception $e) {

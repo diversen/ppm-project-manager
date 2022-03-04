@@ -1,10 +1,10 @@
 <?php
 
 use Diversen\Lang;
-use Pebble\Config;
-use Pebble\Auth;
+use App\AppMain;
 
-$is_authenticated = Auth::getInstance()->isAuthenticated();
+$app_main = new AppMain();
+$is_authenticated = $app_main->getAuth()->isAuthenticated();
 if ($is_authenticated) {
     $home_url = '/overview';
 } else {
@@ -12,8 +12,8 @@ if ($is_authenticated) {
 }
 
 ?>
-<a title="<?= Config::get('App.site_name') ?>" href="<?= $home_url ?>">
-    <img src="/App/templates/assets/logo.svg" title="<?= Config::get('App.site_name') ?>" width="184" height="74"></img>
+<a title="<?= $app_main->getConfig()->get('App.site_name') ?>" href="<?= $home_url ?>">
+    <img src="/App/templates/assets/logo.svg" title="<?= $app_main->getConfig()->get('App.site_name') ?>" width="184" height="74"></img>
 </a>
 
 <div class="app-menu">

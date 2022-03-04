@@ -3,12 +3,16 @@
 namespace App\Error;
 
 use Diversen\Lang;
-use Pebble\LogInstance;
 use Pebble\JSON;
+use App\AppMain;
 
 class Controller
 {
 
+    public $app_main = null;
+    public function __construct() {
+        $this->app_main = new AppMain();
+    }
     /**
      * A route for logging e.g. JS errors using a POST request
      * @route /error/log
@@ -16,8 +20,10 @@ class Controller
      */
     public function ajaxError() {
 
+        
         $error = $_POST['error'] ?? '';
-        LogInstance::get()->message($error, 'error');
+
+        $this->app_main->getLog()->message($error, 'error');
         echo JSON::responseAddRequest(['logged' => true]);
 
     }

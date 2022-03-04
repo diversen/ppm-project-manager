@@ -9,14 +9,16 @@ use Diversen\Lang;
 use Exception;
 use Pebble\Template;
 use Pebble\JSON;
-use App\AppCommon;
+use App\AppMain;
 
-class Controller extends AppCommon
+class Controller
 {
 
     public function __construct()
     {
-        parent::__construct();
+        $app_main = new AppMain();
+        $this->app_acl = $app_main->getAppACL();
+
     }
 
     /**

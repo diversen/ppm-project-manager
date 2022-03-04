@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 
-use Pebble\Config;
+use App\AppMain;
 
 require 'App/templates/header.tpl.php';
 
@@ -33,14 +33,14 @@ function is_checked($value)
 }
 
 $timezones = timezone_identifiers_list();
-$languages = \Pebble\Config::get('Language.enabled');
+$languages = (new AppMain())->getConfig()->get('Language.enabled');
 
 ?>
 
 <h3 class="sub-menu"><?= Lang::translate('Settings') ?></h3>
 <?php
 
-if (Config::get('TwoFactor.enabled')){ ?>
+if ($app_main->getConfig()->get('TwoFactor.enabled')){ ?>
 <p><a href="/2fa/enable"><?=Lang::translate('Two factor authentication')?></a></p>
 <?php 
 
@@ -59,10 +59,10 @@ if (Config::get('TwoFactor.enabled')){ ?>
     <textarea name="bio" placeholder="<?= Lang::translate('Add a bio') ?>"><?= $user_settings['bio'] ?? '' ?></textarea>
 
     <label for="timezone"><?= Lang::translate('Select your timezone') ?></label>
-    <?= select('timezone', $timezones, $user_settings['timezone'] ?? Config::get('App.timezone')); ?>
+    <?= select('timezone', $timezones, $user_settings['timezone'] ?? (new AppMain())->getConfig()->get('App.timezone')); ?>
 
     <label for="language"><?= Lang::translate('Select language') ?></label>
-    <?= select('language', $languages, $user_settings['language'] ?? Config::get('Language.default')); ?>
+    <?= select('language', $languages, $user_settings['language'] ?? (new AppMain())->getConfig()->get('Language.default')); ?>
 
     <input type="checkbox" name="theme_dark_mode" value="1" <?= is_checked($user_settings['theme_dark_mode'] ?? null) ?>>
     <label for="theme"><?= Lang::translate('Theme. Use dark mode') ?></label><br />

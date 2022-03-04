@@ -3,25 +3,34 @@
 namespace App\Account;
 
 use Diversen\Lang;
-use Pebble\Auth;
 use Pebble\Captcha;
-use Pebble\Config;
 use Pebble\CSRF;
-use Pebble\DBInstance;
 use Pebble\Flash;
 use Pebble\JSON;
 use Pebble\SessionTimed;
+use Pebble\ExceptionTrace;
 
 use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
+use App\AppMain;
+use Exception;
 
 class Controller
 {
 
+    public $auth;
+    public $config;
+    public $db;
+    public $log;
+    
     public function __construct()
     {
-        $this->auth = Auth::getInstance();
+        $app_main = new AppMain();
+        $this->auth = $app_main->getAuth();
+        $this->config = $app_main->getConfig();
+        $this->db = $app_main->getDB();
+        $this->log = $app_main->getLog();
     }
 
     /**
@@ -32,7 +41,6 @@ class Controller
     public function index()
     {
 
-        $this->auth = Auth::getInstance();
         if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];
             \Pebble\Template::render('App/Account/views/signout.php',
@@ -66,7 +74,7 @@ class Controller
             $this->auth->unlinkCurrentCookie();
         }
 
-        $redirect = \Pebble\Config::get('App.logout_redirect');
+        $redirect = $this->config->get('App.logout_redirect');
         header("Location: $redirect");
         return;
     }
@@ -106,13 +114,13 @@ class Controller
             $response['error'] = false;
 
             // Verify using two factor
-            if(Config::get('TwoFactor.enabled')) {
+            if($this->config->get('TwoFactor.enabled')) {
 
                 $two_factor = new TwoFactorModel();
                 if ($two_factor->isTwoFactorEnabled($row['id'])) {
                     $session_timed = new SessionTimed();
-                    $session_timed->setValue('auth_id_to_login', $row['id'], Config::get('TwoFactor.time_to_verify'));
-                    $session_timed->setValue('keep_login', isset($_POST['keep_login']), Config::get('TwoFactor.time_to_verify'));
+                    $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
+                    $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
                     Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
                     $response['redirect'] = '/2fa/verify';
                     echo JSON::response($response);
@@ -120,11 +128,11 @@ class Controller
                 }
             }
 
-            $response['redirect'] = Config::get('App.login_redirect');
+            $response['redirect'] = $this->config->get('App.login_redirect');
             if (isset($_POST['keep_login'])) {
-                $this->auth->setPermanentCookie($row);
+                $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
             } else {
-                $this->auth->setSessionCookie($row);
+                $this->auth->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
 
             Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
@@ -201,30 +209,40 @@ class Controller
             return;
         }
 
-        $db = DBInstance::get();
-        $db->beginTransaction();
+        $this->db->beginTransaction();
 
         $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
 
             // Create account without verification using mail
-            if (Config::get('Account.no_email_verify')) {
-                $db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
+            if ($this->config->get('Account.no_email_verify')) {
+                
+                $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
                 $message = Lang::translate('Account has been created. You may log in');
-                $mail_res = true;
+                $mail_success = true;
+
             } else {
+
                 $row = $validate->getByEmail($_POST['email']);
                 $mail = new Mail();
-                $mail_res = $mail->sendSignupMail($row);
+                
+                try {
+                    $mail_success = true;
+                    $mail->sendSignupMail($row);
+                } catch (Exception $e) {
+                    $this->log->message(ExceptionTrace::get($e), 'error');
+                    $mail_success = false;
+                }
+
                 $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
             }
 
-            if (!$mail_res) {
-                $db->rollback();
+            if (!$mail_success) {
+                $this->db->rollback();
                 $response['error'] = true;
                 $response['message'] = Lang::translate('The system could not create an account. Please try again another time');
             } else {
-                $db->commit();
+                $this->db->commit();
 
                 Flash::setMessage($message, 'success');
                 $response['error'] = false;
@@ -243,7 +261,6 @@ class Controller
     {
 
         $token = (new CSRF())->getToken();
-
         $form_vars = [
             'title' => Lang::translate('Recover account'),
             'token' => $token,
@@ -291,9 +308,16 @@ class Controller
         if (!empty($row)) {
 
             $mail = new mail();
-            $res = $mail->sendRecoverMail($row);
-            if ($res) {
+            try {
+                
+                $mail->sendRecoverMail($row);
+                $mail_success = true;
+            } catch (Exception $e) {
+                $this->log->message(ExceptionTrace::get($e), 'error');
+                $mail_success = false;
+            }
 
+            if ($mail_success) {
                 Flash::setMessage(
                     Lang::translate('A notification email has been sent with instructions to create a new password'),
                     'success'

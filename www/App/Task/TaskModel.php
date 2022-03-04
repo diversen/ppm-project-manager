@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Task;
 
-use App\AppCommon;
+use App\AppMain;
 use App\Time\TimeModel;
 use App\Cal;
 use Diversen\Lang;
 use Exception;
 use DateTime;
-use PDOException;
 use Pebble\Exception\NotFoundException;
 
-class TaskModel extends AppCommon
+class TaskModel
 {
 
     const TASK_CLOSED = 0;
@@ -22,7 +21,10 @@ class TaskModel extends AppCommon
 
     public function __construct()
     {
-        parent::__construct();
+
+        $app_main = new AppMain();
+        $this->db = $app_main->getDB();
+
     }
 
     /**
