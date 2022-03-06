@@ -21,6 +21,9 @@ class ProjectModel
     const PROJECT_OPEN = 1;
     const PROJECT_DELETED = 2;
 
+    private $db;
+    private $app_acl;
+
     public function __construct()
     {
         $app_main = new AppMain();

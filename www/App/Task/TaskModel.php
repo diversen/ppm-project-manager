@@ -19,6 +19,8 @@ class TaskModel
     const TASK_OPEN = 1;
     const TASK_DELETED = 2;
 
+    private $db;
+
     public function __construct()
     {
 

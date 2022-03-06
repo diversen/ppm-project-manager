@@ -11,6 +11,8 @@ use App\Settings\SettingsModel;
 class Cal
 {
 
+    private $auth;
+    private $config;
     public function __construct() {
         $app_main = new AppMain();
         $this->auth = $app_main->getAuth();

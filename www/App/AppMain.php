@@ -8,13 +8,36 @@ use Pebble\Auth;
 use Pebble\DB;
 use App\AppACL;
 
+/**
+ * AppMain is a class that returns instances of objects where we only want one object
+ */
 class AppMain {
 
-    public $basePath = null;
+    private $basePath = null;
+
+    /**
+     * @var Pebble\Config
+     */
     public static $config = null;
+
+    /**
+     * @var Pebble\FileLog
+     */
     public static $log = null;
+
+    /**
+     * @var Pebble\DB
+     */
     public static $db = null;
+
+    /**
+     * @var Pebble\Auth
+     */
     public static $auth = null;
+    
+    /**
+     * @var App\AppAcl
+     */
     public static $appAcl = null;
     
     public function __construct() {

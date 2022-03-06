@@ -12,8 +12,9 @@ use Exception;
 
 class Controller
 {
-    public $project_model;
-    public $task_model;
+    private $project_model;
+    private $task_model;
+    private $app_acl;
     public function __construct()
     {
         $app_main = new AppMain();
