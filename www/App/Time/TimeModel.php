@@ -9,7 +9,9 @@ use App\Task\TaskModel;
 
 class TimeModel
 {
-
+    private $db;
+    private $app_acl;
+    
     public function __construct()
     {
         $app_main = new AppMain();
@@ -68,13 +70,14 @@ class TimeModel
     public function sumTime($where)
     {
 
-        $sql = "SELECT SUM(minutes) as total_time FROM time ";
-        $sql .= $this->db->getWhereSql($where);
-        $row = $this->db->prepareFetch($sql, $where);
+        $sql = 'SELECT SUM(minutes) as total_time FROM time ';
+        $sql.=  $this->db->getWhereSql($where);
 
+
+        $row =  $this->db->prepareFetch($sql, $where);
         $total = $row['total_time'];
 
-        if ($total == NULL) {
+        if ($total === NULL) {
             $total = '0';
         }
 

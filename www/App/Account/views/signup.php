@@ -1,8 +1,5 @@
 <?php
 
-use App\AppMain;
-$bd = (new AppMain())->getConfig()->get('App.basedir');
-
 require 'App/templates/header.tpl.php';
 require 'App/templates/flash.tpl.php';
 

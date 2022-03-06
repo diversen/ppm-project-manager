@@ -3,7 +3,6 @@
 namespace App;
 
 use Pebble\Config;
-use Diversen\Lang;
 use Pebble\Log\File as FileLog;
 use Pebble\Auth;
 use Pebble\DB;

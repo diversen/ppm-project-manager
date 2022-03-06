@@ -1,6 +1,5 @@
 <?php
 
-use Pebble\Config;
 use App\AppMain;
 
 require 'App/templates/header_error.tpl.php'; 

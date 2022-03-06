@@ -10,6 +10,7 @@ use Pebble\JSON;
 class Controller
 {
 
+    private $app_acl;
     public function __construct()
     {
         $app_main = new AppMain();

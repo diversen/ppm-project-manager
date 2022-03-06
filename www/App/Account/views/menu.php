@@ -1,9 +1,6 @@
 <?php
 
 use Diversen\Lang;
-use App\AppMain;
-
-$auth = (new AppMain())->getAuth();
 
 ?>
 <div class="app-menu">
