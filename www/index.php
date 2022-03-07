@@ -22,6 +22,7 @@ use Pebble\Session;
 use App\AppMain;
 use App\Error\Controller as ErrorController;
 use App\Settings\SettingsModel;
+use Aidantwoods\SecureHeaders\SecureHeaders;
 
 $app_main = new AppMain();
 
@@ -39,6 +40,18 @@ try {
         Headers::redirectToHttps();
     }
 
+    if ($app_main->getConfig()->get('App.env') !== 'dev') {
+        $headers = new SecureHeaders();
+        $headers->hsts();
+        $headers->csp('default', 'self');
+        $headers->csp('img-src', 'data:');
+        $headers->csp('img-src', $app_main->getConfig()->get('App.server_url'));
+        $headers->csp('script', 'unsafe-inline');
+        $headers->csp('script-src', $app_main->getConfig()->get('App.server_url'));
+        $headers->csp('default-src', 'unsafe-inline');
+        $headers->apply();    
+    }
+    
     // Start session. E.g. Flash messages
     Session::setConfigSettings($app_main->getConfig()->getSection('Session'));
     session_start();
@@ -46,7 +59,6 @@ try {
     // Set timezone and language. Use defaults if not set.
     $settings = new SettingsModel;
 
-    
     $auth_id = $app_main->getAuth()->getAuthId();
     $user_settings = $settings->getUserSetting($auth_id, 'profile');
 
