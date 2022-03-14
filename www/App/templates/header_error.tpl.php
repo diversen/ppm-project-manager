@@ -35,7 +35,6 @@ if (!isset($description)) {
     <link rel="manifest" href="/App/templates/assets/manifest.json">
     <link rel="stylesheet" href="/App/templates/css/default.css?v=3">
     <link rel="icon" sizes="192x192" href="/App/templates/assets/ppm-logo-192x192.png">
-    <script src="/App/templates/js/pebble.js"></script>
 </head>
 <body>
 

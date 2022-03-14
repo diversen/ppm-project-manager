@@ -122,6 +122,7 @@ try {
 
     // Just in case the Log class is missing a log dir.
     // Then we use the Log class exception instead.
+    // Or if using DBLog without a connection
     try {
 
         $app_main->getLog()->message($exception_str, 'error');

@@ -3,7 +3,7 @@
 namespace App;
 
 use Pebble\Config;
-use Pebble\Log\File as FileLog;
+use Pebble\Log\DBLog;
 use Pebble\Auth;
 use Pebble\DB;
 use App\AppACL;
@@ -56,7 +56,7 @@ class AppMain {
 
     public function getLog() {
         if(!self::$log) {
-            self::$log = new FileLog(['log_dir' => $this->basePath . '/logs']);
+            self::$log = new DBLog($this->getDB(), $this->getAuth());
         }
 
         return self::$log;
