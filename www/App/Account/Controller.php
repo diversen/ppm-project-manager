@@ -67,12 +67,16 @@ class Controller
     public function logout()
     {
 
+        $this->log->message('user logging out', 'info');
+
         if (isset($_GET['all_devices'])) {
             $auth_id = $this->auth->getAuthId();
             $this->auth->unlinkAllCookies($auth_id);
         } else {
             $this->auth->unlinkCurrentCookie();
         }
+
+        
 
         $redirect = $this->config->get('App.logout_redirect');
         header("Location: $redirect");
@@ -107,14 +111,20 @@ class Controller
             return;
         }
 
+        $this->log->message("$_POST[email] trying to log in", 'info');
+
         $response['error'] = true;
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
         if (!empty($row)) {
+
+            $this->log->message("$row[email] authenticated", 'info');
 
             $response['error'] = false;
 
             // Verify using two factor
             if($this->config->get('TwoFactor.enabled')) {
+
+                $this->log->message("$row[email] using two factor", 'info');
 
                 $two_factor = new TwoFactorModel();
                 if ($two_factor->isTwoFactorEnabled($row['id'])) {
@@ -134,6 +144,8 @@ class Controller
             } else {
                 $this->auth->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
+
+            $this->log->message("$row[email] Session cookie set", 'info');
 
             Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
 

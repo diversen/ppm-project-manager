@@ -23,12 +23,14 @@ class Controller
 {
     private $twoFactorModel;
     private $acl;
+    private $log;
 
     public function __construct() {
         $app_main = new AppMain();
         $this->twoFactorModel = new TwoFactorModel();
         $this->acl = $app_main->getAppACL();
         $this->config = $app_main->getConfig();
+        $this->log = $app_main->getLog();
     }
 
     private function getOtpAuthUrl(string $label, string $key): string
@@ -167,6 +169,8 @@ class Controller
             } else {
                 $this->acl->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
+
+            $this->log->message("$row[user] Session cookie set", 'info');
             
             Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
