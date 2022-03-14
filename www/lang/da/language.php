@@ -175,3 +175,4 @@ $LANG['Login'] = 'Log på';
 $LANG['Home'] = 'Hjem';
 $LANG['Toggle timer'] = 'Skift timer';
 $LANG['Timer'] = 'Timer';
+$LANG['A server error happened. The incidence has been logged.'] = 'Der opstod en serverfejl. Hændelsen er blevet logget.';

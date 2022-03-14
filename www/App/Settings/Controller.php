@@ -85,6 +85,6 @@ class Controller
         }
 
         header('Content-Type: application/json');
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
     }
 }

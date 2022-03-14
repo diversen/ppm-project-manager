@@ -132,7 +132,7 @@ try {
 
     // If we are not on dev display generic error message
     if ($app_main->getConfig()->get('App.env') !== 'dev') {
-        $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
+        $exception_str = Lang::translate('A server error happened. The incidence has been logged.');
     }
 
     $error->error($exception_str);

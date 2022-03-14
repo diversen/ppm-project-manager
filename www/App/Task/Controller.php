@@ -114,7 +114,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
     }
 
     /**
@@ -150,7 +150,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
     }
 
     /**
@@ -171,7 +171,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
     }
 
     /**
@@ -194,6 +194,6 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
     }
 }

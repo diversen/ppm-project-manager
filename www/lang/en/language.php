@@ -392,3 +392,4 @@ $LANG['Timer'] = 'Timer';
 // Translation of file www/index.php
 
 $LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
+$LANG['A server error happened. The incidence has been logged.'] = 'A server error happened. The incidence has been logged.';

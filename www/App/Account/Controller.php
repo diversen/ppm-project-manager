@@ -103,7 +103,7 @@ class Controller
         $validate = new Validate();
         $response = $validate->postLogin();
         if ($response['error'] === true) {
-            echo JSON::responseAddRequest($response);
+            echo JSON::response($response);
             return;
         }
 
@@ -141,7 +141,7 @@ class Controller
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
 
     }
 
@@ -205,7 +205,7 @@ class Controller
         $validate = new Validate();
         $response = $validate->postSignup();
         if ($response['error'] === true) {
-            echo JSON::responseAddRequest($response);
+            echo JSON::response($response);
             return;
         }
 
@@ -250,7 +250,7 @@ class Controller
             }
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
     }
 
     /**
@@ -295,13 +295,13 @@ class Controller
 
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');
-            echo JSON::responseAddRequest($response);
+            echo JSON::response($response);
             return;
         }
 
         if (!$captcha->validate($_POST['captcha'])) {
             $response['message'] = Lang::translate('The image text does not match your submission');
-            echo JSON::responseAddRequest($response);
+            echo JSON::response($response);
             return;
         }
 
@@ -328,7 +328,7 @@ class Controller
             }
         }
 
-        echo JSON::responseAddRequest($response);
+        echo JSON::response($response);
         return;
     }
 
