@@ -3,7 +3,7 @@
         "google/apiclient": "^2.2",
         "bacon/bacon-qr-code": "^2.0",
         "spomky-labs/otphp": "^10.0",
-        "diversen/pebble-framework": "^2.0",
+        "diversen/pebble-framework": "^3.0",
         "aidantwoods/secureheaders": "^2.0"
     },
     "require-dev": {
