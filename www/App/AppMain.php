@@ -59,7 +59,7 @@ class AppMain {
 
     public function getLog() {
         if(!self::$log) {
-            $log = new Logger('name');
+            $log = new Logger('base');
             $log->pushHandler(new StreamHandler($this->basePath . '/logs/main.log', Logger::DEBUG));
             self::$log = $log;
         }
