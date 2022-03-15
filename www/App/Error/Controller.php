@@ -23,7 +23,7 @@ class Controller
         
         $error = $_POST['error'] ?? '';
 
-        $this->app_main->getLog()->message($error, 'error');
+        $this->app_main->getLog()->error($error);
         echo JSON::response(['logged' => true]);
 
     }

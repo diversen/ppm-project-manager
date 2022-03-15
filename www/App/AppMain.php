@@ -8,6 +8,9 @@ use Pebble\Auth;
 use Pebble\DB;
 use App\AppACL;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
 /**
  * AppMain is a class that returns instances of objects where we only want one object
  */
@@ -56,7 +59,9 @@ class AppMain {
 
     public function getLog() {
         if(!self::$log) {
-            self::$log = new DBLog($this->getDB(), $this->getAuth());
+            $log = new Logger('name');
+            $log->pushHandler(new StreamHandler($this->basePath . '/logs/main.log', Logger::DEBUG));
+            self::$log = $log;
         }
 
         return self::$log;

@@ -67,7 +67,7 @@ class Controller
     public function logout()
     {
 
-        $this->log->message('user logging out', 'info');
+        $this->log->info('user logging out');
 
         if (isset($_GET['all_devices'])) {
             $auth_id = $this->auth->getAuthId();
@@ -111,20 +111,20 @@ class Controller
             return;
         }
 
-        $this->log->message("$_POST[email] trying to log in", 'info');
+        $this->log->info("$_POST[email] trying to log in");
 
         $response['error'] = true;
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
         if (!empty($row)) {
 
-            $this->log->message("$row[email] authenticated", 'info');
+            $this->log->info("$row[email] authenticated");
 
             $response['error'] = false;
 
             // Verify using two factor
             if($this->config->get('TwoFactor.enabled')) {
 
-                $this->log->message("$row[email] using two factor", 'info');
+                $this->log->info("$row[email] using two factor");
 
                 $two_factor = new TwoFactorModel();
                 if ($two_factor->isTwoFactorEnabled($row['id'])) {
@@ -145,7 +145,7 @@ class Controller
                 $this->auth->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
 
-            $this->log->message("$row[email] Session cookie set", 'info');
+            $this->log->info("$row[email] Session cookie set");
 
             Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
 
@@ -242,7 +242,7 @@ class Controller
                     $mail_success = true;
                     $mail->sendSignupMail($row);
                 } catch (Exception $e) {
-                    $this->log->message(ExceptionTrace::get($e), 'error');
+                    $this->log->error(ExceptionTrace::get($e));
                     $mail_success = false;
                 }
 
@@ -325,7 +325,7 @@ class Controller
                 $mail->sendRecoverMail($row);
                 $mail_success = true;
             } catch (Exception $e) {
-                $this->log->message(ExceptionTrace::get($e), 'error');
+                $this->log->error(ExceptionTrace::get($e));
                 $mail_success = false;
             }
 

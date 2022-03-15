@@ -170,7 +170,7 @@ class Controller
                 $this->acl->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
 
-            $this->log->message("$row[user] Session cookie set", 'info');
+            $this->log->info("$row[user] Session cookie set");
             
             Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
