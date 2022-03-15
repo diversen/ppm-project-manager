@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Account;
 
@@ -23,7 +25,7 @@ class Controller
     public $config;
     public $db;
     public $log;
-    
+
     public function __construct()
     {
         $app_main = new AppMain();
@@ -43,7 +45,8 @@ class Controller
 
         if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];
-            \Pebble\Template::render('App/Account/views/signout.php',
+            \Pebble\Template::render(
+                'App/Account/views/signout.php',
                 $form_vars
             );
         } else {
@@ -53,7 +56,8 @@ class Controller
                 'csrf_token' => (new CSRF())->getToken(),
             ];
 
-            \Pebble\Template::render('App/Account/views/signin.php',
+            \Pebble\Template::render(
+                'App/Account/views/signin.php',
                 $form_vars
             );
         }
@@ -66,17 +70,16 @@ class Controller
      */
     public function logout()
     {
+        $auth_id = $this->auth->getAuthId();
 
-        $this->log->info('user logging out');
 
         if (isset($_GET['all_devices'])) {
-            $auth_id = $this->auth->getAuthId();
             $this->auth->unlinkAllCookies($auth_id);
         } else {
             $this->auth->unlinkCurrentCookie();
         }
 
-        
+        $this->log->info('Account.logout.success', ['auth_id' => $auth_id]);
 
         $redirect = $this->config->get('App.logout_redirect');
         header("Location: $redirect");
@@ -90,7 +93,8 @@ class Controller
      */
     public function signout()
     {
-        \Pebble\Template::render('App/Account/views/signout.php',
+        \Pebble\Template::render(
+            'App/Account/views/signout.php',
             []
         );
         return;
@@ -111,20 +115,17 @@ class Controller
             return;
         }
 
-        $this->log->info("$_POST[email] trying to log in");
+        $this->log->info('Account.post_login.email', ['email' => $_POST['email']]);
 
         $response['error'] = true;
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
-        if (!empty($row)) {
 
-            $this->log->info("$row[email] authenticated");
+        if (!empty($row)) {
 
             $response['error'] = false;
 
             // Verify using two factor
-            if($this->config->get('TwoFactor.enabled')) {
-
-                $this->log->info("$row[email] using two factor");
+            if ($this->config->get('TwoFactor.enabled')) {
 
                 $two_factor = new TwoFactorModel();
                 if ($two_factor->isTwoFactorEnabled($row['id'])) {
@@ -145,16 +146,14 @@ class Controller
                 $this->auth->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
 
-            $this->log->info("$row[email] Session cookie set");
+            $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
 
             Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
-
         } else {
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
         }
 
         echo JSON::response($response);
-
     }
 
     /**
@@ -168,7 +167,8 @@ class Controller
             'token' => (new CSRF())->getToken(),
         ];
 
-        \Pebble\Template::render('App/Account/views/signup.php',
+        \Pebble\Template::render(
+            'App/Account/views/signup.php',
             $form_vars
         );
     }
@@ -182,17 +182,19 @@ class Controller
 
         $key = $_GET['key'] ?? '';
 
+
+        $row = $this->atuh->getByWhere(['random' => $key]);
         $res = $this->auth->verifyKey($key);
 
         if ($res) {
             Flash::setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
-
+            $this->log->info('Account.verify.success', ['auth_id' => $row['id']]);
         } else {
             Flash::setMessage(Lang::translate('The key supplied has already been used'), 'error');
+            $this->log->info('Account.verify.failed', ['auth_id' => $row['id']]);
         }
 
         header("Location: /account/signin");
-
     }
 
     /**
@@ -226,23 +228,22 @@ class Controller
         $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
 
-            // Create account without verification using mail
+            $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
             if ($this->config->get('Account.no_email_verify')) {
-                
+
                 $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
                 $message = Lang::translate('Account has been created. You may log in');
                 $mail_success = true;
-
             } else {
 
                 $row = $validate->getByEmail($_POST['email']);
                 $mail = new Mail();
-                
+
                 try {
                     $mail_success = true;
                     $mail->sendSignupMail($row);
                 } catch (Exception $e) {
-                    $this->log->error(ExceptionTrace::get($e));
+                    $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
                     $mail_success = false;
                 }
 
@@ -250,12 +251,15 @@ class Controller
             }
 
             if (!$mail_success) {
+
                 $this->db->rollback();
+                $this->log->info('Account.post_signup.rollback');
                 $response['error'] = true;
                 $response['message'] = Lang::translate('The system could not create an account. Please try again another time');
             } else {
-                $this->db->commit();
 
+                $this->db->commit();
+                $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
                 Flash::setMessage($message, 'success');
                 $response['error'] = false;
                 $response['redirect'] = '/account/signin';
@@ -278,10 +282,10 @@ class Controller
             'token' => $token,
         ];
 
-        \Pebble\Template::render('App/Account/views/recover.php',
+        \Pebble\Template::render(
+            'App/Account/views/recover.php',
             $form_vars
         );
-
     }
 
     /**
@@ -321,15 +325,17 @@ class Controller
 
             $mail = new mail();
             try {
-                
+
                 $mail->sendRecoverMail($row);
                 $mail_success = true;
             } catch (Exception $e) {
-                $this->log->error(ExceptionTrace::get($e));
+                $this->log->error('Account.post_recover.exception', ['exception' => ExceptionTrace::get($e)]);
                 $mail_success = false;
             }
 
             if ($mail_success) {
+
+                $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
                 Flash::setMessage(
                     Lang::translate('A notification email has been sent with instructions to create a new password'),
                     'success'
@@ -365,12 +371,13 @@ class Controller
                 header("Location: $_SERVER[REQUEST_URI]");
             } else {
 
-                // Remove all cookie logins if the user is logged in
                 $this->auth->unlinkAllCookies($row['id']);
                 $this->auth->updatePassword($row['id'], $_POST['password']);
 
+                $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
+
                 Flash::setMessage(Lang::translate('Your password has been updated'), 'success');
-                
+
                 header("Location: /account/signin");
             }
 
@@ -387,7 +394,8 @@ class Controller
 
         $vars['token'] = (new CSRF())->getToken();
 
-        \Pebble\Template::render('App/Account/views/newpassword.php',
+        \Pebble\Template::render(
+            'App/Account/views/newpassword.php',
             $vars
         );
     }
