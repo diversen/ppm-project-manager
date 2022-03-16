@@ -123,20 +123,8 @@ class Controller
         if (!empty($row)) {
 
             $response['error'] = false;
-
-            // Verify using two factor
-            if ($this->config->get('TwoFactor.enabled')) {
-
-                $two_factor = new TwoFactorModel();
-                if ($two_factor->isTwoFactorEnabled($row['id'])) {
-                    $session_timed = new SessionTimed();
-                    $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
-                    $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
-                    Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
-                    $response['redirect'] = '/2fa/verify';
-                    echo JSON::response($response);
-                    return;
-                }
+            if($this->twoFactor($response, $row)){
+                return;
             }
 
             $response['redirect'] = $this->config->get('App.login_redirect');
@@ -154,6 +142,29 @@ class Controller
         }
 
         echo JSON::response($response);
+    }
+
+    /**
+     * Checks if the user has two factor enabled and if so,
+     * redirect to the two factor page
+     * @return bool $res True if the user has two factor enabled
+     */
+    private function twoFactor(array $response, array $row) {
+
+        if ($this->config->get('TwoFactor.enabled')) {
+
+            $two_factor = new TwoFactorModel();
+            if ($two_factor->isTwoFactorEnabled($row['id'])) {
+                $session_timed = new SessionTimed();
+                $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
+                $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
+                Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
+                $response['redirect'] = '/2fa/verify';
+                echo JSON::response($response);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

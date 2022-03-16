@@ -135,7 +135,7 @@ class Controller
      * @route /2fa/verify/post
      * @verbs POST
      */    
-    public function verfiyPost () {
+    public function verify_post () {
         $session_timed = new SessionTimed();
         $auth_id = $session_timed->getValue('auth_id_to_login');
         $keep_login = $session_timed->getValue('keep_login');
@@ -146,6 +146,8 @@ class Controller
             echo json_encode($res);
             return;
         }
+
+        $this->log->info('TwoFactor.verify_post', ['auth_id' => $auth_id]);
 
         $secret = $this->twoFactorModel->getUserSecret($auth_id);
         $input = $_POST['code'];
@@ -170,7 +172,7 @@ class Controller
                 $this->acl->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
             }
 
-            $this->log->info("$row[user] Session cookie set");
+            $this->log->info('TwoFactor.verify_post.success', ['auth_id' => $auth_id]);
             
             Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
