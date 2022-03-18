@@ -2,10 +2,9 @@
 
 namespace App\Account;
 
-use Pebble\App;
+use Pebble\Server;
 use Pebble\Template;
 use Pebble\SMTP;
-use Pebble\Config;
 use Diversen\Lang;
 use App\AppMain;
 
@@ -25,7 +24,7 @@ class Mail {
     {
 
         $vars = $this->config->getSection('App');
-        $activation_url = (new App())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
+        $activation_url = (new Server())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
 
         $text = Template::getOutput('App/Account/views/signup_email.php', $vars);
@@ -43,7 +42,7 @@ class Mail {
     {
 
         $vars = $this->config->getSection('App');
-        $activation_url = (new App())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
+        $activation_url = (new Server())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
 
         $text = Template::getOutput('App/Account/views/recover_email.php', $vars);
