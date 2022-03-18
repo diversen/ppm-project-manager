@@ -103,14 +103,18 @@ try {
     }
     echo "<pre>" . $exception_str . "</pre>";
 } catch (NotFoundException $e) {
+
+    // No logging of NotFoundException. Except a notice of the page in question
     $app_main->getLog()->notice("Page not found: " . $_SERVER['REQUEST_URI']);
     $error->notFound($e->getMessage());
 } catch (ForbiddenException $e) {
+
+    // You should log this exception in a controller
     $app_main->getLog()->notice("Access denied: " . $_SERVER['REQUEST_URI']);
     $error->forbidden($e->getMessage());
 } catch (Throwable $e) {
 
-    // Log error to file
+    // All other errros are logged
     $exception_str = ExceptionTrace::get($e);
 
     // Just in case the Log class is missing a log dir.

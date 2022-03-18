@@ -79,6 +79,8 @@ if ($app_main->getConfig()->get('TwoFactor.enabled')) { ?>
 
         event.preventDefault();
 
+        spinner.classList.toggle('hidden');
+
         let formData = new FormData(document.getElementById('seetings'));
         let res;
 
@@ -91,9 +93,11 @@ if ($app_main->getConfig()->get('TwoFactor.enabled')) { ?>
             }
         } catch (e) {
             await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
         }
 
-        spinner.classList.toggle('hidden');
+        
     });
 </script>
 

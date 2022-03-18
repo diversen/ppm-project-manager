@@ -60,9 +60,11 @@ use Diversen\Lang;
             }
         } catch (e) {
             await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
         }
 
-        spinner.classList.toggle('hidden');
+        
     });
 
 </script>

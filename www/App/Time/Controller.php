@@ -6,14 +6,17 @@ use App\AppMain;
 use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use Pebble\JSON;
+use Pebble\ExceptionTrace;
 
 class Controller
 {
     private $app_acl;
+    private $log;
     public function __construct()
     {
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
+        $this->log = $app_main->getLog();
     }
 
     /**
@@ -57,8 +60,8 @@ class Controller
             $post['project_id'] = $task['project_id'];
             (new TimeModel())->create($post);
         } catch (\Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
         }
 
         $response['project_redirect'] = '/project/view/' . $task['project_id'];
@@ -73,7 +76,6 @@ class Controller
     public function delete($params)
     {
         $response['error'] = false;
-        $response['post'] = $_POST;
 
         try {
             $time = $this->app_acl->getTime($params['id']);
@@ -81,8 +83,8 @@ class Controller
 
             (new TimeModel())->delete(['id' => $params['id']]);
         } catch (\Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
         }
 
         echo JSON::response($response);

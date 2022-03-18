@@ -8,11 +8,8 @@ use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 
-use Pebble\Config;
 use Diversen\Lang;
 
-
-use Pebble\ACL;
 use Pebble\Flash;
 use Pebble\SessionTimed;
 

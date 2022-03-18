@@ -8,6 +8,7 @@ use App\Project\ProjectModel;
 use App\Task\TaskModel;
 use Pebble\JSON;
 use App\AppMain;
+use Pebble\ExceptionTrace;
 use Exception;
 
 class Controller
@@ -15,12 +16,14 @@ class Controller
     private $project_model;
     private $task_model;
     private $app_acl;
+    private $log;
     public function __construct()
     {
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
         $this->project_model = new ProjectModel();
         $this->task_model = new TaskModel();
+        $this->log = $app_main->getLog();
     }
 
     /**
@@ -106,6 +109,7 @@ class Controller
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -140,6 +144,7 @@ class Controller
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -152,13 +157,14 @@ class Controller
      */
     public function move_exceeded_today()
     {
-        $this->app_acl->isAuthenticatedOrThrow();
-        $response['error'] = false;
-
+        
         try {
+            $response['error'] = false;
+            $this->app_acl->isAuthenticatedOrThrow();
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['project_redirect'] = '/overview';
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -180,6 +186,7 @@ class Controller
             $this->task_model->delete($params['task_id']);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 

@@ -5,9 +5,9 @@ $LANG = array();
 // Translation of file www/App/Account/Controller.php
 
 $LANG['Signin'] = 'Signin';
-$LANG['Verify your login.'] = 'Verify your login.';
 $LANG['You are logged in'] = 'You are logged in';
 $LANG['Wrong email or password. Or your account has not been activated.'] = 'Wrong email or password. Or your account has not been activated.';
+$LANG['Verify your login.'] = 'Verify your login.';
 $LANG['Signup'] = 'Signup';
 $LANG['Your account has been verified. You may log in'] = 'Your account has been verified. You may log in';
 $LANG['The key supplied has already been used'] = 'The key supplied has already been used';
@@ -118,7 +118,8 @@ $LANG['Kind Regards'] = 'Kind Regards';
 
 // Translation of file www/App/AppACL.php
 
-$LANG['You are not the owner of this project'] = 'You are not the owner of this project';
+$LANG['You are not logged in. Please log in.'] = 'You are not logged in. Please log in.';
+$LANG['You are not the owner of this project.'] = 'You are not the owner of this project.';
 $LANG['There is no such task ID'] = 'There is no such task ID';
 $LANG['There is no such time ID'] = 'There is no such time ID';
 
@@ -235,6 +236,7 @@ $LANG['Completed tasks'] = 'Completed tasks';
 // Translation of file www/App/Settings/Controller.php
 
 $LANG['Settings have been updated'] = 'Settings have been updated';
+$LANG['Your settings could not be saved. Check if you are logged in'] = 'Your settings could not be saved. Check if you are logged in';
 
 // Translation of file www/App/Settings/views/settings.tpl.php
 

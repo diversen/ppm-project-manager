@@ -9,14 +9,17 @@ use Diversen\Lang;
 use Exception;
 use Pebble\Template;
 use Pebble\JSON;
+use Pebble\ExceptionTrace;
 use App\AppMain;
 
 class Controller
 {
+    private $app_acl;
     public function __construct()
     {
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
+        $this->log = $app_main->getLog();
     }
 
     /**
@@ -107,8 +110,8 @@ class Controller
             $project_model->create($_POST);
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
         }
 
         echo JSON::response($response);
@@ -130,8 +133,8 @@ class Controller
 
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
         }
 
         echo JSON::response($response);
@@ -152,8 +155,8 @@ class Controller
             $project_model->delete($params['project_id']);
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
-            $response['post'] = $_POST;
         }
 
         echo JSON::response($response);

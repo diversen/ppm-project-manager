@@ -9,6 +9,7 @@ use App\Task\TaskModel;
 use App\Time\TimeModel;
 use Diversen\Lang;
 use Pebble\Exception\NotFoundException;
+use Pebble\Exception\ForbiddenException;
 use Exception;
 use Pebble\DB;
 
@@ -24,6 +25,11 @@ class AppACL extends ACL
      */
     public function authUserIsProjectOwner($project_id)
     {
+
+        if(!$this->isAuthenticated()){
+            throw new ForbiddenException(Lang::translate('You are not logged in. Please log in.'));
+        }
+
         $access_ary = [
             'entity' => 'project',
             'entity_id' => $project_id,
@@ -31,7 +37,7 @@ class AppACL extends ACL
             'auth_id' => $this->getAuthId(),
         ];
 
-        $this->hasAccessRightsOrThrow($access_ary, Lang::translate('You are not the owner of this project'));
+        $this->hasAccessRightsOrThrow($access_ary, Lang::translate('You are not the owner of this project.'));
     }
 
     /**

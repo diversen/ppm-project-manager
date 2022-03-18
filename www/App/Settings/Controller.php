@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace App\Settings;
 
 use Diversen\Lang;
-use Pebble\ACL;
 use App\Settings\SettingsModel;
 use Pebble\JSON;
 use Pebble\Exception\NotFoundException;
+use Pebble\ExceptionTrace;
 use Pebble\Flash;
 use App\AppMain;
+use Exception;
 
 class Controller
 {
+    private $acl;
+    private $log;
     public function __construct()
     {
         $this->acl = (new AppMain())->getAppACL();
+        $this->log = (new AppMain())->getLog();
     }
     /**
      * @route /settings
@@ -57,15 +61,16 @@ class Controller
      */
     public function put()
     {
-        $this->acl->isAuthenticatedOrThrow();
 
         $settings = new SettingsModel();
         $post = $_POST;
-        $auth_id = $this->acl->getAuthId();
-
+        
         $response['error'] = false;
 
         try {
+
+            $this->acl->isAuthenticatedOrThrow();
+            $auth_id = $this->acl->getAuthId();
 
             // Do not display message on 'overview' page
             if (isset($post['overview_current_day_state'])) {
@@ -75,10 +80,9 @@ class Controller
                 Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
             }
 
-            // $settings->setUserSetting($auth_id, 'profile', $post);
-            // Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
-        } catch (\Exception $e) {
-            $response['error'] = $e->getMessage();
+        } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');
         }
 
         header('Content-Type: application/json');

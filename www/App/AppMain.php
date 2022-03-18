@@ -3,7 +3,6 @@
 namespace App;
 
 use Pebble\Config;
-use Pebble\Log\DBLog;
 use Pebble\Auth;
 use Pebble\DB;
 use App\AppACL;
@@ -24,7 +23,7 @@ class AppMain
     public static $config = null;
 
     /**
-     * @var Pebble\FileLog
+     * @var Monolog\Logger;
      */
     public static $log = null;
 
