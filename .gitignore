@@ -5,5 +5,5 @@ backup
 composer-master.json
 composer-master.lock
 config-locale
-rsync-live.sh
 .migration
+.php-cs-fixer.cache
