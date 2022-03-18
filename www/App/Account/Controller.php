@@ -72,7 +72,6 @@ class Controller
     {
         $auth_id = $this->auth->getAuthId();
 
-
         if (isset($_GET['all_devices'])) {
             $this->auth->unlinkAllCookies($auth_id);
         } else {
@@ -181,7 +180,6 @@ class Controller
     {
 
         $key = $_GET['key'] ?? '';
-
 
         $row = $this->atuh->getByWhere(['random' => $key]);
         $res = $this->auth->verifyKey($key);
