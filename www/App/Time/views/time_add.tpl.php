@@ -32,7 +32,7 @@ require 'App/templates/flash.tpl.php';
 
 <?php
 
-function output_time_table ($time_rows) { ?>
+function output_time_table($time_rows) { ?>
 
 <div>
     <table>
@@ -84,7 +84,7 @@ function output_time_table ($time_rows) { ?>
 
 }
 
-if(!empty($time_rows)) {
+if (!empty($time_rows)) {
     output_time_table($time_rows);
 }
 

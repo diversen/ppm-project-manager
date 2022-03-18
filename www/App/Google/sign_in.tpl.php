@@ -1,9 +1,9 @@
 <?php
 
-Use Diversen\Lang;
+use Diversen\Lang;
 
-require 'App/templates/header.tpl.php'; 
-require 'App/templates/flash.tpl.php'; 
+require 'App/templates/header.tpl.php';
+require 'App/templates/flash.tpl.php';
 
 ?>
 

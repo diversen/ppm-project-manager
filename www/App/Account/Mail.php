@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Account;
 
@@ -8,13 +10,14 @@ use Pebble\SMTP;
 use Diversen\Lang;
 use App\AppMain;
 
-class Mail {
-
+class Mail
+{
     private $config = null;
-    public function __construct() {
+    public function __construct()
+    {
         $this->config = (new AppMain())->getConfig();
     }
-    
+
     /**
      * Send signup mail
      * @param array $row
@@ -22,7 +25,6 @@ class Mail {
      */
     public function sendSignupMail(array $row)
     {
-
         $vars = $this->config->getSection('App');
         $activation_url = (new Server())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
@@ -30,7 +32,6 @@ class Mail {
         $text = Template::getOutput('App/Account/views/signup_email.php', $vars);
         $smtp = new SMTP($this->config->getSection('SMTP'));
         $smtp->sendMarkdown($row['email'], Lang::translate('Activation link'), $text);
-
     }
 
     /**
@@ -40,7 +41,6 @@ class Mail {
      */
     public function sendRecoverMail(array $row)
     {
-
         $vars = $this->config->getSection('App');
         $activation_url = (new Server())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;

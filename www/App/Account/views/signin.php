@@ -1,6 +1,6 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types=1);
 
-require 'App/templates/header.tpl.php'; 
+require 'App/templates/header.tpl.php';
 
 use Diversen\Lang;
 
@@ -37,7 +37,6 @@ use Diversen\Lang;
 
 <script type="module">
     
-
     import {Pebble} from '/App/js/pebble.js';
     
     const spinner = document.querySelector('.loadingspinner');

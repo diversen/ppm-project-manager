@@ -3,7 +3,8 @@
 /**
  * Get a priority css class name from task
  */
-function get_task_priority_class ($task) {
+function get_task_priority_class($task)
+{
     $priorities = [
         'low',
         'minor',
@@ -20,9 +21,10 @@ function get_task_priority_class ($task) {
 }
 
 /**
- * Get is today as boolean from a unix timestamp 
+ * Get is today as boolean from a unix timestamp
  */
-function is_today ($ts) {
+function is_today($ts)
+{
     $today_ts = strtotime('today');
     $is_today = false;
     if ($today_ts == $ts) {
@@ -31,9 +33,10 @@ function is_today ($ts) {
     return $is_today;
 }
 
-function get_sub_menu(array $parts) {
+function get_sub_menu(array $parts)
+{
     $str = implode(' :: ', $parts);
     return "<h4>$str</h4>";
 }
 
-define ('SUB_MENU_SEP', ' :: ');
+define('SUB_MENU_SEP', ' :: ');

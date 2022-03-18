@@ -5,13 +5,13 @@ namespace App\Google;
 use Pebble\Config;
 use App\AppMain;
 
-class GoogleUtils {
-
-    public function getClient () {
-
+class GoogleUtils
+{
+    public function getClient()
+    {
         $config = (new AppMain())->getConfig();
 
-        $jwt = new \Firebase\JWT\JWT;
+        $jwt = new \Firebase\JWT\JWT();
         $jwt::$leeway = 5; // adjust this value
 
         $client = new \Google_Client(['jwt' => $jwt]);
@@ -24,8 +24,8 @@ class GoogleUtils {
         return $client;
     }
 
-    public function getAuthUrl () {
-
+    public function getAuthUrl()
+    {
         $client = $this->getClient();
         return $client->createAuthUrl();
     }

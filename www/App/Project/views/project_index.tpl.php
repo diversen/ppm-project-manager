@@ -18,10 +18,8 @@ require 'App/templates/header.tpl.php';
 
 function render_projects($projects)
 {
-
     if (empty($projects)) :
-        echo "<p>" . Lang::translate('Your have no projects yet') . "</p>";
-    else : ?>
+        echo "<p>" . Lang::translate('Your have no projects yet') . "</p>"; else : ?>
         <table>
             <thead>
                 <tr>
@@ -36,9 +34,7 @@ function render_projects($projects)
 
                 foreach ($projects as $project) :
 
-                    $created = date('d/m/Y', strtotime($project['created']));
-
-                ?>
+                    $created = date('d/m/Y', strtotime($project['created'])); ?>
                     <tr>
                         <td class="td-overflow"><a title="<?= $project['note'] ?>" href='/project/view/<?= $project['id'] ?>'><?= $project['title'] ?></a></td>
                         <td><?= $created ?></td>
@@ -52,9 +48,7 @@ function render_projects($projects)
                     </tr>
                 <?php
 
-                endforeach;
-
-                ?>
+                endforeach; ?>
             </tbody>
         </table>
     <?php
@@ -79,7 +73,6 @@ function render_projects_total_time($total_time_human)
         <p><?= Lang::translate('Total time used on all projects') ?> <?= $total_time_human ?></p>
     </div>
 <?php
-
 }
 
 

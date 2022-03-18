@@ -1,7 +1,7 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types=1);
 
-use \Pebble\URL;
-use \Diversen\Lang;
+use Pebble\URL;
+use Diversen\Lang;
 
 require 'App/templates/header.tpl.php';
 
@@ -10,7 +10,6 @@ require 'App/templates/header.tpl.php';
  */
 function render_task($task, $today)
 {
-
     $task_title = $title_attr = "$task[title]";
     $task_box_class = '';
     if ($task['status'] == '0') {
@@ -18,10 +17,8 @@ function render_task($task, $today)
         $task_box_class = ' task-done ';
     }
 
-    $project_title = $task['project_title'] . "\n" . 
-        Lang::translate('Total time used on project: ') . $task['project_time_total'];
-
-    ?>
+    $project_title = $task['project_title'] . "\n" .
+        Lang::translate('Total time used on project: ') . $task['project_time_total']; ?>
     <tr>
         <td class="td-overflow <?=$task_box_class?>" title="<?=$title_attr?>">
             <span class="priority <?=get_task_priority_class($task)?>"></span>
@@ -44,12 +41,11 @@ function render_task($task, $today)
 
             if (!$today): ?>
             <a title="<?=Lang::translate('Move to today')?>" class="move_to_today xs-hide" href='#' data-id="<?=$task['id']?>"><?=Lang::translate('Today')?></a>
-            <?php endif;?>
+            <?php endif; ?>
         </div>
         </td>
     </tr>
 <?php
-
 }
 
 /**
@@ -57,7 +53,6 @@ function render_task($task, $today)
  */
 function render_week($week_data, $week_state, $week_user_day_times)
 {
-
     $current_day_state = $week_state['current_day_state'];
     foreach ($week_data as $ts => $day_data):
 
@@ -65,18 +60,17 @@ function render_week($week_data, $week_state, $week_user_day_times)
             continue;
         }
 
-        $day_name = date('D', $ts);
-        $is_today = is_today($ts);
+    $day_name = date('D', $ts);
+    $is_today = is_today($ts);
 
-        if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0' ) {
-            continue;
-        }
+    if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
+        continue;
+    }
 
-        $day_class = '';
-        if ($is_today) {
-            $day_class = ' class="today" ';
-        }
-        ?>
+    $day_class = '';
+    if ($is_today) {
+        $day_class = ' class="today" ';
+    } ?>
 
 	        <p><strong <?=$day_class?> ><?=$day_name?>. </strong>
             <?=Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts]))?></p>
@@ -96,9 +90,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
         foreach ($day_data as $task):
             render_task($task, $is_today);
-        endforeach;
-
-        ?>
+    endforeach; ?>
 
 	            </tbody>
 	        </table>
@@ -113,17 +105,14 @@ function render_week($week_data, $week_state, $week_user_day_times)
  */
 function render_week_nav($week_state, $week_user_total)
 {
-
-    
-
-?>
+    ?>
 <h3><?=Lang::translate('Week')?> <?=$week_state['week_number_delta']?></h3>
 <div class="action-links">
     <a href="/overview?week_delta=<?=$week_state['prev']?>"><?=Lang::translate('Show week')?> <?=$week_state['week_number_delta_prev']?></a>
     <a href="/overview?week_delta=<?=$week_state['next']?>"><?=Lang::translate('Show week')?> <?=$week_state['week_number_delta_next']?></a>
     <?php if ($week_state['current'] != '0'): ?>
     <a href="/overview"><?=Lang::translate('Current week')?></a>
-    <?php endif;?>
+    <?php endif; ?>
 </div>
 
 <?php
@@ -132,9 +121,7 @@ if ($week_state['current_day_state'] == '1') {
     $current_day_state_text = Lang::translate('Show full week');
 } else {
     $current_day_state_text = Lang::translate('Show today');
-}
-
-?>
+} ?>
 <div class="clear"></div>
 <div class="action-links">
     <a href="/overview" class="move_exceeded_today" ><?=Lang::translate('Move exceeded to today')?></a>
@@ -142,7 +129,7 @@ if ($week_state['current_day_state'] == '1') {
     <a href="/overview" class="toggle_current_day" data-current-day-state="<?=$week_state['current_day_state']?>"><?=$current_day_state_text?></a>
     <?php endif; ?>  
 </div>
-<p><?=Lang::translate('Activity this week: <span class="notranslate">{week_user_total}</span>', array ('week_user_total' => $week_user_total))?></p>
+<p><?=Lang::translate('Activity this week: <span class="notranslate">{week_user_total}</span>', array('week_user_total' => $week_user_total))?></p>
 
 <?php
 };

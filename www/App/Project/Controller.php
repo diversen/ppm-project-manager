@@ -13,12 +13,10 @@ use App\AppMain;
 
 class Controller
 {
-
     public function __construct()
     {
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
-
     }
 
     /**
@@ -27,7 +25,6 @@ class Controller
      */
     public function index()
     {
-
         $this->app_acl->isAuthenticatedOrThrow();
 
         $template_data = (new ProjectModel())->getIndexData($this->app_acl->getAuthId());
@@ -45,7 +42,6 @@ class Controller
      */
     public function view(array $params)
     {
-
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
         $template_data = (new ProjectModel())->getViewData($params);
@@ -101,7 +97,6 @@ class Controller
      */
     public function post()
     {
-
         $response['error'] = false;
 
         try {
@@ -125,11 +120,9 @@ class Controller
      */
     public function put($params)
     {
-
         $response['error'] = false;
 
         try {
-
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
             $project_model = new ProjectModel();
@@ -150,11 +143,9 @@ class Controller
      */
     public function delete($params)
     {
-
         $response['error'] = false;
 
         try {
-
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
             $project_model = new ProjectModel();

@@ -49,15 +49,15 @@ try {
         $headers->csp('script', 'unsafe-inline');
         $headers->csp('script-src', $app_main->getConfig()->get('App.server_url'));
         $headers->csp('default-src', 'unsafe-inline');
-        $headers->apply();    
+        $headers->apply();
     }
-    
+
     // Start session. E.g. Flash messages
     Session::setConfigSettings($app_main->getConfig()->getSection('Session'));
     session_start();
 
     // Set timezone and language. Use defaults if not set.
-    $settings = new SettingsModel;
+    $settings = new SettingsModel();
 
     $auth_id = $app_main->getAuth()->getAuthId();
     $user_settings = $settings->getUserSetting($auth_id, 'profile');
@@ -74,7 +74,7 @@ try {
 
     if ($app_main->getConfig()->get('App.env') === 'dev') {
         JSON::$debug = true;
-    } 
+    }
 
     // Define all routes
     $router = new Router();
@@ -90,10 +90,8 @@ try {
     $router->addClass(App\Error\Controller::class);
     $router->addClass(App\TwoFactor\Controller::class);
     $router->run();
-
-    
 } catch (TemplateException $e) {
-    
+
     // If it is a template error then content most likely has been sent to the browser
     // And therefor we can not send a 5xx header.
     $exception_str = ExceptionTrace::get($e);
@@ -104,17 +102,12 @@ try {
         $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
     }
     echo "<pre>" . $exception_str . "</pre>";
-
 } catch (NotFoundException $e) {
-
     $app_main->getLog()->notice("Page not found: " . $_SERVER['REQUEST_URI']);
     $error->notFound($e->getMessage());
-
 } catch (ForbiddenException $e) {
-
     $app_main->getLog()->notice("Access denied: " . $_SERVER['REQUEST_URI']);
     $error->forbidden($e->getMessage());
-    
 } catch (Throwable $e) {
 
     // Log error to file
@@ -124,7 +117,6 @@ try {
     // Then we use the Log class exception instead.
     // Or if using DBLog without a connection
     try {
-
         $app_main->getLog()->error($exception_str);
     } catch (Exception $e) {
         $error->error($e->getMessage());

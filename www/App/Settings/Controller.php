@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Settings;
 
@@ -10,13 +12,11 @@ use Pebble\Exception\NotFoundException;
 use Pebble\Flash;
 use App\AppMain;
 
-
 class Controller
 {
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->acl = (new AppMain())->getAppACL();
-
     }
     /**
      * @route /settings
@@ -24,7 +24,6 @@ class Controller
      */
     public function index()
     {
-
         $this->acl->isAuthenticatedOrThrow();
 
         $settings = new SettingsModel();
@@ -42,9 +41,8 @@ class Controller
      */
     public function user($params)
     {
-
         if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {
-            throw new NotFoundException;
+            throw new NotFoundException();
         }
 
         $settings = new SettingsModel();
@@ -59,7 +57,6 @@ class Controller
      */
     public function put()
     {
-
         $this->acl->isAuthenticatedOrThrow();
 
         $settings = new SettingsModel();

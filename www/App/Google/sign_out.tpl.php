@@ -1,9 +1,9 @@
 <?php
 
-use \Diversen\Lang;
+use Diversen\Lang;
 
-require 'App/templates/header.tpl.php'; 
-require 'App/templates/flash.tpl.php'; 
+require 'App/templates/header.tpl.php';
+require 'App/templates/flash.tpl.php';
 
 ?>
 
@@ -25,7 +25,3 @@ You can always add it again. And your work is not lost.
 <?php
 
 require 'App/templates/footer.tpl.php';
-
-
-
-

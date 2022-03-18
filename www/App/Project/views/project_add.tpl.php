@@ -1,7 +1,7 @@
 <?php
 
-use \Diversen\Lang;
-use \Pebble\CSRF;
+use Diversen\Lang;
+use Pebble\CSRF;
 
 $csrf_token = (new CSRF())->getToken();
 

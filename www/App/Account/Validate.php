@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Account;
 
@@ -6,13 +8,14 @@ use Pebble\CSRF;
 use Diversen\Lang;
 use App\AppMain;
 
-class Validate {
-
-
-    public function __construct() {
+class Validate
+{
+    public function __construct()
+    {
         $this->db = (new AppMain())->getDB();
     }
-    public function postLogin() {
+    public function postLogin()
+    {
         $response = ['error' => true];
 
         if (!$this->token()) {
@@ -23,13 +26,12 @@ class Validate {
 
         $response['error'] = false;
         return $response;
-
     }
-    
+
     /**
      * Get 'Auth' row by email
      */
-    public function getByEmail(string $email) : array
+    public function getByEmail(string $email): array
     {
         $sql = "SELECT * FROM auth WHERE email = ?";
         $row = $this->db->prepareFetch($sql, [$email]);
@@ -39,7 +41,7 @@ class Validate {
     /**
      * Validate if two passwords do match
      */
-    public function passwordsMatch(string $password, string $password_2) : bool
+    public function passwordsMatch(string $password, string $password_2): bool
     {
         if ($password === $password_2) {
             return true;
@@ -50,21 +52,19 @@ class Validate {
     /**
      * Does an email exists. Needs to be unique
      */
-    public function emailExists(string $email) : bool
+    public function emailExists(string $email): bool
     {
-
         $row = $this->getByEmail($email);
         if (!empty($row)) {
             return true;
         }
         return false;
-
     }
 
     /**
      * Validate password strenth
      */
-    public function passwordStrength($password) : bool
+    public function passwordStrength($password): bool
     {
         if (mb_strlen($password) < 7) {
             return false;
@@ -72,7 +72,8 @@ class Validate {
         return true;
     }
 
-    private function token() {
+    private function token()
+    {
         $csrf = new CSRF();
         if (!$csrf->validateToken()) {
             return false;
@@ -83,9 +84,8 @@ class Validate {
     /**
      * Validate signup form from $_POST
      */
-    public function postSignup() : array
+    public function postSignup(): array
     {
-        
         $response = ['error' => true];
 
         if (!$this->token()) {
@@ -128,8 +128,8 @@ class Validate {
     /**
      * Validate passwords from $_POST
      */
-    public function passwords(): array {
-
+    public function passwords(): array
+    {
         $csrf = new CSRF();
 
         $response = ['error' => true];
@@ -155,4 +155,3 @@ class Validate {
         return $response;
     }
 }
-

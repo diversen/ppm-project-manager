@@ -16,10 +16,9 @@ use App\AppMain;
  */
 class ProjectModel
 {
-
-    const PROJECT_CLOSED = 0;
-    const PROJECT_OPEN = 1;
-    const PROJECT_DELETED = 2;
+    public const PROJECT_CLOSED = 0;
+    public const PROJECT_OPEN = 1;
+    public const PROJECT_DELETED = 2;
 
     private $db;
     private $app_acl;
@@ -108,7 +107,6 @@ class ProjectModel
      */
     public function getIndexData($auth_id)
     {
-
         $projects = $this->getAll(['auth_id' => $auth_id, 'status' => ProjectModel::PROJECT_OPEN]);
         $time_model = new TimeModel();
 
@@ -146,7 +144,6 @@ class ProjectModel
      */
     public function getViewData($params)
     {
-
         $project = $this->getOne($params['project_id']);
         $tasks = (new TaskModel())->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
         $tasks_completed = (new TaskModel())->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);

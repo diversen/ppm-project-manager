@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
@@ -10,31 +12,30 @@ use App\Settings\SettingsModel;
 
 class Cal
 {
-
     private $auth;
     private $config;
-    public function __construct() {
+    public function __construct()
+    {
         $app_main = new AppMain();
         $this->auth = $app_main->getAuth();
         $this->config = $app_main->getConfig();
     }
 
-    private function getUserTimeZone() {
-
-        $settings_model = new SettingsModel;
+    private function getUserTimeZone()
+    {
+        $settings_model = new SettingsModel();
         $auth_id = $this->auth->getAuthId();
         $timezone = $settings_model->getSingleProfileSetting($auth_id, 'timezone', null);
         if (!$timezone) {
             $timezone = $this->config->get('App.timezone');
         }
         return $timezone;
-
     }
     /**
      * Get a UTC date in format Y-m-d H:i:s from a supplied datetime string
      */
-    public function userDateToUTC($datetime_str = 'now') {
-
+    public function userDateToUTC($datetime_str = 'now')
+    {
         $user_time_zone = $this->getUserTimeZone();
         $date = new DateTime($datetime_str, new DateTimeZone($user_time_zone));
 
@@ -42,17 +43,17 @@ class Cal
         return $date->format('Y-m-d 00:00:00');
     }
 
-    
-    public function userDate($datetime_str = 'now', $format = 'Y-m-d 00:00:00') {
 
+    public function userDate($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
+    {
         $user_time_zone = $this->getUserTimeZone();
 
-        $date = new DateTime($datetime_str, new DateTimeZone($user_time_zone) );
+        $date = new DateTime($datetime_str, new DateTimeZone($user_time_zone));
         return $date->format($format);
-
     }
 
-    public function userDateFromUnixTs($unix_ts) {
+    public function userDateFromUnixTs($unix_ts)
+    {
         $date_time = new DateTime();
         $date_time->setTimestamp($unix_ts);
 
@@ -60,20 +61,18 @@ class Cal
 
         $date_time->setTimezone(new DateTimeZone($user_time_zone));
         return $date_time->format('Y-m-d 00:00:00');
-        
     }
 
-     
+
     public function getCurrentWeekDays(int $week_delta, string $format = 'Y-m-d H:i:s')
     {
-        
         $week_delta_str = $this->getWeekDeltaStr($week_delta);
 
         $week = [];
 
         $ts_mon = strtotime("Monday this week $week_delta_str");
         $week[$ts_mon] = date($format, $ts_mon);
-        
+
         $ts_tue = strtotime("Tuesday this week $week_delta_str");
         $week[$ts_tue] = date($format, $ts_tue);
 
@@ -93,14 +92,13 @@ class Cal
         $week[$ts_sun] = date($format, $ts_sun);
 
         return $week;
-
     }
 
-    public function getWeekDeltaStr(int $week_delta) { 
+    public function getWeekDeltaStr(int $week_delta)
+    {
         $week_delta_str = '';
         if ($week_delta < 0) {
             $week_delta_str = '-' . abs($week_delta) . " week";
-
         }
         if ($week_delta > 0) {
             $week_delta_str = '+' . $week_delta . " week";
@@ -108,11 +106,9 @@ class Cal
         return $week_delta_str;
     }
 
-    public function getWeekNumberFromDelta(int $week_delta) {
-        
+    public function getWeekNumberFromDelta(int $week_delta)
+    {
         $week_delta_str = $this->getWeekDeltaStr($week_delta);
         return date('W', strtotime("today $week_delta_str"));
     }
-
-    
 }

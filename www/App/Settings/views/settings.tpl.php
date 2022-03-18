@@ -10,7 +10,6 @@ require 'App/templates/header.tpl.php';
 
 function select($name, $select_options, $selected = null)
 {
-
     $str = "<select name='$name'>";
     foreach ($select_options as $key => $option) {
         $checked = '';
@@ -40,11 +39,11 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
 <h3 class="sub-menu"><?= Lang::translate('Settings') ?></h3>
 <?php
 
-if ($app_main->getConfig()->get('TwoFactor.enabled')){ ?>
+if ($app_main->getConfig()->get('TwoFactor.enabled')) { ?>
 <p><a href="/2fa/enable"><?=Lang::translate('Two factor authentication')?></a></p>
-<?php 
+<?php
 
-} 
+}
 
 ?>
 <form name="settings" id="seetings" method="post">

@@ -29,7 +29,6 @@ class Controller
      */
     public function add($params)
     {
-
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
         $project = $this->project_model->getOne($params['project_id']);
@@ -51,7 +50,6 @@ class Controller
      */
     public function edit($params)
     {
-
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
@@ -76,7 +74,6 @@ class Controller
      */
     public function view($params)
     {
-
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
@@ -99,10 +96,8 @@ class Controller
      */
     public function post()
     {
-
         $response['error'] = false;
         try {
-
             $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
 
             $_POST['auth_id'] = $this->app_acl->getAuthId();
@@ -123,19 +118,17 @@ class Controller
      */
     public function put($params)
     {
-
         $response['error'] = false;
         $response['post'] = $_POST;
 
         try {
-
             $task = $this->app_acl->getTask($params['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
             // 'now' updates a tasks begin_date to 'today'
             // Used on overview page
-            // It unsets the 'begin_date' because if there is no date then 'today' date will be used. 
-            // If 'end_date' < 'begin_date' then 'end_date' will be updated to the same as 'begin_date' 
+            // It unsets the 'begin_date' because if there is no date then 'today' date will be used.
+            // If 'end_date' < 'begin_date' then 'end_date' will be updated to the same as 'begin_date'
             if (isset($_POST['now'])) {
                 unset($task['begin_date']);
                 $_POST = $task;
@@ -159,12 +152,10 @@ class Controller
      */
     public function move_exceeded_today()
     {
-
         $this->app_acl->isAuthenticatedOrThrow();
         $response['error'] = false;
 
         try {
-
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['project_redirect'] = '/overview';
         } catch (Exception $e) {
@@ -180,11 +171,9 @@ class Controller
      */
     public function delete($params)
     {
-
         $response['error'] = false;
 
         try {
-
             $task = $this->app_acl->getTask($params['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
 

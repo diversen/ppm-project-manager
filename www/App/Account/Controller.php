@@ -20,7 +20,6 @@ use Exception;
 
 class Controller
 {
-
     public $auth;
     public $config;
     public $db;
@@ -42,7 +41,6 @@ class Controller
 
     public function index()
     {
-
         if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];
             \Pebble\Template::render(
@@ -50,7 +48,6 @@ class Controller
                 $form_vars
             );
         } else {
-
             $form_vars = [
                 'title' => Lang::translate('Signin'),
                 'csrf_token' => (new CSRF())->getToken(),
@@ -120,9 +117,8 @@ class Controller
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
-
             $response['error'] = false;
-            if($this->twoFactor($response, $row)){
+            if ($this->twoFactor($response, $row)) {
                 return;
             }
 
@@ -148,10 +144,9 @@ class Controller
      * redirect to the two factor page
      * @return bool $res True if the user has two factor enabled
      */
-    private function twoFactor(array $response, array $row) {
-
+    private function twoFactor(array $response, array $row)
+    {
         if ($this->config->get('TwoFactor.enabled')) {
-
             $two_factor = new TwoFactorModel();
             if ($two_factor->isTwoFactorEnabled($row['id'])) {
                 $session_timed = new SessionTimed();
@@ -189,7 +184,6 @@ class Controller
      */
     public function verify()
     {
-
         $key = $_GET['key'] ?? '';
 
         $row = $this->atuh->getByWhere(['random' => $key]);
@@ -222,7 +216,6 @@ class Controller
      */
     public function post_signup()
     {
-
         usleep(100000);
 
         $validate = new Validate();
@@ -236,15 +229,12 @@ class Controller
 
         $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
-
             $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
             if ($this->config->get('Account.no_email_verify')) {
-
                 $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
                 $message = Lang::translate('Account has been created. You may log in');
                 $mail_success = true;
             } else {
-
                 $row = $validate->getByEmail($_POST['email']);
                 $mail = new Mail();
 
@@ -260,13 +250,11 @@ class Controller
             }
 
             if (!$mail_success) {
-
                 $this->db->rollback();
                 $this->log->info('Account.post_signup.rollback');
                 $response['error'] = true;
                 $response['message'] = Lang::translate('The system could not create an account. Please try again another time');
             } else {
-
                 $this->db->commit();
                 $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
                 Flash::setMessage($message, 'success');
@@ -284,7 +272,6 @@ class Controller
      */
     public function recover()
     {
-
         $token = (new CSRF())->getToken();
         $form_vars = [
             'title' => Lang::translate('Recover account'),
@@ -303,7 +290,6 @@ class Controller
      */
     public function post_recover()
     {
-
         $captcha = new Captcha();
         $validate = new Validate();
 
@@ -331,10 +317,8 @@ class Controller
         }
 
         if (!empty($row)) {
-
             $mail = new mail();
             try {
-
                 $mail->sendRecoverMail($row);
                 $mail_success = true;
             } catch (Exception $e) {
@@ -343,7 +327,6 @@ class Controller
             }
 
             if ($mail_success) {
-
                 $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
                 Flash::setMessage(
                     Lang::translate('A notification email has been sent with instructions to create a new password'),
@@ -365,13 +348,11 @@ class Controller
      */
     public function newpassword()
     {
-
         $key = $_GET['key'] ?? null;
 
         $row = $this->auth->getByWhere(['random' => $key]);
 
         if (!empty($_POST) && !empty($row)) {
-
             $validate = new Validate();
             $response = $validate->passwords();
 
@@ -379,7 +360,6 @@ class Controller
                 Flash::setMessage($response['message'], 'error');
                 header("Location: $_SERVER[REQUEST_URI]");
             } else {
-
                 $this->auth->unlinkAllCookies($row['id']);
                 $this->auth->updatePassword($row['id'], $_POST['password']);
 

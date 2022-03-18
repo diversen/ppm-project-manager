@@ -8,7 +8,7 @@ $flash_messages = \Pebble\Flash::getMessages();
 
 <?php
 
-foreach($flash_messages as $message): 
+foreach ($flash_messages as $message):
 
     // The flash-remove class indicates if the flash message will be removed with JS after som seconds.
     // If this class is not present then the flash message will NOT be removed

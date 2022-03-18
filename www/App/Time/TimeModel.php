@@ -11,7 +11,7 @@ class TimeModel
 {
     private $db;
     private $app_acl;
-    
+
     public function __construct()
     {
         $app_main = new AppMain();
@@ -69,7 +69,6 @@ class TimeModel
      */
     public function sumTime($where)
     {
-
         $sql = 'SELECT SUM(minutes) as total_time FROM time ';
         $sql.=  $this->db->getWhereSql($where);
 
@@ -77,7 +76,7 @@ class TimeModel
         $row =  $this->db->prepareFetch($sql, $where);
         $total = $row['total_time'];
 
-        if ($total === NULL) {
+        if ($total === null) {
             $total = '0';
         }
 
@@ -90,7 +89,6 @@ class TimeModel
      */
     public function getAll($where)
     {
-
         $time_rows = $this->db->getAll('time', $where);
 
         foreach ($time_rows as $key => $time) {
@@ -112,7 +110,6 @@ class TimeModel
      */
     public function create(array $post)
     {
-
         $this->validate($post);
         $post['auth_id'] = $this->app_acl->getAuthId();
         $post = $this->sanitize($post);
@@ -143,12 +140,10 @@ class TimeModel
      */
     public function getWeekData(array $week_ts): array
     {
-
         $week_data = [];
 
         // iterate all dates in the week
         foreach ($week_ts as $day_ts => $date) {
-
             $sql = "
 
                 SELECT t.*, p.status as project_status, p.title as project_title FROM task t 
@@ -181,7 +176,6 @@ class TimeModel
 
     public function getWeekTimes(array $week_ts): array
     {
-
         $week_user_total = 0;
         foreach ($week_ts as $day_ts => $date) {
             $task_time_user_on_day = $this->sumTime(['begin_date' => $date, 'auth_id' => $this->app_acl->getAuthId()]);

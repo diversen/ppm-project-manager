@@ -1,6 +1,6 @@
 <?php
 
-use \Diversen\Lang;
+use Diversen\Lang;
 
 ?>
 <?=Lang::translate('Hi')?>,

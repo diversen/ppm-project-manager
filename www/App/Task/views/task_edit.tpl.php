@@ -36,12 +36,12 @@ $is_selected = function ($priority, $value) {
     <label for="project_id"><?= Lang::translate('Project') ?></label>
     <select name="project_id">
     <?php
-    foreach($all_projects as $_project): ?>
+    foreach ($all_projects as $_project): ?>
     <option value="<?=$_project['id']?>" <?= $is_selected($_project['id'], $project['id']) ?>><?= $_project['title'] ?></option>
     <?php
 
     endforeach;
-    
+
     ?>
     </select>
     <label for="priority"><?= Lang::translate('Priority') ?></label>

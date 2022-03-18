@@ -1,6 +1,6 @@
 <?php
 
-require 'App/templates/header.tpl.php'; 
+require 'App/templates/header.tpl.php';
 
 use Diversen\Lang;
 
@@ -17,4 +17,3 @@ use Diversen\Lang;
 <?php
 
 require 'App/templates/footer.tpl.php';
-

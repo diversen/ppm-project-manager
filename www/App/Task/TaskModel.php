@@ -14,19 +14,16 @@ use Pebble\Exception\NotFoundException;
 
 class TaskModel
 {
-
-    const TASK_CLOSED = 0;
-    const TASK_OPEN = 1;
-    const TASK_DELETED = 2;
+    public const TASK_CLOSED = 0;
+    public const TASK_OPEN = 1;
+    public const TASK_DELETED = 2;
 
     private $db;
 
     public function __construct()
     {
-
         $app_main = new AppMain();
         $this->db = $app_main->getDB();
-
     }
 
     /**
@@ -35,11 +32,16 @@ class TaskModel
      */
     private function sanitize($post)
     {
-
         $cal = new Cal();
-        if (!isset($post['begin_date'])) $post['begin_date'] = $cal->userDateToUTC();
-        if (!isset($post['end_date'])) $post['end_date'] = $cal->userDateToUTC();
-        if (!isset($post['status'])) $post['status'] = 1;
+        if (!isset($post['begin_date'])) {
+            $post['begin_date'] = $cal->userDateToUTC();
+        }
+        if (!isset($post['end_date'])) {
+            $post['end_date'] = $cal->userDateToUTC();
+        }
+        if (!isset($post['status'])) {
+            $post['status'] = 1;
+        }
 
         if (new DateTime($post['end_date']) < new DateTime($post['begin_date'])) {
             $post['end_date'] = $post['begin_date'];
@@ -67,7 +69,6 @@ class TaskModel
 
     public function getAll($where)
     {
-
         $timeModel = new TimeModel();
 
         $sql = "SELECT * FROM task ";
@@ -84,7 +85,6 @@ class TaskModel
 
     public function getOne($where)
     {
-
         $time_model = new TimeModel();
         $task = $this->db->getOne('task', $where);
 
@@ -129,15 +129,13 @@ class TaskModel
         $post = $this->sanitize($post);
         $this->validate($post);
         $task = $this->getOne($where);
-    
+
         $this->db->beginTransaction();
 
         // Update time in case project_id has changed
         $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
         $this->db->update('task', $post, $where);
         return $this->db->commit();
-        
-
     }
 
     public function close(string $task_id)

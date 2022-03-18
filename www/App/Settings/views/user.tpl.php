@@ -1,9 +1,11 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 use Diversen\Lang;
 use Pebble\Special;
 
-require 'App/templates/header.tpl.php'; 
+require 'App/templates/header.tpl.php';
 
 
 $md = new Parsedown();
@@ -15,7 +17,7 @@ $bio = $user['bio'] ?? '';
 if (empty($name)) {
     $title = Lang::translate('User has not entered any user info yet');
 } else {
-    $title = Lang::translate('User') . ' :: ' .  $user['name']; 
+    $title = Lang::translate('User') . ' :: ' .  $user['name'];
 }
 
 echo "<h3>$title</h3>";

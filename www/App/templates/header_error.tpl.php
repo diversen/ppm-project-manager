@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types=1);
 
 if (isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
@@ -24,8 +24,8 @@ if (!isset($description)) {
     <meta name="description" content="<?=$description?>">
     <meta name="theme-color" content="#ffffff">
     
-    <?php 
-    
+    <?php
+
     if ($use_theme_dark_mode): ?>
     <link rel="stylesheet" href="/App/templates/css/water/dark.min.css">
     <?php else: ?>

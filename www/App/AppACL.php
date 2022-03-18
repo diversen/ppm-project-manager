@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App;
 
@@ -10,10 +12,10 @@ use Pebble\Exception\NotFoundException;
 use Exception;
 use Pebble\DB;
 
-class AppACL extends ACL 
+class AppACL extends ACL
 {
-
-    public function __construct(DB $db, array $auth_cookie_settings){
+    public function __construct(DB $db, array $auth_cookie_settings)
+    {
         parent::__construct($db, $auth_cookie_settings);
     }
 
@@ -22,7 +24,6 @@ class AppACL extends ACL
      */
     public function authUserIsProjectOwner($project_id)
     {
-
         $access_ary = [
             'entity' => 'project',
             'entity_id' => $project_id,
@@ -36,14 +37,15 @@ class AppACL extends ACL
     /**
      * Check if a current authenticated user is the owner of a task (he is if the task is connected to a owned project)
      */
-    public function authUserIsTaskOwner(string $task_id) {
+    public function authUserIsTaskOwner(string $task_id)
+    {
         $task = $this->getTask($task_id);
         $this->authUserIsProjectOwner($task['project_id']);
     }
 
 
-    public function setProjectRights($project_id) {
-
+    public function setProjectRights($project_id)
+    {
         $access_rights = [
             'entity' => 'project',
             'entity_id' => $project_id,
@@ -54,7 +56,8 @@ class AppACL extends ACL
         return $this->setAccessRights($access_rights);
     }
 
-    public function removeProjectRights ($project_id) {
+    public function removeProjectRights($project_id)
+    {
         $access_rights = ['entity' => 'project', 'entity_id' => $project_id];
         return $this->removeAccessRights($access_rights);
     }
@@ -64,7 +67,7 @@ class AppACL extends ACL
      */
     public function getTask($task_id)
     {
-        
+
         // Check if there is a task
         $task = (new TaskModel())->getOne(['id' => $task_id]);
         if (empty($task)) {

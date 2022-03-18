@@ -8,9 +8,9 @@ use App\AppMain;
 
 class Controller
 {
-
     public $app_main = null;
-    public function __construct() {
+    public function __construct()
+    {
         $this->app_main = new AppMain();
     }
     /**
@@ -18,18 +18,16 @@ class Controller
      * @route /error/log
      * @verbs POST
      */
-    public function ajaxError() {
-
-        
+    public function ajaxError()
+    {
         $error = $_POST['error'] ?? '';
 
         $this->app_main->getLog()->error($error);
         echo JSON::response(['logged' => true]);
-
     }
 
-    private function baseError(string $title, string $error_message) {
-
+    private function baseError(string $title, string $error_message)
+    {
         if (empty($error_message)) {
             $error_message = Lang::translate('Page not found. If this page has existed then it has been deleted');
         }
@@ -39,7 +37,8 @@ class Controller
             'message' => $error_message,
         ];
 
-        \Pebble\Template::render('App/Error/error.tpl.php',
+        \Pebble\Template::render(
+            'App/Error/error.tpl.php',
             $error_vars
         );
     }
@@ -49,7 +48,6 @@ class Controller
      */
     public function notFound(string $error_message = '')
     {
-
         header('HTTP/1.0 404 Not Found');
         $this->baseError(Lang::translate('404 Page not found'), $error_message);
     }
@@ -59,10 +57,8 @@ class Controller
      */
     public function forbidden(string $error_message = '')
     {
-
         header('HTTP/1.0 403 Forbidden');
         $this->baseError(Lang::translate('403 Forbidden'), $error_message);
-
     }
 
     /**

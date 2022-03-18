@@ -25,7 +25,8 @@ class Controller
     private $acl;
     private $log;
 
-    public function __construct() {
+    public function __construct()
+    {
         $app_main = new AppMain();
         $this->twoFactorModel = new TwoFactorModel();
         $this->acl = $app_main->getAppACL();
@@ -57,7 +58,8 @@ class Controller
      * @route /2fa/recreate
      * @verbs GET
      */
-    public function recreate () {
+    public function recreate()
+    {
         $this->acl->isAuthenticatedOrThrow();
         if ($this->twoFactorModel->isTwoFactorEnabled($this->acl->getAuthId())) {
             $this->twoFactorModel->delete($this->acl->getAuthId());
@@ -65,7 +67,6 @@ class Controller
         }
 
         header('Location: /2fa/enable', true);
-
     }
 
     /**
@@ -74,7 +75,6 @@ class Controller
      */
     public function enable()
     {
-
         $this->acl->isAuthenticatedOrThrow();
 
         // A random secret will be generated from this.
@@ -111,31 +111,30 @@ class Controller
      * @route /2fa/put
      * @verbs POST
      */
-    public function put() {
-
+    public function put()
+    {
         $auth_id = $this->acl->getAuthId();
         $secret = $this->twoFactorModel->getUserSecret($auth_id);
         $input = $_POST['code'];
         $otp = TOTP::create($secret);
         $res['error'] = false;
-        if(!$otp->verify($input)) {
+        if (!$otp->verify($input)) {
             $message = Lang::translate('The code could not be verified. Try again.');
             $res['error'] = $message;
-            
         } else {
             $this->twoFactorModel->verify($auth_id);
             $res['message'] = Lang::translate('The code is verified. Two factor is enabled.');
         }
 
         echo json_encode($res);
-   
     }
 
     /**
      * @route /2fa/verify/post
      * @verbs POST
-     */    
-    public function verify_post () {
+     */
+    public function verify_post()
+    {
         $session_timed = new SessionTimed();
         $auth_id = $session_timed->getValue('auth_id_to_login');
         $keep_login = $session_timed->getValue('keep_login');
@@ -153,12 +152,10 @@ class Controller
         $input = $_POST['code'];
         $otp = TOTP::create($secret);
         $res['error'] = false;
-        if(!$otp->verify($input)) {
+        if (!$otp->verify($input)) {
             $message = Lang::translate('The code could not be verified. Try again.');
             $res['error'] = $message;
-            
         } else {
-            
             $login_redirect = $this->config->get('App.login_redirect');
             $res['message'] = Lang::translate('The code is verified. You are logged in.');
             $res['redirect'] = $login_redirect;
@@ -173,7 +170,7 @@ class Controller
             }
 
             $this->log->info('TwoFactor.verify_post.success', ['auth_id' => $auth_id]);
-            
+
             Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
 
@@ -184,8 +181,8 @@ class Controller
      * @route /2fa/verify
      * @verbs GET
      */
-    public function verify() {
-        
+    public function verify()
+    {
         $vars = [];
         \Pebble\Template::render(
             'App/TwoFactor/views/verify.tpl.php',

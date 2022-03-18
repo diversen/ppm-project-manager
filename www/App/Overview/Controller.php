@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Overview;
 
@@ -12,7 +14,6 @@ use Diversen\Lang;
 
 class Controller
 {
-
     public function __construct()
     {
         $this->app_main = new AppMain();
@@ -25,7 +26,6 @@ class Controller
      */
     public function index()
     {
-
         $this->app_main->getAppACL()->isAuthenticatedOrThrow();
 
         $cal = new Cal();
@@ -37,7 +37,7 @@ class Controller
         $week_state = [
             'week_number_delta' =>      $cal->getWeekNumberFromDelta($week_delta_current),
             'week_number_delta_next' => $cal->getWeekNumberFromDelta($week_delta_current + 1),
-            'week_number_delta_prev' => $cal->getWeekNumberFromDelta($week_delta_current -1 ),
+            'week_number_delta_prev' => $cal->getWeekNumberFromDelta($week_delta_current -1),
             'week_number' =>            $cal->getWeekNumberFromDelta(0),
             'current' =>                $week_delta_current,
             'next' =>                   $week_delta_current + 1,
@@ -50,17 +50,16 @@ class Controller
         $week_ts = $cal->getCurrentWeekDays($week_delta_current);
         $week_data = $timeModel->getWeekData($week_ts);
         $week_time = $timeModel->getWeekTimes($week_ts);
-        
+
         $data = [
-            'week_data' =>              $week_data, 
+            'week_data' =>              $week_data,
             'week_state' =>             $week_state,
             'week_user_day_times' =>    $week_time['week_user_day_times'],
             'week_user_total' =>        $week_time['week_user_total'],
             'title' => Lang::translate('Overview'),
-            'description' => Lang::translate('Overview by week'), 
+            'description' => Lang::translate('Overview by week'),
         ];
 
         \Pebble\Template::render('App/Overview/overview.tpl.php', $data);
-
     }
 }

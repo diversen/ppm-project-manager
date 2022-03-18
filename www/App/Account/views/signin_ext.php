@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
-require 'App/templates/header.tpl.php'; 
+require 'App/templates/header.tpl.php';
 
 use Diversen\Lang;
 

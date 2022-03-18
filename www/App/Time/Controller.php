@@ -9,7 +9,6 @@ use Pebble\JSON;
 
 class Controller
 {
-
     private $app_acl;
     public function __construct()
     {
@@ -23,7 +22,6 @@ class Controller
      */
     public function add($params)
     {
-
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
@@ -48,11 +46,9 @@ class Controller
      */
     public function post()
     {
-
         $response['error'] = false;
 
         try {
-
             $task = $this->app_acl->getTask($_POST['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
@@ -76,12 +72,10 @@ class Controller
      */
     public function delete($params)
     {
-
         $response['error'] = false;
         $response['post'] = $_POST;
 
         try {
-
             $time = $this->app_acl->getTime($params['id']);
             $this->app_acl->authUserIsProjectOwner($time['project_id']);
 

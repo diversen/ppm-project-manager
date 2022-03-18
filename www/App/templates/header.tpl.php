@@ -1,9 +1,9 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types=1);
 
-use \App\Settings\SettingsModel;
-use \App\AppMain;
+use App\Settings\SettingsModel;
+use App\AppMain;
 
-$settings = new SettingsModel;
+$settings = new SettingsModel();
 $auth = (new AppMain())->getAuth();
 if (!$auth->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
@@ -34,8 +34,8 @@ require 'App/templates/helpers.php';
     <meta name="description" content="<?=$description?>">
     <meta name="theme-color" content="#ffffff">
     
-    <?php 
-    
+    <?php
+
     if ($use_theme_dark_mode): ?>
     <link rel="stylesheet" id="js-startup-stylesheet" href="/App/templates/css/water/dark.min.css">
     <?php else: ?>

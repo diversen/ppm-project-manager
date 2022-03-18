@@ -1,7 +1,7 @@
 <?php
 
-use \Pebble\URL;
-use \Diversen\Lang;
+use Pebble\URL;
+use Diversen\Lang;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -90,13 +90,11 @@ function render_project_tasks($tasks)
 echo "<p>" . Lang::translate('Total time used on project') . ': ' .  "<strong>$project_time</strong></p>";
 
 if (!empty($tasks)) {
-
     echo "<p><strong>" . Lang::translate('Tasks waiting') . "</strong></p>";
     render_project_tasks($tasks);
 }
 
 if (!empty($tasks_completed)) {
-
     echo "<p><strong>" . Lang::translate('Completed tasks') . '</strong></p>';
     render_project_tasks($tasks_completed);
 }

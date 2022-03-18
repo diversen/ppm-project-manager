@@ -1,7 +1,7 @@
 <?php
 
-use \Diversen\Lang;
-use \Pebble\URL;
+use Diversen\Lang;
+use Pebble\URL;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -35,7 +35,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 	<?php
 
 
-	$today = is_today(strtotime($task['begin_date']));
+    $today = is_today(strtotime($task['begin_date']));
     $task_title = $title_attr = "$task[title]";
     $task_box_class = '';
     if ($task['status'] == '0') {
