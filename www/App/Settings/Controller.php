@@ -61,14 +61,12 @@ class Controller
      */
     public function put()
     {
-
         $settings = new SettingsModel();
         $post = $_POST;
-        
+
         $response['error'] = false;
 
         try {
-
             $this->acl->isAuthenticatedOrThrow();
             $auth_id = $this->acl->getAuthId();
 
@@ -79,7 +77,6 @@ class Controller
                 $settings->setUserSetting($auth_id, 'profile', $post);
                 Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
             }
-
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');

@@ -157,7 +157,6 @@ class Controller
      */
     public function move_exceeded_today()
     {
-        
         try {
             $response['error'] = false;
             $this->app_acl->isAuthenticatedOrThrow();
