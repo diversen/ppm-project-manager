@@ -12,6 +12,7 @@ use Pebble\CSRF;
 
 use App\Google\GoogleUtils;
 use App\Account\Controller;
+use stdClass;
 
 /**
  * Extends the normal controler to include google auth
@@ -27,7 +28,7 @@ class ControllerExt extends Controller
      * @route /account/signin
      * @verbs GET
      */
-    public function index()
+    public function index(array $params, stdClass $obj)
     {
         $google_auth_url = $this->getGoogleAuthUrl();
         if ($this->auth->isAuthenticated()) {

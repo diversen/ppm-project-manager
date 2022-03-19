@@ -35,14 +35,14 @@ $is_selected = function ($priority, $value) {
 
     <label for="project_id"><?= Lang::translate('Project') ?></label>
     <select name="project_id">
-    <?php
-    foreach ($all_projects as $_project): ?>
-    <option value="<?=$_project['id']?>" <?= $is_selected($_project['id'], $project['id']) ?>><?= $_project['title'] ?></option>
-    <?php
+        <?php
+        foreach ($all_projects as $_project) : ?>
+            <option value="<?= $_project['id'] ?>" <?= $is_selected($_project['id'], $project['id']) ?>><?= $_project['title'] ?></option>
+        <?php
 
-    endforeach;
+        endforeach;
 
-    ?>
+        ?>
     </select>
     <label for="priority"><?= Lang::translate('Priority') ?></label>
     <select name="priority">
@@ -96,7 +96,6 @@ $is_selected = function ($priority, $value) {
     const spinner = document.querySelector('.loadingspinner');
 
     async function deleteTask(status) {
-        spinner.classList.toggle('hidden');
 
         const form = document.getElementById('task_edit');
         const data = new FormData(form);
@@ -105,8 +104,8 @@ $is_selected = function ($priority, $value) {
 
         try {
 
-            const res = await Pebble.asyncPost('/task/delete/' + task_id, data);
             spinner.classList.toggle('hidden');
+            const res = await Pebble.asyncPost('/task/delete/' + task_id, data);
 
             if (res.error === false) {
                 if (return_to) {
@@ -119,12 +118,13 @@ $is_selected = function ($priority, $value) {
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
         }
     }
 
 
     async function updateTask(status) {
-        spinner.classList.toggle('hidden');
 
         const form = document.getElementById('task_edit');
         const data = new FormData(form);
@@ -140,8 +140,8 @@ $is_selected = function ($priority, $value) {
         const task_id = document.getElementById('id').value;
 
         try {
-            const res = await Pebble.asyncPost('/task/put/' + task_id, data);
             spinner.classList.toggle('hidden');
+            const res = await Pebble.asyncPost('/task/put/' + task_id, data);
 
             if (res.error === false) {
                 if (return_to) {
@@ -154,6 +154,8 @@ $is_selected = function ($priority, $value) {
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
         }
     }
 

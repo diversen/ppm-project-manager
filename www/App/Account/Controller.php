@@ -17,6 +17,7 @@ use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
 use App\AppMain;
 use Exception;
+use stdClass;
 
 class Controller
 {
@@ -39,7 +40,7 @@ class Controller
      * @verbs GET
      */
 
-    public function index()
+    public function index(array $params, stdClass $obj)
     {
         if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];

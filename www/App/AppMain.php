@@ -5,10 +5,18 @@ namespace App;
 use Pebble\Config;
 use Pebble\Auth;
 use Pebble\DB;
+use Pebble\Session;
+use Pebble\Headers;
+use Pebble\JSON;
 use App\AppACL;
+use App\Settings\SettingsModel;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Aidantwoods\SecureHeaders\SecureHeaders;
+use Diversen\Lang;
+
+use ErrorException;
 
 /**
  * AppMain is a class that returns instances of objects where we only want one object
@@ -45,6 +53,15 @@ class AppMain
     public function __construct()
     {
         $this->basePath = dirname(__DIR__) . '/..';
+    }
+
+    public function setErrorHandler()
+    {
+
+        // Throw on all kind of errors and notices
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
     }
 
     public function getConfig()
@@ -95,5 +112,60 @@ class AppMain
         }
 
         return self::$appAcl;
+    }
+
+    public function sendHeaders()
+    {
+        $config = $this->getConfig();
+        if ($config->get('App.force_ssl')) {
+            Headers::redirectToHttps();
+        }
+
+        if ($config->get('App.env') !== 'dev') {
+            $headers = new SecureHeaders();
+            $headers->hsts();
+            $headers->csp('default', 'self');
+            $headers->csp('img-src', 'data:');
+            $headers->csp('img-src', $config->get('App.server_url'));
+            $headers->csp('script', 'unsafe-inline');
+            $headers->csp('script-src', $config->get('App.server_url'));
+            $headers->csp('default-src', 'unsafe-inline');
+            $headers->apply();
+        }
+    }
+
+    public function sessionStart()
+    {
+
+        // Start session. E.g. Flash messages
+        Session::setConfigSettings($this->getConfig()->getSection('Session'));
+        session_start();
+    }
+
+    public function setupIntl()
+    {
+
+        // Set timezone and language. Use defaults if not set.
+        $settings = new SettingsModel();
+
+        $auth_id = $this->getAuth()->getAuthId();
+        $user_settings = $settings->getUserSetting($auth_id, 'profile');
+
+        $timezone = $user_settings['timezone'] ?? $this->getConfig()->get('App.timezone');
+        $language = $user_settings['language'] ?? $this->getConfig()->get('Language.default');
+
+        date_default_timezone_set($timezone);
+
+        // Setup translations
+        $translations = new Lang();
+        $translations->setSingleDir(".");
+        $translations->loadLanguage($language);
+    }
+
+    public function setDebug()
+    {
+        if ($this->getConfig()->get('App.env') === 'dev') {
+            JSON::$debug = true;
+        }
     }
 }

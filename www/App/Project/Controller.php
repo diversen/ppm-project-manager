@@ -15,6 +15,7 @@ use App\AppMain;
 class Controller
 {
     private $app_acl;
+    private $log;
     public function __construct()
     {
         $app_main = new AppMain();

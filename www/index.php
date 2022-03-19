@@ -8,77 +8,28 @@ use Pebble\Autoloader;
 $autoload = new Autoloader();
 $autoload->setPath(__DIR__);
 
-use Diversen\Lang;
-
 use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\NotFoundException;
 use Pebble\Exception\TemplateException;
-use Pebble\Headers;
-use Pebble\JSON;
 use Pebble\Router;
-use Pebble\Session;
 
 use App\AppMain;
 use App\Error\Controller as ErrorController;
-use App\Settings\SettingsModel;
-use Aidantwoods\SecureHeaders\SecureHeaders;
+use Diversen\Lang;
 
-$app_main = new AppMain();
-
-$error = new ErrorController();
-
-// Run the application and check for exceptions and throwable
 try {
+    $app_main = new AppMain();
+    $error = new ErrorController();
 
-    // Throw on all kind of errors and notices
-    set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-    });
-
-    if ($app_main->getConfig()->get('App.force_ssl')) {
-        Headers::redirectToHttps();
-    }
-
-    if ($app_main->getConfig()->get('App.env') !== 'dev') {
-        $headers = new SecureHeaders();
-        $headers->hsts();
-        $headers->csp('default', 'self');
-        $headers->csp('img-src', 'data:');
-        $headers->csp('img-src', $app_main->getConfig()->get('App.server_url'));
-        $headers->csp('script', 'unsafe-inline');
-        $headers->csp('script-src', $app_main->getConfig()->get('App.server_url'));
-        $headers->csp('default-src', 'unsafe-inline');
-        $headers->apply();
-    }
-
-    // Start session. E.g. Flash messages
-    Session::setConfigSettings($app_main->getConfig()->getSection('Session'));
-    session_start();
-
-    // Set timezone and language. Use defaults if not set.
-    $settings = new SettingsModel();
-
-    $auth_id = $app_main->getAuth()->getAuthId();
-    $user_settings = $settings->getUserSetting($auth_id, 'profile');
-
-    $timezone = $user_settings['timezone'] ?? $app_main->getConfig()->get('App.timezone');
-    $language = $user_settings['language'] ?? $app_main->getConfig()->get('Language.default');
-
-    date_default_timezone_set($timezone);
-
-    // Setup translations
-    $l = new Lang();
-    $l->setSingleDir(".");
-    $l->loadLanguage($language);
-
-    if ($app_main->getConfig()->get('App.env') === 'dev') {
-        JSON::$debug = true;
-    }
+    $app_main->sendHeaders();
+    $app_main->sessionStart();
+    $app_main->setupIntl();
+    $app_main->setDebug();
 
     // Define all routes
     $router = new Router();
-
+    $router->addClass(App\Test\Controller::class);
     $router->addClass(App\Account\ControllerExt::class);
     $router->addClass(App\Home\Controller::class);
     $router->addClass(App\Google\Controller::class);
@@ -89,37 +40,29 @@ try {
     $router->addClass(App\Time\Controller::class);
     $router->addClass(App\Error\Controller::class);
     $router->addClass(App\TwoFactor\Controller::class);
+
     $router->run();
 } catch (TemplateException $e) {
-
-    // If it is a template error then content most likely has been sent to the browser
-    // And therefor we can not send a 5xx header.
     $exception_str = ExceptionTrace::get($e);
-    $app_main->getLog()->error($exception_str);
+    $app_main->getLog()->error('App.index.exception', ['exception' => $exception_str]);
 
-    // If we are not on dev display generic error message
     if ($app_main->getConfig()->get('App.env') !== 'dev') {
         $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
     }
+
     echo "<pre>" . $exception_str . "</pre>";
 } catch (NotFoundException $e) {
-
-    // No logging of NotFoundException. Except a notice of the page in question
-    $app_main->getLog()->notice("Page not found: " . $_SERVER['REQUEST_URI']);
+    $app_main->getLog()->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
     $error->notFound($e->getMessage());
 } catch (ForbiddenException $e) {
 
-    // You should log this exception in a controller
-    $app_main->getLog()->notice("Access denied: " . $_SERVER['REQUEST_URI']);
+    // Exception should be logged in a controller if it is considered important
+    $app_main->getLog()->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
     $error->forbidden($e->getMessage());
 } catch (Throwable $e) {
-
-    // All other errros are logged
     $exception_str = ExceptionTrace::get($e);
 
-    // Just in case the Log class is missing a log dir.
-    // Then we use the Log class exception instead.
-    // Or if using DBLog without a connection
+    // Check if log is working
     try {
         $app_main->getLog()->error($exception_str);
     } catch (Exception $e) {
