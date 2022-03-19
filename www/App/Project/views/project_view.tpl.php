@@ -1,6 +1,5 @@
 <?php
 
-use Pebble\URL;
 use Diversen\Lang;
 
 $parsedown = new Parsedown();
@@ -23,11 +22,13 @@ $note_markdown = $parsedown->text($note);
 </div>
 
 <p><?= $note_markdown ?></p>
+<p><?= Lang::translate('Total time used on project') ?>: <strong><?= $project_time ?></strong></p>
+
 
 <?php
 
-function render_project_tasks($tasks)
-{ ?>
+if (!empty($tasks)) { ?>
+    <p><strong><?= Lang::translate('Tasks waiting') ?> (<?= $tasks_count ?>)</strong> </p>
 
     <table class="project-table">
         <thead>
@@ -38,72 +39,65 @@ function render_project_tasks($tasks)
                 <td></td>
             </tr>
         </thead>
-        <tbody>
-
-            <?php
-
-            foreach ($tasks as $task) :
-
-                $task_title = $title_attr = "$task[title]";
-                $task_box_class = '';
-                if ($task['status'] == '0') {
-                    $task_title = "<s>$task_title</s>";
-                    $task_box_class = ' task-done ';
-                }
-
-                $begin_date = date("d/m/Y", strtotime($task['begin_date']));
-                $today = date('Y-m-d 00:00:00');
-                $is_today = false;
-                if ($today == $task['begin_date']) {
-                    $is_today = true;
-                }
-
-            ?>
-
-                <tr>
-                    <td class="td-overflow <?= $task_box_class ?> ">
-                        <span class="priority <?= get_task_priority_class($task) ?>"></span>
-                        <a title="<?= $title_attr ?>" href="/task/view/<?= $task['id'] ?>"><?= $task_title ?>
-                    </td>
-                    <td><?= $begin_date ?></td>
-                    <td class='xs-hide'><?= $task['time_used'] ?></td>
-                    <td>
-                        <div class="action-links">
-                            <a title="<?= Lang::translate('Edit task') ?>" href="<?= URL::returnTo("/task/edit/$task[id]") ?>"><?= Lang::translate('Edit') ?></a>
-                            <!--<a title="Add new task to project" class="xs-hide" href='<?= URL::returnTo("/task/add/$task[project_id]") ?>'>New</a>-->
-                            <a title="<?= Lang::translate('Add time to task') ?>" href='<?= URL::returnTo("/time/add/$task[id]") ?>'><?= Lang::translate('Time') ?></a>
-
-                            <?php
-
-                            if (!$is_today) : ?>
-                                <a title="<?= Lang::translate('Move to today') ?>" class="move_to_today xs-hide" href='#' data-id="<?= $task['id'] ?>"><?= Lang::Translate('Today') ?></a>
-                            <?php endif; ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-
-        </tbody>
+        <tbody class="project-tasks" id="tasks-waiting"></tbody>
     </table>
 <?php
-};
 
-echo "<p>" . Lang::translate('Total time used on project') . ': ' .  "<strong>$project_time</strong></p>";
-
-if (!empty($tasks)) {
-    echo "<p><strong>" . Lang::translate('Tasks waiting') . "</strong></p>";
-    render_project_tasks($tasks);
 }
 
-if (!empty($tasks_completed)) {
-    echo "<p><strong>" . Lang::translate('Completed tasks') . '</strong></p>';
-    render_project_tasks($tasks_completed);
+if (!empty($tasks_completed)) { ?>
+    <p><strong><?= Lang::translate('Completed tasks') ?> (<?= $tasks_completed_count ?>)</strong></p>
+    <table class="project-table">
+        <thead>
+            <tr>
+                <td style='width:35%'><?= Lang::translate('Task') ?></td>
+                <td><?= Lang::translate('Date') ?></td>
+                <td class='xs-hide'><?= Lang::translate('Time') ?></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody class="project-tasks" id="tasks-completed"></tbody>
+    </table>
+
+<?php
+
 }
 
 ?>
 <script type="module">
+
+    // let spinner = document.querySelector('.loadingspinner')
+    async function loadHtml(url) {
+        return fetch(url)
+            .then((response) => {
+                return response.text();
+            })
+            .then((html) => {
+                return html;
+            });
+    }
+
+    // spinner.classList.toggle('hidden');
+
+    let tasksWaiting = document.getElementById('tasks-waiting');
+    if (tasksWaiting) {
+        let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=1&from=1')
+        tasksWaiting.innerHTML = html
+    }
+    
+    let tasksCompleted = document.getElementById('tasks-completed');
+    if(tasksCompleted) {
+        let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=0&from=1')
+        tasksCompleted.innerHTML = html
+    }
+    
+    // spinner.classList.toggle('hidden');
+
     import {
         Pebble
     } from '/App/js/pebble.js';
+
+
     document.addEventListener('click', async function(event) {
 
         if (!event.target.matches('.move_to_today')) return;

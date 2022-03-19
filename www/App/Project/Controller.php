@@ -10,17 +10,21 @@ use Exception;
 use Pebble\Template;
 use Pebble\JSON;
 use Pebble\ExceptionTrace;
+use Pebble\URL;
 use App\AppMain;
 
 class Controller
 {
     private $app_acl;
     private $log;
+    private $project_model;
     public function __construct()
     {
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
         $this->log = $app_main->getLog();
+
+        $this->project_model = new ProjectModel();
     }
 
     /**
@@ -31,7 +35,7 @@ class Controller
     {
         $this->app_acl->isAuthenticatedOrThrow();
 
-        $template_data = (new ProjectModel())->getIndexData($this->app_acl->getAuthId());
+        $template_data = $this->project_model->getIndexData($this->app_acl->getAuthId());
         $template_data['title'] = Lang::translate('All projects');
 
         Template::render(
@@ -48,7 +52,7 @@ class Controller
     {
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-        $template_data = (new ProjectModel())->getViewData($params);
+        $template_data = $this->project_model->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
 
         Template::render(
@@ -82,7 +86,7 @@ class Controller
     public function edit($params)
     {
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
-        $project = (new ProjectModel())->getOne($params['project_id']);
+        $project = $this->project_model->getOne($params['project_id']);
 
         $form_vars = [
             'title' => Lang::translate('Edit project'),
@@ -107,11 +111,10 @@ class Controller
             $this->app_acl->isAuthenticatedOrThrow();
             $_POST['auth_id'] = $this->app_acl->getAuthId();
 
-            $project_model = new ProjectModel();
-            $project_model->create($_POST);
+            $this->project_model->create($_POST);
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Project.post.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -128,13 +131,11 @@ class Controller
 
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
-
-            $project_model = new ProjectModel();
-            $project_model->update($_POST, $params['project_id']);
+            $this->project_model->update($_POST, $params['project_id']);
 
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Project.put.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -151,15 +152,40 @@ class Controller
 
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
-
-            $project_model = new ProjectModel();
-            $project_model->delete($params['project_id']);
+            $this->project_model->delete($params['project_id']);
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
         echo JSON::response($response);
+    }
+
+
+
+    /**
+     * @route /project/tasks/:project_id
+     * @verbs GET
+     */    
+    public function tasks(array $params) {
+
+        $where['project_id'] = $params['project_id'];
+        $status = URL::getQueryPart('status');
+        if($status) $where['status'] = $status;
+
+
+        $data = $this->project_model->getTasks($where, []);
+        try {
+            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+        } catch(Exception $e) {
+            $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
+            $response['error'] = $e->getMessage();
+        }
+
+        Template::render(
+            'App/Project/views/project_task_list.tpl.php',
+            $data
+        );
     }
 }

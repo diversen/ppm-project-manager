@@ -67,13 +67,21 @@ class TaskModel
         }
     }
 
-    public function getAll($where)
+    public function getNumRows(array $where) {
+        $sql = "SELECT count(id) as num_rows FROM task ";
+        $sql .= $this->db->getWhereSql($where);
+        $row = $this->db->prepareFetch($sql, $where);
+        return $row['num_rows'];
+    } 
+
+    public function getAll(array $where, array $limit = [])
     {
         $timeModel = new TimeModel();
 
         $sql = "SELECT * FROM task ";
         $sql .= $this->db->getWhereSql($where);
-        $sql .= 'ORDER by begin_date DESC, priority DESC';
+        $sql .= 'ORDER by begin_date DESC, priority DESC ';
+        $sql .= $this->db->getLimitSql($limit);
 
         $tasks = $this->db->prepareFetchAll($sql, $where);
         foreach ($tasks as $key => $task) {

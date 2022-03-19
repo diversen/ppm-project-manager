@@ -22,12 +22,14 @@ class ProjectModel
 
     private $db;
     private $app_acl;
+    private $task_model;
 
     public function __construct()
     {
         $app_main = new AppMain();
         $this->db = $app_main->getDB();
         $this->app_acl = $app_main->getAppACL();
+        $this->task_model = new TaskModel();
     }
 
     /**
@@ -145,8 +147,10 @@ class ProjectModel
     public function getViewData($params)
     {
         $project = $this->getOne($params['project_id']);
-        $tasks = (new TaskModel())->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
-        $tasks_completed = (new TaskModel())->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
+        $tasks = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
+        $tasks_count = $this->task_model->getNumRows(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
+        $tasks_completed = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
+        $tasks_completed_count = $this->task_model->getNumRows(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
 
         $timeModel = new TimeModel();
         $total = $timeModel->sumTime(['project_id' => $params['project_id']]);
@@ -157,8 +161,17 @@ class ProjectModel
             'tasks' => $tasks,
             'tasks_completed' => $tasks_completed,
             'project_time' => $total_time,
+            'tasks_count' => $tasks_count,
+            'tasks_completed_count' => $tasks_completed_count,
         ];
 
         return $data;
+    }
+
+    public function getTasks(array $where, array $limit) {
+        $total = $this->task_model->getNumRows($where);
+        $tasks = $this->task_model->getAll($where, $limit);
+
+        return ['total' => $total, 'tasks' => $tasks];
     }
 }

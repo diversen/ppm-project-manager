@@ -19,6 +19,7 @@ use App\Error\Controller as ErrorController;
 use Diversen\Lang;
 
 try {
+    
     $app_main = new AppMain();
     $error = new ErrorController();
 
@@ -56,21 +57,19 @@ try {
     $error->notFound($e->getMessage());
 } catch (ForbiddenException $e) {
 
-    // Exception should be logged in a controller if it is considered important
+    // These exceptions are logged in controllers
     $app_main->getLog()->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
     $error->forbidden($e->getMessage());
 } catch (Throwable $e) {
     $exception_str = ExceptionTrace::get($e);
 
-    // Check if log is working
     try {
-        $app_main->getLog()->error($exception_str);
+        $app_main->getLog()->error('App.index.exception', ['exception' => $exception_str]);
     } catch (Exception $e) {
         $error->error($e->getMessage());
         return;
     }
 
-    // If we are not on dev display generic error message
     if ($app_main->getConfig()->get('App.env') !== 'dev') {
         $exception_str = Lang::translate('A server error happened. The incidence has been logged.');
     }
