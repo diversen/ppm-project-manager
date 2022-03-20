@@ -52,9 +52,14 @@ foreach ($tasks as $task) :
 <?php endforeach; 
 
 if($more) { ?>
-<tr><td  colspan="4">
-<a class="more" href="<?=$more?>"><?=Lang::translate('Show more')?></a>
-</td></tr>
+<tr>
+    <td>
+        <a class="more" href="<?=$more?>"><?=Lang::translate('Show more')?></a>
+    </td>
+    <td></td>
+    <td class="xs-hide"></td>
+    <td></td>
+</tr>
 <?php
 
 }
