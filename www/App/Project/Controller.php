@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Project;
 
 use App\Project\ProjectModel;
+use App\Task\TaskModel;
 use Diversen\Lang;
 use Exception;
 use Pebble\Template;
@@ -23,8 +24,9 @@ class Controller
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
         $this->log = $app_main->getLog();
-
+        $this->config = $app_main->getConfig();
         $this->project_model = new ProjectModel();
+        $this->task_model = new TaskModel();
     }
 
     /**
@@ -167,20 +169,17 @@ class Controller
     /**
      * @route /project/tasks/:project_id
      * @verbs GET
-     */    
-    public function tasks(array $params) {
+     */
+    public function tasks(array $params)
+    {
 
-        $where['project_id'] = $params['project_id'];
-        $status = URL::getQueryPart('status');
-        if($status) $where['status'] = $status;
-
-
-        $data = $this->project_model->getTasks($where, []);
+        $data = [];
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
-        } catch(Exception $e) {
-            $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            $data = $this->project_model->getTasksData($params);
+        } catch (Exception $e) {
+            $this->log->error('Project.tasks.exception', ['exception' => ExceptionTrace::get($e)]);
+            $data['error'] = $e->getMessage();
         }
 
         Template::render(

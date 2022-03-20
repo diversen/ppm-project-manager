@@ -5,6 +5,11 @@ use Diversen\Lang;
 
 require_once 'App/templates/helpers.php';
 
+if ($error) {
+    echo "<p style='color: var(--flash-error-color)'>" . $error . "</p>";
+    return;
+}
+
 foreach ($tasks as $task) :
 
     $task_title = $title_attr = "$task[title]";
@@ -44,4 +49,12 @@ foreach ($tasks as $task) :
                 <?php endif; ?>
         </td>
     </tr>
-<?php endforeach; ?>
+<?php endforeach; 
+
+if($more) { ?>
+<tr><td  colspan="4">
+<a class="more" href="<?=$more?>"><?=Lang::translate('Show more')?></a>
+</td></tr>
+<?php
+
+}

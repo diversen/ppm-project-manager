@@ -66,7 +66,6 @@ if (!empty($tasks_completed)) { ?>
 ?>
 <script type="module">
 
-    // let spinner = document.querySelector('.loadingspinner')
     async function loadHtml(url) {
         return fetch(url)
             .then((response) => {
@@ -77,21 +76,29 @@ if (!empty($tasks_completed)) { ?>
             });
     }
 
-    // spinner.classList.toggle('hidden');
-
     let tasksWaiting = document.getElementById('tasks-waiting');
     if (tasksWaiting) {
-        let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=1&from=1')
+        let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=1&from=0')
         tasksWaiting.innerHTML = html
     }
     
     let tasksCompleted = document.getElementById('tasks-completed');
     if(tasksCompleted) {
-        let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=0&from=1')
+        let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=0&from=0')
         tasksCompleted.innerHTML = html
+
+        tasksCompleted.addEventListener('click', async function(e) {   
+            if(e.target.classList.contains('more')) {
+                e.preventDefault()
+                let more = tasksCompleted.querySelector('#tasks-completed tr:last-child').remove()
+                console.log(more)
+                let html = await loadHtml(e.target.href)
+                tasksCompleted.innerHTML = tasksCompleted.innerHTML  + html
+            }
+        })
     }
+
     
-    // spinner.classList.toggle('hidden');
 
     import {
         Pebble

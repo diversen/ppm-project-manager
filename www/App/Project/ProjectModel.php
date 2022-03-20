@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Project;
 
-use Pebble\DBInstance;
+use Pebble\URL;
 use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
@@ -30,6 +30,7 @@ class ProjectModel
         $this->db = $app_main->getDB();
         $this->app_acl = $app_main->getAppACL();
         $this->task_model = new TaskModel();
+        $this->config = $app_main->getConfig();
     }
 
     /**
@@ -168,10 +169,32 @@ class ProjectModel
         return $data;
     }
 
-    public function getTasks(array $where, array $limit) {
-        $total = $this->task_model->getNumRows($where);
-        $tasks = $this->task_model->getAll($where, $limit);
+    /**
+     * Get tasks data ['tasks' => $tasks, 'more' => '/links/ot/more/tasks]
+     */
+    public function getTasksData(array $params): array
+    {
+        // Where
+        $project_id = $params['project_id'];
+        $status = URL::getQueryPart('status');
+        $where['project_id'] = $project_id;
+        if (isset($status)) {
+            $where['status'] = $status;
+        }
 
-        return ['total' => $total, 'tasks' => $tasks];
+        // Pagination
+        $from = (int)URL::getQueryPart('from') ?? 0;
+        $limit = $this->config->get('App.pager_limit');
+        $offset = $from * $limit;
+
+        $data['tasks'] = $this->task_model->getAll($where, [$offset, $limit]);
+
+        $total = $this->task_model->getNumRows($where);
+        if ($offset + $limit < $total) {
+            $from += 1;
+            $data['more'] = "/project/tasks/$project_id?status=$status&from=$from";
+        }
+
+        return $data;
     }
 }
