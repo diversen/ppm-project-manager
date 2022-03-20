@@ -80,6 +80,14 @@ if (!empty($tasks_completed)) { ?>
     if (tasksWaiting) {
         let html = await loadHtml('/project/tasks/<?= $project['id'] ?>?status=1&from=0')
         tasksWaiting.innerHTML = html
+        tasksWaiting.addEventListener('click', async function(e) {   
+            if(e.target.classList.contains('more')) {
+                e.preventDefault()
+                let more = tasksWaiting.querySelector('#tasks-waiting tr:last-child').remove()
+                let html = await loadHtml(e.target.href)
+                tasksWaiting.innerHTML = tasksWaiting.innerHTML  + html
+            }
+        })
     }
     
     let tasksCompleted = document.getElementById('tasks-completed');
@@ -91,14 +99,11 @@ if (!empty($tasks_completed)) { ?>
             if(e.target.classList.contains('more')) {
                 e.preventDefault()
                 let more = tasksCompleted.querySelector('#tasks-completed tr:last-child').remove()
-                console.log(more)
                 let html = await loadHtml(e.target.href)
                 tasksCompleted.innerHTML = tasksCompleted.innerHTML  + html
             }
         })
     }
-
-    
 
     import {
         Pebble

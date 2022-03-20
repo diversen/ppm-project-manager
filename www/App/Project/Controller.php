@@ -164,8 +164,6 @@ class Controller
         echo JSON::response($response);
     }
 
-
-
     /**
      * @route /project/tasks/:project_id
      * @verbs GET
