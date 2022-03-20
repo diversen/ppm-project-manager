@@ -110,6 +110,7 @@ $LANG['Date'] = 'Dato';
 $LANG['Time used'] = 'Brugt tid';
 $LANG['View inactive projects'] = 'Se inaktive projekter';
 $LANG['Total time used on all projects'] = 'Samlet tid brugt på alle projekter';
+$LANG['Show more'] = 'Vis mere';
 $LANG['Add task'] = 'Tilføj opgave';
 $LANG['Total time used on project'] = 'Samlet tid brugt på projektet';
 $LANG['Tasks waiting'] = 'Opgaver, der venter';

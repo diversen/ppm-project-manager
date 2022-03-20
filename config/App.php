@@ -9,5 +9,6 @@ return [
 	'logout_redirect' => '/account/signin',
 	'env' => 'dev',
 	'base_path' => dirname(__FILE__) . '/..',
-	'server_url' => 'http://localhost:8000',	
+	'server_url' => 'http://localhost:8000',
+	'pager_limit' => 50,
 ];

@@ -218,19 +218,24 @@ $LANG['New'] = 'New';
 $LANG['View inactive projects'] = 'View inactive projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
 
+// Translation of file www/App/Project/views/project_task_list.tpl.php
+
+$LANG['Edit task'] = 'Edit task';
+$LANG['Edit'] = 'Edit';
+$LANG['Add time to task'] = 'Add time to task';
+$LANG['Time'] = 'Time';
+$LANG['Move to today'] = 'Move to today';
+$LANG['Show more'] = 'Show more';
+
 // Translation of file www/App/Project/views/project_view.tpl.php
 
 $LANG['Projects'] = 'Projects';
 $LANG['Add task'] = 'Add task';
+$LANG['Total time used on project'] = 'Total time used on project';
+$LANG['Tasks waiting'] = 'Tasks waiting';
 $LANG['Task'] = 'Task';
 $LANG['Date'] = 'Date';
 $LANG['Time'] = 'Time';
-$LANG['Edit task'] = 'Edit task';
-$LANG['Edit'] = 'Edit';
-$LANG['Add time to task'] = 'Add time to task';
-$LANG['Move to today'] = 'Move to today';
-$LANG['Total time used on project'] = 'Total time used on project';
-$LANG['Tasks waiting'] = 'Tasks waiting';
 $LANG['Completed tasks'] = 'Completed tasks';
 
 // Translation of file www/App/Settings/Controller.php
