@@ -7,7 +7,10 @@
         "diversen/pebble-framework": "^4.0",
         "diversen/simple-php-translation": "^2.0",
         "diversen/minimal-cli-framework": "^3.0",
-        "monolog/monolog": "^2.4"
+        "monolog/monolog": "^2.4",
+        "gregwar/captcha": "^1.1",
+        "phpmailer/phpmailer": "^6.0",
+        "erusev/parsedown": "^1.7"
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",
