@@ -4,7 +4,10 @@
         "bacon/bacon-qr-code": "^2.0",
         "spomky-labs/otphp": "^10.0",
         "aidantwoods/secureheaders": "^2.0",
-        "diversen/pebble-framework": "^4.0"
+        "diversen/pebble-framework": "^4.0",
+        "diversen/simple-php-translation": "^2.0",
+        "diversen/minimal-cli-framework": "^3.0",
+        "monolog/monolog": "^2.4"
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",
