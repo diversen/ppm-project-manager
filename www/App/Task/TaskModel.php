@@ -67,12 +67,13 @@ class TaskModel
         }
     }
 
-    public function getNumRows(array $where) {
+    public function getNumRows(array $where)
+    {
         $sql = "SELECT count(id) as num_rows FROM task ";
         $sql .= $this->db->getWhereSql($where);
         $row = $this->db->prepareFetch($sql, $where);
         return $row['num_rows'];
-    } 
+    }
 
     public function getAll(array $where, array $limit = [])
     {

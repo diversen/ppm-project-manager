@@ -170,7 +170,6 @@ class Controller
      */
     public function tasks(array $params)
     {
-
         $data = [];
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);

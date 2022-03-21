@@ -27,7 +27,7 @@ foreach ($tasks as $task) :
     }
 
     $return_to_after_edit = URL::returnTo("/task/edit/$task[id]", "/project/view/$task[project_id]");
-    $return_to_after_time = URL::returnTo("/time/add/$task[id]", "/project/view/$task[project_id]"); 
+    $return_to_after_time = URL::returnTo("/time/add/$task[id]", "/project/view/$task[project_id]");
 
 ?>
 
@@ -49,9 +49,9 @@ foreach ($tasks as $task) :
                 <?php endif; ?>
         </td>
     </tr>
-<?php endforeach; 
+<?php endforeach;
 
-if($more) { ?>
+if ($more) { ?>
 <tr>
     <td>
         <a class="more" href="<?=$more?>"><?=Lang::translate('Show more')?></a>

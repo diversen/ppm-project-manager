@@ -19,7 +19,6 @@ use App\Error\Controller as ErrorController;
 use Diversen\Lang;
 
 try {
-    
     $app_main = new AppMain();
     $error = new ErrorController();
 
