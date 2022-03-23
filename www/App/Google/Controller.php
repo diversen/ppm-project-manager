@@ -15,6 +15,7 @@ use App\AppMain;
 class Controller
 {
     private $auth;
+    private $config;
     public function __construct()
     {
         $app_main = new AppMain();
@@ -22,6 +23,7 @@ class Controller
         $this->config = $app_main->getConfig();
         $this->login_redirect = $this->config->get('App.login_redirect');
         $this->logout_redirect = $this->config->get('App.logout_redirect');
+        $this->flash = new Flash();
     }
 
     /**
@@ -63,12 +65,12 @@ class Controller
                 if ($payload) {
                     $this->verifyPayload($payload);
                 } else {
-                    Flash::setMessage(Lang::translate('Error trying to signin using Google'), 'error');
+                    $this->flash->setMessage(Lang::translate('Error trying to signin using Google'), 'error');
                     header("Location: " . $this->login_redirect);
                     return;
                 }
             } else {
-                Flash::setMessage(Lang::translate('No ID token. Try again later'), 'error');
+                $this->flash->setMessage(Lang::translate('No ID token. Try again later'), 'error');
                 header("Location: " . $this->login_redirect);
                 return;
             }
@@ -96,7 +98,7 @@ class Controller
             return;
         }
 
-        Flash::setMessage(Lang::translate('Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'), 'error');
+        $this->flash->setMessage(Lang::translate('Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'), 'error');
         header("Location: " . $this->login_redirect);
     }
 
@@ -111,7 +113,7 @@ class Controller
 
         // Signin and redirect
         $this->auth->setPermanentCookie($row);
-        Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
+        $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
     }
 
@@ -125,14 +127,14 @@ class Controller
                 $session_timed = new SessionTimed();
                 $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
                 $session_timed->setValue('keep_login', true, $this->config->get('TwoFactor.time_to_verify'));
-                Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
+                $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
                 header("Location: " . '/2fa/verify');
                 return;
             }
         }
 
         $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
-        Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
+        $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
         return;
     }

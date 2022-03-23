@@ -25,6 +25,7 @@ class Controller
     public $config;
     public $db;
     public $log;
+    public $flash;
 
     public function __construct()
     {
@@ -33,6 +34,7 @@ class Controller
         $this->config = $app_main->getConfig();
         $this->db = $app_main->getDB();
         $this->log = $app_main->getLog();
+        $this->flash = new Flash();
     }
 
     /**
@@ -132,7 +134,7 @@ class Controller
 
             $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
 
-            Flash::setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
+            $this->flash->setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
         } else {
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
         }
@@ -153,7 +155,7 @@ class Controller
                 $session_timed = new SessionTimed();
                 $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
                 $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
-                Flash::setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
+                $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
                 $response['redirect'] = '/2fa/verify';
                 echo JSON::response($response);
                 return true;
@@ -191,10 +193,10 @@ class Controller
         $res = $this->auth->verifyKey($key);
 
         if ($res) {
-            Flash::setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
+            $this->flash->setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
             $this->log->info('Account.verify.success', ['auth_id' => $row['id']]);
         } else {
-            Flash::setMessage(Lang::translate('The key supplied has already been used'), 'error');
+            $this->flash->setMessage(Lang::translate('The key supplied has already been used'), 'error');
             $this->log->info('Account.verify.failed', ['auth_id' => $row['id']]);
         }
 
@@ -258,7 +260,7 @@ class Controller
             } else {
                 $this->db->commit();
                 $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
-                Flash::setMessage($message, 'success');
+                $this->flash->setMessage($message, 'success');
                 $response['error'] = false;
                 $response['redirect'] = '/account/signin';
             }
@@ -329,7 +331,7 @@ class Controller
 
             if ($mail_success) {
                 $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
-                Flash::setMessage(
+                $this->flash->setMessage(
                     Lang::translate('A notification email has been sent with instructions to create a new password'),
                     'success'
                 );
@@ -358,7 +360,7 @@ class Controller
             $response = $validate->passwords();
 
             if ($response['error'] === true) {
-                Flash::setMessage($response['message'], 'error');
+                $this->flash->setMessage($response['message'], 'error');
                 header("Location: $_SERVER[REQUEST_URI]");
             } else {
                 $this->auth->unlinkAllCookies($row['id']);
@@ -366,7 +368,7 @@ class Controller
 
                 $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
 
-                Flash::setMessage(Lang::translate('Your password has been updated'), 'success');
+                $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success');
 
                 header("Location: /account/signin");
             }
@@ -378,7 +380,7 @@ class Controller
         if (!empty($row)) {
             $vars['error'] = 0;
         } else {
-            Flash::setMessage(Lang::translate('No such account connected to supplied key'), 'error');
+            $this->flash->setMessage(Lang::translate('No such account connected to supplied key'), 'error');
             $vars['error'] = 1;
         }
 

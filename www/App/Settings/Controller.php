@@ -17,10 +17,12 @@ class Controller
 {
     private $acl;
     private $log;
+    private $flash;
     public function __construct()
     {
         $this->acl = (new AppMain())->getAppACL();
         $this->log = (new AppMain())->getLog();
+        $this->flash = new Flash();
     }
     /**
      * @route /settings
@@ -75,7 +77,7 @@ class Controller
                 $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
             } else {
                 $settings->setUserSetting($auth_id, 'profile', $post);
-                Flash::setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
+                $this->flash->setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
             }
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);

@@ -21,6 +21,7 @@ class Controller
     private $twoFactorModel;
     private $acl;
     private $log;
+    private $flash;
 
     public function __construct()
     {
@@ -29,6 +30,7 @@ class Controller
         $this->acl = $app_main->getAppACL();
         $this->config = $app_main->getConfig();
         $this->log = $app_main->getLog();
+        $this->flash = new Flash();
     }
 
     private function getOtpAuthUrl(string $label, string $key): string
@@ -60,7 +62,7 @@ class Controller
         $this->acl->isAuthenticatedOrThrow();
         if ($this->twoFactorModel->isTwoFactorEnabled($this->acl->getAuthId())) {
             $this->twoFactorModel->delete($this->acl->getAuthId());
-            Flash::setMessage(Lang::translate('New QR code has been created'), 'success', ['flash_remove' => true]);
+            $this->flash->setMessage(Lang::translate('New QR code has been created'), 'success', ['flash_remove' => true]);
         }
 
         header('Location: /2fa/enable', true);
@@ -168,7 +170,7 @@ class Controller
 
             $this->log->info('TwoFactor.verify_post.success', ['auth_id' => $auth_id]);
 
-            Flash::setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
+            $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
 
         echo json_encode($res);

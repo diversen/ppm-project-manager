@@ -1,6 +1,6 @@
 <?php
 
-$flash_messages = \Pebble\Flash::getMessages();
+$flash_messages = (new \Pebble\Flash())->getMessages();
 
 ?>
 
