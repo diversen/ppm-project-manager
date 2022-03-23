@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Google;
 
-use Pebble\Config;
 use Pebble\Flash;
 use Pebble\SessionTimed;
 use Diversen\Lang;

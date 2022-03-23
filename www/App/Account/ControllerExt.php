@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace App\Account;
 
 use Diversen\Lang;
-use Pebble\Auth;
-use Pebble\Config;
 use Pebble\CSRF;
-
 
 use App\Google\GoogleUtils;
 use App\Account\Controller;
