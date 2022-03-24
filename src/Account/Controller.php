@@ -5,10 +5,19 @@ declare(strict_types=1);
 namespace App\Account;
 
 use Diversen\Lang;
-use Pebble\{Captcha, CSRF, Flash, JSON, SessionTimed, ExceptionTrace};
-use App\{AppMain, Account\Mail, Account\Validate, TwoFactor\TwoFactorModel};
+use Pebble\Captcha;
+use Pebble\CSRF;
+use Pebble\Flash;
+use Pebble\JSON;
+use Pebble\SessionTimed;
+use Pebble\ExceptionTrace;
+use App\AppMain;
+use App\Account\Mail;
+use App\Account\Validate;
+use App\TwoFactor\TwoFactorModel;
 
-use Exception, stdClass;
+use Exception;
+use stdClass;
 
 class Controller
 {

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
+
 require 'templates/header.tpl.php';
 
 

@@ -150,7 +150,6 @@ class AppMain
 
     public function setupIntl()
     {
-
         $this->setIncludePath();
         // Set timezone and language. Use defaults if not set.
         $settings = new SettingsModel();
