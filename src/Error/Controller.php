@@ -38,7 +38,7 @@ class Controller
         ];
 
         \Pebble\Template::render(
-            'App/Error/error.tpl.php',
+            'Error/error.tpl.php',
             $error_vars
         );
     }

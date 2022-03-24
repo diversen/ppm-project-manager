@@ -8,6 +8,7 @@ use Pebble\DB;
 use Pebble\Session;
 use Pebble\Headers;
 use Pebble\JSON;
+use Pebble\Router;
 use App\AppACL;
 use App\Settings\SettingsModel;
 
@@ -19,7 +20,8 @@ use Diversen\Lang;
 use ErrorException;
 
 /**
- * AppMain is a class that returns instances of objects where we only want one object
+ * AppMain contains the application
+ * 
  */
 class AppMain
 {
@@ -147,11 +149,34 @@ class AppMain
         set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
     }
 
+    public function run()
+    {
+        // Define all routes
+        $this->sendHeaders();
+        $this->sessionStart();
+        $this->setupIntl();
+        $this->setDebug();
+
+        $router = new Router();
+        $router->addClass(\App\Test\Controller::class);
+        $router->addClass(\App\Account\ControllerExt::class);
+        $router->addClass(\App\Home\Controller::class);
+        $router->addClass(\App\Google\Controller::class);
+        $router->addClass(\App\Overview\Controller::class);
+        $router->addClass(\App\Project\Controller::class);
+        $router->addClass(\App\Settings\Controller::class);
+        $router->addClass(\App\Task\Controller::class);
+        $router->addClass(\App\Time\Controller::class);
+        $router->addClass(\App\Error\Controller::class);
+        $router->addClass(\App\TwoFactor\Controller::class);
+        $router->run();
+    }
+
 
     public function setupIntl()
     {
         $this->setIncludePath();
-        // Set timezone and language. Use defaults if not set.
+
         $settings = new SettingsModel();
 
         $auth_id = $this->getAuth()->getAuthId();
