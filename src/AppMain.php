@@ -189,7 +189,7 @@ class AppMain
 
         // Setup translations
         $translations = new Lang();
-        $translations->setSingleDir(".");
+        $translations->setSingleDir("../src");
         $translations->loadLanguage($language);
     }
 
