@@ -5,8 +5,8 @@ require_once "../vendor/autoload.php";
 
 use Pebble\Autoloader;
 
-$autoload = new Autoloader();
-$autoload->setPath(__DIR__);
+// $autoload = new Autoloader();
+// $autoload->setPath(__DIR__);
 
 use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;
