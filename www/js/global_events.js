@@ -1,4 +1,4 @@
-import {Pebble} from '/App/js/pebble.js';
+import {Pebble} from '/js/pebble.js';
 
 /**
  * Remove pre-loaded flash messages after some seconds

@@ -14,12 +14,6 @@ use Diversen\Lang;
 use Throwable;
 use Exception;
 
-/**
- * Class that executes the App
- * It catches 'ForbiddenException' 'NotFoundException', 'Throwable'
- * The App being executed is found in AppMain
- */
-
 class AppExec
 {
 
@@ -38,6 +32,7 @@ class AppExec
                 $exception_str = Lang::translate('A sever error happened. The incidence has been logged.');
             }
 
+            // Template errors is often just undefined variables, so just output the debug info
             echo "<pre>" . $exception_str . "</pre>";
         } catch (NotFoundException $e) {
             $app_main->getLog()->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);

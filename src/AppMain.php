@@ -152,6 +152,7 @@ class AppMain
     public function run()
     {
         // Define all routes
+        $this->setErrorHandler();
         $this->sendHeaders();
         $this->sessionStart();
         $this->setupIntl();
