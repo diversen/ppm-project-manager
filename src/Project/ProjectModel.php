@@ -189,6 +189,7 @@ class ProjectModel
 
         $data['tasks'] = $this->task_model->getAll($where, [$offset, $limit]);
 
+        $data['more'] = null;
         $total = $this->task_model->getNumRows($where);
         if ($offset + $limit < $total) {
             $from += 1;

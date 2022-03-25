@@ -167,10 +167,12 @@ class Controller
      */
     public function tasks(array $params)
     {
-        $data = [];
+
+        $data = ['error' => false];
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
             $data = $this->project_model->getTasksData($params);
+
         } catch (Exception $e) {
             $this->log->error('Project.tasks.exception', ['exception' => ExceptionTrace::get($e)]);
             $data['error'] = $e->getMessage();

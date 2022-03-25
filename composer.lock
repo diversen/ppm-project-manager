@@ -325,22 +325,23 @@
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v4.0.7",
+            "version": "v4.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "51873d8ee7a29542f9e6c3f0c8088c570b3f583d"
+                "reference": "51451abfa322b02440c5d9cfb40490682c364d94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/51873d8ee7a29542f9e6c3f0c8088c570b3f583d",
-                "reference": "51873d8ee7a29542f9e6c3f0c8088c570b3f583d",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/51451abfa322b02440c5d9cfb40490682c364d94",
+                "reference": "51451abfa322b02440c5d9cfb40490682c364d94",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4.3"
             },
             "require-dev": {
+                "diversen/minimal-cli-framework": "^3.0",
                 "erusev/parsedown": "^1.7",
                 "gregwar/captcha": "^1.1",
                 "phpmailer/phpmailer": "^6.0",
@@ -353,9 +354,9 @@
                 }
             },
             "autoload": {
-                "classmap": [
-                    ""
-                ]
+                "psr-4": {
+                    "Pebble\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -377,9 +378,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v4.0.7"
+                "source": "https://github.com/diversen/pebble-framework/tree/v4.0.9"
             },
-            "time": "2022-03-24T15:04:26+00:00"
+            "time": "2022-03-25T07:27:53+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
