@@ -14,7 +14,6 @@ use App\AppBase;
  */
 class AppMain extends AppBase
 {
-
     public function sendHeaders()
     {
         $config = $this->getConfig();

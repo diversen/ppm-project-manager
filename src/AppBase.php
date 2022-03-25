@@ -130,7 +130,6 @@ class AppBase
      */
     public function sessionStart()
     {
-
         Session::setConfigSettings($this->getConfig()->getSection('Session'));
         session_start();
     }
@@ -149,7 +148,6 @@ class AppBase
      */
     public function setupIntl()
     {
-
         $settings = new SettingsModel();
 
         $auth_id = $this->getAuth()->getAuthId();

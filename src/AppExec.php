@@ -20,10 +20,8 @@ use Exception;
  */
 class AppExec
 {
-
     public function run()
     {
-
         $error = new ErrorController();
         try {
 
@@ -32,7 +30,6 @@ class AppExec
              */
             $app_main = new AppMain();
             $app_main->run();
-            
         } catch (TemplateException $e) {
             $exception_str = ExceptionTrace::get($e);
             $app_main->getLog()->error('App.index.exception', ['exception' => $exception_str]);

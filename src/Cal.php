@@ -19,7 +19,6 @@ class Cal
         $app_main = new AppMain();
         $this->auth = $app_main->getAuth();
         $this->config = $app_main->getConfig();
-        
     }
 
     private function getUserTimeZone()

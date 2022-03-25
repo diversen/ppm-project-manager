@@ -116,7 +116,7 @@ class Controller
         // Signin and redirect
         $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
         $this->log->info('Google.create_user.login', ['auth_id' => $row['id']]);
-        
+
         $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
     }
