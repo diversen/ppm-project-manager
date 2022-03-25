@@ -2,7 +2,6 @@
 
 namespace App\Google;
 
-use Pebble\Config;
 use App\AppMain;
 
 class GoogleUtils

@@ -45,7 +45,7 @@ class Controller
         if ($this->auth->isAuthenticated()) {
             $vars = [];
             \Pebble\Template::render(
-                'App/Google/sign_out.tpl.php',
+                'Google/sign_out.tpl.php',
                 $vars
             );
 
@@ -77,7 +77,7 @@ class Controller
             $authUrl = $client->createAuthUrl();
             $vars = ['auth_url' => $authUrl];
             \Pebble\Template::render(
-                'App/Google/sign_in.tpl.php',
+                'Google/sign_in.tpl.php',
                 $vars,
                 ['raw' => true]
             );
