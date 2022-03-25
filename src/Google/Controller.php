@@ -20,6 +20,7 @@ class Controller
         $app_main = new AppMain();
         $this->auth = $app_main->getAuth();
         $this->config = $app_main->getConfig();
+        $this->log = $app_main->getLog();
         $this->login_redirect = $this->config->get('App.login_redirect');
         $this->logout_redirect = $this->config->get('App.logout_redirect');
         $this->flash = new Flash();
@@ -105,13 +106,17 @@ class Controller
     {
         $password = bin2hex(random_bytes(32));
         $this->auth->create($payload['email'], $password);
+        $this->log->info('Google.create_user.success', ['email' => $payload['email']]);
 
         // Verify
         $row = $this->auth->getByWhere(['email' => $payload['email']]);
         $this->auth->verifyKey($row['random']);
+        $this->log->info('Google.create_user.verify', ['auth_id' => $row['id']]);
 
         // Signin and redirect
-        $this->auth->setPermanentCookie($row);
+        $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+        $this->log->info('Google.create_user.login', ['auth_id' => $row['id']]);
+        
         $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
     }
@@ -133,6 +138,8 @@ class Controller
         }
 
         $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+        $this->log->info('Google.login_user.success', ['auth_id' => $row['id']]);
+
         $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
         return;
