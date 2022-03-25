@@ -20,8 +20,8 @@ use Diversen\Lang;
 use ErrorException;
 
 /**
- * AppMain contains the application
- * 
+ * AppMain contains the application logic.
+ * It initializes the application logic and runs it.
  */
 class AppMain
 {

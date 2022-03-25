@@ -14,6 +14,10 @@ use Diversen\Lang;
 use Throwable;
 use Exception;
 
+/**
+ * Runs an application. If any exception if throw it will be caught here
+ * and the error controller will handle it.
+ */
 class AppExec
 {
 
@@ -22,8 +26,13 @@ class AppExec
 
         $error = new ErrorController();
         try {
+
+            /**
+             * Run the main application class.
+             */
             $app_main = new AppMain();
             $app_main->run();
+            
         } catch (TemplateException $e) {
             $exception_str = ExceptionTrace::get($e);
             $app_main->getLog()->error('App.index.exception', ['exception' => $exception_str]);
