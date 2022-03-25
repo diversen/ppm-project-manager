@@ -26,7 +26,7 @@ class Controller
         }
 
         $data = ['title' => 'PPM'];
-        \Pebble\Template::render('App/Home/views/home.tpl.php', $data);
+        \Pebble\Template::render('Home/views/home.tpl.php', $data);
     }
 
     /**
@@ -35,7 +35,7 @@ class Controller
      */
     public function terms($params)
     {
-        $markdown_file = 'App/Home/views/' . $params['document'] . '.md';
+        $markdown_file = '../src/Home/views/' . $params['document'] . '.md';
 
         if (!file_exists($markdown_file) || !is_file($markdown_file)) {
             throw new NotFoundException('File does not exists.');
@@ -48,6 +48,6 @@ class Controller
 
         $data['note_markdown'] = $parsedown->text($markdown_text);
 
-        \Pebble\Template::render('App/Home/views/terms.tpl.php', $data, ['raw' => true]);
+        \Pebble\Template::render('Home/views/terms.tpl.php', $data, ['raw' => true]);
     }
 }

@@ -6,13 +6,13 @@ declare(strict_types=1);
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(false);
 
-$note = file_get_contents('App/Home/views/home.md');
+$note = file_get_contents('../src/Home/views/home.md');
 
 $note_markdown = $parsedown->text($note);
 
-require 'App/templates/header.tpl.php';
+require 'templates/header.tpl.php';
 
 echo $note_markdown;
 
 
-require 'App/templates/footer.tpl.php';
+require 'templates/footer.tpl.php';
