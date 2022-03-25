@@ -189,7 +189,7 @@ class Controller
     {
         $key = $_GET['key'] ?? '';
 
-        $row = $this->atuh->getByWhere(['random' => $key]);
+        $row = $this->auth->getByWhere(['random' => $key]);
         $res = $this->auth->verifyKey($key);
 
         if ($res) {
