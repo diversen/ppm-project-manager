@@ -51,10 +51,10 @@ foreach ($tasks as $task) :
     </tr>
 <?php endforeach;
 
-if ($more) { ?>
+if (isset($next)) { ?>
 <tr>
     <td>
-        <a class="more" href="<?=$more?>"><?=Lang::translate('Show more')?></a>
+        <a class="more" href="<?=$next?>"><?=Lang::translate('Show more')?></a>
     </td>
     <td></td>
     <td class="xs-hide"></td>

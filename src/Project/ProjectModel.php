@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Project;
 
 use Pebble\URL;
+use Pebble\Pager;
 use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
 use Exception;
 use App\AppMain;
+
 
 /**
  * Project related model
@@ -46,13 +48,9 @@ class ProjectModel
     /**
      * Get all project from an where array
      */
-    public function getAll(array $where)
+    public function getAll(array $params)
     {
-        $sql = 'SELECT * FROM project';
-        $sql .= $this->db->getWhereSql($where);
-        $sql .= 'ORDER by `updated` DESC';
-
-        return $this->db->prepareFetchAll($sql, $where);
+        return $this->db->getAllQuery('SELECT * FROM project', $params, ['updated' => 'DESC']);
     }
 
     /**
@@ -174,6 +172,7 @@ class ProjectModel
      */
     public function getTasksData(array $params): array
     {
+
         // Where
         $project_id = $params['project_id'];
         $status = URL::getQueryPart('status');
@@ -182,18 +181,12 @@ class ProjectModel
             $where['status'] = $status;
         }
 
-        // Pagination
-        $from = (int)URL::getQueryPart('from') ?? 0;
-        $limit = $this->config->get('App.pager_limit');
-        $offset = $from * $limit;
-
-        $data['tasks'] = $this->task_model->getAll($where, [$offset, $limit]);
-
-        $data['more'] = null;
         $total = $this->task_model->getNumRows($where);
-        if ($offset + $limit < $total) {
-            $from += 1;
-            $data['more'] = "/project/tasks/$project_id?status=$status&from=$from";
+        $pager = new Pager($total, $this->config->get('App.pager_limit'));
+        
+        $data['tasks'] = $this->task_model->getAll($where, [$pager->offset, $pager->limit]);
+        if ($pager->has_next) {
+            $data['next'] = "/project/tasks/$project_id?status=$status&page=$pager->next";
         }
 
         return $data;

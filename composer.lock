@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f8dad8f111525ffafbe127a9f1085e4",
+    "content-hash": "c4854db01e17d17e653ef7dfbbf9cbd1",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -325,16 +325,16 @@
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v4.0.9",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "51451abfa322b02440c5d9cfb40490682c364d94"
+                "reference": "93fade1bea2a8141a729ba4a3c26e2042a0af832"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/51451abfa322b02440c5d9cfb40490682c364d94",
-                "reference": "51451abfa322b02440c5d9cfb40490682c364d94",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/93fade1bea2a8141a729ba4a3c26e2042a0af832",
+                "reference": "93fade1bea2a8141a729ba4a3c26e2042a0af832",
                 "shasum": ""
             },
             "require": {
@@ -378,9 +378,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v4.0.9"
+                "source": "https://github.com/diversen/pebble-framework/tree/v5.0.1"
             },
-            "time": "2022-03-25T07:27:53+00:00"
+            "time": "2022-03-26T13:12:33+00:00"
         },
         {
             "name": "diversen/simple-php-translation",

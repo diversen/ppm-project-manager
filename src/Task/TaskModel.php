@@ -69,22 +69,16 @@ class TaskModel
 
     public function getNumRows(array $where)
     {
-        $sql = "SELECT count(id) as num_rows FROM task ";
-        $sql .= $this->db->getWhereSql($where);
-        $row = $this->db->prepareFetch($sql, $where);
-        return $row['num_rows'];
+        $num_rows = $this->db->getTableNumRows('task', 'id', $where);
+        return $num_rows;
     }
 
     public function getAll(array $where, array $limit = [])
     {
         $timeModel = new TimeModel();
-
-        $sql = "SELECT * FROM task ";
-        $sql .= $this->db->getWhereSql($where);
-        $sql .= 'ORDER by begin_date DESC, priority DESC ';
-        $sql .= $this->db->getLimitSql($limit);
-
-        $tasks = $this->db->prepareFetchAll($sql, $where);
+        
+        $order_by = ['updated' => 'DESC', 'priority' => 'ASC'];
+        $tasks = $this->db->getAllQuery('SELECT * FROM task', $where, $order_by, $limit);
         foreach ($tasks as $key => $task) {
             $total_task_time = $timeModel->sumTime(['task_id' => $task['id']]);
             $tasks[$key]['time_used'] = $timeModel->minutesToHoursMinutes($total_task_time);
