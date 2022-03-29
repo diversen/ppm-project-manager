@@ -36,14 +36,14 @@ class Controller
 
         $project = $this->project_model->getOne($params['project_id']);
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
-        $vars = [
+        $template_vars = [
             'project' => $project,
             'task' => $task,
         ];
 
         \Pebble\Template::render(
             'Task/views/task_add.tpl.php',
-            $vars
+            $template_vars
         );
     }
 
@@ -59,7 +59,7 @@ class Controller
         $project = $this->project_model->getOne($task['project_id']);
         $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()]);
 
-        $vars = [
+        $template_vars = [
             'task' => $task,
             'project' => $project,
             'all_projects' => $projects,
@@ -67,7 +67,7 @@ class Controller
 
         \Pebble\Template::render(
             'Task/views/task_edit.tpl.php',
-            $vars
+            $template_vars
         );
     }
 
@@ -79,17 +79,16 @@ class Controller
     {
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
-
         $project = $this->project_model->getOne($task['project_id']);
 
-        $vars = [
+        $template_vars = [
             'task' => $task,
             'project' => $project
         ];
 
         \Pebble\Template::render(
             'Task/views/task_view.tpl.php',
-            $vars
+            $template_vars
         );
     }
 
