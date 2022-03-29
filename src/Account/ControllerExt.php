@@ -31,7 +31,7 @@ class ControllerExt extends Controller
         if ($this->auth->isAuthenticated()) {
             $form_vars = ['title' => Lang::translate('Signin')];
             \Pebble\Template::render(
-                'App/Account/views/signout.php',
+                'Account/views/signout.php',
                 $form_vars
             );
         } else {

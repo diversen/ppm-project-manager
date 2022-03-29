@@ -12,7 +12,6 @@ use App\Task\TaskModel;
 use Exception;
 use App\AppMain;
 
-
 /**
  * Project related model
  */
@@ -183,7 +182,7 @@ class ProjectModel
 
         $total = $this->task_model->getNumRows($where);
         $pager = new Pager($total, $this->config->get('App.pager_limit'));
-        
+
         $data['tasks'] = $this->task_model->getAll($where, [$pager->offset, $pager->limit]);
         if ($pager->has_next) {
             $data['next'] = "/project/tasks/$project_id?status=$status&page=$pager->next";

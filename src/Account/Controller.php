@@ -133,7 +133,6 @@ class Controller
             }
 
             $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
-
             $this->flash->setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
         } else {
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
@@ -367,7 +366,6 @@ class Controller
                 $this->auth->updatePassword($row['id'], $_POST['password']);
 
                 $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
-
                 $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success');
 
                 header("Location: /account/signin");

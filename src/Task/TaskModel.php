@@ -76,7 +76,7 @@ class TaskModel
     public function getAll(array $where, array $limit = [])
     {
         $timeModel = new TimeModel();
-        
+
         $order_by = ['updated' => 'DESC', 'priority' => 'ASC'];
         $tasks = $this->db->getAllQuery('SELECT * FROM task', $where, $order_by, $limit);
         foreach ($tasks as $key => $task) {
