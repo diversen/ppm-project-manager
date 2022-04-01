@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
+use App\Pagination;
 
 require 'templates/header.tpl.php';
 
@@ -24,7 +25,7 @@ function render_projects($projects)
             <thead>
                 <tr>
                     <td><?= Lang::translate('Title') ?></td>
-                    <td><?= Lang::translate('Date') ?> </td>
+                    <td><?= Lang::translate('Updated') ?> </td>
                     <td class="xs-hide"><?= Lang::translate('Time used') ?></td>
                     <td></td>
                 </tr>
@@ -34,10 +35,10 @@ function render_projects($projects)
 
                 foreach ($projects as $project) :
 
-                    $created = date('d/m/Y', strtotime($project['created'])); ?>
+                    $updated = date('d/m/Y', strtotime($project['updated'])); ?>
                     <tr>
                         <td class="td-overflow"><a title="<?= $project['note'] ?>" href='/project/view/<?= $project['id'] ?>'><?= $project['title'] ?></a></td>
-                        <td><?= $created ?></td>
+                        <td><?= $updated ?></td>
                         <td class="xs-hide"><?= $project['project_time_total_human'] ?></td>
                         <td>
                             <div class="action-links">
@@ -56,14 +57,13 @@ function render_projects($projects)
     endif;
 }
 
-function render_projects_inactive_link($inactive)
-{
-    if (!empty($inactive)) : ?>
-        <div class="action-links">
-            <a href='/project?inactive=1'><?= Lang::translate('View inactive projects') ?></a>
-        </div>
+function render_projects_inactive_link()
+{ ?>
+    <div class="action-links">
+        <a href='/project/inactive'><?= Lang::translate('View inactive projects') ?></a>
+    </div>
     <?php
-    endif;
+
 }
 
 function render_projects_total_time($total_time_human)
@@ -75,15 +75,14 @@ function render_projects_total_time($total_time_human)
 <?php
 }
 
+render_projects($projects);
 
-if (isset($_GET['inactive'])) {
-    render_projects($inactive);
-} else {
-    render_projects($projects);
-    render_projects_inactive_link($inactive);
+$pagination = new Pagination();
+$pagination->parse($paginator);
+
+// render_projects_total_time($total_time_human);
+if (isset($inactive_link)) {
+    render_projects_inactive_link();
 }
-
-render_projects_total_time($total_time_human);
-
 
 require 'templates/footer.tpl.php';

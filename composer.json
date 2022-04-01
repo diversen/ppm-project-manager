@@ -10,7 +10,8 @@
         "gregwar/captcha": "^1.1",
         "phpmailer/phpmailer": "^6.0",
         "erusev/parsedown": "^1.7",
-        "diversen/pebble-framework": "^5.0"
+        "diversen/pebble-framework": "^5.0",
+        "jasongrimes/paginator": "^1.0"
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",

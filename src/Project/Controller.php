@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Project;
 
 use App\Project\ProjectModel;
-use App\Task\TaskModel;
 use Diversen\Lang;
 use Exception;
 use Pebble\Template;
 use Pebble\JSON;
 use Pebble\ExceptionTrace;
 use App\AppMain;
+use Pebble\Pager;
+use JasonGrimes\Paginator;
+
 
 class Controller
 {
@@ -27,15 +29,60 @@ class Controller
     }
 
     /**
+     * @route /project/inactive
+     * @verbs GET
+     */
+    public function inactive()
+    {
+        $this->app_acl->isAuthenticatedOrThrow();
+        
+        $where = [
+            'auth_id' => $this->app_acl->getAuthId(), 
+            'status' => ProjectModel::PROJECT_CLOSED
+        ];
+
+        $project_count = $this->project_model->getNumProjects($where);
+        $pager = new Pager($project_count, 10, 'page', false);
+
+        $urlPattern = '/project?page=(:num)';
+        
+        $template_data = $this->project_model->getIndexData( $where, ['updated' => 'DESC'], [$pager->offset, $pager->limit]);
+        $paginator = new Paginator($project_count, $pager->limit, $pager->page, $urlPattern);
+        $template_data['paginator'] = $paginator;
+        $template_data['title'] = Lang::translate('All projects');
+        $template_data['total_time_human'] = 0;
+
+        Template::render(
+            'Project/views/project_index.tpl.php',
+            $template_data
+        );
+    }
+
+    /**
      * @route /project
      * @verbs GET
      */
-    public function index()
+    public function active()
     {
         $this->app_acl->isAuthenticatedOrThrow();
+        
+        $where = [
+            'auth_id' => $this->app_acl->getAuthId(), 
+            'status' => ProjectModel::PROJECT_OPEN
+        ];
 
-        $template_data = $this->project_model->getIndexData($this->app_acl->getAuthId());
+        $project_count = $this->project_model->getNumProjects($where);
+        $pager = new Pager($project_count, 10, 'page', false);
+
+        $urlPattern = '/project?page=(:num)';
+        
+        $template_data = $this->project_model->getIndexData( $where, ['updated' => 'DESC'], [$pager->offset, $pager->limit]);
+
+        $paginator = new Paginator($project_count, $pager->limit, $pager->page, $urlPattern);
+
+        $template_data['paginator'] = $paginator;
         $template_data['title'] = Lang::translate('All projects');
+        $template_data['inactive_link'] = 1;
 
         Template::render(
             'Project/views/project_index.tpl.php',

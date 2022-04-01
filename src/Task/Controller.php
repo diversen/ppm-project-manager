@@ -57,7 +57,7 @@ class Controller
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
         $project = $this->project_model->getOne($task['project_id']);
-        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()]);
+        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['updated' => 'DESC']);
 
         $template_vars = [
             'task' => $task,

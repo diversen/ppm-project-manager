@@ -216,12 +216,14 @@ $LANG['Are you sure want to delete this project? All tasks and all time entries 
 $LANG['Add project'] = 'Add project';
 $LANG['Your have no projects yet'] = 'Your have no projects yet';
 $LANG['Title'] = 'Title';
-$LANG['Date'] = 'Date';
+$LANG['Updated'] = 'Updated';
 $LANG['Time used'] = 'Time used';
 $LANG['Edit'] = 'Edit';
 $LANG['New'] = 'New';
 $LANG['View inactive projects'] = 'View inactive projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
+$LANG['Prev'] = 'Prev';
+$LANG['Next'] = 'Next';
 
 // Translation of file src/Project/views/project_task_list.tpl.php
 

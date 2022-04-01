@@ -217,3 +217,24 @@ table {
 .clear {
     padding: 5px;
 }
+
+.pagination {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.pagination-links {
+
+    padding: 10px;
+    font-weight: 900;
+    border: 1px solid var(--focus);
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+
+}
+
+.pagination-current {
+    background-color: var(--background);
+}
+

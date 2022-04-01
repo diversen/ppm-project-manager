@@ -31,6 +31,7 @@ class ProjectModel
         $this->db = $app_main->getDB();
         $this->app_acl = $app_main->getAppACL();
         $this->task_model = new TaskModel();
+        $this->time_model = new TimeModel();
         $this->config = $app_main->getConfig();
     }
 
@@ -47,9 +48,9 @@ class ProjectModel
     /**
      * Get all project from an where array
      */
-    public function getAll(array $params)
+    public function getAll(array $params, array $order = [], array $limit = [])
     {
-        return $this->db->getAllQuery('SELECT * FROM project', $params, ['updated' => 'DESC']);
+        return $this->db->getAllQuery('SELECT * FROM project', $params, $order, $limit);
     }
 
     /**
@@ -101,39 +102,31 @@ class ProjectModel
         return $this->db->update('project', $post, ['id' => $project_id]);
     }
 
+    public function getNumProjects(array $where): int {
+        return $this->db->getTableNumRows('project', 'id', $where);
+    }
+
+    public function getTimeUsed($where) {
+
+    }
 
     /**
      * Get project index data from an $auth_id
      */
-    public function getIndexData($auth_id)
+    public function getIndexData(array $where, array $order = [], array $limit = [])
     {
-        $projects = $this->getAll(['auth_id' => $auth_id, 'status' => ProjectModel::PROJECT_OPEN]);
-        $time_model = new TimeModel();
 
-        $total_time = 0;
+        $projects = $this->getAll($where, $order, $limit);
 
         // Active
         foreach ($projects as $key => $project) {
-            $project_time = $time_model->sumTime(['project_id' => $project['id']]);
-            $total_time += $project_time;
+            $project_time = $this->time_model->sumTime(['project_id' => $project['id']]);
             $projects[$key]['project_time_total'] = $project_time;
-            $projects[$key]['project_time_total_human'] = $time_model->minutesToHoursMinutes($project_time);
-        }
-
-        // Inactive
-        $inactive = $this->getAll(['auth_id' => $auth_id, 'status' => ProjectModel::PROJECT_CLOSED]);
-        foreach ($inactive as $key => $project) {
-            $project_time = $time_model->sumTime(['project_id' => $project['id']]);
-            $projects[$key]['project_time_total'] = $project_time;
-            $inactive[$key]['project_time_total_human'] = $time_model->minutesToHoursMinutes($project_time);
-            $total_time += $project_time;
+            $projects[$key]['project_time_total_human'] = $this->time_model->minutesToHoursMinutes($project_time);
         }
 
         $data = [
             'projects' => $projects,
-            'inactive' => $inactive,
-            'total_time' => $total_time,
-            'total_time_human' => $time_model->minutesToHoursMinutes($total_time),
         ];
 
         return $data;
