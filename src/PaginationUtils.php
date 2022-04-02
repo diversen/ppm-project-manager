@@ -80,7 +80,7 @@ class PaginationUtils {
         $this->validateField($field);
 
         $query['order_by'] = $field;
-        $query['direction'] = 'ASC';
+        $query['direction'] = 'DESC';
         
         $order_by = $_GET['order_by'] ?? null;
         $direction = $_GET['direction'] ?? null;
