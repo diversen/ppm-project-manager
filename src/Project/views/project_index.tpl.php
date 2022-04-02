@@ -22,7 +22,7 @@ require 'templates/header.tpl.php';
 function render_projects($projects)
 {   
     
-    $pagination_utils = new PaginationUtils([], 'title');
+    $pagination_utils = new PaginationUtils(['title', 'updated'], 'title');
     
     if (empty($projects)) :
         echo "<p>" . Lang::translate('Your have no projects yet') . "</p>"; 

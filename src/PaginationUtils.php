@@ -18,8 +18,24 @@ class PaginationUtils {
         return [$this->order_by_default_field => 'ASC'];
     }
 
+    private function validateField(string $order_by) {
+        if (!in_array($order_by, $this->order_by_allowed)) {
+            throw new InvalidArgumentException("$order_by is not a allowed order by field"); 
+        }
+    }
+
+    private function validateDirection(string $direction) {
+        $direction = mb_strtoupper($direction);
+
+        if (!in_array($direction, ['ASC', 'DESC'])) {
+            throw new InvalidArgumentException("$direction is not an allowed order by direction"); 
+        }
+    }
+
+
+
     /**
-     * Get ORDER BY from $_GET['order_by'] and $_GET['diretion']
+     * Get ORDER BY from $_GET['order_by'] and $_GET['direction']
      * e.g. ['table field' => 'DESC']
      * Return as an array that can be used in e.g DB::getOrderBySql($order_by)
      */
@@ -28,16 +44,11 @@ class PaginationUtils {
         if (!$order_by) {
             return $this->getOrderByDefault();
         }
-        if (!in_array($order_by, $this->order_by_allowed)) {
-            throw new InvalidArgumentException("$order_by is not a allowed"); 
-        }
 
         $direction = $_GET['direction'] ?? 'ASC';
-        $direction = mb_strtoupper($direction);
 
-        if (!in_array($direction, ['ASC', 'DESC'])) {
-            throw new InvalidArgumentException("$direction is not a allowed"); 
-        }
+        $this->validateField($order_by);
+        $this->validateDirection($direction);
 
         return [$order_by => $direction];
     }
@@ -48,6 +59,7 @@ class PaginationUtils {
      * e.g.: order_by=title&direction=DESC
      */
     public function getOrderByQueryPart() {
+        
         $order_by = $this->getOrderByFromQuery();
         $order['order_by'] = array_key_first($order_by);
         $order['direction'] = reset($order_by); 
@@ -63,14 +75,16 @@ class PaginationUtils {
     }
 
     private function getOrderByDirection($field) {
+
         // Defaults
+        $this->validateField($field);
+
         $query['order_by'] = $field;
-        $query['direction'] = 'DESC';
+        $query['direction'] = 'ASC';
         
         $order_by = $_GET['order_by'] ?? null;
         $direction = $_GET['direction'] ?? null;
 
-        // Already ordering by field. Switch directions
         if ($order_by === $field) {
             if ($direction === 'ASC') {
                 $query['direction'] = 'DESC';
@@ -87,6 +101,7 @@ class PaginationUtils {
      * @param string $field 
      */
     public function getOrderByUrl(string $field) {
+        
         
         $query = $this->getOrderByDirection($field);
         
@@ -108,14 +123,15 @@ class PaginationUtils {
                 return "";
             }
         }
+
+        $this->validateField($field);
         
         if ($order_by === $field) {
             $query = $this->getOrderByDirection($field);
             if ($query['direction'] === 'ASC') {
                 return "↓";
             } else {
-                return "↑";
-                
+                return "↑";                
             }
         }
     }
