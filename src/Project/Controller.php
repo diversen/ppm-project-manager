@@ -23,6 +23,7 @@ class Controller
     private $app_acl;
     private $log;
     private $project_model;
+    
     public function __construct()
     {
         $app_main = new AppMain();
@@ -41,7 +42,6 @@ class Controller
         $template_data = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
         $template_data['title'] = Lang::translate('All projects');
         $template_data['total_time_human'] = 0;
-        $template_data['order_by'] = $order_by;
 
         if ($where['status'] === ProjectModel::PROJECT_OPEN) {
             $template_data['inactive_link'] = 1;
