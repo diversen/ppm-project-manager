@@ -23,7 +23,8 @@ class Controller
     private $app_acl;
     private $log;
     private $project_model;
-    
+    private $pagination_utils;
+
     public function __construct()
     {
         $app_main = new AppMain();

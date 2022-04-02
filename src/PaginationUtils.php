@@ -71,7 +71,7 @@ class PaginationUtils {
      * Get a pagination URL pattern used with paginator where order by is added to the query
      */
     public function getPaginationURLPattern(string $url) {
-        return $url . '?' . $this->getOrderByQueryPart($this->order_by_allowed) . '&' . 'page=(:num)';
+        return $url . '?' . $this->getOrderByQueryPart() . '&' . 'page=(:num)';
     }
 
     private function getOrderByDirection($field) {
