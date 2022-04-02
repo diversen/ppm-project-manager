@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Project;
 
-use App\Project\ProjectModel;
 use Diversen\Lang;
-use Exception;
 use Pebble\Template;
 use Pebble\JSON;
 use Pebble\ExceptionTrace;
-use App\AppMain;
 use Pebble\Pager;
+use App\PaginationUtils;
+use App\AppMain;
+use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
+use Exception;
 
 
 class Controller
@@ -28,28 +29,25 @@ class Controller
         $this->app_acl = $app_main->getAppACL();
         $this->log = $app_main->getLog();
         $this->project_model = new ProjectModel();
+        $this->pagination_utils = new PaginationUtils(['title', 'updated'], 'title');
     }
-    
-    private function getProjectData(int $status) {
-                
-        $where = [
-            'auth_id' => $this->app_acl->getAuthId(), 
-            'status' => $status
-        ];
+
+    private function getProjectData(array $where, array $order_by)
+    {
 
         $project_count = $this->project_model->getNumProjects($where);
         $pager = new Pager($project_count, self::PROJECT_PER_PAGE);
 
-        $template_data = $this->project_model->getIndexData( $where, ['updated' => 'DESC'], [$pager->offset, $pager->limit]);
+        $template_data = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
         $template_data['title'] = Lang::translate('All projects');
         $template_data['total_time_human'] = 0;
+        $template_data['order_by'] = $order_by;
 
-        
-        if ($status === ProjectModel::PROJECT_OPEN ) {
+        if ($where['status'] === ProjectModel::PROJECT_OPEN) {
             $template_data['inactive_link'] = 1;
-            $url_pattern = '/project?page=(:num)';
+            $url_pattern = $this->pagination_utils->getPaginationURLPattern('/project');
         } else {
-            $url_pattern = '/project/inactive?page=(:num)';
+            $url_pattern = $this->pagination_utils->getPaginationURLPattern('/project/inactive');
         }
 
         $paginator = new Paginator($project_count, $pager->limit, $pager->page, $url_pattern);
@@ -59,6 +57,7 @@ class Controller
         return $template_data;
     }
 
+
     /**
      * @route /project/inactive
      * @verbs GET
@@ -67,13 +66,20 @@ class Controller
     {
         $this->app_acl->isAuthenticatedOrThrow();
 
-        $template_data = $this->getProjectData(ProjectModel::PROJECT_CLOSED);
+        $where = [
+            'auth_id' => $this->app_acl->getAuthId(),
+            'status' => ProjectModel::PROJECT_CLOSED,
+        ];
+
+        $order_by = $this->pagination_utils->getOrderByFromQuery();
+        $template_data = $this->getProjectData($where, $order_by);
 
         Template::render(
             'Project/views/project_index.tpl.php',
             $template_data
         );
     }
+
 
     /**
      * @route /project
@@ -82,8 +88,14 @@ class Controller
     public function active()
     {
         $this->app_acl->isAuthenticatedOrThrow();
-       
-        $template_data = $this->getProjectData(ProjectModel::PROJECT_OPEN);
+
+        $where = [
+            'auth_id' => $this->app_acl->getAuthId(),
+            'status' => ProjectModel::PROJECT_OPEN,
+        ];
+
+        $order_by = $this->pagination_utils->getOrderByFromQuery();
+        $template_data = $this->getProjectData($where, $order_by);
 
         Template::render(
             'Project/views/project_index.tpl.php',

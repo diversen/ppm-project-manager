@@ -39,7 +39,6 @@ $is_selected = function ($priority, $value) {
         foreach ($all_projects as $_project) : ?>
             <option value="<?= $_project['id'] ?>" <?= $is_selected($_project['id'], $project['id']) ?>><?= $_project['title'] ?></option>
         <?php
-
         endforeach;
 
         ?>

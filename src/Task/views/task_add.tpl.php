@@ -105,7 +105,6 @@ use Diversen\Lang;
 
             try {
                 res = await Pebble.asyncPost('/task/post', data);
-                spinner.classList.toggle('hidden');
                 if (res.error === false) {
                     location.reload();
                 } else {
@@ -113,6 +112,8 @@ use Diversen\Lang;
                 }
             } catch (e) {
                 await Pebble.asyncPostError('/error/log', e.stack);
+            } finally {
+                spinner.classList.toggle('hidden');
             }
         });
     });

@@ -117,8 +117,6 @@ class ProjectModel
     {
 
         $projects = $this->getAll($where, $order, $limit);
-
-        // Active
         foreach ($projects as $key => $project) {
             $project_time = $this->time_model->sumTime(['project_id' => $project['id']]);
             $projects[$key]['project_time_total'] = $project_time;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\Pagination;
+use App\PaginationUtils;
+use Pebble\URL;
 
 require 'templates/header.tpl.php';
 
@@ -17,15 +19,46 @@ require 'templates/header.tpl.php';
 
 <?php
 
+function get_order_link($field, $order_by) {
+    $order_by = $_GET['order_by'] ?? null;
+    $direction = $_GET['direction'] ?? null;
+    
+    // Defaults
+    $query['order_by'] = $field;
+    $query['direction'] = 'ASC';
+    
+    // Already ordering by field. Switch directions
+    if ($order_by === $field) {
+        if ($direction === 'ASC') {
+            $query['direction'] = 'DESC';
+        } else {
+            $query['direction'] = 'ASC';
+        }
+    }
+
+    // Add current page
+    $query['page'] = URL::getQueryPart('page') ?? '1';
+
+    $route = strtok($_SERVER["REQUEST_URI"], '?');
+    return  $route . '?' . http_build_query($query);
+}
+
 function render_projects($projects)
-{
+{   
+    
+    $pagination_utils = new PaginationUtils([], 'title');
+    
     if (empty($projects)) :
-        echo "<p>" . Lang::translate('Your have no projects yet') . "</p>"; else : ?>
+        echo "<p>" . Lang::translate('Your have no projects yet') . "</p>"; 
+    else : ?>
         <table>
             <thead>
                 <tr>
-                    <td><?= Lang::translate('Title') ?></td>
-                    <td><?= Lang::translate('Updated') ?> </td>
+                    <td><a href="<?=$pagination_utils->getOrderByUrl('title')?>">
+                        <?= Lang::translate('Title') ?> <?=$pagination_utils->getCurrentDirectionArrow('title')?></a>
+                    </td>
+                    <td><a href="<?=$pagination_utils->getOrderByUrl('updated')?>">
+                        <?= Lang::translate('Updated') ?><?=$pagination_utils->getCurrentDirectionArrow('updated')?></a> </td>
                     <td class="xs-hide"><?= Lang::translate('Time used') ?></td>
                     <td></td>
                 </tr>
@@ -78,9 +111,8 @@ function render_projects_total_time($total_time_human)
 render_projects($projects);
 
 $pagination = new Pagination();
-$pagination->parse($paginator);
+$pagination->render($paginator);
 
-// render_projects_total_time($total_time_human);
 if (isset($inactive_link)) {
     render_projects_inactive_link();
 }

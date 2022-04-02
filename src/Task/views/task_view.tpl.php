@@ -17,7 +17,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 <h3 class="sub-menu">
     <a href="/project"><?=Lang::translate('Projects')?></a><?=SUB_MENU_SEP?>
     <a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=SUB_MENU_SEP?>
-    <?=Lang::translate('View task')?>
+    <?=$task['title']?>
 </h3>
 
 
@@ -48,7 +48,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
     <tr>
         <td class="td-overflow <?=$task_box_class?>" title="<?=$title_attr?>">
             <span class="priority <?=get_task_priority_class($task)?>"></span>
-            <a href="/task/view/<?=$task['id']?>"><?=$task_title?></a>
+            <span><?=$task_title?></span>
         </td>
 
         <td class='td-overflow'>
@@ -92,7 +92,6 @@ document.addEventListener('click', async function(event) {
 
     event.preventDefault();
 
-    const todayElem = document.getElementById(event.target);
     const task_id = event.target.dataset.id
     
     const formData = new FormData();

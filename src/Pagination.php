@@ -3,7 +3,7 @@
 namespace App;
 
 class Pagination {
-    public function parse (\JasonGrimes\Paginator $paginator) { ?>
+    public function render (\JasonGrimes\Paginator $paginator) { ?>
 
         <div class="pagination"><?php
 
