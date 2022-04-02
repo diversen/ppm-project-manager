@@ -19,30 +19,6 @@ require 'templates/header.tpl.php';
 
 <?php
 
-function get_order_link($field, $order_by) {
-    $order_by = $_GET['order_by'] ?? null;
-    $direction = $_GET['direction'] ?? null;
-    
-    // Defaults
-    $query['order_by'] = $field;
-    $query['direction'] = 'ASC';
-    
-    // Already ordering by field. Switch directions
-    if ($order_by === $field) {
-        if ($direction === 'ASC') {
-            $query['direction'] = 'DESC';
-        } else {
-            $query['direction'] = 'ASC';
-        }
-    }
-
-    // Add current page
-    $query['page'] = URL::getQueryPart('page') ?? '1';
-
-    $route = strtok($_SERVER["REQUEST_URI"], '?');
-    return  $route . '?' . http_build_query($query);
-}
-
 function render_projects($projects)
 {   
     
