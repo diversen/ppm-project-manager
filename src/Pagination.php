@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Diversen\Lang;
-
 class Pagination {
     public function parse (\JasonGrimes\Paginator $paginator) { ?>
 
@@ -14,10 +12,11 @@ class Pagination {
         if ($num_pages):
 
             if ($paginator->getPrevUrl()): ?>
-                <a class='pagination-links' href='<?=$paginator->getPrevUrl()?>'>&lt; <?=Lang::translate('Prev')?></a><?php
+                <a class='pagination-links' href='<?=$paginator->getPrevUrl()?>'>&lt;&lt;</a><?php
             else: ?>
-                <span class='pagination-links'>&lt; <?=Lang::translate('Prev')?></span><?php
+                <span class='pagination-links'>&lt;&lt;</span><?php
             endif;
+
             foreach ($paginator->getPages() as $page):
         
                 $css_class = 'pagination-links';
@@ -34,9 +33,9 @@ class Pagination {
             endforeach;
 
             if ($paginator->getNextUrl()):?>
-                <a class='pagination-links' href='<?=$paginator->getNextUrl()?>'><?=Lang::translate('Next')?> &gt;</a><?php
+                <a class='pagination-links' href='<?=$paginator->getNextUrl()?>'>&gt;&gt;</a><?php
             else: ?>
-                <span class='pagination-links'> <?=Lang::translate('Next')?> &gt;</span><?php
+                <span class='pagination-links'>&gt;&gt;</span><?php
             endif; ?>        
             </div><?php
         endif;

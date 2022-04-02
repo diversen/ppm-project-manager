@@ -17,6 +17,8 @@ use JasonGrimes\Paginator;
 
 class Controller
 {
+
+    public const PROJECT_PER_PAGE = 10;
     private $app_acl;
     private $log;
     private $project_model;
@@ -27,6 +29,35 @@ class Controller
         $this->log = $app_main->getLog();
         $this->project_model = new ProjectModel();
     }
+    
+    private function getProjectData(int $status) {
+                
+        $where = [
+            'auth_id' => $this->app_acl->getAuthId(), 
+            'status' => $status
+        ];
+
+        $project_count = $this->project_model->getNumProjects($where);
+        $pager = new Pager($project_count, self::PROJECT_PER_PAGE);
+
+        $template_data = $this->project_model->getIndexData( $where, ['updated' => 'DESC'], [$pager->offset, $pager->limit]);
+        $template_data['title'] = Lang::translate('All projects');
+        $template_data['total_time_human'] = 0;
+
+        
+        if ($status === ProjectModel::PROJECT_OPEN ) {
+            $template_data['inactive_link'] = 1;
+            $url_pattern = '/project?page=(:num)';
+        } else {
+            $url_pattern = '/project/inactive?page=(:num)';
+        }
+
+        $paginator = new Paginator($project_count, $pager->limit, $pager->page, $url_pattern);
+        $paginator->setMaxPagesToShow(5);
+        $template_data['paginator'] = $paginator;
+
+        return $template_data;
+    }
 
     /**
      * @route /project/inactive
@@ -35,22 +66,8 @@ class Controller
     public function inactive()
     {
         $this->app_acl->isAuthenticatedOrThrow();
-        
-        $where = [
-            'auth_id' => $this->app_acl->getAuthId(), 
-            'status' => ProjectModel::PROJECT_CLOSED
-        ];
 
-        $project_count = $this->project_model->getNumProjects($where);
-        $pager = new Pager($project_count, 10, 'page', false);
-
-        $urlPattern = '/project?page=(:num)';
-        
-        $template_data = $this->project_model->getIndexData( $where, ['updated' => 'DESC'], [$pager->offset, $pager->limit]);
-        $paginator = new Paginator($project_count, $pager->limit, $pager->page, $urlPattern);
-        $template_data['paginator'] = $paginator;
-        $template_data['title'] = Lang::translate('All projects');
-        $template_data['total_time_human'] = 0;
+        $template_data = $this->getProjectData(ProjectModel::PROJECT_CLOSED);
 
         Template::render(
             'Project/views/project_index.tpl.php',
@@ -65,24 +82,8 @@ class Controller
     public function active()
     {
         $this->app_acl->isAuthenticatedOrThrow();
-        
-        $where = [
-            'auth_id' => $this->app_acl->getAuthId(), 
-            'status' => ProjectModel::PROJECT_OPEN
-        ];
-
-        $project_count = $this->project_model->getNumProjects($where);
-        $pager = new Pager($project_count, 10, 'page', false);
-
-        $urlPattern = '/project?page=(:num)';
-        
-        $template_data = $this->project_model->getIndexData( $where, ['updated' => 'DESC'], [$pager->offset, $pager->limit]);
-
-        $paginator = new Paginator($project_count, $pager->limit, $pager->page, $urlPattern);
-
-        $template_data['paginator'] = $paginator;
-        $template_data['title'] = Lang::translate('All projects');
-        $template_data['inactive_link'] = 1;
+       
+        $template_data = $this->getProjectData(ProjectModel::PROJECT_OPEN);
 
         Template::render(
             'Project/views/project_index.tpl.php',

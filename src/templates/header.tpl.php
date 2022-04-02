@@ -43,7 +43,7 @@ require 'templates/helpers.php';
     <?php endif; ?>
 
     <link rel="manifest" href="/assets/manifest.json">
-    <link rel="stylesheet" href="/css/default.css?v=0.8">
+    <link rel="stylesheet" href="/css/default.css?v=0.9">
     <link rel="icon" sizes="192x192" href="/assets/ppm-logo-192x192.png">
     <script type="module">
     	import {GlobalEvents} from '/js/global_events.js';
