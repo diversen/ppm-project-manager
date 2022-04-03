@@ -31,7 +31,7 @@ class Controller
         $this->app_acl = $app_main->getAppACL();
         $this->log = $app_main->getLog();
         $this->project_model = new ProjectModel();
-        $this->pagination_utils = new PaginationUtils(['title', 'updated'], 'title');
+        $this->pagination_utils = new PaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
     }
 
     private function getProjectData(array $where, array $order_by)

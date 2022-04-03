@@ -7,7 +7,7 @@
   "description": "Small time and project manager",
   "icons": [
     {
-      "src": "/templates/assets/logo.svg",
+      "src": "/assets/logo.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }

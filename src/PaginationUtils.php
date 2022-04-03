@@ -5,134 +5,153 @@ namespace App;
 use InvalidArgumentException;
 use Pebble\URL;
 
-class PaginationUtils {
-
-    private $order_by_allowed = [];
-    private $order_by_default_field;
-    public function __construct(array $order_by_allowed, string $order_by_default_field ) {
-        $this->order_by_allowed = $order_by_allowed;
-        $this->order_by_default_field = $order_by_default_field;
-    }
-
-    public function getOrderByDefault() {
-        return [$this->order_by_default_field => 'ASC'];
-    }
-
-    private function validateField(string $order_by) {
-        if (!in_array($order_by, $this->order_by_allowed)) {
-            throw new InvalidArgumentException("$order_by is not a allowed order by field"); 
-        }
-    }
-
-    private function validateDirection(string $direction) {
-        $direction = mb_strtoupper($direction);
-
-        if (!in_array($direction, ['ASC', 'DESC'])) {
-            throw new InvalidArgumentException("$direction is not an allowed order by direction"); 
-        }
-    }
-
-
+class PaginationUtils
+{
 
     /**
-     * Get ORDER BY from $_GET['order_by'] and $_GET['direction']
-     * e.g. ['table field' => 'DESC']
-     * Return as an array that can be used in e.g DB::getOrderBySql($order_by)
+     * Var holding default ORDER BY
      */
-    public function getOrderByFromQuery() {
+    private $order_by_default = [];
+
+    /**
+     * Sets order by default, e.g. `['title' => 'ASC', 'updated' => 'DESC']`
+     */
+    public function __construct(array $order_by_default)
+    {
+        $this->order_by_default = $order_by_default;
+    }
+
+
+    private $should_change_field_order = true;
+
+    /**
+     * Set if changing of field order should happen
+     * `['title' => 'ASC', 'updated' => 'DESC']`to `['updated' => 'ASC', 'title' => 'ASC']`
+     * If false it is only the DIRECTION part of the ORDER BY that will change
+     */
+    public function setShouldChangeFieldOrder(bool $val)
+    {
+        $this->should_change_field_order = $val;
+    }
+
+    /**
+     * Validate a field. Checks if it is set `$order_by_default` fields
+     */
+    private function validateField(string $order_by)
+    {
+        $fields = array_keys($this->order_by_default);
+        if (!in_array($order_by, $fields)) {
+            throw new InvalidArgumentException("$order_by is not a allowed order by field");
+        }
+    }
+
+    /**
+     * Checks diretion, it can only be 'ASC' or 'DESC'
+     */
+    private function validateDirection(string $direction)
+    {
+        $direction = mb_strtoupper($direction);
+        if (!in_array($direction, ['ASC', 'DESC'])) {
+            throw new InvalidArgumentException("$direction is not an allowed order by direction");
+        }
+    }
+
+    private function getNewOrderBy(array $order_by): array
+    {
+
+        // Check if ORDER BY should be altered
+        $order_by_field = $_GET['alter'] ?? null;
+        if (!$order_by_field) {
+            return $order_by;
+        }
+
+        $this->validateField($order_by_field);
+
+        // Change direction of field
+        if ($order_by[$order_by_field] === 'ASC') {
+            $direction = 'DESC';
+        } else {
+            $direction = 'ASC';
+        }
+
+        if (!$this->should_change_field_order) {
+            $order_by[$order_by_field] = $direction;
+            return $order_by;
+        }
+
+        $new_order_by = [];
+
+        // Set altered field as first ORDER BY
+        $new_order_by[$order_by_field] = $direction;
+        unset($order_by[$order_by_field]);
+
+        // Add the rest of the fields from current ORDER BY
+        foreach ($order_by as $field => $direction) {
+            $new_order_by[$field] = $direction;
+        }
+
+        return $new_order_by;
+    }
+
+    /**
+     * Get the ORDER BY parameters from the URL or get the default ORDER BY
+     * @return array $order_by , e.b. `['title' => 'ASC', 'updated' => 'DESC']`
+     */
+    public function getOrderByFromQuery()
+    {
         $order_by = $_GET['order_by'] ?? null;
         if (!$order_by) {
-            return $this->getOrderByDefault();
+            return $this->order_by_default;
         }
 
-        $direction = $_GET['direction'] ?? 'ASC';
-
-        $this->validateField($order_by);
-        $this->validateDirection($direction);
-
-        return [$order_by => $direction];
-    }
-
-
-    /**
-     * Get order by as URL query
-     * e.g.: order_by=title&direction=DESC
-     */
-    public function getOrderByQueryPart() {
-        
-        $order_by = $this->getOrderByFromQuery();
-        $order['order_by'] = array_key_first($order_by);
-        $order['direction'] = reset($order_by); 
-        $order_by_query = http_build_query($order);
-        return $order_by_query;
-    }
-
-    /**
-     * Get a pagination URL pattern used with paginator where order by is added to the query
-     */
-    public function getPaginationURLPattern(string $url) {
-        return $url . '?' . $this->getOrderByQueryPart() . '&' . 'page=(:num)';
-    }
-
-    private function getOrderByDirection($field) {
-
-        // Defaults
-        $this->validateField($field);
-
-        $query['order_by'] = $field;
-        $query['direction'] = 'DESC';
-        
-        $order_by = $_GET['order_by'] ?? null;
-        $direction = $_GET['direction'] ?? null;
-
-        if ($order_by === $field) {
-            if ($direction === 'ASC') {
-                $query['direction'] = 'DESC';
-            } else {
-                $query['direction'] = 'ASC';
-            }
+        // Validate
+        foreach ($order_by as $field => $direction) {
+            $this->validateField($field);
+            $this->validateDirection($direction);
         }
 
-        return $query;
+        return $this->getNewOrderBy($order_by);
     }
 
+
     /**
-     * Get a URL that can be used for ordering data. It is build on current $_GET data 
+     * Get a pagination URL pattern used with paginator where ORDER BY part is added to the URL query
+     */
+    public function getPaginationURLPattern(string $url)
+    {
+        $query['order_by'] = $this->getOrderByFromQuery();
+        $query_str = http_build_query($query);
+        return $url . '?' . $query_str . '&' . 'page=(:num)';
+    }
+
+
+    /**
+     * Get a URL where a new ORDER BY is indicated using `$_GET['alter'] = 'field'`
      * @param string $field 
      */
-    public function getOrderByUrl(string $field) {
-        
-        
-        $query = $this->getOrderByDirection($field);
-        
-        // Add current page
-        $query['page'] = URL::getQueryPart('page') ?? '1';
-        
-        // Use current route
+    public function getAlterOrderUrl(string $field)
+    {
+
+        $query['order_by'] = $this->getOrderByFromQuery();
+        $query['page'] = (int)URL::getQueryPart('page') ?? 1;
+
         $route = strtok($_SERVER["REQUEST_URI"], '?');
-        return  $route . '?' . http_build_query($query);
+        return  $route . '?' . http_build_query($query) . "&alter=$field";
     }
 
-    public function getCurrentDirectionArrow(string $field) {
+    /**
+     * Get a arrow showing current direction of a field
+     */
+    public function getCurrentDirectionArrow(string $field)
+    {
 
-        $order_by = $_GET['order_by'] ?? null;
-        if (!$order_by) {
-            if ($field === $this->order_by_default_field) {
-                return "↑";
-            } else {
-                return "";
-            }
-        }
+        $order_by = $this->getOrderByFromQuery();
+        $direction = $order_by[$field];
 
-        $this->validateField($field);
-        
-        if ($order_by === $field) {
-            $query = $this->getOrderByDirection($field);
-            if ($query['direction'] === 'ASC') {
-                return "↓";
-            } else {
-                return "↑";                
-            }
+        if ($direction == 'ASC') {
+            return "↑";
+        } else {
+            return "↓";
         }
     }
 }

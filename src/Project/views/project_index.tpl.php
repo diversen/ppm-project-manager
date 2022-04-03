@@ -22,7 +22,7 @@ require 'templates/header.tpl.php';
 function render_projects($projects)
 {   
     
-    $pagination_utils = new PaginationUtils(['title', 'updated'], 'title');
+    $pagination_utils = new PaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
     
     if (empty($projects)) :
         echo "<p>" . Lang::translate('Your have no projects yet') . "</p>"; 
@@ -30,10 +30,10 @@ function render_projects($projects)
         <table>
             <thead>
                 <tr>
-                    <td><a href="<?=$pagination_utils->getOrderByUrl('title')?>">
+                    <td><a href="<?=$pagination_utils->getAlterOrderUrl('title')?>">
                         <?= Lang::translate('Title') ?> <?=$pagination_utils->getCurrentDirectionArrow('title')?></a>
                     </td>
-                    <td><a href="<?=$pagination_utils->getOrderByUrl('updated')?>">
+                    <td><a href="<?=$pagination_utils->getAlterOrderUrl('updated')?>">
                         <?= Lang::translate('Updated') ?><?=$pagination_utils->getCurrentDirectionArrow('updated')?></a> </td>
                     <td class="xs-hide"><?= Lang::translate('Time used') ?></td>
                     <td></td>
