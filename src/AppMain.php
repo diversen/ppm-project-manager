@@ -20,13 +20,16 @@ class AppMain extends AppBase
         parent::sendHeaders();
         if ($config->get('App.env') !== 'dev') {
             $headers = new SecureHeaders();
+            $headers->strictMode(false);
             $headers->hsts();
             $headers->csp('default', 'self');
             $headers->csp('img-src', 'data:');
             $headers->csp('img-src', $config->get('App.server_url'));
             $headers->csp('script', 'unsafe-inline');
             $headers->csp('script-src', $config->get('App.server_url'));
-            $headers->csp('default-src', 'unsafe-inline');
+            $headers->csp('style-src', 'self');
+            $headers->csp('style-src', 'unsafe-inline');
+
             $headers->apply();
         }
     }

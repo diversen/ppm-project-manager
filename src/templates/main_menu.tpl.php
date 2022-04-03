@@ -11,10 +11,13 @@ if ($is_authenticated) {
     $home_url = '/';
 }
 
+
 ?>
-<a title="<?= $app_main->getConfig()->get('App.site_name') ?>" href="<?= $home_url ?>">
-    <img src="/assets/logo.svg" title="<?= $app_main->getConfig()->get('App.site_name') ?>" width="184" height="74"></img>
-</a>
+<div class="logo">
+    <a title="<?= $app_main->getConfig()->get('App.site_name') ?>" href="<?= $home_url ?>">
+        <img  src="/assets/logo.png" title="<?= $app_main->getConfig()->get('App.site_name') ?>" width="70" height="70"></img>
+    </a>
+</div>
 
 <div class="app-menu">
     <?php
