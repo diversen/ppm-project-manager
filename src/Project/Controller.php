@@ -15,10 +15,8 @@ use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
 use Exception;
 
-
 class Controller
 {
-
     public const PROJECT_PER_PAGE = 10;
     private $app_acl;
     private $log;
@@ -36,7 +34,6 @@ class Controller
 
     private function getProjectData(array $where, array $order_by)
     {
-
         $project_count = $this->project_model->getNumProjects($where);
         $pager = new Pager($project_count, self::PROJECT_PER_PAGE);
 

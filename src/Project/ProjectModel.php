@@ -102,12 +102,9 @@ class ProjectModel
         return $this->db->update('project', $post, ['id' => $project_id]);
     }
 
-    public function getNumProjects(array $where): int {
+    public function getNumProjects(array $where): int
+    {
         return $this->db->getTableNumRows('project', 'id', $where);
-    }
-
-    public function getTimeUsed($where) {
-
     }
 
     /**
@@ -115,7 +112,6 @@ class ProjectModel
      */
     public function getIndexData(array $where, array $order = [], array $limit = [])
     {
-
         $projects = $this->getAll($where, $order, $limit);
         foreach ($projects as $key => $project) {
             $project_time = $this->time_model->sumTime(['project_id' => $project['id']]);

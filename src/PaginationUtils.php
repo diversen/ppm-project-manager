@@ -7,7 +7,6 @@ use Pebble\URL;
 
 class PaginationUtils
 {
-
     /**
      * Var holding default ORDER BY
      */
@@ -127,11 +126,10 @@ class PaginationUtils
 
     /**
      * Get a URL where a new ORDER BY is indicated using `$_GET['alter'] = 'field'`
-     * @param string $field 
+     * @param string $field
      */
     public function getAlterOrderUrl(string $field)
     {
-
         $query['order_by'] = $this->getOrderByFromQuery();
         $query['page'] = (int)URL::getQueryPart('page') ?? 1;
 
@@ -144,7 +142,6 @@ class PaginationUtils
      */
     public function getCurrentDirectionArrow(string $field)
     {
-
         $order_by = $this->getOrderByFromQuery();
         $direction = $order_by[$field];
 

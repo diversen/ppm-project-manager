@@ -20,12 +20,12 @@ require 'templates/header.tpl.php';
 <?php
 
 function render_projects($projects)
-{   
-    
+{
     $pagination_utils = new PaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
-    
-    if (empty($projects)) :
-        echo "<p>" . Lang::translate('Your have no projects yet') . "</p>"; 
+
+    if (empty($projects)) : ?>
+        <p><?=Lang::translate('Your have no projects yet')?></p><?php
+
     else : ?>
         <table>
             <thead>
