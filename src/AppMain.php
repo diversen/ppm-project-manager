@@ -29,7 +29,6 @@ class AppMain extends AppBase
             $headers->csp('script-src', $config->get('App.server_url'));
             $headers->csp('style-src', 'self');
             $headers->csp('style-src', 'unsafe-inline');
-
             $headers->apply();
         }
     }

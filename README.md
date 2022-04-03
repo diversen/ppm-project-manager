@@ -132,6 +132,8 @@ Remove container (you will need run 'run' command again):
     text-to-svg-cli --config=logo.json
     scripts/logo.sh
 
+[Favicon generator](https://favicon.io/favicon-generator/)
+
 # License
 
 MIT © [Dennis Iversen](https://github.com/diversen)
