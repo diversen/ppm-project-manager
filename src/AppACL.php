@@ -89,7 +89,7 @@ class AppACL extends ACL
     {
         $time = (new TimeModel())->getOne(['id' => $time_id]);
         if (empty($time)) {
-            throw new Exception(Lang::translate('There is no such time ID'));
+            throw new NotFoundException(Lang::translate('There is no such time ID'));
         }
         return $time;
     }

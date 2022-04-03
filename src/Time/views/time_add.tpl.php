@@ -2,6 +2,9 @@
 
 use Diversen\Lang;
 
+use App\AppPagination;
+use App\AppPaginationUtils;
+
 require 'templates/header.tpl.php';
 require 'templates/flash.tpl.php';
 
@@ -32,7 +35,10 @@ require 'templates/flash.tpl.php';
 
 <?php
 
-function output_time_table($time_rows) { ?>
+function output_time_table($time_rows) { 
+    
+    $pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
+    ?>
 
 <div>
     <table>
@@ -42,7 +48,9 @@ function output_time_table($time_rows) { ?>
                     <?= Lang::translate('Time') ?>
                 </td>
                 <td>
-                    <?= Lang::Translate('Date') ?>
+                    <a href="<?=$pagination_utils->getAlterOrderUrl('begin_date')?>">
+                        <?= Lang::Translate('Date') ?> <?=$pagination_utils->getCurrentDirectionArrow('begin_date')?>
+                    </a>
                 </td>
                 <td class=>
                     <?= Lang::translate('Note') ?>
@@ -58,12 +66,12 @@ function output_time_table($time_rows) { ?>
             <?php
 
             foreach ($time_rows as $key => $val) :
-                $created = date("d/m/Y", strtotime($val['created']));
+                $begin_date = date("d/m/Y", strtotime($val['begin_date']));
             ?>
                 <tr>
 
                     <td class="td-overflow"><?= $val['minutes_hours'] ?></td>
-                    <td class="td-overflow"><?= $created ?></td>
+                    <td class="td-overflow"><?= $begin_date ?></td>
                     <td title="<?= $val['note'] ?>" class="td-overflow"><?= $val['note'] ?></td>
                     <td>
                         <div class="action-links">
@@ -86,6 +94,9 @@ function output_time_table($time_rows) { ?>
 
 if (!empty($time_rows)) {
     output_time_table($time_rows);
+
+    $pagination = new AppPagination();
+    $pagination->render($paginator);
 }
 
 ?>

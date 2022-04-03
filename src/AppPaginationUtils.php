@@ -5,7 +5,7 @@ namespace App;
 use InvalidArgumentException;
 use Pebble\URL;
 
-class PaginationUtils
+class AppPaginationUtils
 {
     /**
      * Var holding default ORDER BY

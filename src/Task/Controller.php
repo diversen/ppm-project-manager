@@ -108,7 +108,7 @@ class Controller
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -143,7 +143,7 @@ class Controller
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Task.put.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -162,7 +162,7 @@ class Controller
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['project_redirect'] = '/overview';
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 
@@ -184,7 +184,7 @@ class Controller
             $this->task_model->delete($params['task_id']);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
         } catch (Exception $e) {
-            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $this->log->error('Task.post.delete', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
 

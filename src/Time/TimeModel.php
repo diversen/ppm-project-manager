@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Time;
 
+use Diversen\Lang;
+
 use App\AppMain;
 use App\Task\TaskModel;
 
@@ -83,18 +85,21 @@ class TimeModel
         return $total;
     }
 
+    public function getNumTime(array $where): int {
+        return $this->db->getTableNumRows('time', 'id', $where);
+    }
 
     /**
      * Get all `time` rows and attach minutes_hours (hh:mm) and 'note'
      */
-    public function getAll($where)
+    public function getAll(array $where, array $order = [], array $limit = []): array
     {
-        $time_rows = $this->db->getAll('time', $where);
+        $time_rows = $this->db->getAllQuery('SELECT * FROM time', $where, $order, $limit);
 
         foreach ($time_rows as $key => $time) {
             $time_rows[$key]['minutes_hours'] = $this->minutesToHoursMinutes($time['minutes']);
             if (empty($time_rows[$key]['note'])) {
-                $time_rows[$key]['note'] = 'No note';
+                $time_rows[$key]['note'] = Lang::translate('No note');
             }
         }
         return $time_rows;

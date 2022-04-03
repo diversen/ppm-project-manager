@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Overview;
 
 use App\AppMain;
-use App\Cal;
+use App\AppCal;
 use App\Time\TimeModel;
 use Pebble\URL;
 
@@ -28,7 +28,7 @@ class Controller
     {
         $this->app_main->getAppACL()->isAuthenticatedOrThrow();
 
-        $cal = new Cal();
+        $cal = new AppCal();
         $week_delta_current = (int) URL::getQueryPart('week_delta');
 
         // Only display current day state

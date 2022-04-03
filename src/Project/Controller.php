@@ -9,7 +9,7 @@ use Pebble\Template;
 use Pebble\JSON;
 use Pebble\ExceptionTrace;
 use Pebble\Pager;
-use App\PaginationUtils;
+use App\AppPaginationUtils;
 use App\AppMain;
 use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
@@ -17,25 +17,26 @@ use Exception;
 
 class Controller
 {
-    public const PROJECT_PER_PAGE = 10;
     private $app_acl;
     private $log;
+    private $config;
     private $project_model;
     private $pagination_utils;
 
     public function __construct()
     {
         $app_main = new AppMain();
+        $this->config = $app_main->getConfig();
         $this->app_acl = $app_main->getAppACL();
         $this->log = $app_main->getLog();
         $this->project_model = new ProjectModel();
-        $this->pagination_utils = new PaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
+        $this->pagination_utils = new AppPaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
     }
 
     private function getProjectData(array $where, array $order_by)
     {
         $project_count = $this->project_model->getNumProjects($where);
-        $pager = new Pager($project_count, self::PROJECT_PER_PAGE);
+        $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
 
         $template_data = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
         $template_data['title'] = Lang::translate('All projects');

@@ -6,7 +6,7 @@ namespace App\Task;
 
 use App\AppMain;
 use App\Time\TimeModel;
-use App\Cal;
+use App\AppCal;
 use Diversen\Lang;
 use Exception;
 use DateTime;
@@ -32,7 +32,7 @@ class TaskModel
      */
     private function sanitize($post)
     {
-        $cal = new Cal();
+        $cal = new AppCal();
         if (!isset($post['begin_date'])) {
             $post['begin_date'] = $cal->userDateToUTC();
         }
@@ -108,7 +108,7 @@ class TaskModel
 
     public function setExceededUserTasksToday(string $auth_id)
     {
-        $today = (new Cal())->userDate('now', 'Y-m-d 00:00:00');
+        $today = (new AppCal())->userDate('now', 'Y-m-d 00:00:00');
 
         // If both begin_date AND end_date has been exceeded then we can move tasks to today
         $query = "SELECT * FROM `task` WHERE auth_id = :auth_id AND begin_date < :today AND end_date < :today AND status = 1 ";

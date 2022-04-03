@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
-use App\Pagination;
-use App\PaginationUtils;
+use App\AppPagination;
+use App\AppPaginationUtils;
 use Pebble\URL;
 
 require 'templates/header.tpl.php';
@@ -21,7 +21,7 @@ require 'templates/header.tpl.php';
 
 function render_projects($projects)
 {
-    $pagination_utils = new PaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
+    $pagination_utils = new AppPaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
 
     if (empty($projects)) : ?>
         <p><?=Lang::translate('Your have no projects yet')?></p><?php
@@ -34,7 +34,7 @@ function render_projects($projects)
                         <?= Lang::translate('Title') ?> <?=$pagination_utils->getCurrentDirectionArrow('title')?></a>
                     </td>
                     <td><a href="<?=$pagination_utils->getAlterOrderUrl('updated')?>">
-                        <?= Lang::translate('Updated') ?><?=$pagination_utils->getCurrentDirectionArrow('updated')?></a> </td>
+                        <?= Lang::translate('Updated') ?> <?=$pagination_utils->getCurrentDirectionArrow('updated')?></a> </td>
                     <td class="xs-hide"><?= Lang::translate('Time used') ?></td>
                     <td></td>
                 </tr>
@@ -86,7 +86,7 @@ function render_projects_total_time($total_time_human)
 
 render_projects($projects);
 
-$pagination = new Pagination();
+$pagination = new AppPagination();
 $pagination->render($paginator);
 
 if (isset($inactive_link)) {

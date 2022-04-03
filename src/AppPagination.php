@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Pagination
+class AppPagination
 {
     public function render(\JasonGrimes\Paginator $paginator) { ?>
 

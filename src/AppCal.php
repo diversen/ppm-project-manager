@@ -10,7 +10,7 @@ use App\AppMain;
 
 use App\Settings\SettingsModel;
 
-class Cal
+class AppCal
 {
     private $auth;
     private $config;
