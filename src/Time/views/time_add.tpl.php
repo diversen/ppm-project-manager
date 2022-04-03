@@ -35,10 +35,9 @@ require 'templates/flash.tpl.php';
 
 <?php
 
-function output_time_table($time_rows) { 
-    
-    $pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
-    ?>
+function output_time_table($time_rows)
+{
+    $pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']); ?>
 
 <div>
     <table>
@@ -66,8 +65,7 @@ function output_time_table($time_rows) {
             <?php
 
             foreach ($time_rows as $key => $val) :
-                $begin_date = date("d/m/Y", strtotime($val['begin_date']));
-            ?>
+                $begin_date = date("d/m/Y", strtotime($val['begin_date'])); ?>
                 <tr>
 
                     <td class="td-overflow"><?= $val['minutes_hours'] ?></td>
@@ -81,15 +79,12 @@ function output_time_table($time_rows) {
                 </tr>
             <?php
 
-            endforeach;
-
-            ?>
+            endforeach; ?>
         </tbody>
     </table>
 </div>
 
 <?php
-
 }
 
 if (!empty($time_rows)) {

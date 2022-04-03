@@ -47,7 +47,7 @@ class Controller
         $total = $this->time_model->getNumTime($where);
 
         $this->config->get('App.pager_limit');
-        $pager = new Pager($total, $this->config->get('App.pager_limit') );
+        $pager = new Pager($total, $this->config->get('App.pager_limit'));
         $order_by = $this->pagination_utils->getOrderByFromQuery();
 
         $url_pattern = $this->pagination_utils->getPaginationURLPattern('/time/add/' . $task['id']);

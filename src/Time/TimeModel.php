@@ -85,7 +85,8 @@ class TimeModel
         return $total;
     }
 
-    public function getNumTime(array $where): int {
+    public function getNumTime(array $where): int
+    {
         return $this->db->getTableNumRows('time', 'id', $where);
     }
 
