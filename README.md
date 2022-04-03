@@ -134,6 +134,11 @@ Remove container (you will need run 'run' command again):
 
 [Favicon generator](https://favicon.io/favicon-generator/)
 
+Convert:
+
+    convert assets/android-chrome-192x192.png -scale "70x70" assets/logo.png
+	
+
 # License
 
 MIT © [Dennis Iversen](https://github.com/diversen)
