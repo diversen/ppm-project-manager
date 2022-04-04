@@ -242,3 +242,26 @@ table {
     padding-bottom: 20px;
 }
 
+.width-35 {
+    width: 35%;
+}
+
+.width-50 {
+    width: 50%;
+}
+
+#timer {
+    display: none;
+}
+
+#timer_display {
+    padding:4px; float: left; min-width:80px; 
+}
+
+#captcha {
+    cursor: pointer;
+}
+
+.error {
+    color: var(--flash-error-color);
+}

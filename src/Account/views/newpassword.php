@@ -12,10 +12,10 @@ if ($error == '0'): ?>
 
     <input type="hidden" name="csrf_token" value="<?=$token?>" />
     <label for="password"><?=Lang::translate('New password')?></label>
-    <input class="form-control" type="password" name="password">
+    <input type="password" name="password">
 
     <label for="password"><?=Lang::translate('Repeat new password')?></label>
-    <input class="form-control" type="password" name="password_2">
+    <input type="password" name="password_2">
 
     <button id="submit" class="btn btn-primary"><?=Lang::translate('Send')?></button>
     <div class="loadingspinner hidden"></div>

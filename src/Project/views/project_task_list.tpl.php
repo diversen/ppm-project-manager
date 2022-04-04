@@ -6,7 +6,7 @@ use Diversen\Lang;
 require_once 'templates/helpers.php';
 
 if (isset($error)) {
-    echo "<p style='color: var(--flash-error-color)'>" . $error . "</p>";
+    echo "<p class='error'>$error</p>";
     return;
 }
 

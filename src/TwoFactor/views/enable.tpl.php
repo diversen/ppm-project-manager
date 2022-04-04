@@ -14,7 +14,7 @@ require 'templates/header.tpl.php';
 
 <form id="two-factor-form">
     <label for="code"><?= Lang::translate('2. Enter code as seen on your phone') ?></label>
-    <input type="code" class="form-control" type="text" name="code">
+    <input type="code" type="text" name="code">
     <br />
     <button id="check"><?= Lang::translate('Submit') ?></button>
     <div class="loadingspinner hidden"></div>

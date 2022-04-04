@@ -24,9 +24,9 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 <table>
 	<thead>
 		<tr>
-			<td style="width:35%"><?=Lang::translate('Task')?></td>
+			<td class="width-35"><?=Lang::translate('Task')?></td>
 			<td><?=Lang::translate('Project')?></td>
-			<td class='xs-hide' style="width:50px"><?=Lang::translate('Time')?></td>
+			<td class='xs-hide width-50'><?=Lang::translate('Time')?></td>
 			<td></td>
 		</tr>
 	</thead>

@@ -33,7 +33,7 @@ if (!empty($tasks)) { ?>
     <table class="project-table">
         <thead>
             <tr>
-                <td style='width:35%'><?= Lang::translate('Task') ?></td>
+                <td class="width-35"><?= Lang::translate('Task') ?></td>
                 <td><?= Lang::translate('Date') ?></td>
                 <td class='xs-hide'><?= Lang::translate('Time') ?></td>
                 <td></td>
@@ -50,7 +50,7 @@ if (!empty($tasks_completed)) { ?>
     <table class="project-table">
         <thead>
             <tr>
-                <td style='width:35%'><?= Lang::translate('Task') ?></td>
+                <td  class="width-35"><?= Lang::translate('Task') ?></td>
                 <td><?= Lang::translate('Date') ?></td>
                 <td class='xs-hide'><?= Lang::translate('Time') ?></td>
                 <td></td>

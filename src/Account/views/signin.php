@@ -19,12 +19,12 @@ require 'templates/header.tpl.php';
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>" />
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
-    <input type="email" class="form-control" type="text" name="email">
+    <input type="email" type="text" name="email">
 
     <label for="password"><?= Lang::translate('Password') ?></label>
-    <input type="password" class="form-control" name="password">
+    <input type="password" name="password">
 
-    <label class="form-check-label" for="keep_login">
+    <label for="keep_login">
         <?= Lang::translate('Keep me signed in') ?>
     </label>
 
