@@ -222,8 +222,6 @@ $LANG['Edit'] = 'Edit';
 $LANG['New'] = 'New';
 $LANG['View inactive projects'] = 'View inactive projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
-$LANG['Prev'] = 'Prev';
-$LANG['Next'] = 'Next';
 
 // Translation of file src/Project/views/project_task_list.tpl.php
 
@@ -326,7 +324,6 @@ $LANG['Open this task?'] = 'Open this task?';
 // Translation of file src/Task/views/task_view.tpl.php
 
 $LANG['Projects'] = 'Projects';
-$LANG['View task'] = 'View task';
 $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';
 $LANG['Time'] = 'Time';
@@ -338,6 +335,10 @@ $LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Today'] = 'Today';
 $LANG['Note'] = 'Note';
+
+// Translation of file src/Time/TimeModel.php
+
+$LANG['No note'] = 'No note';
 
 // Translation of file src/Time/views/time_add.tpl.php
 
