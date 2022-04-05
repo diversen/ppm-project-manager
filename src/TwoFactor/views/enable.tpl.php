@@ -1,6 +1,7 @@
 <?php
 
 use Diversen\Lang;
+use App\AppMain;
 
 require 'templates/header.tpl.php';
 
@@ -33,7 +34,7 @@ require 'templates/header.tpl.php';
 </p>
 
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     
     import {Pebble} from '/js/pebble.js';
 
