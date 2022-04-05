@@ -1,6 +1,6 @@
 # README
 
-![logo.png](www/assets/android-chrome-192x192.png)
+![https://ppm.10kilobyte.com](www/assets/android-chrome-192x192.png)
 
 PPM (PPM project mangement) is a single user project, task, and time management system. 
 
