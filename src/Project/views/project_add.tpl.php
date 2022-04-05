@@ -2,6 +2,7 @@
 
 use Diversen\Lang;
 use Pebble\CSRF;
+use App\AppMAin;
 
 $csrf_token = (new CSRF())->getToken();
 
@@ -19,7 +20,7 @@ require 'templates/header.tpl.php';
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     import {
         Pebble
     } from '/js/pebble.js';

@@ -1,6 +1,7 @@
 <?php
 
 use Diversen\Lang;
+use App\AppMain;
 
 require 'templates/header.tpl.php';
 require 'templates/flash.tpl.php';
@@ -83,7 +84,7 @@ $is_selected = function ($priority, $value) {
 
 </form>
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     import {
         Pebble
     } from '/js/pebble.js';

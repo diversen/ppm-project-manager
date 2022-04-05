@@ -255,7 +255,9 @@ table {
 }
 
 #timer_display {
-    padding:4px; float: left; min-width:80px; 
+    padding:4px; 
+    float: left; 
+    min-width:80px; 
 }
 
 #captcha {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\Router;
+use Pebble\Random;
 use Aidantwoods\SecureHeaders\SecureHeaders;
 use App\AppBase;
 
@@ -13,30 +14,37 @@ use App\AppBase;
  * It initializes the application logic and runs it.
  */
 class AppMain extends AppBase
-{
+{   
+    public static $nonce;
     public function sendHeaders()
     {
         $config = $this->getConfig();
         parent::sendHeaders();
-        if ($config->get('App.env') !== 'dev') {
-            $headers = new SecureHeaders();
-            $headers->strictMode(false);
-            $headers->hsts();
-            $headers->csp('default', 'self');
-            $headers->csp('img-src', 'data:');
-            $headers->csp('img-src', $config->get('App.server_url'));
-            $headers->csp('script', 'unsafe-inline');
-            $headers->csp('script-src', $config->get('App.server_url'));
-            $headers->csp('style-src', 'self');
-            $headers->csp('style-src', 'unsafe-inline');
-            $headers->apply();
-        }
+
+        self::$nonce = $nonce = Random::generateRandomString(16);
+
+        $headers = new SecureHeaders();
+        $headers->strictMode(false);
+        $headers->errorReporting(true);
+        $headers->hsts();
+        $headers->csp('default', 'self');
+        $headers->csp('img-src', 'data:');
+        $headers->csp('img-src', $config->get('App.server_url'));
+        $headers->csp('script-src', "'nonce-$nonce'");
+        $headers->csp('script-src', $config->get('App.server_url'));
+        $headers->csp('style-src', 'self');
+        $config->get('App.server_url');
+        $headers->apply();
+    }
+
+    public static function getNonce() {
+        return self::$nonce;
     }
 
 
     public function run()
     {
-        // Define all routes
+        
         $this->setIncludePath();
         $this->setErrorHandler();
         $this->sendHeaders();
@@ -44,6 +52,7 @@ class AppMain extends AppBase
         $this->setupIntl();
         $this->setDebug();
 
+        // Define all routes
         $router = new Router();
         $router->addClass(\App\Test\Controller::class);
         $router->addClass(\App\Account\ControllerExt::class);

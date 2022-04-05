@@ -1,6 +1,7 @@
 <?php
 
 use Diversen\Lang;
+use App\AppMain;
 
 include 'templates/header.tpl.php';
 
@@ -36,7 +37,7 @@ if ($project['status'] == 1) {
 </form>
 
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     import {
         Pebble
     } from '/js/pebble.js';

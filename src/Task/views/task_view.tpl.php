@@ -2,6 +2,7 @@
 
 use Diversen\Lang;
 use Pebble\URL;
+use App\AppMain;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -26,7 +27,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 		<tr>
 			<td class="width-35"><?=Lang::translate('Task')?></td>
 			<td><?=Lang::translate('Project')?></td>
-			<td class='xs-hide width-50'><?=Lang::translate('Time')?></td>
+			<td class='xs-hide'><?=Lang::translate('Time')?></td>
 			<td></td>
 		</tr>
 	</thead>
@@ -82,7 +83,7 @@ endif;
 echo $note_markdown;
 
 ?>
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
 
 import {Pebble} from '/js/pebble.js';
 

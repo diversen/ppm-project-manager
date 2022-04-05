@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Diversen\Lang;
 use App\AppPagination;
 use App\AppPaginationUtils;
-use Pebble\URL;
 
 require 'templates/header.tpl.php';
 

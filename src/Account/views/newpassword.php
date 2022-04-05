@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-use Pebble\Template;
 use Diversen\Lang;
 
 require 'templates/header.tpl.php';

@@ -4,6 +4,7 @@ use Diversen\Lang;
 
 use App\AppPagination;
 use App\AppPaginationUtils;
+use App\AppMain;
 
 require 'templates/header.tpl.php';
 require 'templates/flash.tpl.php';
@@ -97,7 +98,7 @@ if (!empty($time_rows)) {
 ?>
 
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     import {
         Pebble
     } from '/js/pebble.js';

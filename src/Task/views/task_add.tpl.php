@@ -55,7 +55,7 @@ use Diversen\Lang;
     <div class="loadingspinner hidden"></div>
 
 </form>
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
 
     import {Pebble} from '/js/pebble.js';
 

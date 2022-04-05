@@ -2,6 +2,7 @@
 
 use Pebble\URL;
 use Diversen\Lang;
+use App\AppMain;
 
 require 'templates/header.tpl.php';
 
@@ -138,7 +139,9 @@ render_week_nav($week_state, $week_user_total);
 render_week($week_data, $week_state, $week_user_day_times);
 
 ?>
-<script type="module">
+
+<script type="module" nonce="<?=AppMain::$nonce?>" >
+
     import {Pebble} from '/js/pebble.js';
 
     document.addEventListener('click', async function(event) {
@@ -214,6 +217,7 @@ render_week($week_data, $week_state, $week_user_day_times);
     });
 	
 </script>
+
 
 <?php
 

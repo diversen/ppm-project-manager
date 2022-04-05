@@ -1,6 +1,7 @@
 <?php
 
 use Diversen\Lang;
+use App\AppMain;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -64,7 +65,7 @@ if (!empty($tasks_completed)) { ?>
 }
 
 ?>
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
 
     async function loadHtml(url) {
         return fetch(url)

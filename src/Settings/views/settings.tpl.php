@@ -68,7 +68,7 @@ if ((new AppMain())->getConfig()->get('TwoFactor.enabled')) { ?>
     <button id="settings_submit" type="submit" name="submit" class="update_settings"><?= Lang::translate('Update') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     
     import {Pebble} from '/js/pebble.js';
 

@@ -3,10 +3,9 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
+use App\AppMain;
 
 require 'templates/header.tpl.php';
-
-
 
 ?>
 
@@ -53,7 +52,7 @@ endif;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
 
     import {Pebble} from '/js/pebble.js';
     

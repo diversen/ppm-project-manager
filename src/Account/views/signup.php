@@ -1,7 +1,7 @@
 <?php
 
-use Pebble\Template;
 use Diversen\Lang;
+use App\AppMain;
 
 require 'templates/header.tpl.php';
 require 'templates/flash.tpl.php';
@@ -31,7 +31,7 @@ require 'templates/flash.tpl.php';
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
     
     import {Pebble} from '/js/pebble.js';
 
