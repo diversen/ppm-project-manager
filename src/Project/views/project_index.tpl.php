@@ -20,7 +20,7 @@ require 'templates/header.tpl.php';
 
 function render_projects($projects)
 {
-    $pagination_utils = new AppPaginationUtils(['updated' => 'ASC', 'title' => 'DESC']);
+    $pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);
 
     if (empty($projects)) : ?>
         <p><?=Lang::translate('Your have no projects yet')?></p><?php
