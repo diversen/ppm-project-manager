@@ -93,8 +93,8 @@ span.loadingspinner {
 .action-links>a {
     color: var(--text-main);
     font-size: 0.90em;
-    padding: 2px;
-    margin-right:2px;
+    padding: 4px;
+    margin-right: 4px;
     text-decoration: none;
     border-radius: 3px;
     background-color: var(--background-alt);
