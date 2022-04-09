@@ -10,7 +10,6 @@ use App\Time\TimeModel;
 use Diversen\Lang;
 use Pebble\Exception\NotFoundException;
 use Pebble\Exception\ForbiddenException;
-use Exception;
 use Pebble\DB;
 
 class AppACL extends ACL

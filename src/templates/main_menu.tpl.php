@@ -15,7 +15,11 @@ if ($is_authenticated) {
 ?>
 <div class="logo">
     <a title="<?= $app_main->getConfig()->get('App.site_name') ?>" href="<?= $home_url ?>">
-        <img  src="/assets/logo.png" title="<?= $app_main->getConfig()->get('App.site_name') ?>" width="70" height="70"></img>
+        <img  
+            src="/assets/logo.png?version=<?=AppMain::VERSION?>" 
+            title="<?= $app_main->getConfig()->get('App.site_name') ?>" 
+            width="70" height="70">
+        </img>
     </a>
 </div>
 
