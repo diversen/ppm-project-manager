@@ -174,7 +174,6 @@ class Controller
             $response['project_redirect'] = "/project";
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
-            
         } catch (Exception $e) {
             $this->log->error('Project.post.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
@@ -197,9 +196,8 @@ class Controller
 
             $response['project_redirect'] = "/project";
         } catch (FormException $e) {
-            $response['error'] = $e->getMessage();    
-        }
-        catch (Exception $e) {
+            $response['error'] = $e->getMessage();
+        } catch (Exception $e) {
             $this->log->error('Project.put.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }

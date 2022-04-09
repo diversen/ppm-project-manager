@@ -14,7 +14,7 @@ use App\AppBase;
  * It initializes the application logic and runs it.
  */
 class AppMain extends AppBase
-{   
+{
     public static $nonce;
     public function sendHeaders()
     {
@@ -37,14 +37,14 @@ class AppMain extends AppBase
         $headers->apply();
     }
 
-    public static function getNonce() {
+    public static function getNonce()
+    {
         return self::$nonce;
     }
 
 
     public function run()
     {
-        
         $this->setIncludePath();
         $this->setErrorHandler();
         $this->sendHeaders();
