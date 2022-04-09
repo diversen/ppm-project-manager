@@ -15,7 +15,7 @@ use App\Main\AppBase;
  */
 class AppMain extends AppBase
 {
-    public const VERSION = "1.1.7";
+    public const VERSION = "1.1.8";
     public static $nonce;
     public function sendHeaders()
     {

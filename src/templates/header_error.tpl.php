@@ -35,9 +35,9 @@ if (!isset($description)) {
     <?php endif; ?>
 
     <link rel="stylesheet" href="/css/default.css?v=1.1">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?version=<?=AppMain::VERSION?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?version=<?=AppMain::VERSION?>">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?version=<?=AppMain::VERSION?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?version=<?=AppMain::VERSION?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?version=<?=AppMain::VERSION?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png?version=<?=AppMain::VERSION?>">
     <link rel="manifest" href="/assets/manifest.json?version=<?=AppMain::VERSION?>">
 </head>
 <body>
