@@ -45,10 +45,9 @@ class AppMain extends AppBase
 
     public function run()
     {
-
         $this->setIncludePath(__DIR__);
-        $this->setErrorHandler();        
-        $this->sendHeaders();        
+        $this->setErrorHandler();
+        $this->sendHeaders();
         $this->sessionStart();
         $this->setupIntl();
         $this->setDebug();
