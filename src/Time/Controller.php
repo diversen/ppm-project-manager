@@ -7,7 +7,7 @@ use Exception;
 use App\AppMain;
 use App\Project\ProjectModel;
 use App\Time\TimeModel;
-use App\AppPaginationUtils;
+use App\Utils\AppPaginationUtils;
 
 use Pebble\Pager;
 use Pebble\JSON;

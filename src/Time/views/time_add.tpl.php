@@ -2,8 +2,8 @@
 
 use Diversen\Lang;
 
-use App\AppPagination;
-use App\AppPaginationUtils;
+use App\Utils\AppPagination;
+use App\Utils\AppPaginationUtils;
 use App\AppMain;
 
 require 'templates/header.tpl.php';

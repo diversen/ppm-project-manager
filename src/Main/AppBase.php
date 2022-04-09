@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Main;
 
 use Pebble\Config;
 use Pebble\Auth;
@@ -55,7 +55,7 @@ class AppBase
 
     public function __construct()
     {
-        $this->base_path = dirname(__DIR__);
+        $this->base_path = dirname(dirname(__DIR__));
     }
 
     public function setErrorHandler()
@@ -137,9 +137,9 @@ class AppBase
     /**
      * Set include path to 'src' dir in order to easy include files from src dir (e.g. templates)
      */
-    public function setIncludePath()
+    public function setIncludePath(string $dir)
     {
-        set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
+        set_include_path(get_include_path() . PATH_SEPARATOR . $dir);
     }
 
     /**

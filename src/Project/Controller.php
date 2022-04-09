@@ -9,7 +9,7 @@ use Pebble\Template;
 use Pebble\JSON;
 use Pebble\ExceptionTrace;
 use Pebble\Pager;
-use App\AppPaginationUtils;
+use App\Utils\AppPaginationUtils;
 use App\AppMain;
 use App\Exception\FormException;
 use App\Project\ProjectModel;

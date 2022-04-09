@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
 use InvalidArgumentException;
 use Pebble\URL;

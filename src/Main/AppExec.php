@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Main;
 
 use Pebble\ExceptionTrace;
 use Pebble\Exception\ForbiddenException;

@@ -7,7 +7,7 @@ namespace App;
 use Pebble\Router;
 use Pebble\Random;
 use Aidantwoods\SecureHeaders\SecureHeaders;
-use App\AppBase;
+use App\Main\AppBase;
 
 /**
  * AppMain contains the application logic.
@@ -45,14 +45,14 @@ class AppMain extends AppBase
 
     public function run()
     {
-        $this->setIncludePath();
-        $this->setErrorHandler();
-        $this->sendHeaders();
+
+        $this->setIncludePath(__DIR__);
+        $this->setErrorHandler();        
+        $this->sendHeaders();        
         $this->sessionStart();
         $this->setupIntl();
         $this->setDebug();
 
-        // Define all routes
         $router = new Router();
         $router->addClass(\App\Test\Controller::class);
         $router->addClass(\App\Account\ControllerExt::class);

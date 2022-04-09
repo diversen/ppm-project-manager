@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
-use App\AppPagination;
-use App\AppPaginationUtils;
+use App\Utils\AppPagination;
+use App\Utils\AppPaginationUtils;
 
 require 'templates/header.tpl.php';
 
