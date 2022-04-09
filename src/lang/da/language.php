@@ -59,8 +59,6 @@ $LANG['You are not logged in. Please log in.'] = 'Du er ikke logget ind. Log ven
 $LANG['You are not the owner of this project.'] = 'Du er ikke ejeren af dette projekt.';
 $LANG['There is no such task ID'] = 'Der findes ikke et sådant opgave -id';
 $LANG['There is no such time ID'] = 'Der findes ikke et sådant tids -id';
-$LANG['A sever error happened. The incidence has been logged.'] = 'Der skete en fejl. Fejlen er registreret.';
-$LANG['A server error happened. The incidence has been logged.'] = 'Der opstod en serverfejl. Hændelsen er blevet logget.';
 $LANG['Page not found. If this page has existed then it has been deleted'] = 'Siden blev ikke fundet. Hvis denne side har eksisteret, er den blevet slettet';
 $LANG['404 Page not found'] = '404 Side ikke fundet';
 $LANG['403 Forbidden'] = '403 forbudt';
@@ -71,6 +69,8 @@ $LANG['Error trying to signin using Google. You will need to give this applicati
 $LANG['You are signed in.'] = 'Du er logget ind.';
 $LANG['Click the image and sign-in using google'] = 'Klik på billedet og log ind med google';
 $LANG['You are signed in'] = 'Du er logget ind';
+$LANG['A sever error happened. The incidence has been logged.'] = 'Der skete en fejl. Fejlen er registreret.';
+$LANG['A server error happened. The incidence has been logged.'] = 'Der opstod en serverfejl. Hændelsen er blevet logget.';
 $LANG['Overview'] = 'Oversigt';
 $LANG['Overview by week'] = 'Oversigt efter uge';
 $LANG['Total time used on project: '] = 'Samlet tid brugt på projektet:';

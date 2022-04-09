@@ -7,10 +7,13 @@ namespace App\Overview;
 use App\AppMain;
 use App\Utils\AppCal;
 use App\Time\TimeModel;
-use Pebble\URL;
-
 use App\Settings\SettingsModel;
+use Pebble\URL;
+use Pebble\JSON;
+use Pebble\ExceptionTrace;
+
 use Diversen\Lang;
+use Exception;
 
 class Controller
 {
@@ -18,6 +21,7 @@ class Controller
     {
         $this->app_main = new AppMain();
         $this->auth_id = $this->app_main->getAuth()->getAuthId();
+        $this->acl = $this->app_main->getAppACL();
     }
 
     /**
@@ -61,5 +65,33 @@ class Controller
         ];
 
         \Pebble\Template::render('Overview/overview.tpl.php', $data);
+    }
+
+    /**
+     * @route /overview/settings/put
+     * @verbs POST
+     */
+    public function setSettings() {
+
+        $settings = new SettingsModel();
+        $post = $_POST;
+
+        $response['error'] = false;
+
+        try {
+            $this->acl->isAuthenticatedOrThrow();
+            $auth_id = $this->acl->getAuthId();
+            
+            if (isset($post['overview_current_day_state'])) {
+                $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
+            } 
+
+        } catch (Exception $e) {
+            $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
+            $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');
+        }
+
+        header('Content-Type: application/json');
+        echo JSON::response($response);
     }
 }

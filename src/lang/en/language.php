@@ -123,11 +123,6 @@ $LANG['You are not the owner of this project.'] = 'You are not the owner of this
 $LANG['There is no such task ID'] = 'There is no such task ID';
 $LANG['There is no such time ID'] = 'There is no such time ID';
 
-// Translation of file src/AppExec.php
-
-$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
-$LANG['A server error happened. The incidence has been logged.'] = 'A server error happened. The incidence has been logged.';
-
 // Translation of file src/Error/Controller.php
 
 $LANG['Page not found. If this page has existed then it has been deleted'] = 'Page not found. If this page has existed then it has been deleted';
@@ -151,6 +146,11 @@ $LANG['Click the image and sign-in using google'] = 'Click the image and sign-in
 
 $LANG['You are signed in'] = 'You are signed in';
 $LANG['Sign out'] = 'Sign out';
+
+// Translation of file src/Main/AppExec.php
+
+$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
+$LANG['A server error happened. The incidence has been logged.'] = 'A server error happened. The incidence has been logged.';
 
 // Translation of file src/Overview/Controller.php
 

@@ -205,7 +205,7 @@ render_week($week_data, $week_state, $week_user_day_times);
         }
 
         try {
-            const res = await Pebble.asyncPost('/settings/put/', formData);
+            const res = await Pebble.asyncPost('/overview/settings/put', formData);
             if (res.error === false) {
                 location.reload();
             } else {

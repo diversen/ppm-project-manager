@@ -42,6 +42,12 @@ if (!isset($description)) {
 </head>
 <body>
 
-<a title="" href="/"><img src="/assets/logo.svg?version=<?=AppMain::VERSION?>"></img></a>
+<div class="logo">
+<a title="" href="/">
+    <img 
+        src="/assets/logo.png?version=<?=AppMain::VERSION?>">
+    </img>
+</a>
+</div>
 
 <?php

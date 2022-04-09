@@ -70,15 +70,10 @@ class Controller
 
         try {
             $this->acl->isAuthenticatedOrThrow();
-            $auth_id = $this->acl->getAuthId();
+            $auth_id = $this->acl->getAuthId();         
 
-            // Do not display message on 'overview' page
-            if (isset($post['overview_current_day_state'])) {
-                $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
-            } else {
-                $settings->setUserSetting($auth_id, 'profile', $post);
-                $this->flash->setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
-            }
+            $settings->setProfileSetting($auth_id, 'profile', $post);
+            $this->flash->setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');

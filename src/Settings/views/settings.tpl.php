@@ -81,6 +81,10 @@ if ((new AppMain())->getConfig()->get('TwoFactor.enabled')) { ?>
         spinner.classList.toggle('hidden');
 
         let formData = new FormData(document.getElementById('seetings'));
+        if (!formData.get('theme_dark_mode')) {
+            formData.set('theme_dark_mode', '0');
+        }
+
         let res;
 
         try {
