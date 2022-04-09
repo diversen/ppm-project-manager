@@ -84,7 +84,7 @@ class Controller
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
             (new TimeModel())->create($post);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->log->error('Time.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
@@ -107,7 +107,7 @@ class Controller
             $this->app_acl->authUserIsProjectOwner($time['project_id']);
 
             $this->time_model->delete(['id' => $params['id']]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->log->error('Time.post.delete', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }

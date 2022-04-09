@@ -8,6 +8,7 @@ use App\Project\ProjectModel;
 use App\Task\TaskModel;
 use Pebble\JSON;
 use App\AppMain;
+use App\Exception\FormException;
 use Pebble\ExceptionTrace;
 use Exception;
 
@@ -107,6 +108,8 @@ class Controller
             $task_model = new TaskModel();
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
+        } catch (FormException $e) {
+            $response['error'] = $e->getMessage();
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
@@ -142,6 +145,8 @@ class Controller
 
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
             $response['project_redirect'] = "/project/view/" . $task['project_id'];
+        } catch (FormException $e) {
+            $response['error'] = $e->getMessage();
         } catch (Exception $e) {
             $this->log->error('Task.put.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();

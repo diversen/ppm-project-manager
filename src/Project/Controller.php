@@ -11,6 +11,7 @@ use Pebble\ExceptionTrace;
 use Pebble\Pager;
 use App\AppPaginationUtils;
 use App\AppMain;
+use App\Exception\FormException;
 use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
 use Exception;
@@ -171,6 +172,9 @@ class Controller
 
             $this->project_model->create($_POST);
             $response['project_redirect'] = "/project";
+        } catch (FormException $e) {
+            $response['error'] = $e->getMessage();
+            
         } catch (Exception $e) {
             $this->log->error('Project.post.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
@@ -192,7 +196,10 @@ class Controller
             $this->project_model->update($_POST, $params['project_id']);
 
             $response['project_redirect'] = "/project";
-        } catch (Exception $e) {
+        } catch (FormException $e) {
+            $response['error'] = $e->getMessage();    
+        }
+        catch (Exception $e) {
             $this->log->error('Project.put.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }

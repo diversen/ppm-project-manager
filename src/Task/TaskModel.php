@@ -7,6 +7,7 @@ namespace App\Task;
 use App\AppMain;
 use App\Time\TimeModel;
 use App\AppCal;
+use App\Exception\FormException;
 use Diversen\Lang;
 use Exception;
 use DateTime;
@@ -59,11 +60,11 @@ class TaskModel
     private function validate($post)
     {
         if (!mb_strlen($post['title'])) {
-            throw new Exception(Lang::translate('Title is required'));
+            throw new FormException(Lang::translate('Title is required'));
         }
 
         if (new DateTime($post['end_date']) < new DateTime($post['begin_date'])) {
-            throw new Exception(Lang::translate('The end date can not be before the begin date'));
+            throw new FormException(Lang::translate('The end date can not be before the begin date'));
         }
     }
 

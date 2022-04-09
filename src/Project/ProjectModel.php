@@ -9,7 +9,7 @@ use Pebble\Pager;
 use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
-use Exception;
+use App\Exception\FormException;
 use App\AppMain;
 
 /**
@@ -41,7 +41,7 @@ class ProjectModel
     private function validate(array $post)
     {
         if (!isset($post['title']) || !mb_strlen($post['title'])) {
-            throw new Exception(Lang::translate('Title is required'));
+            throw new FormException(Lang::translate('Title is required'));
         }
     }
 

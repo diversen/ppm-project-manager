@@ -50,7 +50,6 @@ require 'templates/header.tpl.php';
 
         try {
             res = await Pebble.asyncPost('/2fa/put', formData);
-            console.log(res)
             if (res.error) {
                 Pebble.setFlashMessage(res.error, 'error');
             } else {
