@@ -16,11 +16,6 @@ use Diversen\Lang;
     <a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=SUB_MENU_SEP?>
     <?=Lang::translate('Add task')?>
 </h3>
-    
-<div class="action-links">
-  <a href="/task/add/<?=$project['id']?>"><?=Lang::translate('Add task')?></a>
-</div>
-
 
 <form id="task_add" name="task_add" method="post">
     <label for="title"><?=Lang::translate('Title')?> *</label>
