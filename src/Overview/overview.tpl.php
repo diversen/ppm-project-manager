@@ -49,6 +49,20 @@ function render_task($task, $today)
 <?php
 }
 
+function get_day_name(string $day_num) {
+    $days = [
+        '1' => Lang::translate('monday'),
+        '2' => Lang::translate('tuesday'),
+        '3' => Lang::translate('wednesday'),
+        '4' => Lang::translate('thursday'),
+        '5' => Lang::translate('friday'),
+        '6' => Lang::translate('saturday'),
+        '7' => Lang::translate('sunday'),
+    ];
+
+    return $days[$day_num];
+}
+
 /**
  * Render a full week
  */
@@ -61,7 +75,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
             continue;
         }
 
-    $day_name = date('D', $ts);
+    $day_number = date('N', $ts);
     $is_today = is_today($ts);
 
     if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
@@ -73,7 +87,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
         $day_class = ' class="today" ';
     } ?>
 
-	        <p><strong <?=$day_class?> ><?=$day_name?>. </strong>
+	        <p><strong <?=$day_class?> ><?=ucfirst(get_day_name($day_number))?>. </strong>
             <?=Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts]))?></p>
 	        <table>
 	            <thead>

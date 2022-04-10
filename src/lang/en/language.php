@@ -156,6 +156,7 @@ $LANG['A server error happened. The incidence has been logged.'] = 'A server err
 
 $LANG['Overview'] = 'Overview';
 $LANG['Overview by week'] = 'Overview by week';
+$LANG['Your settings could not be saved. Check if you are logged in'] = 'Your settings could not be saved. Check if you are logged in';
 
 // Translation of file src/Overview/overview.tpl.php
 
@@ -168,6 +169,13 @@ $LANG['Add time to task'] = 'Add time to task';
 $LANG['Time'] = 'Time';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Today'] = 'Today';
+$LANG['monday'] = 'monday';
+$LANG['tuesday'] = 'tuesday';
+$LANG['wednesday'] = 'wednesday';
+$LANG['thursday'] = 'thursday';
+$LANG['friday'] = 'friday';
+$LANG['saturday'] = 'saturday';
+$LANG['sunday'] = 'sunday';
 $LANG['Your activity: <span class="notranslate">{activity}</span> '] = 'Your activity: <span class="notranslate">{activity}</span> ';
 $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';

@@ -16,10 +16,12 @@ timer_toggle.addEventListener('click', function (e) {
         console.log('block')
         sessionStorage.setItem('timer_toggle_state', 'display')
         timer_elem.style.display = "block";
+        // timer_toggle.classList.add('active');
     } else {
         console.log('none')
         sessionStorage.setItem('timer_toggle_state', 'hidden')
         timer_elem.style.display = "none";
+        // timer_toggle.classList.remove('active');
     }
 })
 

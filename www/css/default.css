@@ -267,3 +267,12 @@ table {
 .error {
     color: var(--flash-error-color);
 }
+
+#timer_toggle:hover {
+    /* background-color: unset !important; */
+    background-color: var(--background-alt);
+}
+
+.button-timer {
+    background-color: var(--background) !important;
+}
