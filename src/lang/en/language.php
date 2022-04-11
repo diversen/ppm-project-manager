@@ -275,6 +275,10 @@ $LANG['User has not entered any user info yet'] = 'User has not entered any user
 $LANG['User'] = 'User';
 $LANG['No user info'] = 'No user info';
 
+// Translation of file src/Task/Controller.php
+
+$LANG['Task added to project'] = 'Task added to project';
+
 // Translation of file src/Task/TaskModel.php
 
 $LANG['Title is required'] = 'Title is required';
@@ -326,7 +330,7 @@ $LANG['Complete'] = 'Complete';
 $LANG['Open'] = 'Open';
 $LANG['Delete'] = 'Delete';
 $LANG['Complete this task?'] = 'Complete this task?';
-$LANG['Delete this task.Registered time entries will be removed?'] = 'Delete this task.Registered time entries will be removed?';
+$LANG['Delete this task. Registered time entries will be removed?'] = 'Delete this task. Registered time entries will be removed?';
 $LANG['Open this task?'] = 'Open this task?';
 
 // Translation of file src/Task/views/task_view.tpl.php
@@ -362,6 +366,7 @@ $LANG['Submit and stay'] = 'Submit and stay';
 $LANG['Submit and close task'] = 'Submit and close task';
 $LANG['Time'] = 'Time';
 $LANG['Delete'] = 'Delete';
+$LANG['Complete this task?'] = 'Complete this task?';
 $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to delete time entry?';
 
 // Translation of file src/TwoFactor/Controller.php

@@ -45,73 +45,76 @@ use Diversen\Lang;
 
     <input id="project_id" type="hidden" name="project_id" value="<?=$project['id']?>">
     <button id="task_submit" type="submit" name="submit" value="submit"><?=Lang::translate('Submit')?></button>
-    <button id="task_submit_add_another" type="submit" name="submit"
-        value="submit"><?=Lang::translate('Submit and stay')?></button>
+    <button id="task_add_another" type="submit" name="submit" value="submit"><?=Lang::translate('Submit and stay')?></button>
     <div class="loadingspinner hidden"></div>
 
 </form>
 <script type="module" nonce="<?=AppMain::getNonce()?>">
 
     import {Pebble} from '/js/pebble.js';
+    import {addMultipleEventListener} from '/js/event.js'
 
     const title = document.getElementById('title');
     title.focus();
-    
+
     const spinner = document.querySelector('.loadingspinner');
-    document.addEventListener("DOMContentLoaded", function (event) {
-        document.getElementById('task_submit').addEventListener("click", async function (e) {
-            e.preventDefault();
+
+    const task_submit = document.getElementById('task_submit');  
+    addMultipleEventListener(task_submit, ['click', 'touchstart'], async function (e) {
+        
+        e.preventDefault();
+        spinner.classList.toggle('hidden');
+
+        const form = document.getElementById('task_add');
+        const data = new FormData(form);
+        data.append('status', '1');
+
+        const return_to = Pebble.getQueryVariable('return_to');
+
+        try {
+            const res = await Pebble.asyncPost('/task/post', data);
             spinner.classList.toggle('hidden');
 
-            const form = document.getElementById('task_add');
-            const data = new FormData(form);
-            data.append('status', '1');
-
-            const return_to = Pebble.getQueryVariable('return_to');
-
-            try {
-                const res = await Pebble.asyncPost('/task/post', data);
-                spinner.classList.toggle('hidden');
-
-                if (res.error === false) {
-                    if (return_to) {
-                        window.location.replace(return_to);
-                    } else {
-                        window.location.replace(res.project_redirect);
-                    }
+            if (res.error === false) {
+                if (return_to) {
+                    window.location.replace(return_to);
                 } else {
-                    Pebble.setFlashMessage(res.error, 'error');
+                    window.location.replace(res.project_redirect);
                 }
-            } catch (e) {
-                await Pebble.asyncPostError('/error/log', e.stack);
+            } else {
+                Pebble.setFlashMessage(res.error, 'error');
             }
-        });
-
-        document.getElementById('task_submit_add_another').addEventListener("click", async function (e) {
-            e.preventDefault();
-            spinner.classList.toggle('hidden');
-
-            var form = document.getElementById('task_add');
-            var data = new FormData(form);
-            data.append('status', '1');
-
-            let res;
-            let return_to = Pebble.getQueryVariable('return_to');
-
-            try {
-                res = await Pebble.asyncPost('/task/post', data);
-                if (res.error === false) {
-                    location.reload();
-                } else {
-                    Pebble.setFlashMessage(res.error, 'error');
-                }
-            } catch (e) {
-                await Pebble.asyncPostError('/error/log', e.stack);
-            } finally {
-                spinner.classList.toggle('hidden');
-            }
-        });
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        }
     });
+
+    const task_add_another = document.getElementById('task_add_another');
+    addMultipleEventListener(task_add_another, ['click', 'touchstart'], async function (e) {
+
+        spinner.classList.toggle('hidden');
+
+        var form = document.getElementById('task_add');
+        var data = new FormData(form);
+        data.append('status', '1');
+
+        let res;
+        let return_to = Pebble.getQueryVariable('return_to');
+
+        try {
+            res = await Pebble.asyncPost('/task/post', data);
+            if (res.error === false) {
+                location.reload();
+            } else {
+                Pebble.setFlashMessage(res.error, 'error');
+            }
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    });
+
 </script>
 
 <?php

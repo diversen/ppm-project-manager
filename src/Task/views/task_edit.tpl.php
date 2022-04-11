@@ -180,7 +180,7 @@ $is_selected = function ($priority, $value) {
     if (task_delete) {
         task_delete.addEventListener('click', async function(e) {
             e.preventDefault();
-            const complete_confirm = confirm('<?= Lang::translate('Delete this task.Registered time entries will be removed?') ?>')
+            const complete_confirm = confirm('<?= Lang::translate('Delete this task. Registered time entries will be removed?') ?>')
             if (complete_confirm) {
                 deleteTask();
             }

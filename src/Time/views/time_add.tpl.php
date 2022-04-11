@@ -114,6 +114,12 @@ if (!empty($time_rows)) {
 
             event.preventDefault();
 
+            if (event.target.matches('#time_add_submit_and_close')) {
+                if (!confirm('<?=Lang::translate('Complete this task?')?>')) {
+                    return;
+                }
+            }
+
             spinner.classList.toggle('hidden');
 
             const form = document.getElementById('time_add');
@@ -141,9 +147,11 @@ if (!empty($time_rows)) {
                 }
             } catch (e) {
                 Pebble.asyncPostError('/error/log', e.stack)
+            } finally {
+                spinner.classList.toggle('hidden');
             }
 
-            spinner.classList.toggle('hidden');
+            
         }
 
         if (event.target.matches('.time_delete')) {
@@ -171,8 +179,10 @@ if (!empty($time_rows)) {
 
                 } catch (e) {
                     Pebble.asyncPostError('/error/log', e.stack)
+                } finally {
+                    spinner.classList.toggle('hidden');
                 }
-                spinner.classList.toggle('hidden');
+                
             }
         }
     });

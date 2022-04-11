@@ -14,7 +14,7 @@ return [
     'translate_base_dir' => 'src',
 
     // Directory were js translation is exported to
-    'translate_base_dir_js' => 'www/lang', 
+    'translate_base_dir_js' => 'www/js/lang', 
 
     // For doing auto translations of languages enabled
     'google_application_credentials' => 'config-locale/pebble-xxx.json',

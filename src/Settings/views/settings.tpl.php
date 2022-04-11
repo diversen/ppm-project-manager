@@ -46,7 +46,6 @@ if ((new AppMain())->getConfig()->get('TwoFactor.enabled')) { ?>
 
 ?>
 <form name="settings" id="seetings" method="post">
-
     <label for="company"><?= Lang::translate('Organization') ?></label>
     <input type="text" name="company" value="<?= $user_settings['company'] ?? '' ?>" placeholder="<?= Lang::translate('Organization') ?>">
 
@@ -71,13 +70,13 @@ if ((new AppMain())->getConfig()->get('TwoFactor.enabled')) { ?>
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
     import {Pebble} from '/js/pebble.js';
+    import {addMultipleEventListener} from '/js/event.js'
 
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('settings_submit');
-    submitElem.addEventListener('click', async function(event) {
+    addMultipleEventListener(submitElem, ['click', 'touchstart'], async function(event) {
 
         event.preventDefault();
-
         spinner.classList.toggle('hidden');
 
         let formData = new FormData(document.getElementById('seetings'));
