@@ -127,9 +127,9 @@ class Controller
 
             $response['redirect'] = $this->config->get('App.login_redirect');
             if (isset($_POST['keep_login'])) {
-                $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+                $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
             } else {
-                $this->auth->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
+                $this->auth->setCookie($row, 0);
             }
 
             $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);

@@ -112,6 +112,9 @@ class Controller
      */
     public function put()
     {
+
+        $this->acl->isAuthenticatedOrThrow();
+
         $auth_id = $this->acl->getAuthId();
         $secret = $this->twoFactorModel->getUserSecret($auth_id);
         $input = $_POST['code'];
@@ -163,13 +166,12 @@ class Controller
 
             $response['redirect'] = $this->config->get('App.login_redirect');
             if ($keep_login) {
-                $this->acl->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+                $this->acl->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
             } else {
-                $this->acl->setSessionCookie($row, $this->config->get('Auth.cookie_seconds'));
+                $this->acl->setCookie($row, 0);
             }
 
             $this->log->info('TwoFactor.verify_post.success', ['auth_id' => $auth_id]);
-
             $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
 

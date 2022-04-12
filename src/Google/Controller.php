@@ -114,7 +114,7 @@ class Controller
         $this->log->info('Google.create_user.verify', ['auth_id' => $row['id']]);
 
         // Signin and redirect
-        $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+        $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
         $this->log->info('Google.create_user.login', ['auth_id' => $row['id']]);
 
         $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
@@ -137,7 +137,7 @@ class Controller
             }
         }
 
-        $this->auth->setPermanentCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+        $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
         $this->log->info('Google.login_user.success', ['auth_id' => $row['id']]);
 
         $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
