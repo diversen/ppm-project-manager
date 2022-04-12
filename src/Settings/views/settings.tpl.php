@@ -62,7 +62,7 @@ if ((new AppMain())->getConfig()->get('TwoFactor.enabled')) { ?>
     <?= select('language', $languages, $user_settings['language'] ?? (new AppMain())->getConfig()->get('Language.default')); ?>
 
     <input type="checkbox" name="theme_dark_mode" value="1" <?= is_checked($user_settings['theme_dark_mode'] ?? null) ?>>
-    <label for="theme"><?= Lang::translate('Theme. Use dark mode') ?></label><br />
+    <label for="theme_dark_mode"><?= Lang::translate('Theme. Use dark mode') ?></label><br />
 
     <button id="settings_submit" type="submit" name="submit" class="update_settings"><?= Lang::translate('Update') ?></button>
     <div class="loadingspinner hidden"></div>
