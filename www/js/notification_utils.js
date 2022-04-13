@@ -1,8 +1,6 @@
 class NotificationUtils {
 
-    constructor() {
-        console.log('constructed')
-    }
+    constructor() {}
 
     isSupported() {
         if (!("Notification" in window)) {

@@ -351,6 +351,20 @@ $LANG['Note'] = 'Note';
 
 // Translation of file src/Test/notification.tpl.php
 
+$LANG['Receive notifications'] = 'Receive notifications';
+$LANG['Pause notifications'] = 'Pause notifications';
+$LANG['Your browser does not support notifiations'] = 'Your browser does not support notifiations';
+$LANG['Resume'] = 'Resume';
+$LANG['Notifications Paused. You will not receive notifications'] = 'Notifications Paused. You will not receive notifications';
+$LANG['Pause'] = 'Pause';
+$LANG['Notifications Enabled.'] = 'Notifications Enabled.';
+$LANG['You have denied notifications. Change it in your browser settings if you want to receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want to receive notifications.';
+$LANG['You have not enabled notifications.'] = 'You have not enabled notifications.';
+$LANG['Notification granted. Thanks you!'] = 'Notification granted. Thanks you!';
+$LANG['Notifications'] = 'Notifications';
+
+// Translation of file src/Test/notification.tpl.php.bak
+
 $LANG['Notifications'] = 'Notifications';
 $LANG['Receive notifications'] = 'Receive notifications';
 $LANG['Pause notifications'] = 'Pause notifications';
