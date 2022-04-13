@@ -349,6 +349,19 @@ $LANG['Move to today'] = 'Move to today';
 $LANG['Today'] = 'Today';
 $LANG['Note'] = 'Note';
 
+// Translation of file src/Test/notification.tpl.php
+
+$LANG['Your browser does not support notifiations'] = 'Your browser does not support notifiations';
+$LANG['Notifications Paused. You will not recevie notifications'] = 'Notifications Paused. You will not recevie notifications';
+$LANG['Notifications Enabled.'] = 'Notifications Enabled.';
+$LANG['You have denied notifications. Change it in your browser settings if you want ot receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want ot receive notifications.';
+$LANG['You have denied notifications. Change it in your browser settings if you want ot receive notifications'] = 'You have denied notifications. Change it in your browser settings if you want ot receive notifications';
+$LANG['Notification granted. Thanks you!'] = 'Notification granted. Thanks you!';
+
+// Translation of file src/Test/translate.tpl.php
+
+$LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
+
 // Translation of file src/Time/TimeModel.php
 
 $LANG['No note'] = 'No note';
