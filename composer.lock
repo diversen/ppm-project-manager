@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9156cdcab878e2771d81cba84aceb6b",
+    "content-hash": "54014fc94564aad14f9a79435e98377a",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -384,16 +384,16 @@
         },
         {
             "name": "diversen/simple-php-translation",
-            "version": "v2.0.2",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/simple-php-translation.git",
-                "reference": "b2b4cd050c15237ed56c3f93ba3f088c4dfe787d"
+                "reference": "419a1eedc6c557f12321bb5f65918a10103f9ba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/simple-php-translation/zipball/b2b4cd050c15237ed56c3f93ba3f088c4dfe787d",
-                "reference": "b2b4cd050c15237ed56c3f93ba3f088c4dfe787d",
+                "url": "https://api.github.com/repos/diversen/simple-php-translation/zipball/419a1eedc6c557f12321bb5f65918a10103f9ba1",
+                "reference": "419a1eedc6c557f12321bb5f65918a10103f9ba1",
                 "shasum": ""
             },
             "require": {
@@ -432,9 +432,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/simple-php-translation/issues",
-                "source": "https://github.com/diversen/simple-php-translation/tree/v2.0.2"
+                "source": "https://github.com/diversen/simple-php-translation/tree/v3.0.0"
             },
-            "time": "2021-05-11T14:35:29+00:00"
+            "time": "2022-04-13T11:38:17+00:00"
         },
         {
             "name": "erusev/parsedown",
