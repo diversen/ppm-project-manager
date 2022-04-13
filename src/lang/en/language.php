@@ -258,8 +258,9 @@ $LANG['Your settings could not be saved. Check if you are logged in'] = 'Your se
 
 // Translation of file src/Settings/views/settings.tpl.php
 
-$LANG['Settings'] = 'Settings';
 $LANG['Two factor authentication'] = 'Two factor authentication';
+$LANG['Notifications'] = 'Notifications';
+$LANG['Settings'] = 'Settings';
 $LANG['Organization'] = 'Organization';
 $LANG['Your name'] = 'Your name';
 $LANG['Bio'] = 'Bio';

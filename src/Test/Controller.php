@@ -10,10 +10,25 @@ class Controller
 {
 
     /**
-     * @route /test
+     * @route /worker
      * @verbs GET
      */
-    public function test() {
-        Template::render('Test/test.tpl.php');
+    public function worker() {
+        Template::render('Test/worker.tpl.php');
+    }
+    /**
+     * @route /notification
+     * @verbs GET
+     */
+    public function notificaton() {
+        Template::render('Test/notification.tpl.php');
+    }
+
+    /**
+     * @route /translate
+     * @verbs GET
+     */
+    public function translate() {
+        Template::render('Test/translate.tpl.php');
     }
 }

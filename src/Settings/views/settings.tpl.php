@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\AppMain;
+use Pebble\HTML;
 
 require 'templates/header.tpl.php';
 
@@ -30,21 +31,28 @@ function is_checked($value)
     return '';
 }
 
+function get_settings_links () {
+    $config = (new AppMain())->getConfig();
+    $links = [];
+    if ($config->get('TwoFactor.enabled')) {
+        $links[] = HTML::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/2fa/enable', 'disabled' => null]);
+    }
+    if ($config->get('Notification.enabled')) {
+        $links[] = HTML::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);
+    }
+
+    return implode(' | ', $links);
+}
+
 $timezones = timezone_identifiers_list();
 $languages = (new AppMain())->getConfig()->get('Language.enabled');
 
 ?>
 
 <h3 class="sub-menu"><?= Lang::translate('Settings') ?></h3>
-<?php
-
-if ((new AppMain())->getConfig()->get('TwoFactor.enabled')) { ?>
-<p><a href="/2fa/enable"><?=Lang::translate('Two factor authentication')?></a></p>
-<?php
-
-}
-
-?>
+<p>
+<?=get_settings_links()?>
+</p>
 <form name="settings" id="seetings" method="post">
     <label for="company"><?= Lang::translate('Organization') ?></label>
     <input type="text" name="company" value="<?= $user_settings['company'] ?? '' ?>" placeholder="<?= Lang::translate('Organization') ?>">
