@@ -276,3 +276,7 @@ table {
 .button-timer {
     background-color: var(--background) !important;
 }
+
+body {
+    overflow: scroll; /* Show scrollbars */
+  }
