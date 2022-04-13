@@ -356,10 +356,10 @@ $LANG['Receive notifications'] = 'Receive notifications';
 $LANG['Pause notifications'] = 'Pause notifications';
 $LANG['Your browser does not support notifiations'] = 'Your browser does not support notifiations';
 $LANG['Resume'] = 'Resume';
-$LANG['Notifications Paused. You will not recevie notifications'] = 'Notifications Paused. You will not recevie notifications';
+$LANG['Notifications Paused. You will not receive notifications'] = 'Notifications Paused. You will not receive notifications';
 $LANG['Pause'] = 'Pause';
 $LANG['Notifications Enabled.'] = 'Notifications Enabled.';
-$LANG['You have denied notifications. Change it in your browser settings if you want ot receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want ot receive notifications.';
+$LANG['You have denied notifications. Change it in your browser settings if you want to receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want to receive notifications.';
 $LANG['You have not enabled notifications.'] = 'You have not enabled notifications.';
 $LANG['Notification granted. Thanks you!'] = 'Notification granted. Thanks you!';
 
