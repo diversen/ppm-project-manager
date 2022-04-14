@@ -9,10 +9,6 @@ class NotificationUtils {
         return true;
     }
 
-    registerServiceWorker(worker) {
-        navigator.serviceWorker.register(worker);
-    }
-
     isNotificationEnabled() {
 
         if (!this.isSupported()) {
@@ -26,7 +22,8 @@ class NotificationUtils {
         return false;
     }
 
-    sendNotification(message) {
+    // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+    sendNotification(message, options) {
 
         if (!this.isNotificationEnabled()) {
             return false;
@@ -37,7 +34,7 @@ class NotificationUtils {
         }
 
         let promise = navigator.serviceWorker.ready.then(function (registration) {
-            registration.showNotification(message);
+            registration.showNotification(message, options);
         }).catch(function (e) {
             console.log(e)
         });
