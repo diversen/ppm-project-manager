@@ -54,8 +54,8 @@ async function initServiceWorker() {
             if (serviceUpdated) {
 
                 const diff = unixTime - serviceUpdated;
-
-                if (diff > 10) {
+                const hours_24 = 24 * 60 * 60;
+                if (diff > hours_24) {
                     localStorage.setItem('service_updated', unixTime);
                     registration.update();
                     console.log('Service Worker Updated');
