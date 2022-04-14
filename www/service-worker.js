@@ -1,4 +1,25 @@
+const version = 'v1.1.4';
+
+self.addEventListener('install', event => {
+    console.log(`${version} installing …`);
+
+    self.skipWaiting();
+
+    console.log('skipped waiting');
+
+    // Cache something
+    // event.waitUntil(
+    //     caches.open('static-v1').then(cache => cache.add('/cat.svg'))
+    // );
+});
+
+self.addEventListener('activate', event => {
+    console.log(`${version} now ready to handle fetches!`);
+});
+
 self.addEventListener('notificationclick', function (event) {
+
+    console.log(`${version}. Notification click: service-worker.js`);
 
     if (event.action === 'test') {
         var url = '/settings'
@@ -6,10 +27,6 @@ self.addEventListener('notificationclick', function (event) {
         var url = '/overview'
     }
 
-
-    console.log(event);
-    // let url = 'https://ppm.10kilobyte.com/overview';
-    console.log('click sw 5')
     event.notification.close(); // Android needs explicit close.
     event.waitUntil(
         clients.matchAll({ type: 'window' }).then(windowClients => {

@@ -1,6 +1,6 @@
 class NotificationUtils {
 
-    constructor() {}
+    constructor() { }
 
     isSupported() {
         if (!("Notification" in window)) {
