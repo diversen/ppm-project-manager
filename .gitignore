@@ -7,4 +7,3 @@ composer-master.lock
 config-locale
 .migration
 .php-cs-fixer.cache
-src/Test/*
