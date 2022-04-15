@@ -2,16 +2,22 @@ class NotificationUtils {
 
     constructor() { }
 
-    isSupported() {
-        if (!("Notification" in window)) {
-            return false;
+    async isSupported() {
+        if ("Notification" in window) {
+            let registration = await navigator.serviceWorker.ready
+            if (!registration.showNotification) {
+                return false;
+            } else {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
-    isNotificationEnabled() {
 
-        if (!this.isSupported()) {
+    async isNotificationEnabled() {
+        const isSupported = await this.isSupported()
+        if (!isSupported) {
             return false;
         }
 
@@ -23,9 +29,10 @@ class NotificationUtils {
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
-    sendNotification(message, options) {
+    async sendNotification(message, options) {
 
-        if (!this.isNotificationEnabled()) {
+        const isEnabled = await this.isNotificationEnabled();
+        if (!isEnabled) {
             return false;
         }
 

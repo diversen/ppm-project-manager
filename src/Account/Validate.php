@@ -14,6 +14,7 @@ class Validate
     {
         $this->db = (new AppMain())->getDB();
     }
+
     public function postLogin()
     {
         $response = ['error' => true];

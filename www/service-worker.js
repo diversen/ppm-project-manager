@@ -1,8 +1,11 @@
-const version = 'v1.1.4';
+const version = 'v1.1.5';
 
 self.addEventListener('install', event => {
     console.log(`${version} installing …`);
 
+    // In order to install the service worker, we need to wait
+    // This prevents the service worker from installing until the
+    // page has loaded again 
     self.skipWaiting();
 
     console.log('skipped waiting');

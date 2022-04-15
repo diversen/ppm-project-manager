@@ -17,15 +17,15 @@ require 'templates/header.tpl.php';
 
     const notify = new NotificationUtils();
 
-    function getButtons() {
-
-        if (!notify.isSupported()) {
-
-            return html`
+    function notSupported() {
+        return html`
+            <h3>${Lang.translate('Notifications')}</h3>
             <button id="enable" disabled>${Lang.translate('Receive notifications')}</button>
             <button id="pause" disabled>${Lang.translate('Pause notifications')}</button>
             <p id="message">${Lang.translate('Your browser does not support notifiations')}</p>`
-        }
+    }
+
+    function getButtons() {
 
         if (Notification.permission === "granted") {
 
@@ -88,17 +88,23 @@ require 'templates/header.tpl.php';
             }
         }
     }
-
+    
     const renderMain = () => html`
         <h3>${Lang.translate('Notifications')}</h3>
         ${getButtons()}
     `
  
-    function renderApp () {
-        render(renderMain(), document.getElementById('app'));  
+    async function renderApp () {
+        const isSupported = await notify.isSupported();
+        if (!isSupported) {
+            render(notSupported(), document.getElementById('app'));  
+        } else {
+            render(renderMain(), document.getElementById('app'));  
+        }
+        
     }
 
-    renderApp();
+    await renderApp();
 
 
 </script>

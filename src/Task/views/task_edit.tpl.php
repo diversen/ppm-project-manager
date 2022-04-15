@@ -16,8 +16,6 @@ $is_selected = function ($priority, $value) {
     return '';
 };
 
-
-
 ?>
 
 <h3 class="sub-menu">
@@ -89,6 +87,8 @@ $is_selected = function ($priority, $value) {
         Pebble
     } from '/js/pebble.js';
 
+    import {addMultipleEventListener} from '/js/event.js'
+
     const return_to = Pebble.getQueryVariable('return_to');
     const title = document.getElementById('title');
     title.focus();
@@ -125,7 +125,7 @@ $is_selected = function ($priority, $value) {
 
 
     async function updateTask(status) {
-
+        
         const form = document.getElementById('task_edit');
         const data = new FormData(form);
 
@@ -160,14 +160,14 @@ $is_selected = function ($priority, $value) {
     }
 
     const task_update = document.getElementById('task_update');
-    task_update.addEventListener('click', async function(e) {
+    addMultipleEventListener(task_update, ['click', 'touchstart'], async function(e) {
         e.preventDefault();
         updateTask();
     })
 
     const task_complete = document.getElementById('task_complete');
     if (task_complete) {
-        task_complete.addEventListener('click', async function(e) {
+        addMultipleEventListener(task_complete, ['click', 'touchstart'], async function(e) {
             e.preventDefault();
             const complete_confirm = confirm('<?= Lang::translate('Complete this task?') ?>')
             if (complete_confirm) {
@@ -178,7 +178,7 @@ $is_selected = function ($priority, $value) {
 
     const task_delete = document.getElementById('task_delete');
     if (task_delete) {
-        task_delete.addEventListener('click', async function(e) {
+        addMultipleEventListener(task_delete, ['click', 'touchstart'], async function(e) {
             e.preventDefault();
             const complete_confirm = confirm('<?= Lang::translate('Delete this task. Registered time entries will be removed?') ?>')
             if (complete_confirm) {
@@ -189,7 +189,7 @@ $is_selected = function ($priority, $value) {
 
     const task_open = document.getElementById('task_open');
     if (task_open) {
-        task_open.addEventListener('click', async function(e) {
+        addMultipleEventListener(task_open, ['click', 'touchstart'], async function(e) {
             e.preventDefault();
             const complete_confirm = confirm('<?= Lang::translate('Open this task?') ?>')
             if (complete_confirm) {
