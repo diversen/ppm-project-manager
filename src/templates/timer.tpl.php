@@ -10,4 +10,4 @@ use App\AppMain;
     <button id="timer_reset" class="button-timer button-small" href="#">Reset</button>
 </div>
 
-<script src="/js/timer.js?v=?version=<?=AppMain::VERSION?>" ></script>
+<script src="/js/timer.js?v=?version=<?=AppMain::VERSION?>" nonce="<?=AppMain::getNonce()?>" ></script>

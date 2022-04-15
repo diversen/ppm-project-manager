@@ -75,6 +75,7 @@ setInterval(function () {
     let options = {}
     options.tag = 'default';
     options.body = 'Great news has arrived - latest!!!'
+    options.icon = '/favicon_io/android-chrome-192x192.png';
     options.actions = [];
     options.actions.push({ 'title': 'Open site', 'action': 'test' })
     notify.sendNotification('Great news!', options);

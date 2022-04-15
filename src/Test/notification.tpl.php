@@ -100,11 +100,10 @@ require 'templates/header.tpl.php';
             render(notSupported(), document.getElementById('app'));  
         } else {
             render(renderMain(), document.getElementById('app'));  
-        }
-        
+        }   
     }
 
-    await renderApp();
+    renderApp();
 
 
 </script>
