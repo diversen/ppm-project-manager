@@ -136,7 +136,7 @@ Remove container (you will need run 'run' command again):
 
 Convert:
 
-    convert assets/android-chrome-192x192.png -scale "70x70" assets/logo.png
+    cd www && convert favicon_io/android-chrome-192x192.png -scale "70x70" assets/logo.png
 	
 
 # License
