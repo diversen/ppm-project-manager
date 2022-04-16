@@ -4,29 +4,30 @@ $LANG = array();
 
 // Translation of file src/Account/Controller.php
 
-$LANG['Signin'] = 'Signin';
+$LANG['Sign out'] = 'Sign out';
+$LANG['Sign in'] = 'Sign in';
 $LANG['You are logged in'] = 'You are logged in';
 $LANG['Wrong email or password. Or your account has not been activated.'] = 'Wrong email or password. Or your account has not been activated.';
 $LANG['Verify your login.'] = 'Verify your login.';
-$LANG['Signup'] = 'Signup';
+$LANG['Sign up'] = 'Sign up';
 $LANG['Your account has been verified. You may log in'] = 'Your account has been verified. You may log in';
 $LANG['The key supplied has already been used'] = 'The key supplied has already been used';
 $LANG['Account has been created. You may log in'] = 'Account has been created. You may log in';
 $LANG['User created. An activation link has been sent to your email. Press the link and your account will be activated'] = 'User created. An activation link has been sent to your email. Press the link and your account will be activated';
 $LANG['The system could not create an account. Please try again another time'] = 'The system could not create an account. Please try again another time';
-$LANG['Recover account'] = 'Recover account';
+$LANG['Forgotten password'] = 'Forgotten password';
 $LANG['Invalid Request. We will look in to this'] = 'Invalid Request. We will look in to this';
 $LANG['No such email in our system'] = 'No such email in our system';
 $LANG['The image text does not match your submission'] = 'The image text does not match your submission';
 $LANG['A notification email has been sent with instructions to create a new password'] = 'A notification email has been sent with instructions to create a new password';
 $LANG['E-mail could not be sent. Try again later.'] = 'E-mail could not be sent. Try again later.';
-$LANG['Your password has been updated'] = 'Your password has been updated';
-$LANG['Create new password'] = 'Create new password';
+$LANG['New password'] = 'New password';
 $LANG['No such account connected to supplied key'] = 'No such account connected to supplied key';
+$LANG['Your password has been updated'] = 'Your password has been updated';
 
 // Translation of file src/Account/ControllerExt.php
 
-$LANG['Signin'] = 'Signin';
+$LANG['Sign in'] = 'Sign in';
 
 // Translation of file src/Account/Mail.php
 
@@ -44,18 +45,20 @@ $LANG['Image text does not match'] = 'Image text does not match';
 
 // Translation of file src/Account/views/menu.php
 
-$LANG['Email login'] = 'Email login';
-$LANG['Email signup'] = 'Email signup';
+$LANG['Sign in'] = 'Sign in';
+$LANG['Email sign up'] = 'Email sign up';
 $LANG['Lost password'] = 'Lost password';
 
 // Translation of file src/Account/views/newpassword.php
 
+$LANG['Create new password'] = 'Create new password';
 $LANG['New password'] = 'New password';
 $LANG['Repeat new password'] = 'Repeat new password';
 $LANG['Send'] = 'Send';
 
 // Translation of file src/Account/views/recover.php
 
+$LANG['Forgotten password'] = 'Forgotten password';
 $LANG['E-mail'] = 'E-mail';
 $LANG['Click to get a new image'] = 'Click to get a new image';
 $LANG['Enter above image text (click to get a new image). Case of the text does not matter'] = 'Enter above image text (click to get a new image). Case of the text does not matter';
@@ -78,7 +81,7 @@ $LANG['Disclaimer'] = 'Disclaimer';
 $LANG['E-mail'] = 'E-mail';
 $LANG['Password'] = 'Password';
 $LANG['Keep me signed in'] = 'Keep me signed in';
-$LANG['Send'] = 'Send';
+$LANG['Submit'] = 'Submit';
 
 // Translation of file src/Account/views/signin_ext.php
 
@@ -93,15 +96,14 @@ $LANG['Send'] = 'Send';
 
 // Translation of file src/Account/views/signout.php
 
-$LANG['Logout'] = 'Logout';
-$LANG['You are logged in'] = 'You are logged in';
 $LANG['Sign out'] = 'Sign out';
+$LANG['You are logged in'] = 'You are logged in';
 $LANG['Or'] = 'Or';
 $LANG['Sign out of all devices'] = 'Sign out of all devices';
 
 // Translation of file src/Account/views/signup.php
 
-$LANG['Signup'] = 'Signup';
+$LANG['Email sign up'] = 'Email sign up';
 $LANG['E-mail'] = 'E-mail';
 $LANG['Password'] = 'Password';
 $LANG['Repeat password'] = 'Repeat password';
@@ -351,20 +353,6 @@ $LANG['Note'] = 'Note';
 
 // Translation of file src/Test/notification.tpl.php
 
-$LANG['Receive notifications'] = 'Receive notifications';
-$LANG['Pause notifications'] = 'Pause notifications';
-$LANG['Your browser does not support notifiations'] = 'Your browser does not support notifiations';
-$LANG['Resume'] = 'Resume';
-$LANG['Notifications Paused. You will not receive notifications'] = 'Notifications Paused. You will not receive notifications';
-$LANG['Pause'] = 'Pause';
-$LANG['Notifications Enabled.'] = 'Notifications Enabled.';
-$LANG['You have denied notifications. Change it in your browser settings if you want to receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want to receive notifications.';
-$LANG['You have not enabled notifications.'] = 'You have not enabled notifications.';
-$LANG['Notification granted. Thanks you!'] = 'Notification granted. Thanks you!';
-$LANG['Notifications'] = 'Notifications';
-
-// Translation of file src/Test/notification.tpl.php.bak
-
 $LANG['Notifications'] = 'Notifications';
 $LANG['Receive notifications'] = 'Receive notifications';
 $LANG['Pause notifications'] = 'Pause notifications';
@@ -436,8 +424,8 @@ $LANG['Submit'] = 'Submit';
 
 // Translation of file src/templates/main_menu.tpl.php
 
-$LANG['Login'] = 'Login';
-$LANG['Email signup'] = 'Email signup';
+$LANG['Sign in'] = 'Sign in';
+$LANG['Email sign up'] = 'Email sign up';
 $LANG['Lost password'] = 'Lost password';
 $LANG['Home'] = 'Home';
 $LANG['Projects'] = 'Projects';
