@@ -74,7 +74,7 @@ function output_time_table($time_rows)
                     <td title="<?= $val['note'] ?>" class="td-overflow"><?= $val['note'] ?></td>
                     <td>
                         <div class="action-links">
-                            <a class='time_delete' data-id="<?= $val['id'] ?>" href="#"><?= Lang::translate('Delete') ?></a>
+                            <a class='time_delete' data-id="<?= $val['id'] ?>" href="#"><?=get_icon('delete')?></a>
                         </div>
                     <td>
                 </tr>

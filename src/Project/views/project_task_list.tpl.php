@@ -40,12 +40,16 @@ foreach ($tasks as $task) :
         <td class='xs-hide'><?= $task['time_used'] ?></td>
         <td>
             <div class="action-links">
-                <a title="<?= Lang::translate('Edit task') ?>" href="<?= $return_to_after_edit ?>"><?= Lang::translate('Edit') ?></a>
-                <a title="<?= Lang::translate('Add time to task') ?>" href="<?= $return_to_after_time?>"><?= Lang::translate('Time') ?></a>
+                <a title="<?= Lang::translate('Edit task') ?>" href="<?= $return_to_after_edit ?>"><?=get_icon('edit')?></a>
+                <a title="<?= Lang::translate('Add time to task') ?>" href="<?= $return_to_after_time?>"><?=get_icon('clock')?></a>
                 <?php
 
                 if (!$is_today) : ?>
-                    <a title="<?= Lang::translate('Move to today') ?>" class="move_to_today xs-hide" href='#' data-id="<?= $task['id'] ?>"><?= Lang::Translate('Today') ?></a>
+                    <a 
+                        title="<?= Lang::translate('Move to today') ?>" 
+                        class="move_to_today" 
+                        href='#' data-id="<?= $task['id'] ?>"><?=get_icon('today')?>
+                    </a>
                 <?php endif; ?>
         </td>
     </tr>

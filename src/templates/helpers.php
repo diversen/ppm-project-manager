@@ -1,5 +1,7 @@
 <?php
 
+use Diversen\Lang;
+
 /**
  * Get a priority css class name from task
  */
@@ -37,6 +39,41 @@ function get_sub_menu(array $parts)
 {
     $str = implode(' :: ', $parts);
     return "<h4>$str</h4>";
+}
+
+function get_icon(string $icon) {
+    if ($icon === 'edit') {
+        return '<i class="fa-solid fa-edit"></i>';
+    }
+    if ($icon === 'add') {
+        return '<i class="fa-solid fa-plus"></i>';
+    }
+    if($icon === 'clock') {
+        return '<i class="fa-solid fa-clock"></i>';
+    }
+    if($icon === 'today') {
+        return Lang::translate('Today');
+    }
+    if($icon === 'delete') {
+        return Lang::translate('Delete');
+    }
+
+    // if ($icon === 'edit') {
+    //     return Lang::translate('Edit');
+    // }
+    // if ($icon === 'add') {
+    //     return Lang::translate('New');
+    // }
+    // if($icon === 'clock') {
+    //     return Lang::translate('Time');
+    // }
+    // if($icon === 'today') {
+    //     return Lang::translate('Today');
+    // }
+    // if($icon === 'delete') {
+    //     return Lang::translate('Delete');
+    // }
+
 }
 
 define('SUB_MENU_SEP', ' :: ');

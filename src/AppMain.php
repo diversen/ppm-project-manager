@@ -15,7 +15,7 @@ use App\Main\AppBase;
  */
 class AppMain extends AppBase
 {
-    public const VERSION = "1.2.104";
+    public const VERSION = "1.2.109";
     public static $nonce;
     public function sendHeaders()
     {
@@ -34,6 +34,9 @@ class AppMain extends AppBase
         $headers->csp('img-src', $config->get('App.server_url'));
         $headers->csp('script-src', "'nonce-$nonce'");
         $headers->csp('style-src', 'self');
+        $headers->csp('style-src', 'https://cdnjs.cloudflare.com');
+        $headers->csp('font-src', 'https://cdnjs.cloudflare.com');
+        
         $headers->csp('worker-src', $config->get('App.server_url'));
         $headers->apply();
     }

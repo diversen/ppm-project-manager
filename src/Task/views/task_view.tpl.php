@@ -60,14 +60,14 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 
         <td>
         <div class="action-links">
-            <a title="<?=Lang::translate('Edit task')?>" href="<?=URL::returnTo("/task/edit/$task[id]")?>"><?=Lang::translate('Edit')?></a>
-            <a title="<?=Lang::translate('Add new task to project')?>" class="xs-hide" href='<?=URL::returnTo("/task/add/$task[project_id]")?>'><?=Lang::translate('New')?></a>
-            <a title="<?=Lang::translate('Add time to task')?>"  href='<?=URL::returnTo("/time/add/$task[id]")?>'><?=Lang::translate('Time')?></a>
+            <a title="<?=Lang::translate('Edit task')?>" href="<?=URL::returnTo("/task/edit/$task[id]")?>"><?=get_icon('edit')?></a>
+            <a title="<?=Lang::translate('Add new task to project')?>" class="xs-hide" href='<?=URL::returnTo("/task/add/$task[project_id]")?>'><?=get_icon('add')?></a>
+            <a title="<?=Lang::translate('Add time to task')?>"  href='<?=URL::returnTo("/time/add/$task[id]")?>'><?=get_icon('clock')?></a>
 
             <?php
 
             if (!$today): ?>
-            <a title="<?=Lang::translate('Move to today')?>"  class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=Lang::translate('Today')?></a>
+            <a title="<?=Lang::translate('Move to today')?>"  class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=get_icon('today')?></a>
             <?php endif;?>
         </td>
     </tr>

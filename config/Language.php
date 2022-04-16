@@ -5,6 +5,7 @@ return [
     'enabled' => [
         'en',
         'da',
+        'de',
     ],
 
     // default language 

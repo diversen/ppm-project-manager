@@ -13,7 +13,7 @@ require 'templates/header.tpl.php';
 <h3 class="sub-menu"><?= Lang::Translate('Projects') ?></h3>
 
 <div class="action-links">
-    <a href="/project/add"><?= Lang::translate('Add project') ?></a>
+    <a href="/project/add" title="<?=Lang::translate('Add new project')?>"><?= Lang::translate('Add project') ?></a>
 </div>
 
 <?php
@@ -50,8 +50,8 @@ function render_projects($projects)
                         <td class="xs-hide"><?= $project['project_time_total_human'] ?></td>
                         <td>
                             <div class="action-links">
-                                <a href="/project/edit/<?= $project['id'] ?>"><?= Lang::translate('Edit') ?></a>
-                                <a href="/task/add/<?= $project['id'] ?>"><?= Lang::translate('New') ?></a>
+                                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit task') ?>"><?=get_icon('edit')?></a>
+                                <a href="/task/add/<?= $project['id'] ?>" title="<?=Lang::translate('Add new task to project')?>"><?=get_icon('add')?></a>
                             </div>
                         </td>
                     </tr>
