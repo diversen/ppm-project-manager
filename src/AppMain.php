@@ -25,7 +25,7 @@ class AppMain extends AppBase
         self::$nonce = $nonce = Random::generateRandomString(16);
 
         $headers = new SecureHeaders();
-        $headers->strictMode(true);
+        $headers->strictMode(false);
         $headers->errorReporting(true);
         $headers->hsts();
         $headers->csp('default', 'self');
@@ -33,11 +33,8 @@ class AppMain extends AppBase
         $headers->csp('img-src', 'data:');
         $headers->csp('img-src', $config->get('App.server_url'));
         $headers->csp('script-src', "'nonce-$nonce'");
-        // $headers->csp('script-src', 'unsafe-inline');
-        
         $headers->csp('style-src', 'self');
         $headers->csp('worker-src', $config->get('App.server_url'));
-        $config->get('App.server_url');
         $headers->apply();
     }
 
@@ -55,6 +52,8 @@ class AppMain extends AppBase
         $this->sessionStart();
         $this->setupIntl();
         $this->setDebug();
+
+
 
         $router = new Router();
         $router->addClass(\App\Test\Controller::class);

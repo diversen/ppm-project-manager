@@ -10,6 +10,7 @@ use Pebble\DB;
 use Pebble\Session;
 use Pebble\Headers;
 use Pebble\JSON;
+use Pebble\HTTP\AcceptLanguage;
 
 use App\AppACL;
 use App\Settings\SettingsModel;
@@ -154,7 +155,7 @@ class AppBase
         $user_settings = $settings->getUserSetting($auth_id, 'profile');
 
         $timezone = $user_settings['timezone'] ?? $this->getConfig()->get('App.timezone');
-        $language = $user_settings['language'] ?? $this->getConfig()->get('Language.default');
+        $language = $user_settings['language'] ?? $this->getRequestLanguage();
 
         date_default_timezone_set($timezone);
 
@@ -162,6 +163,14 @@ class AppBase
         $translations = new Lang();
         $translations->setSingleDir("../src");
         $translations->loadLanguage($language);
+    }
+
+    private function getRequestLanguage() {
+
+        $default = $this->getConfig()->get('Language.default');
+        $supported = $this->getConfig()->get('Language.enabled');
+
+        return AcceptLanguage::getLanguage($supported, $default);
     }
 
     /**

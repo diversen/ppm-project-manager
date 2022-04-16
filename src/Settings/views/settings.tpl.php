@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\AppMain;
-use Pebble\HTML;
+use Pebble\HTML\Tag;
 
 require 'templates/header.tpl.php';
 
@@ -35,10 +35,10 @@ function get_settings_links () {
     $config = (new AppMain())->getConfig();
     $links = [];
     if ($config->get('TwoFactor.enabled')) {
-        $links[] = HTML::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/2fa/enable', 'disabled' => null]);
+        $links[] = Tag::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/2fa/enable', 'disabled' => null]);
     }
     if ($config->get('Notification.enabled')) {
-        $links[] = HTML::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);
+        $links[] = Tag::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);
     }
 
     return implode(' | ', $links);
