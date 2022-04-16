@@ -7,7 +7,7 @@ require 'templates/header.tpl.php';
 require 'templates/flash.tpl.php';
 
 ?>
-<h3 class="sub-menu"><?= Lang::translate('Signup') ?></h3>
+<h3 class="sub-menu"><?= Lang::translate('Email sign up') ?></h3>
 
 <form id="signup-form">
     <input type="hidden" name="csrf_token" value="<?= $token ?>" />

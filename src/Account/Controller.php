@@ -44,21 +44,20 @@ class Controller
 
     public function index(array $params, stdClass $obj)
     {
+        $template_vars = [];
         if ($this->auth->isAuthenticated()) {
-            $form_vars = ['title' => Lang::translate('Signin')];
+            $template_vars['title'] = Lang::translate('Sign out');
             \Pebble\Template::render(
                 'Account/views/signout.php',
-                $form_vars
+                $template_vars
             );
         } else {
-            $form_vars = [
-                'title' => Lang::translate('Signin'),
-                'csrf_token' => (new CSRF())->getToken(),
-            ];
+            $template_vars['title'] = Lang::translate('Sign in');
+            $template_vars['csrf_token'] = (new CSRF())->getToken();
 
             \Pebble\Template::render(
                 'Account/views/signin.php',
-                $form_vars
+                $template_vars
             );
         }
     }
@@ -82,7 +81,6 @@ class Controller
 
         $redirect = $this->config->get('App.logout_redirect');
         header("Location: $redirect");
-        return;
     }
 
     /**
@@ -94,7 +92,7 @@ class Controller
     {
         \Pebble\Template::render(
             'Account/views/signout.php',
-            []
+            ['title' => Lang::translate('Sign out')]
         );
         return;
     }
@@ -169,14 +167,14 @@ class Controller
      */
     public function signup()
     {
-        $form_vars = [
-            'title' => Lang::translate('Signup'),
+        $template_vars = [
+            'title' => Lang::translate('Email sign up'),
             'token' => (new CSRF())->getToken(),
         ];
 
         \Pebble\Template::render(
             'Account/views/signup.php',
-            $form_vars
+            $template_vars
         );
     }
 
@@ -274,15 +272,14 @@ class Controller
      */
     public function recover()
     {
-        $token = (new CSRF())->getToken();
-        $form_vars = [
-            'title' => Lang::translate('Recover account'),
-            'token' => $token,
+        $template_vars = [
+            'token' => (new CSRF())->getToken(),
+            'title' => Lang::translate('Forgotten password'),
         ];
 
         \Pebble\Template::render(
             'Account/views/recover.php',
-            $form_vars
+            $template_vars
         );
     }
 
@@ -346,12 +343,34 @@ class Controller
 
     /**
      * @route /account/newpassword
-     * @verbs GET,POST
+     * @verbs GET
      */
     public function newpassword()
     {
         $key = $_GET['key'] ?? null;
+        $row = $this->auth->getByWhere(['random' => $key]);
 
+        $template_vars = ['title' => Lang::translate('New password')];
+        if (empty($row)) {
+            $template_vars['error'] = true;         
+            $this->flash->setMessage(Lang::translate('No such account connected to supplied key'), 'error');
+        }
+
+        $template_vars['token'] = (new CSRF())->getToken();
+
+        \Pebble\Template::render(
+            'Account/views/newpassword.php',
+            $template_vars
+        );
+    }
+
+    /**
+     * @route /account/newpassword
+     * @verbs POST
+     */
+    public function post_newpassword()
+    {
+        $key = $_GET['key'] ?? null;
         $row = $this->auth->getByWhere(['random' => $key]);
 
         if (!empty($_POST) && !empty($row)) {
@@ -373,20 +392,5 @@ class Controller
 
             return;
         }
-
-        $vars['title'] = Lang::translate('Create new password');
-        if (!empty($row)) {
-            $vars['error'] = 0;
-        } else {
-            $this->flash->setMessage(Lang::translate('No such account connected to supplied key'), 'error');
-            $vars['error'] = 1;
-        }
-
-        $vars['token'] = (new CSRF())->getToken();
-
-        \Pebble\Template::render(
-            'Account/views/newpassword.php',
-            $vars
-        );
     }
 }

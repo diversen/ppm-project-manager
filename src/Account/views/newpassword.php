@@ -4,9 +4,11 @@ use Diversen\Lang;
 
 require 'templates/header.tpl.php';
 
-if ($error == '0'): ?>
+$has_error = $error ?? null;
 
-<h3 class="sub-menu"><?=$title?></h3>
+if (!$has_error): ?>
+
+<h3 class="sub-menu"><?= Lang::translate('Create new password')?></h3>
 <form id="signup-form" method="post" action="#">
 
     <input type="hidden" name="csrf_token" value="<?=$token?>" />

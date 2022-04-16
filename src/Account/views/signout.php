@@ -6,7 +6,7 @@ require  'templates/header.tpl.php';
 
 ?>
 
-<h3 class="sub-menu"><?=Lang::translate('Logout')?></h2>
+<h3 class="sub-menu"><?=Lang::translate('Sign out')?></h2>
 
 
 <p><?=Lang::translate('You are logged in')?>. <a href="/account/logout"><?=Lang::translate('Sign out')?></a>

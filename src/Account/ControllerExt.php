@@ -28,22 +28,21 @@ class ControllerExt extends Controller
     public function index(array $params, stdClass $obj)
     {
         $google_auth_url = $this->getGoogleAuthUrl();
+        $template_vars = [];
         if ($this->auth->isAuthenticated()) {
-            $form_vars = ['title' => Lang::translate('Signin')];
             \Pebble\Template::render(
-                'Account/views/signout.php',
-                $form_vars
+                'Account/views/signout.php'
             );
         } else {
-            $form_vars = [
+            $template_vars = [
                 'google_auth_url' => $google_auth_url,
-                'title' => 'Signin',
+                'title' => Lang::translate('Sign in'),
                 'csrf_token' => (new CSRF())->getToken(),
             ];
 
             \Pebble\Template::render(
                 'Account/views/signin_ext.php',
-                $form_vars
+                $template_vars
             );
         }
     }

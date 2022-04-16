@@ -9,7 +9,7 @@ require 'templates/header.tpl.php';
 
 ?>
 
-<h3 class="sub-menu"><?= $title ?></h3>
+<h3 class="sub-menu"><?= Lang::translate('Forgotten password') ?></h3>
 
 <form id="signup-form">
 

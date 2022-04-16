@@ -32,7 +32,7 @@ require 'templates/header.tpl.php';
     <input type="checkbox" value="1" id="keep_login" name="keep_login" checked="checked">
         
     <br />
-    <button id="login"><?= Lang::translate('Send') ?></button>
+    <button id="login"><?= Lang::translate('Submit') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
 
