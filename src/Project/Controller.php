@@ -75,7 +75,7 @@ class Controller
         $template_data = $this->getProjectData($where, $order_by);
 
         Template::render(
-            'Project/views/project_index.tpl.php',
+            'Project/views/index.tpl.php',
             $template_data
         );
     }
@@ -98,7 +98,7 @@ class Controller
         $template_data = $this->getProjectData($where, $order_by);
 
         Template::render(
-            'Project/views/project_index.tpl.php',
+            'Project/views/index.tpl.php',
             $template_data
         );
     }
@@ -115,7 +115,7 @@ class Controller
         $template_data['title'] = Lang::translate('View project');
 
         Template::render(
-            'Project/views/project_view.tpl.php',
+            'Project/views/view.tpl.php',
             $template_data
         );
     }
@@ -133,7 +133,7 @@ class Controller
         ];
 
         Template::render(
-            'Project/views/project_add.tpl.php',
+            'Project/views/add.tpl.php',
             $form_vars
         );
     }
@@ -153,7 +153,7 @@ class Controller
         ];
 
         Template::render(
-            'Project/views/project_edit.tpl.php',
+            'Project/views/edit.tpl.php',
             $form_vars
         );
     }
@@ -241,7 +241,7 @@ class Controller
         }
 
         Template::render(
-            'Project/views/project_task_list.tpl.php',
+            'Project/views/task_list.tpl.php',
             $data
         );
     }

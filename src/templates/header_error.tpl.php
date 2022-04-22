@@ -50,4 +50,6 @@ if (!isset($description)) {
 </a>
 </div>
 
+<div class="page">
+
 <?php
