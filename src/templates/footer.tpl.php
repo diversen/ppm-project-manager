@@ -1,10 +1,7 @@
-<!-- end class page -->
 </div>
 
 <div class="footer">
-    <hr />
-
-        
+    <hr />        
 </div>
 
 </body>

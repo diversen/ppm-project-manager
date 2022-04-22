@@ -38,7 +38,8 @@ class AppPagination
             else: ?>
                 <span class='pagination-links'>&gt;&gt;</span><?php
             endif; ?>        
-            </div><?php
-        endif;
+            <?php
+        endif; ?>
+        </div><?php
     }
 }
