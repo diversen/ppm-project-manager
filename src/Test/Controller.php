@@ -16,13 +16,6 @@ class Controller
     public function worker() {
         Template::render('Test/worker.tpl.php');
     }
-    /**
-     * @route /notification
-     * @verbs GET
-     */
-    public function notificaton() {
-        Template::render('Test/notification.tpl.php');
-    }
 
     /**
      * @route /translate

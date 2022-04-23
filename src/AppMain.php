@@ -56,10 +56,9 @@ class AppMain extends AppBase
         $this->setupIntl();
         $this->setDebug();
 
-
-
         $router = new Router();
         $router->addClass(\App\Test\Controller::class);
+        $router->addClass(\App\Notification\Controller::class);
         $router->addClass(\App\Account\ControllerExt::class);
         $router->addClass(\App\Home\Controller::class);
         $router->addClass(\App\Google\Controller::class);
