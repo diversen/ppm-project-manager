@@ -1,29 +1,10 @@
-const version = 'v1.1.5';
-/*
-self.addEventListener('install', event => {
-    console.log(`${version} installing …`);
-
-    // In order to install the service worker, we need to wait
-    // This prevents the service worker from installing until the
-    // page has loaded again 
-    self.skipWaiting();
-
-    console.log('skipped waiting');
-
-    // Cache something
-    // event.waitUntil(
-    //     caches.open('static-v1').then(cache => cache.add('/cat.svg'))
-    // );
-});
-*/
-const OFFLINE_VERSION = 1;
+const VERSION = 'v1.1.5';
 const CACHE_NAME = "offline";
-// Customize this with a different URL if needed.
 const OFFLINE_URL = "offline.html";
 
 self.addEventListener("install", (event) => {
 
-    console.log(`${version} installing …`);
+    console.log(`${VERSION} installing …`);
     event.waitUntil(
         (async () => {
             const cache = await caches.open(CACHE_NAME);
@@ -92,12 +73,12 @@ self.addEventListener("fetch", (event) => {
 });
 
 self.addEventListener('activate', event => {
-    console.log(`${version} now ready to handle fetches!`);
+    console.log(`${VERSION} now ready to handle fetches!`);
 });
 
 self.addEventListener('notificationclick', function (event) {
 
-    console.log(`${version}. Notification click: service-worker.js`);
+    console.log(`${VERSION}. Notification click: service-worker.js`);
 
     if (event.action === 'test') {
         var url = '/settings'

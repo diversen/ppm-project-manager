@@ -2,31 +2,35 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You are offline</title>
 
-    <title>Offline</title>
-    <meta name="description" content="Offline">
-    <meta name="theme-color" content="#ffffff">
+    <!-- Inline the page's stylesheet. -->
+    <style>
+        body {
+            font-family: helvetica, arial, sans-serif;
+            margin: 2em;
+        }
 
-    <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/light.min.css">
+        h1 {
+            font-style: italic;
+            color: #0076d1;
+        }
 
-    <link rel="stylesheet" href="/css/default.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="/assets/manifest.json">
+        p {
+            margin-block: 1rem;
+        }
 
+        button {
+            display: block;
+        }
+    </style>
 </head>
-<div class="logo">
-    <a title="" href="/">
-        <img src="/assets/logo.png">
-        </img>
-    </a>
-</div>
 
-<div class="page">
+<body>
     <h1>You are offline</h1>
 
     <p>Click the button below to try reloading.</p>
@@ -65,6 +69,6 @@
 
         checkNetworkAndReload();
     </script>
-    </body>
+</body>
 
 </html>
