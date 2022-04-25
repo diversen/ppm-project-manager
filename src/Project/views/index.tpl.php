@@ -50,7 +50,7 @@ function render_projects($projects)
                         <td class="xs-hide"><?= $project['project_time_total_human'] ?></td>
                         <td>
                             <div class="action-links">
-                                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit task') ?>"><?=get_icon('edit')?></a>
+                                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit project') ?>"><?=get_icon('edit')?></a>
                                 <a href="/task/add/<?= $project['id'] ?>" title="<?=Lang::translate('Add new task to project')?>"><?=get_icon('add')?></a>
                             </div>
                         </td>

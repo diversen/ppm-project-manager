@@ -1,5 +1,6 @@
 import { Pebble } from '/js/pebble.js';
 import { NotificationUtils } from '/js/notification_utils.js';
+import { LocalStorageUtils } from '/js/local_storage_utils.js';
 
 /**
  * Remove pre-loaded flash messages after some seconds
@@ -69,9 +70,32 @@ async function initServiceWorker() {
 
 initServiceWorker()
 
+
 const notify = new NotificationUtils();
+const localStorageUtils = new LocalStorageUtils();
+
+function getNotification() {
+    var date = new Date();
+    let dayHour = date.getHours();
+
+    let notificationAt10 = localStorageUtils.getWithExpiry('notification_at_10');
+    if (!notificationAt10 && dayHour === 10) {
+        console.log('will send')
+        let options = {}
+        options.tag = 'default';
+        options.body = 'Great news has arrived - latest!!!'
+        options.icon = '/favicon_io/android-chrome-192x192.png';
+        options.actions = [];
+        options.actions.push({ 'title': 'Open site', 'action': 'test' })
+        notify.sendNotification('Great news!', options);
+    }
+}
+
 
 setInterval(function () {
+
+    getNotification();
+    /*
     let options = {}
     options.tag = 'default';
     options.body = 'Great news has arrived - latest!!!'
@@ -79,8 +103,10 @@ setInterval(function () {
     options.actions = [];
     options.actions.push({ 'title': 'Open site', 'action': 'test' })
     notify.sendNotification('Great news!', options);
-
+    */
 }, 10000)
+
+
 
 const GlobalEvents = {}
 

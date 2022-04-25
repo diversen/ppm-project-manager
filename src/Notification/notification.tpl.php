@@ -10,7 +10,7 @@ require 'templates/header.tpl.php';
 
 <script type="module" nonce="<?= AppMain::getNonce() ?>">
 
-    import {NotificationUtils} from '/js/notification_utils.js?v=10';
+    import {NotificationUtils} from '/js/notification_utils.js';
     import {html, render} from '/js/lit-html.js';
     import {Lang} from '/js/lang.js';
     await Lang.load();
