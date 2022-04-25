@@ -154,6 +154,20 @@ $LANG['Sign out'] = 'Sign out';
 $LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
 $LANG['A server error happened. The incidence has been logged.'] = 'A server error happened. The incidence has been logged.';
 
+// Translation of file src/Notification/notification.tpl.php
+
+$LANG['Notifications'] = 'Notifications';
+$LANG['Receive notifications'] = 'Receive notifications';
+$LANG['Pause notifications'] = 'Pause notifications';
+$LANG['Your browser does not support notifiations'] = 'Your browser does not support notifiations';
+$LANG['Resume'] = 'Resume';
+$LANG['Notifications Paused. You will not receive notifications'] = 'Notifications Paused. You will not receive notifications';
+$LANG['Pause'] = 'Pause';
+$LANG['Notifications Enabled.'] = 'Notifications Enabled.';
+$LANG['You have denied notifications. Change it in your browser settings if you want to receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want to receive notifications.';
+$LANG['You have not enabled notifications.'] = 'You have not enabled notifications.';
+$LANG['Notification granted. Thanks you!'] = 'Notification granted. Thanks you!';
+
 // Translation of file src/Overview/Controller.php
 
 $LANG['Overview'] = 'Overview';
@@ -164,13 +178,9 @@ $LANG['Your settings could not be saved. Check if you are logged in'] = 'Your se
 
 $LANG['Total time used on project: '] = 'Total time used on project: ';
 $LANG['Edit task'] = 'Edit task';
-$LANG['Edit'] = 'Edit';
 $LANG['Add new task to project'] = 'Add new task to project';
-$LANG['New'] = 'New';
 $LANG['Add time to task'] = 'Add time to task';
-$LANG['Time'] = 'Time';
 $LANG['Move to today'] = 'Move to today';
-$LANG['Today'] = 'Today';
 $LANG['monday'] = 'monday';
 $LANG['tuesday'] = 'tuesday';
 $LANG['wednesday'] = 'wednesday';
@@ -181,6 +191,7 @@ $LANG['sunday'] = 'sunday';
 $LANG['Your activity: <span class="notranslate">{activity}</span> '] = 'Your activity: <span class="notranslate">{activity}</span> ';
 $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';
+$LANG['Time'] = 'Time';
 $LANG['Week'] = 'Week';
 $LANG['Show week'] = 'Show week';
 $LANG['Current week'] = 'Current week';
@@ -200,7 +211,7 @@ $LANG['Edit project'] = 'Edit project';
 
 $LANG['Title is required'] = 'Title is required';
 
-// Translation of file src/Project/views/project_add.tpl.php
+// Translation of file src/Project/views/add.tpl.php
 
 $LANG['Add project'] = 'Add project';
 $LANG['Title'] = 'Title';
@@ -209,7 +220,7 @@ $LANG['Note'] = 'Note';
 $LANG['Add an optional project note'] = 'Add an optional project note';
 $LANG['Add'] = 'Add';
 
-// Translation of file src/Project/views/project_edit.tpl.php
+// Translation of file src/Project/views/edit.tpl.php
 
 $LANG['Projects'] = 'Projects';
 $LANG['Edit project'] = 'Edit project';
@@ -221,30 +232,30 @@ $LANG['Update'] = 'Update';
 $LANG['Delete'] = 'Delete';
 $LANG['Are you sure want to delete this project? All tasks and all time entries will be deleted!'] = 'Are you sure want to delete this project? All tasks and all time entries will be deleted!';
 
-// Translation of file src/Project/views/project_index.tpl.php
+// Translation of file src/Project/views/index.tpl.php
 
+$LANG['Add new project'] = 'Add new project';
 $LANG['Add project'] = 'Add project';
 $LANG['Your have no projects yet'] = 'Your have no projects yet';
 $LANG['Title'] = 'Title';
 $LANG['Updated'] = 'Updated';
 $LANG['Time used'] = 'Time used';
-$LANG['Edit'] = 'Edit';
-$LANG['New'] = 'New';
+$LANG['Edit project'] = 'Edit project';
+$LANG['Add new task to project'] = 'Add new task to project';
 $LANG['View inactive projects'] = 'View inactive projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
 
-// Translation of file src/Project/views/project_task_list.tpl.php
+// Translation of file src/Project/views/task_list.tpl.php
 
 $LANG['Edit task'] = 'Edit task';
-$LANG['Edit'] = 'Edit';
 $LANG['Add time to task'] = 'Add time to task';
-$LANG['Time'] = 'Time';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Show more'] = 'Show more';
 
-// Translation of file src/Project/views/project_view.tpl.php
+// Translation of file src/Project/views/view.tpl.php
 
 $LANG['Projects'] = 'Projects';
+$LANG['Add new task to project'] = 'Add new task to project';
 $LANG['Add task'] = 'Add task';
 $LANG['Total time used on project'] = 'Total time used on project';
 $LANG['Tasks waiting'] = 'Tasks waiting';
@@ -343,27 +354,10 @@ $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';
 $LANG['Time'] = 'Time';
 $LANG['Edit task'] = 'Edit task';
-$LANG['Edit'] = 'Edit';
 $LANG['Add new task to project'] = 'Add new task to project';
-$LANG['New'] = 'New';
 $LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
-$LANG['Today'] = 'Today';
 $LANG['Note'] = 'Note';
-
-// Translation of file src/Test/notification.tpl.php
-
-$LANG['Notifications'] = 'Notifications';
-$LANG['Receive notifications'] = 'Receive notifications';
-$LANG['Pause notifications'] = 'Pause notifications';
-$LANG['Your browser does not support notifiations'] = 'Your browser does not support notifiations';
-$LANG['Resume'] = 'Resume';
-$LANG['Notifications Paused. You will not receive notifications'] = 'Notifications Paused. You will not receive notifications';
-$LANG['Pause'] = 'Pause';
-$LANG['Notifications Enabled.'] = 'Notifications Enabled.';
-$LANG['You have denied notifications. Change it in your browser settings if you want to receive notifications.'] = 'You have denied notifications. Change it in your browser settings if you want to receive notifications.';
-$LANG['You have not enabled notifications.'] = 'You have not enabled notifications.';
-$LANG['Notification granted. Thanks you!'] = 'Notification granted. Thanks you!';
 
 // Translation of file src/Test/translate.tpl.php
 
@@ -386,7 +380,6 @@ $LANG['Submit'] = 'Submit';
 $LANG['Submit and stay'] = 'Submit and stay';
 $LANG['Submit and close task'] = 'Submit and close task';
 $LANG['Time'] = 'Time';
-$LANG['Delete'] = 'Delete';
 $LANG['Complete this task?'] = 'Complete this task?';
 $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to delete time entry?';
 
@@ -421,6 +414,14 @@ $LANG['If you create a new QR code then the old code will be deleted'] = 'If you
 $LANG['Verify login using two factor authentication'] = 'Verify login using two factor authentication';
 $LANG['1. Enter code as seen on your phone'] = '1. Enter code as seen on your phone';
 $LANG['Submit'] = 'Submit';
+
+// Translation of file src/templates/helpers.php
+
+$LANG['Today'] = 'Today';
+$LANG['Delete'] = 'Delete';
+$LANG['Edit'] = 'Edit';
+$LANG['New'] = 'New';
+$LANG['Time'] = 'Time';
 
 // Translation of file src/templates/main_menu.tpl.php
 
