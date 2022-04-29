@@ -147,16 +147,25 @@ class TimeModel
     {
         $week_data = [];
 
-        // iterate all dates in the week
+        // Iterate all dates in the week
         foreach ($week_ts as $day_ts => $date) {
             $sql = "
 
-                SELECT t.*, p.status as project_status, p.title as project_title FROM task t 
+                SELECT t.*, p.status as project_status, p.title as project_title 
+                    FROM task t 
                 LEFT JOIN project p ON t.project_id = p.id 
-                WHERE t.auth_id = :auth_id AND (:begin_date BETWEEN t.begin_date AND  t.end_date) AND t.status != 2 ORDER BY t.status DESC, t.priority DESC";
+                
+                WHERE 
+                    t.auth_id = :auth_id AND 
+                    :begin_date BETWEEN t.begin_date AND  t.end_date AND 
+                    t.status != 2 
+                
+                ORDER BY t.status DESC, t.priority DESC";
 
             $params = ['auth_id' => $this->app_acl->getAuthId(), 'begin_date' => $date];
             $week_data[$day_ts] = $this->db->prepareFetchAll($sql, $params);
+
+            
         }
 
         foreach ($week_data as $day_ts => $day_data) {

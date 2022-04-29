@@ -72,6 +72,7 @@ function get_day_name(string $day_num)
  */
 function render_week($week_data, $week_state, $week_user_day_times)
 {
+
     $current_day_state = $week_state['current_day_state'];
     foreach ($week_data as $ts => $day_data) :
 
@@ -79,17 +80,17 @@ function render_week($week_data, $week_state, $week_user_day_times)
             continue;
         }
 
-    $day_number = date('N', $ts);
-    $is_today = is_today($ts);
+        $day_number = date('N', $ts);
+        $is_today = is_today($ts);
 
-    if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
-        continue;
-    }
+        if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
+            continue;
+        }
 
-    $day_class = '';
-    if ($is_today) {
-        $day_class = ' class="today" ';
-    } ?>
+        $day_class = '';
+        if ($is_today) {
+            $day_class = ' class="today" ';
+        } ?>
 
         
         <p><strong title="<?=date('d/m/Y', $ts)?>" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?>. </strong>
@@ -111,7 +112,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
                 foreach ($day_data as $task) :
                     render_task($task, $is_today);
-    endforeach; ?>
+                endforeach; ?>
 
             </tbody>
         </table>
