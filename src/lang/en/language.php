@@ -365,6 +365,7 @@ $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] 
 
 // Translation of file src/Time/TimeModel.php
 
+$LANG['Not a valid time input'] = 'Not a valid time input';
 $LANG['No note'] = 'No note';
 
 // Translation of file src/Time/views/time_add.tpl.php

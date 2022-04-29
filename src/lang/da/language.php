@@ -167,6 +167,7 @@ $LANG['Open'] = 'Åben';
 $LANG['Complete this task?'] = 'Fuldfør denne opgave?';
 $LANG['Delete this task. Registered time entries will be removed?'] = 'Slet denne opgave. Registrerede tidsregistreringer vil blive fjernet?';
 $LANG['Open this task?'] = 'Åbn denne opgave?';
+$LANG['Not a valid time input'] = 'Ikke en gyldig tidsindtastning';
 $LANG['No note'] = 'Ingen note';
 $LANG['Add time'] = 'Tilføj tid';
 $LANG['Time used. Valid time input (hh:mm), e.g. 1:10 or 0:15'] = 'Brugt tid. Gyldig tidsindgang (tt: mm), f.eks. 1:10 eller 0:15';

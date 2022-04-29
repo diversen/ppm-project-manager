@@ -40,7 +40,7 @@ class TimeModel
     private function validate($post)
     {
         if ($this->totalMinutes($post['minutes']) == 0) {
-            throw new \Exception('Not a valid time input');
+            throw new \Exception(Lang::translate('Not a valid time input'));
         }
     }
 

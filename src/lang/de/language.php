@@ -167,6 +167,7 @@ $LANG['Open'] = 'Offen';
 $LANG['Complete this task?'] = 'Diese Aufgabe abschließen?';
 $LANG['Delete this task. Registered time entries will be removed?'] = 'Löschen Sie diese Aufgabe. Registrierte Zeiteinträge werden entfernt?';
 $LANG['Open this task?'] = 'Diese Aufgabe öffnen?';
+$LANG['Not a valid time input'] = 'Keine gültige Zeiteingabe';
 $LANG['No note'] = 'Keine Notiz';
 $LANG['Add time'] = 'Zeit hinzufügen';
 $LANG['Time used. Valid time input (hh:mm), e.g. 1:10 or 0:15'] = 'Zeit verwendet. Gültige Zeiteingabe (hh:mm), zB 1:10 oder 0:15';
