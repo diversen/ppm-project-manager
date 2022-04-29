@@ -112,7 +112,6 @@ class Controller
      */
     public function put()
     {
-
         $this->acl->isAuthenticatedOrThrow();
 
         $auth_id = $this->acl->getAuthId();

@@ -8,13 +8,10 @@ use App\AppMain;
 
 class Model
 {
-
     private $db;
     public function __construct()
     {
         $app_main = new AppMain();
         $this->db = $app_main->getDB();
     }
-
-    
 }

@@ -41,20 +41,21 @@ function get_sub_menu(array $parts)
     return "<h4>$str</h4>";
 }
 
-function get_icon(string $icon) {
+function get_icon(string $icon)
+{
     if ($icon === 'edit') {
         return '<i class="fa-solid fa-edit"></i>';
     }
     if ($icon === 'add') {
         return '<i class="fa-solid fa-plus"></i>';
     }
-    if($icon === 'clock') {
+    if ($icon === 'clock') {
         return '<i class="fa-solid fa-clock"></i>';
     }
-    if($icon === 'today') {
+    if ($icon === 'today') {
         return Lang::translate('Today');
     }
-    if($icon === 'delete') {
+    if ($icon === 'delete') {
         return Lang::translate('Delete');
     }
 
@@ -73,7 +74,6 @@ function get_icon(string $icon) {
     // if($icon === 'delete') {
     //     return Lang::translate('Delete');
     // }
-
 }
 
 define('SUB_MENU_SEP', ' :: ');

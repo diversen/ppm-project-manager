@@ -67,13 +67,12 @@ class TimeModel
     }
 
     /**
-     * Get total task time in minutes
+     * Get total task time in minutes from where conditions
      */
     public function sumTime($where)
     {
         $sql = 'SELECT SUM(minutes) as total_time FROM time ';
         $sql.=  $this->db->getWhereSql($where);
-
 
         $row =  $this->db->prepareFetch($sql, $where);
         $total = $row['total_time'];

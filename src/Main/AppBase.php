@@ -165,8 +165,8 @@ class AppBase
         $translations->loadLanguage($language);
     }
 
-    private function getRequestLanguage() {
-
+    private function getRequestLanguage()
+    {
         $default = $this->getConfig()->get('Language.default');
         $supported = $this->getConfig()->get('Language.enabled');
 

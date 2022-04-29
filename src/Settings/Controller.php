@@ -70,7 +70,7 @@ class Controller
 
         try {
             $this->acl->isAuthenticatedOrThrow();
-            $auth_id = $this->acl->getAuthId();         
+            $auth_id = $this->acl->getAuthId();
 
             $settings->setProfileSetting($auth_id, 'profile', $post);
             $this->flash->setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);

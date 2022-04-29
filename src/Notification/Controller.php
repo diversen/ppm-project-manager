@@ -8,12 +8,12 @@ use Pebble\Template;
 
 class Controller
 {
-
     /**
      * @route /notification
      * @verbs GET
      */
-    public function notificaton() {
+    public function notificaton()
+    {
         Template::render('Notification/notification.tpl.php');
     }
 }

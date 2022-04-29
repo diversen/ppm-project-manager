@@ -31,7 +31,8 @@ function is_checked($value)
     return '';
 }
 
-function get_settings_links () {
+function get_settings_links()
+{
     $config = (new AppMain())->getConfig();
     $links = [];
     if ($config->get('TwoFactor.enabled')) {

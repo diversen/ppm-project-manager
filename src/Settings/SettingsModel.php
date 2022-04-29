@@ -12,7 +12,7 @@ class SettingsModel
 {
     private $cache = null;
     private $config = null;
-    
+
     private $allowed = ['company', 'name', 'bio', 'timezone', 'language', 'theme_dark_mode'];
     private $set_cookies = ['language', 'timezone', 'theme_dark_mode'];
     public function __construct()
@@ -44,7 +44,8 @@ class SettingsModel
     /**
      * Get allowed values from POST
      */
-    private function getAllowed($post) {
+    private function getAllowed($post)
+    {
         $profile_values = array_intersect_key($post, array_flip($this->allowed));
         return $profile_values;
     }
@@ -54,12 +55,11 @@ class SettingsModel
      */
     public function setProfileSetting($auth_id, $setting, $values)
     {
-
         $cookie_lifetime = $this->config->get('Cookie.cookie_seconds');
         $cookie = new Cookie($this->config->getSection('Cookie'));
         $values = $this->getAllowed($values);
 
-        foreach($values as $key => $value) {
+        foreach ($values as $key => $value) {
             if (in_array($key, $this->set_cookies)) {
                 $cookie->setCookie($key, $value, $cookie_lifetime);
             }

@@ -8,12 +8,12 @@ use Pebble\Template;
 
 class Controller
 {
-
     /**
      * @route /worker
      * @verbs GET
      */
-    public function worker() {
+    public function worker()
+    {
         Template::render('Test/worker.tpl.php');
     }
 
@@ -21,7 +21,8 @@ class Controller
      * @route /translate
      * @verbs GET
      */
-    public function translate() {
+    public function translate()
+    {
         Template::render('Test/translate.tpl.php');
     }
 }

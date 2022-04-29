@@ -352,7 +352,7 @@ class Controller
 
         $template_vars = ['title' => Lang::translate('New password')];
         if (empty($row)) {
-            $template_vars['error'] = true;         
+            $template_vars['error'] = true;
             $this->flash->setMessage(Lang::translate('No such account connected to supplied key'), 'error');
         }
 

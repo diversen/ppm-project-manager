@@ -36,7 +36,7 @@ class AppMain extends AppBase
         $headers->csp('style-src', 'self');
         $headers->csp('style-src', 'https://cdnjs.cloudflare.com');
         $headers->csp('font-src', 'https://cdnjs.cloudflare.com');
-        
+
         $headers->csp('worker-src', $config->get('App.server_url'));
         $headers->apply();
     }

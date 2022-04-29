@@ -71,8 +71,8 @@ class Controller
      * @route /overview/settings/put
      * @verbs POST
      */
-    public function setSettings() {
-
+    public function setSettings()
+    {
         $settings = new SettingsModel();
         $post = $_POST;
 
@@ -81,11 +81,10 @@ class Controller
         try {
             $this->acl->isAuthenticatedOrThrow();
             $auth_id = $this->acl->getAuthId();
-            
+
             if (isset($post['overview_current_day_state'])) {
                 $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
-            } 
-
+            }
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');
