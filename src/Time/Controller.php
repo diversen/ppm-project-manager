@@ -8,6 +8,7 @@ use App\AppMain;
 use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use App\Utils\AppPaginationUtils;
+use App\Exception\FormException;
 
 use Pebble\Pager;
 use Pebble\JSON;
@@ -84,7 +85,10 @@ class Controller
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
             (new TimeModel())->create($post);
-        } catch (Exception $e) {
+        } catch (FormException $e) {
+            $response['error'] = $e->getMessage();
+        }
+        catch (Exception $e) {
             $this->log->error('Time.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
