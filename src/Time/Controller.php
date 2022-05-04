@@ -64,7 +64,7 @@ class Controller
         ];
 
         \Pebble\Template::render(
-            'Time/views/time_add.tpl.php',
+            'Time/views/add.tpl.php',
             $time_vars
         );
     }
