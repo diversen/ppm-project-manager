@@ -8,6 +8,7 @@ use Diversen\Lang;
 
 use App\AppMain;
 use App\Task\TaskModel;
+use App\Exception\FormException;
 
 class TimeModel
 {
@@ -40,7 +41,7 @@ class TimeModel
     private function validate($post)
     {
         if ($this->totalMinutes($post['minutes']) == 0) {
-            throw new \Exception(Lang::translate('Not a valid time input'));
+            throw new FormException(Lang::translate('Not a valid time input'));
         }
     }
 
