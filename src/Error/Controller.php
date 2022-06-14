@@ -4,14 +4,19 @@ namespace App\Error;
 
 use Diversen\Lang;
 use Pebble\JSON;
+use Pebble\ExceptionTrace;
 use App\AppMain;
+use Exception;
+use Throwable;
 
 class Controller
 {
     public $app_main = null;
+    public $log;
     public function __construct()
     {
         $this->app_main = new AppMain();
+        $this->log = $this->app_main->getLog();
     }
     /**
      * A route for logging e.g. JS errors using a POST request
@@ -20,17 +25,14 @@ class Controller
      */
     public function ajaxError()
     {
-        $error = $_POST['error'] ?? '';
 
-        $this->app_main->getLog()->error($error);
+        $error = $_POST['error'] ?? '';
+        $this->log->error($error);
         echo JSON::response(['logged' => true]);
     }
 
     private function baseError(string $title, string $error_message)
     {
-        if (empty($error_message)) {
-            $error_message = Lang::translate('Page not found. If this page has existed then it has been deleted');
-        }
 
         $error_vars = [
             'title' => $title,
@@ -43,30 +45,42 @@ class Controller
         );
     }
 
-    /**
-     * Not found errror
-     */
-    public function notFound(string $error_message = '')
-    {
-        header('HTTP/1.0 404 Not Found');
-        $this->baseError(Lang::translate('404 Page not found'), $error_message);
+    public function templateException(Exception $e) {
+        $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
+        http_response_code(500);
+
+        // Template errors may come in the middle of some content. So we do not display a complete new page.
+        $error_message = "<pre>" . ExceptionTrace::get($e) . "</pre>"; 
+        if ($this->app_main->getConfig()->get('App.env') !== 'dev') {
+            $error_message . "<pre>" . Lang::translate('A sever error happened. The incidence has been logged.') . "</pre>";
+        }
+
+        echo $error_message;
     }
 
-    /**
-     * Forbidden error
-     */
-    public function forbidden(string $error_message = '')
-    {
-        header('HTTP/1.0 403 Forbidden');
-        $this->baseError(Lang::translate('403 Forbidden'), $error_message);
+    private function getErrorMessage($e) {
+        $error_message = ExceptionTrace::get($e);
+        if ($this->app_main->getConfig()->get('App.env') !== 'dev') {
+            $error_message = '';
+        }
+        return $error_message;
     }
 
-    /**
-     * Server error. Any other error than forbidden and not found.
-     */
-    public function error(string $error_message = '')
-    {
-        header('HTTP/1.0 500 Internal Server Error');
-        $this->baseError(Lang::translate('500 Internal Server Error'), $error_message);
+    public function notFoundException(Exception $e) {
+        $this->log->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
+        http_response_code(404);
+        $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
+    }
+
+    public function forbiddenException(Exception $e) {
+        $this->log->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
+        http_response_code(403);
+        $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
+    }
+
+    public function internalException(Throwable $e) {
+        $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
+        http_response_code(500);
+        $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
 }

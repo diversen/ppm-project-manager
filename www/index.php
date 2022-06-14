@@ -3,7 +3,11 @@
 // Include vendor loaded packages
 require_once "../vendor/autoload.php";
 
-use App\Main\AppExec;
+use Pebble\PebbleExec;
+use App\AppMain;
+use App\Error\Controller as ErrorHandler; 
 
-$app = new AppExec();
-$app->run();
+$pebble_exec = new PebbleExec();
+$pebble_exec->setErrorController(ErrorHandler::class);
+$pebble_exec->setApp(AppMain::class);
+$pebble_exec->run();

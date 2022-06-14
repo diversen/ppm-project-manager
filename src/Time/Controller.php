@@ -87,8 +87,7 @@ class Controller
             (new TimeModel())->create($post);
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $this->log->error('Time.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }

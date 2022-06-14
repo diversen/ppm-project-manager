@@ -6,21 +6,67 @@ namespace App;
 
 use Pebble\Router;
 use Pebble\Random;
+use Pebble\PebbleApp;
+use Pebble\Headers;
+use Pebble\Session;
+use Pebble\Path;
 use Aidantwoods\SecureHeaders\SecureHeaders;
-use App\Main\AppBase;
+
+use Pebble\JSON;
+use Pebble\HTTP\AcceptLanguage;
+
+use App\AppACL;
+use App\Settings\SettingsModel;
+
+use Diversen\Lang;
 
 /**
  * AppMain contains the application logic.
  * It initializes the application logic and runs it.
  */
-class AppMain extends AppBase
+class AppMain extends PebbleApp
 {
     public const VERSION = "1.2.109";
     public static $nonce;
+    public static $appAcl = null;
+
+    public function getAppACL()
+    {
+        if (!self::$appAcl) {
+            $auth_cookie_settings = $this->getConfig()->getSection('Auth');
+            self::$appAcl = new AppAcl($this->getDB(), $auth_cookie_settings);
+        }
+
+        return self::$appAcl;
+    }
+
+    /**
+     * Load user language and timezone if set else load default language
+     * Init translations
+     */
+    public function setupIntl()
+    {
+        $settings = new SettingsModel();
+
+        $auth_id = $this->getAuth()->getAuthId();
+        $user_settings = $settings->getUserSetting($auth_id, 'profile');
+
+        $timezone = $user_settings['timezone'] ?? $this->getConfig()->get('App.timezone');
+        $language = $user_settings['language'] ?? $this->getRequestLanguage();
+
+        date_default_timezone_set($timezone);
+
+        // Setup translations
+        $translations = new Lang();
+        $translations->setSingleDir("../src");
+        $translations->loadLanguage($language);
+    }
+
+
     public function sendHeaders()
     {
         $config = $this->getConfig();
-        parent::sendHeaders();
+        self::sendSSLHeaders();
 
         self::$nonce = $nonce = Random::generateRandomString(16);
 
@@ -46,10 +92,13 @@ class AppMain extends AppBase
         return self::$nonce;
     }
 
-
     public function run()
-    {
-        $this->setIncludePath(__DIR__);
+    {   
+
+        // Add src/ to include path (template include)
+        $this->addBaseToIncudePath();
+        $this->addSrcToIncludePath();
+
         $this->setErrorHandler();
         $this->sendHeaders();
         $this->sessionStart();

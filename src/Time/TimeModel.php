@@ -165,8 +165,6 @@ class TimeModel
 
             $params = ['auth_id' => $this->app_acl->getAuthId(), 'begin_date' => $date];
             $week_data[$day_ts] = $this->db->prepareFetchAll($sql, $params);
-
-            
         }
 
         foreach ($week_data as $day_ts => $day_data) {
