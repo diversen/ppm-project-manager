@@ -7,13 +7,8 @@ namespace App;
 use Pebble\Router;
 use Pebble\Random;
 use Pebble\PebbleApp;
-use Pebble\Headers;
-use Pebble\Session;
-use Pebble\Path;
-use Aidantwoods\SecureHeaders\SecureHeaders;
 
-use Pebble\JSON;
-use Pebble\HTTP\AcceptLanguage;
+use Aidantwoods\SecureHeaders\SecureHeaders;
 
 use App\AppACL;
 use App\Settings\SettingsModel;
@@ -66,7 +61,7 @@ class AppMain extends PebbleApp
     public function sendHeaders()
     {
         $config = $this->getConfig();
-        self::sendSSLHeaders();
+        $this->sendSSLHeaders();
 
         self::$nonce = $nonce = Random::generateRandomString(16);
 
@@ -93,7 +88,7 @@ class AppMain extends PebbleApp
     }
 
     public function run()
-    {   
+    {
 
         // Add src/ to include path (template include)
         $this->addBaseToIncudePath();
