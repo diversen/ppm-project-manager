@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54014fc94564aad14f9a79435e98377a",
+    "content-hash": "2c896ca6396fe0cfd555ff0929a2e684",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",

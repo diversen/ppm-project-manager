@@ -63,6 +63,11 @@ class AppMain extends PebbleApp
         $config = $this->getConfig();
         $this->sendSSLHeaders();
 
+        $env = $this->getConfig()->get("App.env");
+        if ($env === 'dev') {
+            return;
+        }
+        
         self::$nonce = $nonce = Random::generateRandomString(16);
 
         $headers = new SecureHeaders();

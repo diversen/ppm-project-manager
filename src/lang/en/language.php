@@ -127,7 +127,7 @@ $LANG['There is no such time ID'] = 'There is no such time ID';
 
 // Translation of file src/Error/Controller.php
 
-$LANG['Page not found. If this page has existed then it has been deleted'] = 'Page not found. If this page has existed then it has been deleted';
+$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
 $LANG['404 Page not found'] = '404 Page not found';
 $LANG['403 Forbidden'] = '403 Forbidden';
 $LANG['500 Internal Server Error'] = '500 Internal Server Error';
@@ -148,11 +148,6 @@ $LANG['Click the image and sign-in using google'] = 'Click the image and sign-in
 
 $LANG['You are signed in'] = 'You are signed in';
 $LANG['Sign out'] = 'Sign out';
-
-// Translation of file src/Main/AppExec.php
-
-$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
-$LANG['A server error happened. The incidence has been logged.'] = 'A server error happened. The incidence has been logged.';
 
 // Translation of file src/Notification/notification.tpl.php
 
@@ -368,7 +363,7 @@ $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] 
 $LANG['Not a valid time input'] = 'Not a valid time input';
 $LANG['No note'] = 'No note';
 
-// Translation of file src/Time/views/time_add.tpl.php
+// Translation of file src/Time/views/add.tpl.php
 
 $LANG['Add time'] = 'Add time';
 $LANG['Project'] = 'Project';

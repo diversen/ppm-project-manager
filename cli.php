@@ -7,11 +7,8 @@ use Pebble\CLI\User;
 use Pebble\CLI\DB;
 use Pebble\CLI\Migrate;
 use Pebble\CLI\Translate;
-use Pebble\Autoloader;
 use Pebble\Config;
 
-$autoloader = new Autoloader();
-$autoloader->setPath(__DIR__);
 
 $config = new Config();
 // Load config settings
