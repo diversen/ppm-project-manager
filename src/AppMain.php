@@ -6,7 +6,7 @@ namespace App;
 
 use Pebble\Router;
 use Pebble\Random;
-use Pebble\PebbleApp;
+use Pebble\App\AppBase;
 
 use Aidantwoods\SecureHeaders\SecureHeaders;
 
@@ -19,7 +19,7 @@ use Diversen\Lang;
  * AppMain contains the application logic.
  * It initializes the application logic and runs it.
  */
-class AppMain extends PebbleApp
+class AppMain extends AppBase
 {
     public const VERSION = "1.2.109";
     public static $nonce;
