@@ -57,6 +57,14 @@ class Controller
         echo $error_message;
     }
 
+    private function getErrorCode($e) {
+        $error_code = $e->getCode();
+        if (!$error_code) { 
+            $error_code = 500;
+        }
+        return $error_code;
+    }
+
     private function getErrorMessage($e) {
         $error_message = ExceptionTrace::get($e);
         if ($this->getEnv() !== 'dev') {
@@ -65,19 +73,40 @@ class Controller
         return $error_message;
     }
 
-    public function notFoundException(Exception $e) {
+    public function render(Throwable $e) {
+
+        $error_code = $this->getErrorCode($e);
+        http_response_code($error_code);
+
+        if ($error_code === 404) {
+            $this->notFoundException($e);
+        }
+        else if ($error_code === 403) {
+            $this->forbiddenException($e);
+        }
+        else if ($error_code === 510) {
+            $this->templateException($e);
+        }
+
+        // 500. And anything else
+        else {
+            $this->internalException($e);
+        }
+    }
+
+    private function notFoundException(Exception $e) {
         (new AppMain())->getLog()->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
         http_response_code(404);
         $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
     }
 
-    public function forbiddenException(Exception $e) {
+    private function forbiddenException(Exception $e) {
         (new AppMain())->getLog()->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
         http_response_code(403);
         $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
     }
 
-    public function internalException(Throwable $e) {
+    private function internalException(Throwable $e) {
         (new AppMain())->getLog()->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
         http_response_code(500);
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
