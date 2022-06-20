@@ -6,6 +6,7 @@ namespace App\Project;
 
 use Pebble\URL;
 use Pebble\Pager;
+use Pebble\App\StdUtils;
 use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
@@ -15,24 +16,22 @@ use App\AppMain;
 /**
  * Project related model
  */
-class ProjectModel
+class ProjectModel extends StdUtils
 {
     public const PROJECT_CLOSED = 0;
     public const PROJECT_OPEN = 1;
     public const PROJECT_DELETED = 2;
 
-    private $db;
     private $app_acl;
     private $task_model;
 
     public function __construct()
     {
+        parent::__contruct();
         $app_main = new AppMain();
-        $this->db = $app_main->getDB();
         $this->app_acl = $app_main->getAppACL();
         $this->task_model = new TaskModel();
         $this->time_model = new TimeModel();
-        $this->config = $app_main->getConfig();
     }
 
     /**

@@ -12,25 +12,23 @@ use Diversen\Lang;
 
 use Pebble\Flash;
 use Pebble\SessionTimed;
+use Pebble\App\StdUtils;
 
 use App\TwoFactor\TwoFactorModel;
 use App\AppMain;
 
-class Controller
+
+class Controller extends StdUtils
 {
     private $twoFactorModel;
-    private $acl;
-    private $log;
-    private $flash;
+
 
     public function __construct()
     {
-        $app_main = new AppMain();
+
+        parent::__contruct();
         $this->twoFactorModel = new TwoFactorModel();
-        $this->acl = $app_main->getAppACL();
-        $this->config = $app_main->getConfig();
-        $this->log = $app_main->getLog();
-        $this->flash = new Flash();
+
     }
 
     private function getOtpAuthUrl(string $label, string $key): string
@@ -93,13 +91,13 @@ class Controller
 
             $vars = ['qr_image' => $qr_image, 'enabled' => false];
 
-            \Pebble\Template::render(
+            $this->template->render(
                 'TwoFactor/views/enable.tpl.php',
                 $vars
             );
         } else {
             $vars = ['enabled' => true];
-            \Pebble\Template::render(
+            $this->template->render(
                 'TwoFactor/views/is_enabled.tpl.php',
                 $vars
             );
@@ -127,7 +125,7 @@ class Controller
             $res['message'] = Lang::translate('The code is verified. Two factor is enabled.');
         }
 
-        echo json_encode($res);
+        $this->json->render($res);
     }
 
     /**
@@ -143,7 +141,7 @@ class Controller
         if (!$auth_id) {
             $message = Lang::translate('You were to slow to enter two factor code. You will need to login again.');
             $res['error'] = $message;
-            echo json_encode($res);
+            $this->json->render($res);
             return;
         }
 
@@ -174,7 +172,7 @@ class Controller
             $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         }
 
-        echo json_encode($res);
+        $this->json->render($res);
     }
 
     /**
@@ -184,7 +182,7 @@ class Controller
     public function verify()
     {
         $vars = [];
-        \Pebble\Template::render(
+        $this->template->render(
             'TwoFactor/views/verify.tpl.php',
             $vars
         );

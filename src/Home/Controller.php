@@ -6,13 +6,15 @@ namespace App\Home;
 
 use Parsedown;
 use Pebble\Exception\NotFoundException;
+use Pebble\App\StdUtils;
 use App\AppMain;
 
-class Controller
+class Controller extends StdUtils
 {
     public function __construct()
     {
-        $this->auth_id = (new AppMain())->getAuth()->getAuthId();
+        parent::__contruct();
+        $this->auth_id = $this->auth->getAuthId();
     }
 
     /**
@@ -26,7 +28,7 @@ class Controller
         }
 
         $data = ['title' => 'PPM'];
-        \Pebble\Template::render('Home/views/home.tpl.php', $data);
+        $this->template->render('Home/views/home.tpl.php', $data);
     }
 
     /**
@@ -48,6 +50,6 @@ class Controller
 
         $data['note_markdown'] = $parsedown->text($markdown_text);
 
-        \Pebble\Template::render('Home/views/terms.tpl.php', $data, ['raw' => true]);
+        $this->template->render('Home/views/terms.tpl.php', $data, ['raw' => true]);
     }
 }

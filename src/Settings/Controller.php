@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace App\Settings;
 
 use Diversen\Lang;
-use App\Settings\SettingsModel;
+
 use Pebble\JSON;
 use Pebble\Exception\NotFoundException;
 use Pebble\ExceptionTrace;
 use Pebble\Flash;
+use Pebble\App\StdUtils;
+
+use App\Settings\SettingsModel;
 use App\AppMain;
 use Exception;
 
-class Controller
+
+class Controller extends StdUtils
 {
-    private $acl;
-    private $log;
-    private $flash;
     public function __construct()
     {
-        $this->acl = (new AppMain())->getAppACL();
-        $this->log = (new AppMain())->getLog();
-        $this->flash = new Flash();
+        parent::__contruct();
     }
     /**
      * @route /settings
@@ -37,7 +36,7 @@ class Controller
 
         $vars['user_settings'] = $user_settings;
 
-        \Pebble\Template::render('Settings/views/settings.tpl.php', $vars);
+        $this->template->render('Settings/views/settings.tpl.php', $vars);
     }
 
     /**
@@ -54,7 +53,7 @@ class Controller
         $settings = new SettingsModel();
         $user = $settings->getUserSetting($params['auth_id'], 'profile');
 
-        \Pebble\Template::render('Settings/views/user.tpl.php', ['user' => $user]);
+        $this->template->render('Settings/views/user.tpl.php', ['user' => $user]);
     }
 
     /**
@@ -80,6 +79,6 @@ class Controller
         }
 
         header('Content-Type: application/json');
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 }

@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace App\Time;
 
+use Pebble\App\StdUtils;
 use Diversen\Lang;
 
 use App\AppMain;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 
-class TimeModel
+
+class TimeModel extends StdUtils
 {
-    private $db;
     private $app_acl;
 
     public function __construct()
     {
+        parent::__contruct();
         $app_main = new AppMain();
-        $this->db = $app_main->getDB();
         $this->app_acl = $app_main->getAppACL();
     }
 

@@ -4,26 +4,21 @@ declare(strict_types=1);
 
 namespace App\Google;
 
-use Pebble\Flash;
 use Pebble\SessionTimed;
+use Pebble\App\StdUtils;
 use Diversen\Lang;
 use App\Google\GoogleUtils;
 use App\TwoFactor\TwoFactorModel;
-use App\AppMain;
 
-class Controller
+
+class Controller extends StdUtils
 {
-    private $auth;
-    private $config;
     public function __construct()
     {
-        $app_main = new AppMain();
-        $this->auth = $app_main->getAuth();
-        $this->config = $app_main->getConfig();
-        $this->log = $app_main->getLog();
+
+        parent::__contruct();
         $this->login_redirect = $this->config->get('App.login_redirect');
         $this->logout_redirect = $this->config->get('App.logout_redirect');
-        $this->flash = new Flash();
     }
 
     /**
@@ -45,7 +40,7 @@ class Controller
     {
         if ($this->auth->isAuthenticated()) {
             $vars = [];
-            \Pebble\Template::render(
+            $this->template->render(
                 'Google/sign_out.tpl.php',
                 $vars
             );
@@ -77,7 +72,7 @@ class Controller
         } else {
             $authUrl = $client->createAuthUrl();
             $vars = ['auth_url' => $authUrl];
-            \Pebble\Template::render(
+            $this->template->render(
                 'Google/sign_in.tpl.php',
                 $vars,
                 ['raw' => true]

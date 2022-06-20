@@ -30,7 +30,7 @@ class ControllerExt extends Controller
         $google_auth_url = $this->getGoogleAuthUrl();
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
-            \Pebble\Template::render(
+            $this->template->render(
                 'Account/views/signout.php'
             );
         } else {
@@ -40,7 +40,7 @@ class ControllerExt extends Controller
                 'csrf_token' => (new CSRF())->getToken(),
             ];
 
-            \Pebble\Template::render(
+            $this->template->render(
                 'Account/views/signin_ext.php',
                 $template_vars
             );

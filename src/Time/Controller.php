@@ -15,22 +15,23 @@ use Pebble\JSON;
 use Pebble\ExceptionTrace;
 
 use JasonGrimes\Paginator;
+use Pebble\App\StdUtils;
 
-class Controller
+class Controller extends StdUtils
 {
     private $app_acl;
-    private $log;
     private $pagination_utils;
     private $time_model;
-    private $config;
+
     public function __construct()
     {
+        parent::__contruct();
+
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
-        $this->log = $app_main->getLog();
         $this->pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
         $this->time_model = new TimeModel();
-        $this->config = $app_main->getConfig();
+
     }
 
     /**
@@ -63,7 +64,7 @@ class Controller
             'paginator' => $paginator,
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Time/views/add.tpl.php',
             $time_vars
         );
@@ -94,7 +95,7 @@ class Controller
 
         $response['project_redirect'] = '/project/view/' . $task['project_id'];
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -115,6 +116,6 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 }

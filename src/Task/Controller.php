@@ -4,32 +4,30 @@ declare(strict_types=1);
 
 namespace App\Task;
 
+use Pebble\ExceptionTrace;
+use Pebble\App\StdUtils;
+
 use App\Project\ProjectModel;
 use App\Task\TaskModel;
-use Pebble\JSON;
-use Pebble\ExceptionTrace;
-use Pebble\Flash;
 use App\AppMain;
 use App\Exception\FormException;
-use Diversen\Lang;
 
 use Exception;
 
-class Controller
+class Controller extends StdUtils
 {
     private $project_model;
     private $task_model;
     private $app_acl;
-    private $log;
-    private $flash;
+
     public function __construct()
     {
+        parent::__contruct();
+
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
         $this->project_model = new ProjectModel();
         $this->task_model = new TaskModel();
-        $this->log = $app_main->getLog();
-        $this->flash = new Flash();
     }
 
     /**
@@ -47,7 +45,7 @@ class Controller
             'task' => $task,
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Task/views/task_add.tpl.php',
             $template_vars
         );
@@ -71,7 +69,7 @@ class Controller
             'all_projects' => $projects,
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Task/views/task_edit.tpl.php',
             $template_vars
         );
@@ -92,7 +90,7 @@ class Controller
             'project' => $project
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Task/views/task_view.tpl.php',
             $template_vars
         );
@@ -121,7 +119,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -158,7 +156,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -177,7 +175,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -199,6 +197,6 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 }

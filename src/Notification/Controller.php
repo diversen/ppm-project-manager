@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace App\Notification;
 
 use Pebble\Template;
+use Pebble\App\StdUtils;
 
-class Controller
+class Controller extends StdUtils
 {
+
+    public function __construct()
+    {
+        parent::__contruct();
+    }
     /**
      * @route /notification
      * @verbs GET
      */
     public function notificaton()
     {
-        Template::render('Notification/notification.tpl.php');
+        $this->template->render('Notification/notification.tpl.php');
     }
 }

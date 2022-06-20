@@ -10,5 +10,5 @@ return [
 	'env' => 'dev',
 	'base_path' => dirname(__FILE__) . '/..',
 	'server_url' => 'http://localhost:8000',
-	'pager_limit' => 10,
+	'pager_limit' => 50,
 ];

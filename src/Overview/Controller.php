@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace App\Overview;
 
+use Pebble\URL;
+use Pebble\ExceptionTrace;
+use Pebble\App\StdUtils;
+
 use App\AppMain;
 use App\Utils\AppCal;
 use App\Time\TimeModel;
 use App\Settings\SettingsModel;
-use Pebble\URL;
-use Pebble\JSON;
-use Pebble\ExceptionTrace;
 
 use Diversen\Lang;
 use Exception;
 
-class Controller
+class Controller extends StdUtils
 {
     public function __construct()
     {
+        parent::__contruct();
         $this->app_main = new AppMain();
-        $this->auth_id = $this->app_main->getAuth()->getAuthId();
-        $this->acl = $this->app_main->getAppACL();
+        $this->auth_id = $this->auth->getAuthId();
     }
 
     /**
@@ -30,7 +31,7 @@ class Controller
      */
     public function index()
     {
-        $this->app_main->getAppACL()->isAuthenticatedOrThrow();
+        $this->acl->isAuthenticatedOrThrow();
 
         $cal = new AppCal();
         $week_delta_current = (int) URL::getQueryPart('week_delta');
@@ -64,7 +65,7 @@ class Controller
             'description' => Lang::translate('Overview by week'),
         ];
 
-        \Pebble\Template::render('Overview/overview.tpl.php', $data);
+        $this->template->render('Overview/overview.tpl.php', $data);
     }
 
     /**
@@ -91,6 +92,6 @@ class Controller
         }
 
         header('Content-Type: application/json');
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 }

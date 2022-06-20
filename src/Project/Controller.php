@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Project;
 
 use Diversen\Lang;
-use Pebble\Template;
-use Pebble\JSON;
 use Pebble\ExceptionTrace;
 use Pebble\Pager;
+use Pebble\App\StdUtils;
 use App\Utils\AppPaginationUtils;
 use App\AppMain;
 use App\Exception\FormException;
@@ -16,20 +15,19 @@ use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
 use Exception;
 
-class Controller
+
+class Controller extends StdUtils
 {
     private $app_acl;
-    private $log;
-    private $config;
     private $project_model;
     private $pagination_utils;
 
     public function __construct()
     {
+        parent::__contruct();
         $app_main = new AppMain();
-        $this->config = $app_main->getConfig();
         $this->app_acl = $app_main->getAppACL();
-        $this->log = $app_main->getLog();
+
         $this->project_model = new ProjectModel();
         $this->pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);
     }
@@ -74,7 +72,7 @@ class Controller
         $order_by = $this->pagination_utils->getOrderByFromQuery();
         $template_data = $this->getProjectData($where, $order_by);
 
-        Template::render(
+        $this->template->render(
             'Project/views/index.tpl.php',
             $template_data
         );
@@ -97,7 +95,7 @@ class Controller
         $order_by = $this->pagination_utils->getOrderByFromQuery();
         $template_data = $this->getProjectData($where, $order_by);
 
-        Template::render(
+        $this->template->render(
             'Project/views/index.tpl.php',
             $template_data
         );
@@ -114,7 +112,7 @@ class Controller
         $template_data = $this->project_model->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
 
-        Template::render(
+        $this->template->render(
             'Project/views/view.tpl.php',
             $template_data
         );
@@ -132,7 +130,7 @@ class Controller
             'title' => Lang::translate('Add project'),
         ];
 
-        Template::render(
+        $this->template->render(
             'Project/views/add.tpl.php',
             $form_vars
         );
@@ -152,7 +150,7 @@ class Controller
             'project' => $project,
         ];
 
-        Template::render(
+        $this->template->render(
             'Project/views/edit.tpl.php',
             $form_vars
         );
@@ -179,7 +177,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -202,7 +200,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -222,7 +220,7 @@ class Controller
             $response['error'] = $e->getMessage();
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -240,7 +238,7 @@ class Controller
             $data['error'] = $e->getMessage();
         }
 
-        Template::render(
+        $this->template->render(
             'Project/views/task_list.tpl.php',
             $data
         );

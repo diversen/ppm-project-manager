@@ -7,11 +7,10 @@ namespace App\Account;
 use Diversen\Lang;
 use Pebble\Captcha;
 use Pebble\CSRF;
-use Pebble\Flash;
-use Pebble\JSON;
 use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
-use App\AppMain;
+use Pebble\App\StdUtils;
+
 use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
@@ -19,35 +18,26 @@ use App\TwoFactor\TwoFactorModel;
 use Exception;
 use stdClass;
 
-class Controller
+class Controller extends StdUtils
 {
-    public $auth;
-    public $config;
-    public $db;
-    public $log;
-    public $flash;
 
     public function __construct()
     {
-        $app_main = new AppMain();
-        $this->auth = $app_main->getAuth();
-        $this->config = $app_main->getConfig();
-        $this->db = $app_main->getDB();
-        $this->log = $app_main->getLog();
-        $this->flash = new Flash();
+
+        parent::__contruct();
     }
 
     /**
      * @route /account/signin
      * @verbs GET
      */
-
     public function index(array $params, stdClass $obj)
     {
+
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
             $template_vars['title'] = Lang::translate('Sign out');
-            \Pebble\Template::render(
+            $this->template->render(
                 'Account/views/signout.php',
                 $template_vars
             );
@@ -55,7 +45,7 @@ class Controller
             $template_vars['title'] = Lang::translate('Sign in');
             $template_vars['csrf_token'] = (new CSRF())->getToken();
 
-            \Pebble\Template::render(
+            $this->template->render(
                 'Account/views/signin.php',
                 $template_vars
             );
@@ -90,7 +80,7 @@ class Controller
      */
     public function signout()
     {
-        \Pebble\Template::render(
+        $this->template->render(
             'Account/views/signout.php',
             ['title' => Lang::translate('Sign out')]
         );
@@ -108,7 +98,7 @@ class Controller
         $validate = new Validate();
         $response = $validate->postLogin();
         if ($response['error'] === true) {
-            echo JSON::response($response);
+            $this->json->render($response);
             return;
         }
 
@@ -136,7 +126,7 @@ class Controller
             $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -154,7 +144,7 @@ class Controller
                 $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
                 $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
                 $response['redirect'] = '/2fa/verify';
-                echo JSON::response($response);
+                $this->json->render($response);
                 return true;
             }
         }
@@ -172,7 +162,7 @@ class Controller
             'token' => (new CSRF())->getToken(),
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Account/views/signup.php',
             $template_vars
         );
@@ -221,7 +211,7 @@ class Controller
         $validate = new Validate();
         $response = $validate->postSignup();
         if ($response['error'] === true) {
-            echo JSON::response($response);
+            $this->json->render($response);
             return;
         }
 
@@ -263,7 +253,7 @@ class Controller
             }
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
     }
 
     /**
@@ -277,7 +267,7 @@ class Controller
             'title' => Lang::translate('Forgotten password'),
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Account/views/recover.php',
             $template_vars
         );
@@ -297,7 +287,7 @@ class Controller
         $csrf = new CSRF();
         if (!$csrf->validateToken()) {
             $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            echo JSON::response($response);
+            $this->json->render($response);
             return;
         }
 
@@ -305,13 +295,13 @@ class Controller
 
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');
-            echo JSON::response($response);
+            $this->json->render($response);
             return;
         }
 
         if (!$captcha->validate($_POST['captcha'])) {
             $response['message'] = Lang::translate('The image text does not match your submission');
-            echo JSON::response($response);
+            $this->json->render($response);
             return;
         }
 
@@ -337,7 +327,7 @@ class Controller
             }
         }
 
-        echo JSON::response($response);
+        $this->json->render($response);
         return;
     }
 
@@ -358,7 +348,7 @@ class Controller
 
         $template_vars['token'] = (new CSRF())->getToken();
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Account/views/newpassword.php',
             $template_vars
         );

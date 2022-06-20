@@ -5,12 +5,16 @@ namespace App\Error;
 use Diversen\Lang;
 use Pebble\JSON;
 use Pebble\ExceptionTrace;
-use App\AppMain;
+use Pebble\App\StdUtils;
 use Exception;
 use Throwable;
 
-class Controller
+class Controller extends StdUtils
 {
+
+    public function __construct() {
+        parent::__contruct();
+    }
     /**
      * A route for logging e.g. JS errors using a POST request
      * @route /error/log
@@ -20,8 +24,8 @@ class Controller
     {
 
         $error = $_POST['error'] ?? '';
-        (new AppMain())->getLog()->error($error);
-        echo JSON::response(['logged' => true]);
+        $this->log->error($error);
+        $this->json->render(['logged' => true]);
     }
 
     private function baseError(string $title, string $error_message)
@@ -32,19 +36,19 @@ class Controller
             'message' => $error_message,
         ];
 
-        \Pebble\Template::render(
+        $this->template->render(
             'Error/error.tpl.php',
             $error_vars
         );
     }
 
     private function getEnv() {
-        $env = (new AppMain())->getConfig()->get('App.env');
+        $env = $this->config->get('App.env');
         return $env;
     }
 
     public function templateException(Exception $e) {
-        (new AppMain())->getLog()->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
+        $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
         http_response_code(500);
 
         // Template errors may come in the middle of some content. So we do not display a complete new page.
@@ -57,7 +61,7 @@ class Controller
         echo $error_message;
     }
 
-    private function getErrorCode($e) {
+    private function getErrorCode(Throwable $e) {
         $error_code = $e->getCode();
         if (!$error_code) { 
             $error_code = 500;
@@ -65,7 +69,7 @@ class Controller
         return $error_code;
     }
 
-    private function getErrorMessage($e) {
+    private function getErrorMessage(Throwable $e) {
         $error_message = ExceptionTrace::get($e);
         if ($this->getEnv() !== 'dev') {
             $error_message = '';
@@ -95,19 +99,19 @@ class Controller
     }
 
     private function notFoundException(Exception $e) {
-        (new AppMain())->getLog()->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
+        $this->log->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
         http_response_code(404);
         $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
     }
 
     private function forbiddenException(Exception $e) {
-        (new AppMain())->getLog()->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
+        $this->log->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
         http_response_code(403);
         $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
     }
 
     private function internalException(Throwable $e) {
-        (new AppMain())->getLog()->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
+        $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
         http_response_code(500);
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }

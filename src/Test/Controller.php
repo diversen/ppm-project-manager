@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Test;
 
-use Pebble\Template;
+use Pebble\App\StdUtils;
 
-class Controller
+class Controller extends StdUtils
 {
     /**
      * @route /worker
@@ -14,7 +14,7 @@ class Controller
      */
     public function worker()
     {
-        Template::render('Test/worker.tpl.php');
+        $this->template->render('Test/worker.tpl.php');
     }
 
     /**
@@ -23,6 +23,6 @@ class Controller
      */
     public function translate()
     {
-        Template::render('Test/translate.tpl.php');
+        $this->template->render('Test/translate.tpl.php');
     }
 }

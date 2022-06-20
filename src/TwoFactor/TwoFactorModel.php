@@ -2,14 +2,15 @@
 
 namespace App\TwoFactor;
 
+use Pebble\App\StdUtils;
 use App\AppMain;
 
-class TwoFactorModel
+class TwoFactorModel extends StdUtils
 {
-    public $db;
+
     public function __construct()
     {
-        $this->db = (new AppMain())->getDB();
+        parent::__contruct();
     }
 
     public function getUserRow(array $where): array

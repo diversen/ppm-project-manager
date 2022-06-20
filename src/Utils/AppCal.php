@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
+use Pebble\App\StdUtils;
+
 use DateTime;
 use DateTimeZone;
-use App\AppMain;
 
 use App\Settings\SettingsModel;
 
-class AppCal
+class AppCal extends StdUtils
 {
-    private $auth;
-    private $config;
+
     public function __construct()
     {
-        $app_main = new AppMain();
-        $this->auth = $app_main->getAuth();
-        $this->config = $app_main->getConfig();
+        parent::__contruct();
     }
 
     private function getUserTimeZone()
