@@ -325,16 +325,16 @@
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v5.2.0",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "93de7479a66b7b535c54053b4a7561aadd84e38f"
+                "reference": "6562e6ac8f7b149841391f1b9ac1b0cee8934345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/93de7479a66b7b535c54053b4a7561aadd84e38f",
-                "reference": "93de7479a66b7b535c54053b4a7561aadd84e38f",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/6562e6ac8f7b149841391f1b9ac1b0cee8934345",
+                "reference": "6562e6ac8f7b149841391f1b9ac1b0cee8934345",
                 "shasum": ""
             },
             "require": {
@@ -378,26 +378,29 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v5.2.0"
+                "source": "https://github.com/diversen/pebble-framework/tree/v5.2.1"
             },
-            "time": "2022-06-18T13:46:37+00:00"
+            "time": "2022-06-20T16:56:48+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
-            "version": "v3.0.0",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/simple-php-translation.git",
-                "reference": "419a1eedc6c557f12321bb5f65918a10103f9ba1"
+                "reference": "6d09350943763f6893842af7b7636087459bfa7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/simple-php-translation/zipball/419a1eedc6c557f12321bb5f65918a10103f9ba1",
-                "reference": "419a1eedc6c557f12321bb5f65918a10103f9ba1",
+                "url": "https://api.github.com/repos/diversen/simple-php-translation/zipball/6d09350943763f6893842af7b7636087459bfa7a",
+                "reference": "6d09350943763f6893842af7b7636087459bfa7a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "google/cloud-translate": "^1.12"
             },
             "type": "library",
             "extra": {
@@ -432,9 +435,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/simple-php-translation/issues",
-                "source": "https://github.com/diversen/simple-php-translation/tree/v3.0.0"
+                "source": "https://github.com/diversen/simple-php-translation/tree/v3.0.3"
             },
-            "time": "2022-04-13T11:38:17+00:00"
+            "time": "2022-06-19T12:26:55+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -620,16 +623,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.253.0",
+            "version": "v0.254.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "70c62b17f7821526cb52c6f125254dc51f256109"
+                "reference": "e1b16659df899f3bdf5c798358c256a9cc01efeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/70c62b17f7821526cb52c6f125254dc51f256109",
-                "reference": "70c62b17f7821526cb52c6f125254dc51f256109",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/e1b16659df899f3bdf5c798358c256a9cc01efeb",
+                "reference": "e1b16659df899f3bdf5c798358c256a9cc01efeb",
                 "shasum": ""
             },
             "require": {
@@ -658,9 +661,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.253.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.254.0"
             },
-            "time": "2022-06-13T01:06:12+00:00"
+            "time": "2022-06-19T01:16:11+00:00"
         },
         {
             "name": "google/auth",
@@ -1421,16 +1424,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.6.2",
+            "version": "v6.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "b52ed06864fdda81b82ec8bf564cf15d45ed4f95"
+                "reference": "9400f305a898f194caff5521f64e5dfa926626f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/b52ed06864fdda81b82ec8bf564cf15d45ed4f95",
-                "reference": "b52ed06864fdda81b82ec8bf564cf15d45ed4f95",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/9400f305a898f194caff5521f64e5dfa926626f3",
+                "reference": "9400f305a898f194caff5521f64e5dfa926626f3",
                 "shasum": ""
             },
             "require": {
@@ -1487,7 +1490,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.2"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.6.3"
             },
             "funding": [
                 {
@@ -1495,7 +1498,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-06-14T09:27:21+00:00"
+            "time": "2022-06-20T09:21:02+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -2572,16 +2575,16 @@
         },
         {
             "name": "google/gax",
-            "version": "v1.12.2",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/gax-php.git",
-                "reference": "38ea1c12e7d24caeb3abbcac44a6a3536a8ef2a7"
+                "reference": "1403cdf2406ef9af113d8563a43ccb0f7d7c7544"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/38ea1c12e7d24caeb3abbcac44a6a3536a8ef2a7",
-                "reference": "38ea1c12e7d24caeb3abbcac44a6a3536a8ef2a7",
+                "url": "https://api.github.com/repos/googleapis/gax-php/zipball/1403cdf2406ef9af113d8563a43ccb0f7d7c7544",
+                "reference": "1403cdf2406ef9af113d8563a43ccb0f7d7c7544",
                 "shasum": ""
             },
             "require": {
@@ -2592,7 +2595,7 @@
                 "grpc/grpc": "^1.13",
                 "guzzlehttp/promises": "^1.3",
                 "guzzlehttp/psr7": "^1.7.0||^2",
-                "php": ">=5.5"
+                "php": ">=5.6"
             },
             "conflict": {
                 "ext-protobuf": "<3.7.0"
@@ -2619,9 +2622,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/gax-php/issues",
-                "source": "https://github.com/googleapis/gax-php/tree/v1.12.2"
+                "source": "https://github.com/googleapis/gax-php/tree/v1.13.0"
             },
-            "time": "2022-05-17T03:48:18+00:00"
+            "time": "2022-06-19T23:40:58+00:00"
         },
         {
             "name": "google/grpc-gcp",
@@ -3530,16 +3533,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.20",
+            "version": "9.5.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "12bc8879fb65aef2138b26fc633cb1e3620cffba"
+                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/12bc8879fb65aef2138b26fc633cb1e3620cffba",
-                "reference": "12bc8879fb65aef2138b26fc633cb1e3620cffba",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e32b76be457de00e83213528f6bb37e2a38fcb1",
+                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1",
                 "shasum": ""
             },
             "require": {
@@ -3573,7 +3576,6 @@
                 "sebastian/version": "^3.0.2"
             },
             "require-dev": {
-                "ext-pdo": "*",
                 "phpspec/prophecy-phpunit": "^2.0.1"
             },
             "suggest": {
@@ -3617,7 +3619,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.20"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.21"
             },
             "funding": [
                 {
@@ -3629,7 +3631,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-01T12:37:26+00:00"
+            "time": "2022-06-19T12:14:25+00:00"
         },
         {
             "name": "rize/uri-template",
