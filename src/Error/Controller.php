@@ -2,6 +2,9 @@
 
 namespace App\Error;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Pebble\Path;
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
 use Pebble\App\AppBase;
@@ -43,10 +46,17 @@ class Controller
             
         } catch (Exception $e) {
 
-            // This os most likely a config dir that can not be read
+            // This is most likely a config dir that can not be read
             // This will throw an exception
+            // But can not be logged using the normal LogService
+            // Because the normal log service uses Config
             echo $e->getMessage();
-            error_log(ExceptionTrace::get($e));
+
+            $base_path = Path::getBasePath();
+            $log = new Logger('base');
+            $log->pushHandler(new StreamHandler($base_path . '/logs/emergency.log', Logger::DEBUG));
+            $log->emergency($e->getMessage(), ['trace' => ExceptionTrace::get($e)]);
+
             exit();
         }
     }
