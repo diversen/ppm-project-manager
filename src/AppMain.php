@@ -41,7 +41,7 @@ class AppMain extends AppBase
      */
     public function setupIntl()
     {
-        // Setup translations
+        // Load 'en' case an error early we still have som translation
         $translations = new Lang();
         $translations->setSingleDir("../src");
         $translations->loadLanguage('en');
@@ -52,11 +52,12 @@ class AppMain extends AppBase
         $user_settings = $settings->getUserSetting($auth_id, 'profile');
 
         $timezone = $user_settings['timezone'] ?? $this->getConfig()->get('App.timezone');
-        $language = $user_settings['language'] ?? $this->getRequestLanguage();
-
         date_default_timezone_set($timezone);
         
+        $language = $user_settings['language'] ?? $this->getRequestLanguage();
+        
         $translations->loadLanguage($language);
+
     }
 
 
