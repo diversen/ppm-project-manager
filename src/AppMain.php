@@ -41,6 +41,11 @@ class AppMain extends AppBase
      */
     public function setupIntl()
     {
+        // Setup translations
+        $translations = new Lang();
+        $translations->setSingleDir("../src");
+        $translations->loadLanguage('en');
+
         $settings = new SettingsModel();
 
         $auth_id = $this->getAuth()->getAuthId();
@@ -50,10 +55,7 @@ class AppMain extends AppBase
         $language = $user_settings['language'] ?? $this->getRequestLanguage();
 
         date_default_timezone_set($timezone);
-
-        // Setup translations
-        $translations = new Lang();
-        $translations->setSingleDir("../src");
+        
         $translations->loadLanguage($language);
     }
 
