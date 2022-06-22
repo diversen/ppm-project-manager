@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 namespace App\Time;
 
-use Pebble\App\StdUtils;
 use Diversen\Lang;
 
 use App\AppMain;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 
+use Throwable;
 
-class TimeModel extends StdUtils
+
+class TimeModel
 {
     private $app_acl;
+    private $db;
 
     public function __construct()
     {
-        parent::__contruct();
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
+        $this->db = $app_main->getDB();
     }
 
     /**
@@ -121,16 +123,21 @@ class TimeModel extends StdUtils
         $post['auth_id'] = $this->app_acl->getAuthId();
         $post = $this->sanitize($post);
 
-        $this->db->beginTransaction();
+        try {
+            $this->db->beginTransaction();
 
-        if (isset($post['close'])) {
-            $task = new TaskModel();
-            $task->close($post['task_id']);
-            unset($post['close']);
+            if (isset($post['close'])) {
+                $task = new TaskModel();
+                $task->close($post['task_id']);
+                unset($post['close']);
+            }
+
+            $this->db->insert('time', $post);
+            $this->db->commit();
+        } catch (Throwable $e) {
+            $this->db->rollBack();
+            throw $e;
         }
-
-        $this->db->insert('time', $post);
-        return $this->db->commit();
     }
 
     /**

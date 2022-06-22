@@ -11,7 +11,6 @@ use App\Utils\AppPaginationUtils;
 use App\Exception\FormException;
 
 use Pebble\Pager;
-use Pebble\JSON;
 use Pebble\ExceptionTrace;
 
 use JasonGrimes\Paginator;
@@ -22,6 +21,7 @@ class Controller extends StdUtils
     private $app_acl;
     private $pagination_utils;
     private $time_model;
+    private $project_model;
 
     public function __construct()
     {
@@ -31,6 +31,7 @@ class Controller extends StdUtils
         $this->app_acl = $app_main->getAppACL();
         $this->pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
         $this->time_model = new TimeModel();
+        $this->project_model = new ProjectModel();
 
     }
 
@@ -43,7 +44,7 @@ class Controller extends StdUtils
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-        $project = (new ProjectModel())->getOne($task['project_id']);
+        $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
         $where = ['task_id' => $task['id']];
         $total = $this->time_model->getNumTime($where);
@@ -85,7 +86,7 @@ class Controller extends StdUtils
             // POST time
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
-            (new TimeModel())->create($post);
+            $this->time_model->create($post);
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
         } catch (Exception $e) {

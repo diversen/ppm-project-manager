@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Task;
 
-
-use Pebble\App\StdUtils;
+use Pebble\App\AppBase;
 use Pebble\Exception\NotFoundException;
 
 use App\Time\TimeModel;
@@ -14,16 +13,23 @@ use App\Exception\FormException;
 use Diversen\Lang;
 use DateTime;
 
+use Throwable;
 
-class TaskModel extends StdUtils
+class TaskModel
 {
     public const TASK_CLOSED = 0;
     public const TASK_OPEN = 1;
     public const TASK_DELETED = 2;
 
+    private $db;
+    private $time_model;
+
     public function __construct()
     {
-        parent::__contruct();
+        
+        $app_base = new AppBase();
+        $this->db = $app_base->getDB();
+        $this->time_model = new TimeModel();
     }
 
     /**
@@ -75,28 +81,26 @@ class TaskModel extends StdUtils
 
     public function getAll(array $where, array $limit = [])
     {
-        $timeModel = new TimeModel();
 
         $order_by = ['updated' => 'DESC', 'priority' => 'ASC'];
         $tasks = $this->db->getAllQuery('SELECT * FROM task', $where, $order_by, $limit);
         foreach ($tasks as $key => $task) {
-            $total_task_time = $timeModel->sumTime(['task_id' => $task['id']]);
-            $tasks[$key]['time_used'] = $timeModel->minutesToHoursMinutes($total_task_time);
+            $total_task_time = $this->time_model->sumTime(['task_id' => $task['id']]);
+            $tasks[$key]['time_used'] = $this->time_model->minutesToHoursMinutes($total_task_time);
         }
         return $tasks;
     }
 
     public function getOne($where)
     {
-        $time_model = new TimeModel();
         $task = $this->db->getOne('task', $where);
 
         if (empty($task)) {
             throw new NotFoundException(Lang::translate('There is no such task'));
         }
 
-        $task_time_total = $time_model->sumTime(['task_id' => $task['id']]);
-        $task['task_time_total'] = $time_model->minutesToHoursMinutes($task_time_total);
+        $task_time_total = $this->time_model->sumTime(['task_id' => $task['id']]);
+        $task['task_time_total'] = $this->time_model->minutesToHoursMinutes($task_time_total);
         return $task;
     }
 
@@ -121,10 +125,18 @@ class TaskModel extends StdUtils
 
     public function create($post)
     {
+        
         $post = $this->sanitize($post);
         $this->validate($post);
-        $this->db->insert('task', $post);
-        return $this->db->lastInsertId();
+
+        try {
+            $this->db->beginTransaction();
+            $this->db->insert('task', $post);
+            $this->db->commit();
+        } catch (Throwable $e) {            
+            $this->db->rollback();
+            throw $e;
+        }
     }
 
     public function update($post, $where)
@@ -133,12 +145,19 @@ class TaskModel extends StdUtils
         $this->validate($post);
         $task = $this->getOne($where);
 
-        $this->db->beginTransaction();
+        try {
+            $this->db->beginTransaction();
 
-        // Update time in case project_id has changed
-        $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
-        $this->db->update('task', $post, $where);
-        return $this->db->commit();
+            // Update time in case project_id has changed
+            $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
+            $this->db->update('task', $post, $where);
+            $this->db->commit();
+
+        } catch (Throwable $e) {
+            $this->db->rollback();
+            throw $e;
+        }
+        
     }
 
     public function close(string $task_id)

@@ -6,17 +6,18 @@ namespace App\Project;
 
 use Pebble\URL;
 use Pebble\Pager;
-use Pebble\App\StdUtils;
 use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\AppMain;
+use PDOException;
+use Throwable;
 
 /**
  * Project related model
  */
-class ProjectModel extends StdUtils
+class ProjectModel
 {
     public const PROJECT_CLOSED = 0;
     public const PROJECT_OPEN = 1;
@@ -24,12 +25,16 @@ class ProjectModel extends StdUtils
 
     private $app_acl;
     private $task_model;
+    private $db;
+    private $config;
 
     public function __construct()
     {
-        parent::__contruct();
         $app_main = new AppMain();
+        
         $this->app_acl = $app_main->getAppACL();
+        $this->db = $app_main->getDB();
+        $this->config = $app_main->getConfig();
         $this->task_model = new TaskModel();
         $this->time_model = new TimeModel();
     }
@@ -49,15 +54,15 @@ class ProjectModel extends StdUtils
      */
     public function getAll(array $params, array $order = [], array $limit = [])
     {
-        return $this->db->getAllQuery('SELECT * FROM project', $params, $order, $limit);
+        return $this->db->getAll('project', $params, $order, $limit);
     }
 
     /**
      * Get single project from ID
      */
-    public function getOne($id)
+    public function getOne(array $where): array
     {
-        return $this->db->getOne('project', ['id' => $id]);
+        return $this->db->getOne('project', $where);
     }
 
     /**
@@ -65,10 +70,15 @@ class ProjectModel extends StdUtils
      */
     public function delete($id)
     {
-        $this->db->beginTransaction();
-        $this->db->delete('project', ['id' => $id]);
-        $this->app_acl->removeProjectRights($id);
-        return $this->db->commit();
+        try {
+            $this->db->beginTransaction();
+            $this->db->delete('project', ['id' => $id]);
+            $this->app_acl->removeProjectRights($id);
+            $this->db->commit();
+        } catch (Throwable $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
     }
 
     /**
@@ -78,14 +88,18 @@ class ProjectModel extends StdUtils
     {
         $this->validate($post);
 
-        $this->db->beginTransaction();
-        $this->db->insert('project', $post);
-        $project_id = $this->db->lastInsertId();
+        try {
+            $this->db->beginTransaction();
+            $this->db->insert('project', $post);
+            $project_id = $this->db->lastInsertId();
 
-        $this->app_acl->setProjectRights($project_id);
-        $this->db->commit();
+            $this->app_acl->setProjectRights($project_id);
+            $this->db->commit();
+        } catch (Throwable $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
 
-        return $project_id;
     }
 
     /**
@@ -98,7 +112,14 @@ class ProjectModel extends StdUtils
         // Forcde update even when noting has been updated
         $post['updated'] = date('Y-m-d H:i:s');
 
-        return $this->db->update('project', $post, ['id' => $project_id]);
+        try {
+            $this->db->beginTransaction();
+            $this->db->update('project', $post, ['id' => $project_id]);
+            $this->db->commit();
+        } catch (Throwable $e) {
+            $this->db->rollback();
+            throw $e;
+        }
     }
 
     public function getNumProjects(array $where): int
@@ -126,11 +147,11 @@ class ProjectModel extends StdUtils
     }
 
     /**
-     * Get project 'view' data from controller params
+     * Get project 'view'
      */
     public function getViewData($params)
     {
-        $project = $this->getOne($params['project_id']);
+        $project = $this->getOne(['id' => $params['project_id']]);
         $tasks = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
         $tasks_count = $this->task_model->getNumRows(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
         $tasks_completed = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);

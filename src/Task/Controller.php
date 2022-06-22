@@ -38,7 +38,7 @@ class Controller extends StdUtils
     {
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
 
-        $project = $this->project_model->getOne($params['project_id']);
+        $project = $this->project_model->getOne(['id' => $params['project_id']]);
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
         $template_vars = [
             'project' => $project,
@@ -60,7 +60,7 @@ class Controller extends StdUtils
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-        $project = $this->project_model->getOne($task['project_id']);
+        $project = $this->project_model->getOne(['id' => $task['project_id']]);
         $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['updated' => 'DESC']);
 
         $template_vars = [
@@ -83,7 +83,7 @@ class Controller extends StdUtils
     {
         $task = $this->app_acl->getTask($params['task_id']);
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
-        $project = $this->project_model->getOne($task['project_id']);
+        $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
         $template_vars = [
             'task' => $task,

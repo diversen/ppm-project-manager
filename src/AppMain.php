@@ -41,7 +41,7 @@ class AppMain extends AppBase
      */
     public function setupIntl()
     {
-        // Load 'en' case an error early we still have som translation
+        // Set a default language in case of an early error
         $translations = new Lang();
         $translations->setSingleDir("../src");
         $translations->loadLanguage('en');
@@ -53,13 +53,10 @@ class AppMain extends AppBase
 
         $timezone = $user_settings['timezone'] ?? $this->getConfig()->get('App.timezone');
         date_default_timezone_set($timezone);
-        
+
         $language = $user_settings['language'] ?? $this->getRequestLanguage();
-        
         $translations->loadLanguage($language);
-
     }
-
 
     public function sendHeaders()
     {
@@ -70,7 +67,7 @@ class AppMain extends AppBase
         if ($env === 'dev') {
             return;
         }
-        
+
         self::$nonce = $nonce = Random::generateRandomString(16);
 
         $headers = new SecureHeaders();

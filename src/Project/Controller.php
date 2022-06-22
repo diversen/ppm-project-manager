@@ -143,7 +143,7 @@ class Controller extends StdUtils
     public function edit($params)
     {
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
-        $project = $this->project_model->getOne($params['project_id']);
+        $project = $this->project_model->getOne(['id' => $params['project_id']]);
 
         $form_vars = [
             'title' => Lang::translate('Edit project'),

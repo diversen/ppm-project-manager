@@ -384,16 +384,16 @@
         },
         {
             "name": "diversen/simple-php-translation",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/simple-php-translation.git",
-                "reference": "47a7c98065e53001fc4d66ce015c141b2697fd55"
+                "reference": "fd19890ac1c289760d3bc14bb0fd1e7ba612fe1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/simple-php-translation/zipball/47a7c98065e53001fc4d66ce015c141b2697fd55",
-                "reference": "47a7c98065e53001fc4d66ce015c141b2697fd55",
+                "url": "https://api.github.com/repos/diversen/simple-php-translation/zipball/fd19890ac1c289760d3bc14bb0fd1e7ba612fe1f",
+                "reference": "fd19890ac1c289760d3bc14bb0fd1e7ba612fe1f",
                 "shasum": ""
             },
             "require": {
@@ -435,9 +435,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/simple-php-translation/issues",
-                "source": "https://github.com/diversen/simple-php-translation/tree/v3.0.5"
+                "source": "https://github.com/diversen/simple-php-translation/tree/v3.0.6"
             },
-            "time": "2022-06-21T17:19:25+00:00"
+            "time": "2022-06-22T14:02:22+00:00"
         },
         {
             "name": "erusev/parsedown",
