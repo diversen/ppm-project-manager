@@ -13,8 +13,6 @@ use App\Exception\FormException;
 use Diversen\Lang;
 use DateTime;
 
-use Throwable;
-
 class TaskModel
 {
     public const TASK_CLOSED = 0;
@@ -129,35 +127,21 @@ class TaskModel
         $post = $this->sanitize($post);
         $this->validate($post);
 
-        try {
-            $this->db->beginTransaction();
+        $this->db->inTransactionExec(function () use ($post) {
             $this->db->insert('task', $post);
-            $this->db->commit();
-        } catch (Throwable $e) {            
-            $this->db->rollback();
-            throw $e;
-        }
+        });
     }
 
-    public function update($post, $where)
+    public function update(array $post, array $where)
     {
         $post = $this->sanitize($post);
         $this->validate($post);
-        $task = $this->getOne($where);
-
-        try {
-            $this->db->beginTransaction();
-
-            // Update time in case project_id has changed
+        
+        $this->db->inTransactionExec(function () use ($post, $where) {
+            $task = $this->getOne($where);
             $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
             $this->db->update('task', $post, $where);
-            $this->db->commit();
-
-        } catch (Throwable $e) {
-            $this->db->rollback();
-            throw $e;
-        }
-        
+        });       
     }
 
     public function close(string $task_id)

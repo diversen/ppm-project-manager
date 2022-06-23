@@ -10,9 +10,6 @@ use App\AppMain;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 
-use Throwable;
-
-
 class TimeModel
 {
     private $app_acl;
@@ -123,9 +120,7 @@ class TimeModel
         $post['auth_id'] = $this->app_acl->getAuthId();
         $post = $this->sanitize($post);
 
-        try {
-            $this->db->beginTransaction();
-
+        $this->db->inTransactionExec(function () use ($post) {
             if (isset($post['close'])) {
                 $task = new TaskModel();
                 $task->close($post['task_id']);
@@ -133,11 +128,7 @@ class TimeModel
             }
 
             $this->db->insert('time', $post);
-            $this->db->commit();
-        } catch (Throwable $e) {
-            $this->db->rollBack();
-            throw $e;
-        }
+        });
     }
 
     /**
