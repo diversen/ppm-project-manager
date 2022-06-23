@@ -36,7 +36,7 @@ require 'templates/header.tpl.php';
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
-    import {Pebble} from '/js/pebble.js';
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('check');

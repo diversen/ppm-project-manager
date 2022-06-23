@@ -99,9 +99,7 @@ if (!empty($time_rows)) {
 
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
-    import {
-        Pebble
-    } from '/js/pebble.js';
+    import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     const minutes = document.getElementById('minutes');
     minutes.focus();
@@ -138,9 +136,9 @@ if (!empty($time_rows)) {
                         return;
                     }
                     if (return_to) {
-                        window.location.replace(return_to);
+                        Pebble.redirect(return_to);
                     } else {
-                        window.location.replace(res.project_redirect);
+                        Pebble.redirect(res.project_redirect);
                     }
                 } else {
                     Pebble.setFlashMessage(res.error, 'error');

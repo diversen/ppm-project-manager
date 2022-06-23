@@ -78,8 +78,8 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
 </form>
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
-    import {Pebble} from '/js/pebble.js';
-    import {addMultipleEventListener} from '/js/event.js'
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
+    import {addMultipleEventListener} from '/js/event.js?v=<?=AppMain::VERSION?>'
 
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('settings_submit');

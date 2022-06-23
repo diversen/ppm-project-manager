@@ -22,7 +22,7 @@ require 'templates/header.tpl.php';
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
-    import {Pebble} from '/js/pebble.js';
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('check');
@@ -41,7 +41,7 @@ require 'templates/header.tpl.php';
                 Pebble.setFlashMessage(res.error, 'error');
             } else {
                 // Pebble.setFlashMessage(res.message, 'success');
-                window.location.replace(res.redirect);
+                Pebble.redirect(res.redirect);
             }
         } catch (e) {
             await Pebble.asyncPostError('/error/log', e.stack);

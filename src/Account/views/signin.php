@@ -38,7 +38,7 @@ require 'templates/header.tpl.php';
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
-    import {Pebble} from '/js/pebble.js';
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     
     const spinner = document.querySelector('.loadingspinner');
 
@@ -55,7 +55,7 @@ require 'templates/header.tpl.php';
 
             const res = await Pebble.asyncPost('/account/post_login', data);
             if (res.error === false) {
-                window.location.replace(res.redirect);
+                Pebble.redirect(res.redirect);
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }

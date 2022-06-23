@@ -15,7 +15,7 @@ require 'templates/header.tpl.php';
     elem.addEventListener('click', function(e) {
         e.preventDefault();
         if (confirm('<?=Lang::translate('If you create a new QR code then the old code will be deleted')?>')) {
-            window.location.replace('/2fa/recreate');
+            Pebble.redirect('/2fa/recreate');
         }
     })
 

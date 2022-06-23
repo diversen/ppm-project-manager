@@ -54,7 +54,7 @@ endif;
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
 
-    import {Pebble} from '/js/pebble.js';
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     
     var spinner = document.querySelector('.loadingspinner');
 
@@ -71,7 +71,7 @@ endif;
             const res = await Pebble.asyncPost('/account/post_login', data);
             
             if (res.error === false) {
-                window.location.replace(res.redirect);
+                Pebble.redirect(res.redirect);
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }

@@ -133,6 +133,14 @@ function removeFlashMessages() {
     })
 }
 
+function redirect(url) {
+    // Add to window history
+    // window.location.assign(url)
+    
+    // Does not add to window history
+    window.location.replace(url)
+}
+
 var Pebble = {
     getPathPart: getPathPart,
     setFlashMessage: setFlashMessage,
@@ -145,6 +153,7 @@ var Pebble = {
     logFormdata: logFormdata,
     asyncRequest: asyncRequest,
     asyncPostError: asyncPostError,
+    redirect: redirect
 
 }
 

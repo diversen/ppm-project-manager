@@ -51,8 +51,8 @@ use Diversen\Lang;
 </form>
 <script type="module" nonce="<?=AppMain::getNonce()?>">
 
-    import {Pebble} from '/js/pebble.js';
-    import {addMultipleEventListener} from '/js/event.js'
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
+    import {addMultipleEventListener} from '/js/event.js?v=<?=AppMain::VERSION?>'
 
     const title = document.getElementById('title');
     title.focus();
@@ -77,9 +77,9 @@ use Diversen\Lang;
 
             if (res.error === false) {
                 if (return_to) {
-                    window.location.replace(return_to);
+                    Pebble.redirect(return_to);
                 } else {
-                    window.location.replace(res.project_redirect);
+                    Pebble.redirect(res.project_redirect);
                 }
             } else {
                 Pebble.setFlashMessage(res.error, 'error');

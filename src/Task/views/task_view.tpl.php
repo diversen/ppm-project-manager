@@ -85,7 +85,7 @@ echo $note_markdown;
 ?>
 <script type="module" nonce="<?=AppMain::getNonce()?>">
 
-import {Pebble} from '/js/pebble.js';
+import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
 document.addEventListener('click', async function(event) {
 

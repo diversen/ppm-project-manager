@@ -106,9 +106,7 @@ if (!empty($tasks_completed)) { ?>
         })
     }
 
-    import {
-        Pebble
-    } from '/js/pebble.js';
+    import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
 
     document.addEventListener('click', async function(event) {

@@ -38,9 +38,7 @@ if ($project['status'] == 1) {
 
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
-    import {
-        Pebble
-    } from '/js/pebble.js';
+    import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     const title = document.getElementById('title');
     title.focus();
@@ -64,7 +62,7 @@ if ($project['status'] == 1) {
 
             const res = await Pebble.asyncPost('/project/put/' + project_id, data);
             if (res.error === false) {
-                window.location.replace(res.project_redirect);
+                Pebble.redirect(res.project_redirect);
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }
@@ -93,7 +91,7 @@ if ($project['status'] == 1) {
             const res = await Pebble.asyncPost('/project/delete/' + project_id, data);
 
             if (res.error === false) {
-                window.location.replace(res.project_redirect);
+                Pebble.redirect(res.project_redirect);
             } else {
                 Pebble.setFlashMessage(res.error, 'error');
             }

@@ -28,7 +28,7 @@ require 'templates/header.tpl.php';
 </form>
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
-    import {Pebble} from '/js/pebble.js';
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     document.getElementById('captcha').addEventListener('click', function() {
         this.src = '/account/captcha?' + Math.random();
@@ -48,7 +48,7 @@ require 'templates/header.tpl.php';
 
             const res = await Pebble.asyncPost('/account/post_recover', data);
             if (res.error === false) {
-                window.location.replace('/account/signin');
+                Pebble.redirect('/account/signin');
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }

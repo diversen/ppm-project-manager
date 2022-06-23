@@ -33,7 +33,7 @@ require 'templates/flash.tpl.php';
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
-    import {Pebble} from '/js/pebble.js';
+    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     document.getElementById('captcha').addEventListener('click', function() {
         this.src = '/account/captcha?' + Math.random();
@@ -54,7 +54,7 @@ require 'templates/flash.tpl.php';
 
             const res = await Pebble.asyncPost('/account/post_signup', data);
             if (res.error === false) {
-                window.location.replace(res.redirect);
+                Pebble.redirect(res.redirect);
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }

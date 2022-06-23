@@ -21,7 +21,7 @@ use Diversen\Lang;
  */
 class AppMain extends AppBase
 {
-    public const VERSION = "1.2.109";
+    public const VERSION = "1.3.2";
     public static $nonce;
     public static $appAcl = null;
 

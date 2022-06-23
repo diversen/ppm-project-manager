@@ -163,7 +163,7 @@ render_week($week_data, $week_state, $week_user_day_times);
 <script type="module" nonce="<?= AppMain::$nonce ?>">
     import {
         Pebble
-    } from '/js/pebble.js';
+    } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     document.addEventListener('click', async function(event) {
 
