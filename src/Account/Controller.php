@@ -20,10 +20,8 @@ use stdClass;
 
 class Controller extends StdUtils
 {
-
     public function __construct()
     {
-
         parent::__contruct();
     }
 
@@ -33,7 +31,6 @@ class Controller extends StdUtils
      */
     public function index(array $params, stdClass $obj)
     {
-
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
             $template_vars['title'] = Lang::translate('Sign out');

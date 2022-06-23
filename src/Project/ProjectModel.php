@@ -30,7 +30,7 @@ class ProjectModel
     public function __construct()
     {
         $app_main = new AppMain();
-        
+
         $this->app_acl = $app_main->getAppACL();
         $this->db = $app_main->getDB();
         $this->config = $app_main->getConfig();
@@ -69,7 +69,7 @@ class ProjectModel
      */
     public function delete($id)
     {
-        $this->db->inTransactionExec(function () use ($id)  {
+        $this->db->inTransactionExec(function () use ($id) {
             $this->db->delete('project', ['id' => $id]);
             $this->app_acl->removeProjectRights($id);
         });
@@ -82,7 +82,7 @@ class ProjectModel
     {
         $this->validate($post);
 
-        $this->db->inTransactionExec(function () use ($post)  {
+        $this->db->inTransactionExec(function () use ($post) {
             $this->db->insert('project', $post);
             $project_id = $this->db->lastInsertId();
             $this->app_acl->setProjectRights($project_id);
@@ -99,7 +99,7 @@ class ProjectModel
         // Force update even when noting has been updated
         $post['updated'] = date('Y-m-d H:i:s');
 
-        $this->db->inTransactionExec(function () use ($post, $project_id)  {
+        $this->db->inTransactionExec(function () use ($post, $project_id) {
             $this->db->update('project', $post, ['id' => $project_id]);
         });
     }

@@ -13,7 +13,6 @@ use Throwable;
 
 class Controller
 {
-
     /**
      * @var \Pebble\Log
      */
@@ -31,19 +30,17 @@ class Controller
 
     /**
      * Notice this does not extend StdUtils because
-     * we only want as few requirements as possible here. 
+     * we only want as few requirements as possible here.
      * In order to almost always show an appropriate error message
      */
     public function __construct()
     {
         try {
-
             $this->app_base = new AppBase();
             $this->template = $this->app_base->getTemplate();
             $this->json = $this->app_base->getJSON();
             $this->log = $this->app_base->getLog();
             $this->config = $this->app_base->getConfig();
-            
         } catch (Exception $e) {
 
             // This is most likely a config dir that can not be read
@@ -67,7 +64,6 @@ class Controller
      */
     public function ajaxError()
     {
-
         $error = $_POST['error'] ?? '';
         $this->log->error($error);
         $this->json->render(['logged' => true]);
@@ -75,7 +71,6 @@ class Controller
 
     private function baseError(string $title, string $error_message)
     {
-
         $error_vars = [
             'title' => $title,
             'message' => $error_message,
@@ -128,15 +123,14 @@ class Controller
 
     public function render(Throwable $e)
     {
-
         $error_code = $this->getErrorCode($e);
         http_response_code($error_code);
 
         if ($error_code === 404) {
             $this->notFoundException($e);
-        } else if ($error_code === 403) {
+        } elseif ($error_code === 403) {
             $this->forbiddenException($e);
-        } else if ($error_code === 510) {
+        } elseif ($error_code === 510) {
             $this->templateException($e);
         }
 

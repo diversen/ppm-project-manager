@@ -13,7 +13,6 @@ use App\Settings\SettingsModel;
 
 class AppCal extends StdUtils
 {
-
     public function __construct()
     {
         parent::__contruct();

@@ -9,7 +9,6 @@ use Pebble\App\StdUtils;
 
 class Controller extends StdUtils
 {
-
     public function __construct()
     {
         parent::__contruct();

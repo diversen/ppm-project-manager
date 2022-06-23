@@ -24,7 +24,6 @@ class TaskModel
 
     public function __construct()
     {
-        
         $app_base = new AppBase();
         $this->db = $app_base->getDB();
         $this->time_model = new TimeModel();
@@ -79,7 +78,6 @@ class TaskModel
 
     public function getAll(array $where, array $limit = [])
     {
-
         $order_by = ['updated' => 'DESC', 'priority' => 'ASC'];
         $tasks = $this->db->getAllQuery('SELECT * FROM task', $where, $order_by, $limit);
         foreach ($tasks as $key => $task) {
@@ -123,7 +121,6 @@ class TaskModel
 
     public function create($post)
     {
-        
         $post = $this->sanitize($post);
         $this->validate($post);
 
@@ -136,12 +133,12 @@ class TaskModel
     {
         $post = $this->sanitize($post);
         $this->validate($post);
-        
+
         $this->db->inTransactionExec(function () use ($post, $where) {
             $task = $this->getOne($where);
             $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
             $this->db->update('task', $post, $where);
-        });       
+        });
     }
 
     public function close(string $task_id)

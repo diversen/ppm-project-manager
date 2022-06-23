@@ -6,7 +6,6 @@ use Pebble\App\StdUtils;
 
 class TwoFactorModel extends StdUtils
 {
-
     public function __construct()
     {
         parent::__contruct();

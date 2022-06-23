@@ -16,7 +16,6 @@ use App\Settings\SettingsModel;
 use App\AppMain;
 use Exception;
 
-
 class Controller extends StdUtils
 {
     public function __construct()

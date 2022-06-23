@@ -32,7 +32,6 @@ class Controller extends StdUtils
         $this->pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
         $this->time_model = new TimeModel();
         $this->project_model = new ProjectModel();
-
     }
 
     /**

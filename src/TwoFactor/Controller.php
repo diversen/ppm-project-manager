@@ -17,7 +17,6 @@ use Pebble\App\StdUtils;
 use App\TwoFactor\TwoFactorModel;
 use App\AppMain;
 
-
 class Controller extends StdUtils
 {
     private $twoFactorModel;
@@ -25,10 +24,8 @@ class Controller extends StdUtils
 
     public function __construct()
     {
-
         parent::__contruct();
         $this->twoFactorModel = new TwoFactorModel();
-
     }
 
     private function getOtpAuthUrl(string $label, string $key): string

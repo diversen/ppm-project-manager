@@ -15,7 +15,6 @@ use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
 use Exception;
 
-
 class Controller extends StdUtils
 {
     private $app_acl;
