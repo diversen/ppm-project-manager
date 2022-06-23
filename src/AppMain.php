@@ -25,6 +25,9 @@ class AppMain extends AppBase
     public static $nonce;
     public static $appAcl = null;
 
+    /**
+     * @return \App\AppACL
+     */
     public function getAppACL()
     {
         if (!self::$appAcl) {

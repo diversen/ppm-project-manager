@@ -328,7 +328,6 @@ class Controller extends StdUtils
         }
 
         $this->json->render($response);
-        return;
     }
 
     /**
@@ -379,8 +378,6 @@ class Controller extends StdUtils
 
                 header("Location: /account/signin");
             }
-
-            return;
         }
     }
 }

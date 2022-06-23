@@ -11,7 +11,6 @@ use App\Time\TimeModel;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\AppMain;
-use PDOException;
 use Throwable;
 
 /**
@@ -70,15 +69,10 @@ class ProjectModel
      */
     public function delete($id)
     {
-        try {
-            $this->db->beginTransaction();
+        $this->db->inTransactionExec(function () use ($id)  {
             $this->db->delete('project', ['id' => $id]);
             $this->app_acl->removeProjectRights($id);
-            $this->db->commit();
-        } catch (Throwable $e) {
-            $this->db->rollBack();
-            throw $e;
-        }
+        });
     }
 
     /**
@@ -88,38 +82,26 @@ class ProjectModel
     {
         $this->validate($post);
 
-        try {
-            $this->db->beginTransaction();
+        $this->db->inTransactionExec(function () use ($post)  {
             $this->db->insert('project', $post);
             $project_id = $this->db->lastInsertId();
-
             $this->app_acl->setProjectRights($project_id);
-            $this->db->commit();
-        } catch (Throwable $e) {
-            $this->db->rollBack();
-            throw $e;
-        }
-
+        });
     }
 
     /**
      * Update a project from a POST and a ID
      */
-    public function update($post, $project_id)
+    public function update(array $post, string $project_id)
     {
         $this->validate($post);
 
-        // Forcde update even when noting has been updated
+        // Force update even when noting has been updated
         $post['updated'] = date('Y-m-d H:i:s');
 
-        try {
-            $this->db->beginTransaction();
+        $this->db->inTransactionExec(function () use ($post, $project_id)  {
             $this->db->update('project', $post, ['id' => $project_id]);
-            $this->db->commit();
-        } catch (Throwable $e) {
-            $this->db->rollback();
-            throw $e;
-        }
+        });
     }
 
     public function getNumProjects(array $where): int

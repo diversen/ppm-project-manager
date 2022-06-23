@@ -66,7 +66,7 @@ class SettingsModel
         }
 
         $key = $auth_id . '_settings_' . $setting;
-        return $this->cache->set($key, $values);
+        $this->cache->set($key, $values);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\TwoFactor;
 
 use Pebble\App\StdUtils;
-use App\AppMain;
 
 class TwoFactorModel extends StdUtils
 {
