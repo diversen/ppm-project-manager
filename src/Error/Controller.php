@@ -124,11 +124,12 @@ class Controller
     public function render(Throwable $e)
     {
         $error_code = $this->getErrorCode($e);
-        http_response_code($error_code);
-
+        
         if ($error_code === 404) {
+            http_response_code(404);
             $this->notFoundException($e);
         } elseif ($error_code === 403) {
+            http_response_code(403);
             $this->forbiddenException($e);
         } elseif ($error_code === 510) {
             $this->templateException($e);
@@ -136,6 +137,11 @@ class Controller
 
         // 500. And anything else
         else {
+            if (is_int($error_code)) {
+                http_response_code($error_code);
+            } else {
+                http_response_code(500);
+            }
             $this->internalException($e);
         }
     }
@@ -143,21 +149,19 @@ class Controller
     private function notFoundException(Exception $e)
     {
         $this->log->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
-        http_response_code(404);
         $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
     }
 
     private function forbiddenException(Exception $e)
     {
         $this->log->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
-        http_response_code(403);
         $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
     }
 
     private function internalException(Throwable $e)
     {
         $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
-        http_response_code(500);
+        
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
 }
