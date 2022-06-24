@@ -1,160 +1,167 @@
-var setFlashMessage = function (str, type, remove_after) {
-    var messageElem = document.querySelector(".flash-messages");
-    messageElem.innerHTML = '';
+class Pebble {
 
-    if (!type) {
-        type = 'notice';
+    /**
+     * Sets a flash message
+     */
+    static setFlashMessage(str, type, remove_after) {
+        var messageElem = document.querySelector(".flash-messages");
+        messageElem.innerHTML = '';
+
+        if (!type) {
+            type = 'notice';
+        }
+
+        let class_random = '';
+        if (remove_after) {
+            class_random = 'random_' + (Math.random() + 1).toString(36).substring(2);
+            setTimeout(function () {
+                console.log(class_random)
+                document.querySelector('.' + class_random).remove();
+            }, remove_after)
+        }
+
+        var html = `<div class="flash flash-${type} ${class_random}">${str}</div>`;
+        messageElem.insertAdjacentHTML('afterbegin', html);
+        messageElem.scrollIntoView();
     }
 
-    let class_random = '';
-    if (remove_after) {
-        class_random = 'random_' + (Math.random() + 1).toString(36).substring(2);
-        setTimeout(function () {
-            console.log(class_random)
-            document.querySelector('.' + class_random).remove();
-        }, remove_after)
-    }
-
-    var html = `<div class="flash flash-${type} ${class_random}">${str}</div>`;
-    messageElem.insertAdjacentHTML('afterbegin', html);
-    messageElem.scrollIntoView();
-}
-
-var toggleVisible = function (elem) {
-    if (elem.style.visibility === 'visible') {
-        elem.style.visibility = 'hidden';
-    } else {
-        elem.style.visibility = 'visible';
-    }
-}
-
-var toggleHide = function (elem) {
-    if (elem.style.display === "none") {
-        elem.style.display = "block";
-    } else {
-        elem.style.display = "none";
-    }
-}
-
-var logFormdata = function (data) {
-    for (var p of data) {
-        let name = p[0];
-        let value = p[1];
-        console.log(name, value)
-    }
-}
-
-// Show an element
-var show = function (elem) {
-    elem.style.display = 'block';
-};
-
-// Hide an element
-var hide = function (elem) {
-    elem.style.display = 'none';
-};
-
-// Toggle element visibility
-var toggleDisplay = function (elem) {
-
-    // If the element is visible, hide it
-    if (window.getComputedStyle(elem).display === 'block') {
-        hide(elem);
-        return;
-    }
-
-    // Otherwise, show it
-    show(elem);
-
-};
-
-var getPathPart = function (num) {
-    var path = window.location.pathname;
-    var ary = path.split('/');
-    ary.shift();
-    return ary[num];
-}
-
-function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) == variable) {
-            return decodeURIComponent(pair[1]);
+    /**
+     * Toggle visibility of an element between visible and hidden
+     */
+    static toggleVisible(elem) {
+        if (elem.style.visibility === 'visible') {
+            elem.style.visibility = 'hidden';
+        } else {
+            elem.style.visibility = 'visible';
         }
     }
-}
 
-async function asyncPost(url, formData) {
-    const rawResponse = await fetch(url, {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            // 'Content-Type': 'application/json'
-        },
-        body: formData
-    }).then(function (response) {
-        return response.json()
-    }).then(function (response) {
-        return response;
-    });
+    /**
+     * Toggle display of en element between 'none' and 'block' 
+     */
+    static toggleHide(elem) {
+        if (elem.style.display === "none") {
+            elem.style.display = "block";
+        } else {
+            elem.style.display = "none";
+        }
+    }
 
-    return rawResponse;
-}
+    /**
+     * Logs FormData object
+     */
+    static logFormdata(data) {
+        for (var p of data) {
+            let name = p[0];
+            let value = p[1];
+            console.log(name, value)
+        }
+    }
 
-async function asyncRequest(url, formData, method) {
-    const rawResponse = await fetch(url, {
-        method: method,
-        headers: {
-            'Accept': 'application/json',
-            // 'Content-Type': 'application/json'
-        },
-        body: formData
-    }).then(function (response) {
-        return response.json()
-    }).then(function (response) {
-        return response;
-    });
+    /**
+     * Set elem display to block
+     */
+    static show(elem) {
+        elem.style.display = 'block';
+    };
 
-    return rawResponse;
-}
+    /**
+     * Set elem display to hide
+     */
+    static hide(elem) {
+        elem.style.display = 'none';
+    };
 
-async function asyncPostError(endpoint, error) {
-    const error_data = new FormData();
-    error_data.set('error', error);
-    return Pebble.asyncPost(endpoint, error_data);
-}
+    /**
+     * Path a segment of the window.location.pathname
+     */
+    static getPathPart(num) {
+        var path = window.location.pathname;
+        var ary = path.split('/');
+        ary.shift();
+        return ary[num];
+    }
 
-function removeFlashMessages() {
-    let elems = document.querySelectorAll('.flash-remove')
-    elems.forEach(function (elem) {
-        elem.remove();
-    })
-}
+    /**
+     * Get a query variable from current windown.location.search
+     */
+    static getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+    }
 
-function redirect(url) {
-    // Add to window history
-    // window.location.assign(url)
-    
-    // Does not add to window history
-    window.location.replace(url)
-}
+    /**
+     * Post formdata async. Accepts JSON as response
+     */
+    static async asyncPost(url, formData) {
+        const rawResponse = await fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: formData
+        }).then(function (response) {
+            return response.json()
+        }).then(function (response) {
+            return response;
+        });
 
-var Pebble = {
-    getPathPart: getPathPart,
-    setFlashMessage: setFlashMessage,
-    removeFlashMessages: removeFlashMessages,
-    toggleVisible: toggleVisible,
-    toggleHide: toggleHide,
-    toggleDisplay: toggleDisplay,
-    getQueryVariable: getQueryVariable,
-    asyncPost: asyncPost,
-    logFormdata: logFormdata,
-    asyncRequest: asyncRequest,
-    asyncPostError: asyncPostError,
-    redirect: redirect
+        return rawResponse;
+    }
 
+    /**
+     * Async request. Accept JSON as response
+     */
+    static async asyncRequest(url, formData, method) {
+        const rawResponse = await fetch(url, {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: formData
+        }).then(function (response) {
+            return response.json()
+        }).then(function (response) {
+            return response;
+        });
+
+        return rawResponse;
+    }
+
+    /**
+     * 
+     * Sends a Error to an endpont (for logging)
+     */
+    static async asyncPostError(endpoint, error) {
+        const error_data = new FormData();
+        error_data.set('error', error);
+        return Pebble.asyncPost(endpoint, error_data);
+    }
+
+    /**
+     * Remove flash messages .flash-remove
+     */
+    static removeFlashMessages() {
+        let elems = document.querySelectorAll('.flash-remove')
+        elems.forEach(function (elem) {
+            elem.remove();
+        })
+    }
+
+    /**
+     * Redirect to URL
+     */
+    static redirect(url) {
+        // Add to window history
+        // window.location.assign(url)
+        window.location.replace(url)
+    }
 }
 
 export { Pebble }
