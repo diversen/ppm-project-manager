@@ -11,7 +11,6 @@ use App\Time\TimeModel;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\AppMain;
-use Throwable;
 
 /**
  * Project related model
@@ -129,7 +128,7 @@ class ProjectModel
     }
 
     /**
-     * Get project 'view'
+     * Get project data for '/project/view/:id'
      */
     public function getViewData($params)
     {
