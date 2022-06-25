@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9202cf440eaa291bf9045a4055b77db6",
+    "content-hash": "cefe6f7cb0c3d13149ceec1059b043bd",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -237,27 +237,22 @@
         },
         {
             "name": "diversen/console-padding",
-            "version": "v1.0.1",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/console-padding.git",
-                "reference": "06c157d9a2d4525838b745f95549806d2f0ded7d"
+                "reference": "6b6bf84d6f6e41e5b54efd44b05af70ac84f9edf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/console-padding/zipball/06c157d9a2d4525838b745f95549806d2f0ded7d",
-                "reference": "06c157d9a2d4525838b745f95549806d2f0ded7d",
+                "url": "https://api.github.com/repos/diversen/console-padding/zipball/6b6bf84d6f6e41e5b54efd44b05af70ac84f9edf",
+                "reference": "6b6bf84d6f6e41e5b54efd44b05af70ac84f9edf",
                 "shasum": ""
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "diversen\\": ""
+                    "Diversen\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -278,26 +273,26 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/console-padding/issues",
-                "source": "https://github.com/diversen/console-padding/tree/master"
+                "source": "https://github.com/diversen/console-padding/tree/v2.0.0"
             },
-            "time": "2016-12-12T19:55:34+00:00"
+            "time": "2022-06-25T10:47:48+00:00"
         },
         {
             "name": "diversen/minimal-cli-framework",
-            "version": "v3.1.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/minimal-cli-framework.git",
-                "reference": "0baae7ebe060668e17db972e685272b4d4b63067"
+                "reference": "006c80c68304a99fa703f29d87d6934e6ade6766"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/0baae7ebe060668e17db972e685272b4d4b63067",
-                "reference": "0baae7ebe060668e17db972e685272b4d4b63067",
+                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/006c80c68304a99fa703f29d87d6934e6ade6766",
+                "reference": "006c80c68304a99fa703f29d87d6934e6ade6766",
                 "shasum": ""
             },
             "require": {
-                "diversen/console-padding": "^1.0",
+                "diversen/console-padding": "^2.0",
                 "php-parallel-lint/php-console-color": "^1.0"
             },
             "type": "library",
@@ -319,22 +314,22 @@
             "description": "A very fast and simple CLI framework",
             "support": {
                 "issues": "https://github.com/diversen/minimal-cli-framework/issues",
-                "source": "https://github.com/diversen/minimal-cli-framework/tree/v3.1.0"
+                "source": "https://github.com/diversen/minimal-cli-framework/tree/v4.0.0"
             },
-            "time": "2022-06-18T13:37:06+00:00"
+            "time": "2022-06-25T11:46:31+00:00"
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v5.3.2",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "86cd1eed4d587712e59e97b55903b48cb575398f"
+                "reference": "2aae9b86cd12674a154ef121dc9d0fd666a3c003"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/86cd1eed4d587712e59e97b55903b48cb575398f",
-                "reference": "86cd1eed4d587712e59e97b55903b48cb575398f",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/2aae9b86cd12674a154ef121dc9d0fd666a3c003",
+                "reference": "2aae9b86cd12674a154ef121dc9d0fd666a3c003",
                 "shasum": ""
             },
             "require": {
@@ -378,9 +373,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v5.3.2"
+                "source": "https://github.com/diversen/pebble-framework/tree/v6.0.0"
             },
-            "time": "2022-06-23T16:11:58+00:00"
+            "time": "2022-06-25T11:56:16+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
@@ -2673,16 +2668,16 @@
         },
         {
             "name": "google/protobuf",
-            "version": "v3.21.1",
+            "version": "v3.21.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "68f71264d8816f001177d68ce99d25b28e212d4c"
+                "reference": "374edda06747bb1d6899d11af646ccab38646e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/68f71264d8816f001177d68ce99d25b28e212d4c",
-                "reference": "68f71264d8816f001177d68ce99d25b28e212d4c",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/374edda06747bb1d6899d11af646ccab38646e65",
+                "reference": "374edda06747bb1d6899d11af646ccab38646e65",
                 "shasum": ""
             },
             "require": {
@@ -2712,9 +2707,9 @@
             ],
             "support": {
                 "issues": "https://github.com/protocolbuffers/protobuf-php/issues",
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.1"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v3.21.2"
             },
-            "time": "2022-05-27T22:57:31+00:00"
+            "time": "2022-06-24T21:52:31+00:00"
         },
         {
             "name": "grpc/grpc",
