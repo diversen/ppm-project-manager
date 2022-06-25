@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Diversen\Lang;
 use App\Utils\AppPagination;
 use App\Utils\AppPaginationUtils;
+use App\Utils\DateUtils;
 
 require 'templates/header.tpl.php';
 
@@ -41,9 +42,15 @@ function render_projects($projects)
             <tbody>
                 <?php
 
-                foreach ($projects as $project) :
+                $date_utils = new DateUtils();
 
-                    $updated = date('d/m/Y', strtotime($project['updated'])); ?>
+                foreach ($projects as $project) :
+                    
+                    // Stored in UTC, convert to user local timezone
+                    $updated = $project['updated'];
+                    $updated = $date_utils->getUserDateFromUTC($updated, 'Y-m-d H:i:s');
+                    
+                    $updated = date('d/m/Y', strtotime($updated)); ?>
                     <tr>
                         <td class="td-overflow"><a title="<?= $project['note'] ?>" href='/project/view/<?= $project['id'] ?>'><?= $project['title'] ?></a></td>
                         <td><?= $updated ?></td>

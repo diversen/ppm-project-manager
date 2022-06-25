@@ -4,65 +4,16 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
-use Pebble\App\StdUtils;
-
-use DateTime;
-use DateTimeZone;
-
-use App\Settings\SettingsModel;
-
-class AppCal extends StdUtils
+class AppCal
 {
-    public function __construct()
-    {
-        parent::__contruct();
-    }
 
-    private function getUserTimeZone()
-    {
-        $settings_model = new SettingsModel();
-        $auth_id = $this->auth->getAuthId();
-        $timezone = $settings_model->getSingleProfileSetting($auth_id, 'timezone', null);
-        if (!$timezone) {
-            $timezone = $this->config->get('App.timezone');
-        }
-        return $timezone;
-    }
     /**
-     * Get a UTC date in format Y-m-d H:i:s from a supplied datetime string
+     * Get an array containing the weekdays where the key is a unix timestamp
+     * and the value is a date string formatted according to $format
      */
-    public function userDateToUTC($datetime_str = 'now')
-    {
-        $user_time_zone = $this->getUserTimeZone();
-        $date = new DateTime($datetime_str, new DateTimeZone($user_time_zone));
-
-        $date->setTimezone(new DateTimeZone('UTC'));
-        return $date->format('Y-m-d 00:00:00');
-    }
-
-
-    public function userDate($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
-    {
-        $user_time_zone = $this->getUserTimeZone();
-
-        $date = new DateTime($datetime_str, new DateTimeZone($user_time_zone));
-        return $date->format($format);
-    }
-
-    public function userDateFromUnixTs($unix_ts)
-    {
-        $date_time = new DateTime();
-        $date_time->setTimestamp($unix_ts);
-
-        $user_time_zone = $this->getUserTimeZone();
-
-        $date_time->setTimezone(new DateTimeZone($user_time_zone));
-        return $date_time->format('Y-m-d 00:00:00');
-    }
-
-
     public function getCurrentWeekDays(int $week_delta, string $format = 'Y-m-d H:i:s')
     {
+        
         $week_delta_str = $this->getWeekDeltaStr($week_delta);
 
         $week = [];
@@ -91,6 +42,10 @@ class AppCal extends StdUtils
         return $week;
     }
 
+    /**
+     * Get a week delta string, e.g. +1 week or -10 week
+     * @return string $week_delta_str a string representing that week that can be read by strtotime
+     */
     public function getWeekDeltaStr(int $week_delta)
     {
         $week_delta_str = '';
@@ -103,6 +58,10 @@ class AppCal extends StdUtils
         return $week_delta_str;
     }
 
+    /**
+     * Get a week number as string from a week delta. e.g. -2 or +4
+     * indicating the week number calculated from the current week)
+     */
     public function getWeekNumberFromDelta(int $week_delta)
     {
         $week_delta_str = $this->getWeekDeltaStr($week_delta);

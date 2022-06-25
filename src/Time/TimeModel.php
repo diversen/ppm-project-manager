@@ -9,6 +9,7 @@ use Diversen\Lang;
 use App\AppMain;
 use App\Task\TaskModel;
 use App\Exception\FormException;
+use App\Utils\DateUtils;
 
 class TimeModel
 {
@@ -50,12 +51,14 @@ class TimeModel
      */
     private function sanitize($post)
     {
+        $date_utils = new DateUtils();
         $post['minutes'] = $this->totalMinutes($post['minutes']);
+        $post['created'] = $date_utils->getUTCDate('now', 'Y-m-d H:i:s');
         return $post;
     }
 
     /**
-     * Convert minutes to hh:mm
+     * Convert minutes to 'hours and minutes' (hh:mm)
      */
     public function minutesToHoursMinutes($time, $format = '%02d:%02d')
     {

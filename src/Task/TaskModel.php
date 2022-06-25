@@ -10,6 +10,7 @@ use Pebble\Exception\NotFoundException;
 use App\Time\TimeModel;
 use App\Utils\AppCal;
 use App\Exception\FormException;
+use App\Utils\DateUtils;
 use Diversen\Lang;
 use DateTime;
 
@@ -21,12 +22,14 @@ class TaskModel
 
     private $db;
     private $time_model;
+    private $date_utils;
 
     public function __construct()
     {
         $app_base = new AppBase();
         $this->db = $app_base->getDB();
         $this->time_model = new TimeModel();
+        $this->date_utils = new DateUtils();
     }
 
     /**
@@ -37,10 +40,10 @@ class TaskModel
     {
         $cal = new AppCal();
         if (!isset($post['begin_date'])) {
-            $post['begin_date'] = $cal->userDateToUTC();
+            $post['begin_date'] = $this->date_utils->getUTCDate();
         }
         if (!isset($post['end_date'])) {
-            $post['end_date'] = $cal->userDateToUTC();
+            $post['end_date'] = $this->date_utils->getUTCDate();
         }
         if (!isset($post['status'])) {
             $post['status'] = 1;
@@ -108,7 +111,8 @@ class TaskModel
 
     public function setExceededUserTasksToday(string $auth_id)
     {
-        $today = (new AppCal())->userDate('now', 'Y-m-d 00:00:00');
+    
+        $today = $this->date_utils->getUTCDate('now', 'Y-m-d 00:00:00');
 
         // If both begin_date AND end_date has been exceeded then we can move tasks to today
         $query = "SELECT * FROM `task` WHERE auth_id = :auth_id AND begin_date < :today AND end_date < :today AND status = 1 ";

@@ -11,6 +11,7 @@ use App\Time\TimeModel;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\AppMain;
+use App\Utils\DateUtils;
 
 /**
  * Project related model
@@ -25,6 +26,7 @@ class ProjectModel
     private $task_model;
     private $db;
     private $config;
+    private $date_utils;
 
     public function __construct()
     {
@@ -35,6 +37,7 @@ class ProjectModel
         $this->config = $app_main->getConfig();
         $this->task_model = new TaskModel();
         $this->time_model = new TimeModel();
+        $this->date_utils = new DateUtils();
     }
 
     /**
@@ -52,7 +55,8 @@ class ProjectModel
      */
     public function getAll(array $params, array $order = [], array $limit = [])
     {
-        return $this->db->getAll('project', $params, $order, $limit);
+        $projects = $this->db->getAll('project', $params, $order, $limit);
+        return $projects;
     }
 
     /**
@@ -80,8 +84,13 @@ class ProjectModel
     public function create($post)
     {
         $this->validate($post);
+        
+        // Store in UTC
+        $post['updated'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
+        $post['created'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
 
         $this->db->inTransactionExec(function () use ($post) {
+            
             $this->db->insert('project', $post);
             $project_id = $this->db->lastInsertId();
             $this->app_acl->setProjectRights($project_id);
@@ -95,8 +104,8 @@ class ProjectModel
     {
         $this->validate($post);
 
-        // Force update even when noting has been updated
-        $post['updated'] = date('Y-m-d H:i:s');
+        // Force an update
+        $post['updated'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
 
         $this->db->inTransactionExec(function () use ($post, $project_id) {
             $this->db->update('project', $post, ['id' => $project_id]);
