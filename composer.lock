@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cefe6f7cb0c3d13149ceec1059b043bd",
+    "content-hash": "8031e352c8ffb9d7f9b0ed8e66738b61",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -279,16 +279,16 @@
         },
         {
             "name": "diversen/minimal-cli-framework",
-            "version": "v4.0.0",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/minimal-cli-framework.git",
-                "reference": "006c80c68304a99fa703f29d87d6934e6ade6766"
+                "reference": "2072f8cddbcdb7c6c48fc4ff3fa8c516f2b81f1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/006c80c68304a99fa703f29d87d6934e6ade6766",
-                "reference": "006c80c68304a99fa703f29d87d6934e6ade6766",
+                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/2072f8cddbcdb7c6c48fc4ff3fa8c516f2b81f1d",
+                "reference": "2072f8cddbcdb7c6c48fc4ff3fa8c516f2b81f1d",
                 "shasum": ""
             },
             "require": {
@@ -314,9 +314,9 @@
             "description": "A very fast and simple CLI framework",
             "support": {
                 "issues": "https://github.com/diversen/minimal-cli-framework/issues",
-                "source": "https://github.com/diversen/minimal-cli-framework/tree/v4.0.0"
+                "source": "https://github.com/diversen/minimal-cli-framework/tree/v4.0.1"
             },
-            "time": "2022-06-25T11:46:31+00:00"
+            "time": "2022-06-25T12:01:59+00:00"
         },
         {
             "name": "diversen/pebble-framework",
