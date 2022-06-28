@@ -22,7 +22,7 @@ require 'templates/header.tpl.php';
 function render_project($project)
 {
     $date_utils = new DateUtils();
-    
+
     // Stored in UTC, convert to user local timezone
     $updated = $project['updated'];
     $updated = $date_utils->getUserDateFromUTC($updated, 'Y-m-d H:i:s');
@@ -86,7 +86,7 @@ function render_projects_inactive_link()
 
 function render_projects_total_time($total_time_human)
 {
-?>
+    ?>
     <div>
         <p><?= Lang::translate('Total time used on all projects') ?> <?= $total_time_human ?></p>
     </div>
