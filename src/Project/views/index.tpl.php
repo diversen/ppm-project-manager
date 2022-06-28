@@ -14,62 +14,65 @@ require 'templates/header.tpl.php';
 <h3 class="sub-menu"><?= Lang::Translate('Projects') ?></h3>
 
 <div class="action-links">
-    <a href="/project/add" title="<?=Lang::translate('Add new project')?>"><?= Lang::translate('Add project') ?></a>
+    <a href="/project/add" title="<?= Lang::translate('Add new project') ?>"><?= Lang::translate('Add project') ?></a>
 </div>
 
 <?php
+
+function render_project($project)
+{
+    $date_utils = new DateUtils();
+    
+    // Stored in UTC, convert to user local timezone
+    $updated = $project['updated'];
+    $updated = $date_utils->getUserDateFromUTC($updated, 'Y-m-d H:i:s');
+
+    $updated = date('d/m/Y', strtotime($updated)); ?>
+    <tr>
+        <td class="td-overflow"><a title="<?= $project['note'] ?>" href='/project/view/<?= $project['id'] ?>'><?= $project['title'] ?></a></td>
+        <td><?= $updated ?></td>
+        <td class="xs-hide"><?= $project['project_time_total_human'] ?></td>
+        <td>
+            <div class="action-links">
+                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit project') ?>"><?= get_icon('edit') ?></a>
+                <a href="/task/add/<?= $project['id'] ?>" title="<?= Lang::translate('Add new task to project') ?>"><?= get_icon('add') ?></a>
+            </div>
+        </td>
+    </tr>
+    <?php
+}
 
 function render_projects($projects)
 {
     $pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);
 
-    if (empty($projects)) : ?>
-        <p><?=Lang::translate('Your have no projects yet')?></p><?php
-
-    else : ?>
+    if (empty($projects)) { ?>
+        <p><?= Lang::translate('Your have no projects yet') ?></p>
+    <?php
+    } else { ?>
         <table>
             <thead>
                 <tr>
-                    <td><a href="<?=$pagination_utils->getAlterOrderUrl('title')?>">
-                        <?= Lang::translate('Title') ?> <?=$pagination_utils->getCurrentDirectionArrow('title')?></a>
+                    <td><a href="<?= $pagination_utils->getAlterOrderUrl('title') ?>">
+                            <?= Lang::translate('Title') ?> <?= $pagination_utils->getCurrentDirectionArrow('title') ?></a>
                     </td>
-                    <td><a href="<?=$pagination_utils->getAlterOrderUrl('updated')?>">
-                        <?= Lang::translate('Updated') ?> <?=$pagination_utils->getCurrentDirectionArrow('updated')?></a> </td>
+                    <td><a href="<?= $pagination_utils->getAlterOrderUrl('updated') ?>">
+                            <?= Lang::translate('Updated') ?> <?= $pagination_utils->getCurrentDirectionArrow('updated') ?></a> </td>
                     <td class="xs-hide"><?= Lang::translate('Time used') ?></td>
                     <td></td>
                 </tr>
             </thead>
             <tbody>
                 <?php
-
-                $date_utils = new DateUtils();
-
-                foreach ($projects as $project) :
-                    
-                    // Stored in UTC, convert to user local timezone
-                    $updated = $project['updated'];
-                    $updated = $date_utils->getUserDateFromUTC($updated, 'Y-m-d H:i:s');
-                    
-                    $updated = date('d/m/Y', strtotime($updated)); ?>
-                    <tr>
-                        <td class="td-overflow"><a title="<?= $project['note'] ?>" href='/project/view/<?= $project['id'] ?>'><?= $project['title'] ?></a></td>
-                        <td><?= $updated ?></td>
-                        <td class="xs-hide"><?= $project['project_time_total_human'] ?></td>
-                        <td>
-                            <div class="action-links">
-                                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit project') ?>"><?=get_icon('edit')?></a>
-                                <a href="/task/add/<?= $project['id'] ?>" title="<?=Lang::translate('Add new task to project')?>"><?=get_icon('add')?></a>
-                            </div>
-                        </td>
-                    </tr>
-                <?php
-
-                endforeach; ?>
+                foreach ($projects as $project) {
+                    render_project($project);
+                }
+                ?>
             </tbody>
         </table>
     <?php
 
-    endif;
+    }
 }
 
 function render_projects_inactive_link()
@@ -77,13 +80,13 @@ function render_projects_inactive_link()
     <div class="action-links">
         <a href='/project/inactive'><?= Lang::translate('View inactive projects') ?></a>
     </div>
-    <?php
+<?php
 
 }
 
 function render_projects_total_time($total_time_human)
 {
-    ?>
+?>
     <div>
         <p><?= Lang::translate('Total time used on all projects') ?> <?= $total_time_human ?></p>
     </div>

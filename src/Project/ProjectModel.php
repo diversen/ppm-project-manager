@@ -84,13 +84,12 @@ class ProjectModel
     public function create($post)
     {
         $this->validate($post);
-        
+
         // Store in UTC
         $post['updated'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
         $post['created'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
 
         $this->db->inTransactionExec(function () use ($post) {
-            
             $this->db->insert('project', $post);
             $project_id = $this->db->lastInsertId();
             $this->app_acl->setProjectRights($project_id);

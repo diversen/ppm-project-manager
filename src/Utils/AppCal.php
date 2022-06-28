@@ -6,14 +6,12 @@ namespace App\Utils;
 
 class AppCal
 {
-
     /**
      * Get an array containing the weekdays where the key is a unix timestamp
      * and the value is a date string formatted according to $format
      */
     public function getCurrentWeekDays(int $week_delta, string $format = 'Y-m-d H:i:s')
     {
-        
         $week_delta_str = $this->getWeekDeltaStr($week_delta);
 
         $week = [];

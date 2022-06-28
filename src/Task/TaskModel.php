@@ -111,7 +111,6 @@ class TaskModel
 
     public function setExceededUserTasksToday(string $auth_id)
     {
-    
         $today = $this->date_utils->getUTCDate('now', 'Y-m-d 00:00:00');
 
         // If both begin_date AND end_date has been exceeded then we can move tasks to today

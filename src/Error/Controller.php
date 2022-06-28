@@ -124,7 +124,7 @@ class Controller
     public function render(Throwable $e)
     {
         $error_code = $this->getErrorCode($e);
-        
+
         if ($error_code === 404) {
             http_response_code(404);
             $this->notFoundException($e);
@@ -161,7 +161,7 @@ class Controller
     private function internalException(Throwable $e)
     {
         $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
-        
+
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
 }
