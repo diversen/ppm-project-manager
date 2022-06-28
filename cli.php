@@ -7,15 +7,9 @@ use Pebble\CLI\User;
 use Pebble\CLI\DB;
 use Pebble\CLI\Migrate;
 use Pebble\CLI\Translate;
-use Pebble\Config;
+use Pebble\Service\ConfigService;
 
-
-$config = new Config();
-// Load config settings
-$config->readConfig('./config');
-
-// Load config settings
-$config->readConfig('./config-locale');
+$config = (new ConfigService())->getConfig();
 
 $cli = new MinimalCli();
 $cli->commands = [
