@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {"App\\": "src/"}
