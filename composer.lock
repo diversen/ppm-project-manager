@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8031e352c8ffb9d7f9b0ed8e66738b61",
+    "content-hash": "68573556ae30df9b82a8b4c773bb75a5",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -279,16 +279,16 @@
         },
         {
             "name": "diversen/minimal-cli-framework",
-            "version": "v4.1.1",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/minimal-cli-framework.git",
-                "reference": "f7237da83d2c24dbd4901f9d6c7bcc3a562a817d"
+                "reference": "a8ad090cf8be1c9342ed1566c8b99974021f32d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/f7237da83d2c24dbd4901f9d6c7bcc3a562a817d",
-                "reference": "f7237da83d2c24dbd4901f9d6c7bcc3a562a817d",
+                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/a8ad090cf8be1c9342ed1566c8b99974021f32d0",
+                "reference": "a8ad090cf8be1c9342ed1566c8b99974021f32d0",
                 "shasum": ""
             },
             "require": {
@@ -315,22 +315,22 @@
             "description": "A very fast and simple CLI framework",
             "support": {
                 "issues": "https://github.com/diversen/minimal-cli-framework/issues",
-                "source": "https://github.com/diversen/minimal-cli-framework/tree/v4.1.1"
+                "source": "https://github.com/diversen/minimal-cli-framework/tree/v6.0.0"
             },
-            "time": "2022-06-30T19:03:26+00:00"
+            "time": "2022-07-06T14:10:38+00:00"
         },
         {
             "name": "diversen/parse-argv",
-            "version": "v3.0.2",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/parse-argv.git",
-                "reference": "42c53eb3108157cbe88bea16d8b5c6b3dd6eeff6"
+                "reference": "87dfac35cce1ec86d289a603c25ede5623f896a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/parse-argv/zipball/42c53eb3108157cbe88bea16d8b5c6b3dd6eeff6",
-                "reference": "42c53eb3108157cbe88bea16d8b5c6b3dd6eeff6",
+                "url": "https://api.github.com/repos/diversen/parse-argv/zipball/87dfac35cce1ec86d289a603c25ede5623f896a2",
+                "reference": "87dfac35cce1ec86d289a603c25ede5623f896a2",
                 "shasum": ""
             },
             "require-dev": {
@@ -363,29 +363,29 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/parse-argv/issues",
-                "source": "https://github.com/diversen/parse-argv/tree/v3.0.2"
+                "source": "https://github.com/diversen/parse-argv/tree/v3.0.4"
             },
-            "time": "2022-06-28T15:47:21+00:00"
+            "time": "2022-07-04T15:44:20+00:00"
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v6.1.3",
+            "version": "v6.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "0b57f4cbce447d44e879113b264c8cd8703ede01"
+                "reference": "d8a80aaf17ea3fb523475ba74e1e1a636d069744"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/0b57f4cbce447d44e879113b264c8cd8703ede01",
-                "reference": "0b57f4cbce447d44e879113b264c8cd8703ede01",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/d8a80aaf17ea3fb523475ba74e1e1a636d069744",
+                "reference": "d8a80aaf17ea3fb523475ba74e1e1a636d069744",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4.3"
             },
             "require-dev": {
-                "diversen/minimal-cli-framework": "^3.0",
+                "diversen/minimal-cli-framework": "^6.0",
                 "diversen/simple-php-translation": "^3.0",
                 "erusev/parsedown": "^1.7",
                 "gregwar/captcha": "^1.1",
@@ -418,9 +418,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v6.1.3"
+                "source": "https://github.com/diversen/pebble-framework/tree/v6.1.4"
             },
-            "time": "2022-07-02T12:09:48+00:00"
+            "time": "2022-07-06T14:14:16+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
@@ -663,16 +663,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.255.0",
+            "version": "v0.256.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "2b895ceb08eb106f65e975221e5d2e971cf7470e"
+                "reference": "122e51021eb19b53f831904918460671d1e7259d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/2b895ceb08eb106f65e975221e5d2e971cf7470e",
-                "reference": "2b895ceb08eb106f65e975221e5d2e971cf7470e",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/122e51021eb19b53f831904918460671d1e7259d",
+                "reference": "122e51021eb19b53f831904918460671d1e7259d",
                 "shasum": ""
             },
             "require": {
@@ -701,9 +701,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.255.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.256.0"
             },
-            "time": "2022-06-27T01:30:11+00:00"
+            "time": "2022-07-04T01:10:37+00:00"
         },
         {
             "name": "google/auth",
