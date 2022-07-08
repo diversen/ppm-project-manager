@@ -44,7 +44,7 @@ function render_project($project)
 
 function render_projects($projects)
 {
-    $pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);
+    $pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC'], 'project');
 
     if (empty($projects)) { ?>
         <p><?= Lang::translate('Your have no projects yet') ?></p>

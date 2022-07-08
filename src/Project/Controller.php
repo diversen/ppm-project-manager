@@ -68,7 +68,7 @@ class Controller extends StdUtils
             'status' => ProjectModel::PROJECT_CLOSED,
         ];
 
-        $order_by = $this->pagination_utils->getOrderByFromQuery();
+        $order_by = $this->pagination_utils->getOrderByFromRequest('project');
         $template_data = $this->getProjectData($where, $order_by);
 
         $this->template->render(
@@ -91,7 +91,7 @@ class Controller extends StdUtils
             'status' => ProjectModel::PROJECT_OPEN,
         ];
 
-        $order_by = $this->pagination_utils->getOrderByFromQuery();
+        $order_by = $this->pagination_utils->getOrderByFromRequest('project');
         $template_data = $this->getProjectData($where, $order_by);
 
         $this->template->render(

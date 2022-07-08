@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use InvalidArgumentException;
+use Exception;
 use Pebble\URL;
 
 class AppPaginationUtils
@@ -12,12 +13,21 @@ class AppPaginationUtils
      */
     private $order_by_default = [];
 
+    private $order_by_default_init = [];
+
     /**
      * Sets order by default, e.g. `['title' => 'ASC', 'updated' => 'DESC']`
      */
-    public function __construct(array $order_by_default)
+    public function __construct(array $order_by_default, $key = null)
     {
-        $this->order_by_default = $order_by_default;
+        $this->order_by_default_init = $order_by_default;
+        $this->order_by_default = $order_by_default; 
+        if ($key) {
+            $this->order_by_default = $_SESSION[$key] ?? $order_by_default;            
+            if (!$this->validateFields($this->order_by_default)) {
+                $this->order_by_default = $this->order_by_default_init;
+            }
+        } 
     }
 
 
@@ -38,7 +48,7 @@ class AppPaginationUtils
      */
     private function validateField(string $order_by)
     {
-        $fields = array_keys($this->order_by_default);
+        $fields = array_keys($this->order_by_default_init);
         if (!in_array($order_by, $fields)) {
             throw new InvalidArgumentException("$order_by is not a allowed order by field");
         }
@@ -92,9 +102,60 @@ class AppPaginationUtils
         return $new_order_by;
     }
 
+    private function validateFields($order_by) {
+
+        
+        try {
+            foreach ($order_by as $field => $direction) {
+                $this->validateField($field);
+                $this->validateDirection($direction);
+            }
+            
+        } catch (Exception $e) {
+            return false;
+        }
+
+        $order_by_keys = array_keys($order_by);
+        $needed_keys = array_keys($this->order_by_default_init);
+
+        sort($order_by_keys);
+        sort($needed_keys);
+
+        if ($order_by_keys !== $needed_keys){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getOrderByFromRequest($session_key) {
+        
+        $order_by = $this->getOrderByFromQuery();
+
+        if (!isset($_GET['order_by'])) {
+
+            // Prefer session but else get default order by
+            $order_by = $_SESSION[$session_key] ?? $order_by;
+            if (!$this->validateFields($order_by)) {
+                
+                $order_by = $this->order_by_default_init;
+            }
+        } else {
+
+            // New sorting. Save to session
+            if ($this->validateFields($order_by)) {
+                $_SESSION[$session_key] = $order_by;
+            } 
+        }
+
+        return $order_by;
+    }
+
     /**
-     * Get the ORDER BY parameters from the URL or get the default ORDER BY
-     * @return array $order_by , e.b. `['title' => 'ASC', 'updated' => 'DESC']`
+     * Get the ORDER BY parameters from the URL or order by from settings OR 
+     * get the default ORDER BY
+     * 
+     * @return array $order_by , e.g. `['title' => 'ASC', 'updated' => 'DESC']`
      */
     public function getOrderByFromQuery()
     {
