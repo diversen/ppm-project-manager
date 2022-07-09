@@ -63,7 +63,6 @@ use Diversen\Lang;
     addMultipleEventListener(task_submit, ['click', 'touchstart'], async function (e) {
         
         e.preventDefault();
-        spinner.classList.toggle('hidden');
 
         const form = document.getElementById('task_add');
         const data = new FormData(form);
@@ -86,6 +85,8 @@ use Diversen\Lang;
             }
         } catch (e) {
             await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
         }
     });
 

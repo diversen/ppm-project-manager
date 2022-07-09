@@ -29,6 +29,7 @@ class DateUtils
         }
         return $timezone;
     }
+
     /**
      * Get a UTC date in format Y-m-d H:i:s from a supplied datetime string, e.g. 'now'
      */

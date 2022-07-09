@@ -38,12 +38,12 @@ class TaskModel
      */
     private function sanitize($post)
     {
-        $cal = new AppCal();
+
         if (!isset($post['begin_date'])) {
-            $post['begin_date'] = $this->date_utils->getUTCDate();
+            $post['begin_date'] = $this->date_utils->getUserDateFromUTC('now', 'Y-m-d 00:00:00');
         }
         if (!isset($post['end_date'])) {
-            $post['end_date'] = $this->date_utils->getUTCDate();
+            $post['end_date'] = $this->date_utils->getUserDateFromUTC('now', 'Y-m-d 00:00:00');
         }
         if (!isset($post['status'])) {
             $post['status'] = 1;
@@ -111,7 +111,7 @@ class TaskModel
 
     public function setExceededUserTasksToday(string $auth_id)
     {
-        $today = $this->date_utils->getUTCDate('now', 'Y-m-d 00:00:00');
+        $today = $this->date_utils->getUserDateFromUTC('now', 'Y-m-d 00:00:00');
 
         // If both begin_date AND end_date has been exceeded then we can move tasks to today
         $query = "SELECT * FROM `task` WHERE auth_id = :auth_id AND begin_date < :today AND end_date < :today AND status = 1 ";
@@ -139,6 +139,8 @@ class TaskModel
 
         $this->db->inTransactionExec(function () use ($post, $where) {
             $task = $this->getOne($where);
+            
+            
             $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
             $this->db->update('task', $post, $where);
         });
