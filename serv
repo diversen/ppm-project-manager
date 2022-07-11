@@ -10,5 +10,4 @@ if [ "$1" ]
     PORT=$1
 fi
 
-echo $PORT
 php -S localhost:$PORT -t www 

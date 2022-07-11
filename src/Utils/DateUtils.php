@@ -8,14 +8,15 @@ use App\Settings\SettingsModel;
 use DateTime;
 use DateTimeZone;
 use Pebble\Service\AuthService;
+use Pebble\App\StdUtils;
 
-class DateUtils
+class DateUtils extends StdUtils
 {
     private $user_timezone;
-    private $auth;
+
     public function __construct()
     {
-        $this->auth = (new AuthService())->getAuth();
+        parent::__contruct();
         $this->user_timezone = $this->getUserTimezone();
     }
 
