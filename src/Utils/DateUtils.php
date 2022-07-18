@@ -7,7 +7,6 @@ namespace App\Utils;
 use App\Settings\SettingsModel;
 use DateTime;
 use DateTimeZone;
-use Pebble\Service\AuthService;
 use Pebble\App\StdUtils;
 
 class DateUtils extends StdUtils
