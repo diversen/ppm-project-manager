@@ -174,8 +174,14 @@ class Controller extends StdUtils
         $key = $_GET['key'] ?? '';
 
         $row = $this->auth->getByWhere(['random' => $key]);
-        $res = $this->auth->verifyKey($key);
+        if (empty($row)) {
+            $this->flash->setMessage(Lang::translate('No valid verification key could be found'), 'error');
+            $this->log->info('Account.verify.failed', ['get' => $_GET]);
+            header("Location: /account/signin");
+            return;
+        }
 
+        $res = $this->auth->verifyKey($key);
         if ($res) {
             $this->flash->setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
             $this->log->info('Account.verify.success', ['auth_id' => $row['id']]);
