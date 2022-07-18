@@ -10,6 +10,7 @@ $LANG['You are logged in'] = 'You are logged in';
 $LANG['Wrong email or password. Or your account has not been activated.'] = 'Wrong email or password. Or your account has not been activated.';
 $LANG['Verify your login.'] = 'Verify your login.';
 $LANG['Email sign up'] = 'Email sign up';
+$LANG['No valid verification key could be found'] = 'No valid verification key could be found';
 $LANG['Your account has been verified. You may log in'] = 'Your account has been verified. You may log in';
 $LANG['The key supplied has already been used'] = 'The key supplied has already been used';
 $LANG['Account has been created. You may log in'] = 'Account has been created. You may log in';
@@ -231,12 +232,12 @@ $LANG['Are you sure want to delete this project? All tasks and all time entries 
 
 $LANG['Add new project'] = 'Add new project';
 $LANG['Add project'] = 'Add project';
+$LANG['Edit project'] = 'Edit project';
+$LANG['Add new task to project'] = 'Add new task to project';
 $LANG['Your have no projects yet'] = 'Your have no projects yet';
 $LANG['Title'] = 'Title';
 $LANG['Updated'] = 'Updated';
 $LANG['Time used'] = 'Time used';
-$LANG['Edit project'] = 'Edit project';
-$LANG['Add new task to project'] = 'Add new task to project';
 $LANG['View inactive projects'] = 'View inactive projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
 
