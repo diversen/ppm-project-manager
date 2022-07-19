@@ -69,7 +69,7 @@ class AppMain extends AppBase
 
         $this->setErrorHandler();
         $this->sendSSLHeaders();
-        $this->sendHeaders();
+        $this->sendCSPHeaders();
         $this->sessionStart();
         $this->setupIntl();
         $this->setDebug();

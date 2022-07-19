@@ -13,7 +13,7 @@ trait CSP {
 
     public static $nonce;
 
-    public function sendHeaders()
+    public function sendCSPHeaders()
     {
         $config = (new ConfigService())->getConfig();
 
