@@ -9,6 +9,7 @@ use Pebble\CLI\Migrate;
 use Pebble\CLI\Translate;
 
 $cli = new MinimalCli();
+$cli->header = 'PPM CLI';
 $cli->commands = [
     'user' => new User(),
     'db' => new DB(),

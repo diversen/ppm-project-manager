@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\Router;
-use Pebble\Random;
 use Pebble\App\AppBase;
-
-use Aidantwoods\SecureHeaders\SecureHeaders;
-
 use App\AppACL;
 use App\Settings\SettingsModel;
 
@@ -21,8 +17,10 @@ use Diversen\Lang;
  */
 class AppMain extends AppBase
 {
+
+    use \App\CSP;
+
     public const VERSION = "1.3.3";
-    public static $nonce;
     public static $appAcl = null;
 
     /**
@@ -61,39 +59,6 @@ class AppMain extends AppBase
         $translations->loadLanguage($language);
     }
 
-    public function sendHeaders()
-    {
-        $config = $this->getConfig();
-        $this->sendSSLHeaders();
-
-        $env = $this->getConfig()->get("App.env");
-        if ($env === 'dev') {
-            return;
-        }
-
-        self::$nonce = $nonce = Random::generateRandomString(16);
-
-        $headers = new SecureHeaders();
-        $headers->strictMode(false);
-        $headers->errorReporting(true);
-        $headers->hsts();
-        $headers->csp('default', 'self');
-        $headers->csp('base-uri', $config->get('App.server_url'));
-        $headers->csp('img-src', 'data:');
-        $headers->csp('img-src', $config->get('App.server_url'));
-        $headers->csp('script-src', "'nonce-$nonce'");
-        $headers->csp('style-src', 'self');
-        $headers->csp('style-src', 'https://cdnjs.cloudflare.com');
-        $headers->csp('font-src', 'https://cdnjs.cloudflare.com');
-
-        $headers->csp('worker-src', $config->get('App.server_url'));
-        $headers->apply();
-    }
-
-    public static function getNonce()
-    {
-        return self::$nonce;
-    }
 
     public function run()
     {
@@ -103,6 +68,7 @@ class AppMain extends AppBase
         $this->addSrcToIncludePath();
 
         $this->setErrorHandler();
+        $this->sendSSLHeaders();
         $this->sendHeaders();
         $this->sessionStart();
         $this->setupIntl();

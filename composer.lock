@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68573556ae30df9b82a8b4c773bb75a5",
+    "content-hash": "97389ace110dd42341bbd5f9e07c01a3",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -279,16 +279,16 @@
         },
         {
             "name": "diversen/minimal-cli-framework",
-            "version": "v6.0.0",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/minimal-cli-framework.git",
-                "reference": "a8ad090cf8be1c9342ed1566c8b99974021f32d0"
+                "reference": "d7ad425ed3dc3bfd2be6f20e81d46dc7309eb89b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/a8ad090cf8be1c9342ed1566c8b99974021f32d0",
-                "reference": "a8ad090cf8be1c9342ed1566c8b99974021f32d0",
+                "url": "https://api.github.com/repos/diversen/minimal-cli-framework/zipball/d7ad425ed3dc3bfd2be6f20e81d46dc7309eb89b",
+                "reference": "d7ad425ed3dc3bfd2be6f20e81d46dc7309eb89b",
                 "shasum": ""
             },
             "require": {
@@ -315,9 +315,9 @@
             "description": "A very fast and simple CLI framework",
             "support": {
                 "issues": "https://github.com/diversen/minimal-cli-framework/issues",
-                "source": "https://github.com/diversen/minimal-cli-framework/tree/v6.0.0"
+                "source": "https://github.com/diversen/minimal-cli-framework/tree/v6.0.2"
             },
-            "time": "2022-07-06T14:10:38+00:00"
+            "time": "2022-07-19T10:17:07+00:00"
         },
         {
             "name": "diversen/parse-argv",
@@ -369,16 +369,16 @@
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v6.2.1",
+            "version": "v6.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "80ed1ca32fb546377ae128ed0589fd4dc2c6d23c"
+                "reference": "a2c89eefcbeae4a25736424dbdd0e42eb8dda64f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/80ed1ca32fb546377ae128ed0589fd4dc2c6d23c",
-                "reference": "80ed1ca32fb546377ae128ed0589fd4dc2c6d23c",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/a2c89eefcbeae4a25736424dbdd0e42eb8dda64f",
+                "reference": "a2c89eefcbeae4a25736424dbdd0e42eb8dda64f",
                 "shasum": ""
             },
             "require": {
@@ -418,9 +418,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v6.2.1"
+                "source": "https://github.com/diversen/pebble-framework/tree/v6.2.3"
             },
-            "time": "2022-07-14T08:30:17+00:00"
+            "time": "2022-07-19T11:04:37+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
