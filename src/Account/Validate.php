@@ -117,11 +117,6 @@ class Validate
             return $response;
         }
 
-        if (mb_strtolower($_POST['captcha']) != mb_strtolower($_SESSION['captcha_phrase'])) {
-            $response['message'] = Lang::translate('Image text does not match');
-            return $response;
-        }
-
         $response['error'] = false;
         return $response;
     }

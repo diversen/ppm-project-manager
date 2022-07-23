@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Account;
 
 use Diversen\Lang;
-use Pebble\Captcha;
 use Pebble\CSRF;
 use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
@@ -194,16 +193,6 @@ class Controller extends StdUtils
     }
 
     /**
-     * @route /account/captcha
-     * @verbs GET
-     */
-    public function captcha()
-    {
-        $captcha = new Captcha();
-        $captcha->outputImage();
-    }
-
-    /**
      * @route /account/post_signup
      * @verbs POST
      */
@@ -223,24 +212,20 @@ class Controller extends StdUtils
         $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
             $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
-            if ($this->config->get('Account.no_email_verify')) {
-                $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
-                $message = Lang::translate('Account has been created. You may log in');
+            
+            $row = $validate->getByEmail($_POST['email']);
+            $mail = new Mail();
+
+            try {
                 $mail_success = true;
-            } else {
-                $row = $validate->getByEmail($_POST['email']);
-                $mail = new Mail();
-
-                try {
-                    $mail_success = true;
-                    $mail->sendSignupMail($row);
-                } catch (Exception $e) {
-                    $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
-                    $mail_success = false;
-                }
-
-                $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
+                $mail->sendSignupMail($row);
+            } catch (Exception $e) {
+                $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
+                $mail_success = false;
             }
+
+            $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
+        
 
             if (!$mail_success) {
                 $this->db->rollback();
@@ -282,7 +267,6 @@ class Controller extends StdUtils
      */
     public function post_recover()
     {
-        $captcha = new Captcha();
         $validate = new Validate();
 
         $response = ['error' => true];
@@ -298,12 +282,6 @@ class Controller extends StdUtils
 
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');
-            $this->json->render($response);
-            return;
-        }
-
-        if (!$captcha->validate($_POST['captcha'])) {
-            $response['message'] = Lang::translate('The image text does not match your submission');
             $this->json->render($response);
             return;
         }

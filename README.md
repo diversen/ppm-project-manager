@@ -24,7 +24,7 @@ If you have updated you browser the last couple of years you will be good to go.
 
 # Install
 
-Known to work on:  `PHP >= 7.4.3`
+Works on:  `PHP >= 8.1`
 
 Clone the source code: 
 
