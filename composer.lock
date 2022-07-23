@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8b7bb8d78774447830a5aa4aaebc559",
+    "content-hash": "68573556ae30df9b82a8b4c773bb75a5",
     "packages": [
         {
             "name": "aidantwoods/secureheaders",
@@ -369,16 +369,16 @@
         },
         {
             "name": "diversen/pebble-framework",
-            "version": "v7.0.1",
+            "version": "v6.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/diversen/pebble-framework.git",
-                "reference": "ccc9873bea1f1401a0e29df57e7847115cf7dccf"
+                "reference": "79db6d510f45d0bd215a4a14806a7ae076876962"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/ccc9873bea1f1401a0e29df57e7847115cf7dccf",
-                "reference": "ccc9873bea1f1401a0e29df57e7847115cf7dccf",
+                "url": "https://api.github.com/repos/diversen/pebble-framework/zipball/79db6d510f45d0bd215a4a14806a7ae076876962",
+                "reference": "79db6d510f45d0bd215a4a14806a7ae076876962",
                 "shasum": ""
             },
             "require": {
@@ -388,6 +388,7 @@
                 "diversen/minimal-cli-framework": "^6.0",
                 "diversen/simple-php-translation": "^3.0",
                 "erusev/parsedown": "^1.7",
+                "gregwar/captcha": "^1.1",
                 "monolog/monolog": "^2.7",
                 "phpmailer/phpmailer": "^6.0",
                 "phpstan/phpstan": "^1.8",
@@ -419,9 +420,9 @@
             ],
             "support": {
                 "issues": "https://github.com/diversen/pebble-framework/issues",
-                "source": "https://github.com/diversen/pebble-framework/tree/v7.0.1"
+                "source": "https://github.com/diversen/pebble-framework/tree/v6.2.8"
             },
-            "time": "2022-07-23T15:31:52+00:00"
+            "time": "2022-07-23T13:39:31+00:00"
         },
         {
             "name": "diversen/simple-php-translation",
