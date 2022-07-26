@@ -14,7 +14,7 @@ class Controller extends StdUtils
 {
     public function __construct()
     {
-        parent::__contruct();
+        parent::__construct();
         $this->login_redirect = $this->config->get('App.login_redirect');
         $this->logout_redirect = $this->config->get('App.logout_redirect');
     }

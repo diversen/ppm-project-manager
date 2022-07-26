@@ -15,7 +15,7 @@ class DateUtils extends StdUtils
 
     public function __construct()
     {
-        parent::__contruct();
+        parent::__construct();
         $this->user_timezone = $this->getUserTimezone();
     }
 

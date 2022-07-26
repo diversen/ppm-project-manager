@@ -8,7 +8,7 @@ class TwoFactorModel extends StdUtils
 {
     public function __construct()
     {
-        parent::__contruct();
+        parent::__construct();
     }
 
     public function getUserRow(array $where): array

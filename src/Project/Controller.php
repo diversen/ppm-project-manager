@@ -23,7 +23,7 @@ class Controller extends StdUtils
 
     public function __construct()
     {
-        parent::__contruct();
+        parent::__construct();
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
 

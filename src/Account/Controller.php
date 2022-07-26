@@ -22,7 +22,7 @@ class Controller extends StdUtils
 {
     public function __construct()
     {
-        parent::__contruct();
+        parent::__construct();
     }
 
     /**
