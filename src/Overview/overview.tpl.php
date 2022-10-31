@@ -67,6 +67,10 @@ function get_day_name(string $day_num)
     return $days[$day_num];
 }
 
+function get_date($ts) {
+    return date('M d, Y', $ts);
+}
+
 /**
  * Render a full week
  */
@@ -92,7 +96,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
     } ?>
 
         
-        <p><strong title="<?=date('d/m/Y', $ts)?>" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?>. </strong>
+        <p><strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?=get_date($ts)?>)
             <?= Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts])) ?>
         </p>
         <table>
