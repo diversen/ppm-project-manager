@@ -333,6 +333,7 @@ $LANG['Minor'] = 'Minor';
 $LANG['Low'] = 'Low';
 $LANG['Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.'] = 'Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.';
 $LANG['Not enabled'] = 'Not enabled';
+$LANG['Next day'] = 'Next day';
 $LANG['One week'] = 'One week';
 $LANG['Four weeks'] = 'Four weeks';
 $LANG['First day of the month'] = 'First day of the month';

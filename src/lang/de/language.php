@@ -163,6 +163,7 @@ $LANG['Pick end date'] = 'Enddatum auswählen';
 $LANG['Submit and stay'] = 'Einreichen und bleiben';
 $LANG['Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.'] = 'Wiederholbare Aufgabe. Verschiebt die Aufgabe automatisch auf ein neues Datum, wenn das Datum der Aufgabe überschritten wird.';
 $LANG['Not enabled'] = 'Nicht aktiviert';
+$LANG['Next day'] = 'Nächster Tag';
 $LANG['One week'] = 'Eine Woche';
 $LANG['Four weeks'] = 'Vier Wochen';
 $LANG['First day of the month'] = 'Erster Tag des Monats';

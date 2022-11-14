@@ -163,6 +163,7 @@ $LANG['Pick end date'] = 'Vælg slutdato';
 $LANG['Submit and stay'] = 'Opdater og bliv';
 $LANG['Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.'] = 'Gentagelig opgave. Flytter automatisk opgaven til en ny dato, når datoen for opgaven er overskredet.';
 $LANG['Not enabled'] = 'Ikke aktiveret';
+$LANG['Next day'] = 'Næste dag';
 $LANG['One week'] = 'En uge';
 $LANG['Four weeks'] = 'Fire uger';
 $LANG['First day of the month'] = 'Første dag i måneden';
