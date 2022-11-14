@@ -1,0 +1,1 @@
+ALTER TABLE `task` ADD COLUMN `auto_move` int(1) NOT NULL DEFAULT 0 AFTER `priority`;

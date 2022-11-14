@@ -8,7 +8,6 @@ use Pebble\App\AppBase;
 use Pebble\Exception\NotFoundException;
 
 use App\Time\TimeModel;
-use App\Utils\AppCal;
 use App\Exception\FormException;
 use App\Utils\DateUtils;
 use Diversen\Lang;
@@ -19,6 +18,19 @@ class TaskModel
     public const TASK_CLOSED = 0;
     public const TASK_OPEN = 1;
     public const TASK_DELETED = 2;
+
+    public const AUTO_MOVE_NONE = 0;
+    public const AUTO_MOVE_ONE_WEEK = 1;
+    public const AUTO_MOVE_FOUR_WEEKS = 2;
+    public const AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH = 3;
+    public const AUTO_MOVE_LAST_DAY_OF_THIS_MONTH = 4;
+
+    public const PRIORITY_URGENT = 4;
+    public const PRIORITY_HIGH = 3;
+    public const PRIORITY_NORMAL = 2;
+    public const PRIORITY_MINOR = 1;
+    public const PRIORITY_LOW = 0;
+    
 
     private $db;
     private $time_model;

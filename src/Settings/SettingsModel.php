@@ -72,7 +72,7 @@ class SettingsModel
     /**
      * Get a single setting from the 'profile' settings
      */
-    public function getSingleProfileSetting($auth_id, $profile_setting, $default)
+    public function getSingleProfileSetting(string $auth_id, string $profile_setting)
     {
         $profile = $this->getUserSetting($auth_id, 'profile');
 

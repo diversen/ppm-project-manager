@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Pebble\URL;
 use Diversen\Lang;
 use App\AppMain;
+use App\Utils\DateUtils;
 
 require 'templates/header.tpl.php';
 
@@ -67,15 +68,21 @@ function get_day_name(string $day_num)
     return $days[$day_num];
 }
 
-function get_date($ts) {
+function get_date($ts)
+{
     return date('M d, Y', $ts);
 }
+
 
 /**
  * Render a full week
  */
 function render_week($week_data, $week_state, $week_user_day_times)
 {
+
+    $date_utils = new DateUtils();
+
+
     $current_day_state = $week_state['current_day_state'];
     foreach ($week_data as $ts => $day_data) :
 
@@ -83,20 +90,26 @@ function render_week($week_data, $week_state, $week_user_day_times)
             continue;
         }
 
-    $day_number = date('N', $ts);
-    $is_today = is_today($ts);
+        $date_time_user = $date_utils->getUserDateTimeFromUnixTs($ts);
 
-    if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
-        continue;
-    }
-
-    $day_class = '';
-    if ($is_today) {
-        $day_class = ' class="today" ';
-    } ?>
-
+        $day_number = $date_time_user->format("N");
         
-        <p><strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?=get_date($ts)?>)
+        $is_today = is_today($ts);
+
+        if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
+            continue;
+        }
+
+        $day_class = '';
+        if ($is_today) {
+            $day_class = ' class="today" ';
+        } 
+
+        $date = $date_time_user->format('M d, Y');
+
+        ?>
+
+        <p><strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?= $date ?>)
             <?= Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts])) ?>
         </p>
         <table>
@@ -115,7 +128,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
                 foreach ($day_data as $task) :
                     render_task($task, $is_today);
-    endforeach; ?>
+                endforeach; ?>
 
             </tbody>
         </table>
@@ -167,7 +180,7 @@ render_week($week_data, $week_state, $week_user_day_times);
 <script type="module" nonce="<?= AppMain::$nonce ?>">
     import {
         Pebble
-    } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
+    } from '/js/pebble.js?v=<?= AppMain::VERSION ?>';
 
     document.addEventListener('click', async function(event) {
 

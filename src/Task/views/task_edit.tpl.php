@@ -2,6 +2,7 @@
 
 use Diversen\Lang;
 use App\AppMain;
+use App\Task\TaskModel;
 
 require 'templates/header.tpl.php';
 require 'templates/flash.tpl.php';
@@ -9,8 +10,8 @@ require 'templates/flash.tpl.php';
 $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 $end_date = date('Y-m-d', strtotime($task['end_date']));
 
-$is_selected = function ($priority, $value) {
-    if ($priority == $value) {
+$is_selected = function ($value, $current_state) {
+    if ($value == $current_state) {
         return 'selected';
     }
     return '';
@@ -44,11 +45,20 @@ $is_selected = function ($priority, $value) {
     </select>
     <label for="priority"><?= Lang::translate('Priority') ?></label>
     <select name="priority">
-        <option value="4" <?= $is_selected('4', $task['priority']) ?>><?= Lang::translate('Urgent') ?></option>
-        <option value="3" <?= $is_selected('3', $task['priority']) ?>><?= Lang::translate('High') ?></option>
-        <option value="2" <?= $is_selected('2', $task['priority']) ?>><?= Lang::translate('Normal') ?></option>
-        <option value="1" <?= $is_selected('1', $task['priority']) ?>><?= Lang::translate('Minor') ?></option>
-        <option value="0" <?= $is_selected('0', $task['priority']) ?>><?= Lang::translate('Low') ?></option>
+        <option value="<?=TaskModel::PRIORITY_URGENT?>" <?= $is_selected(TaskModel::PRIORITY_URGENT, $task['priority']) ?>><?= Lang::translate('Urgent') ?></option>
+        <option value="<?=TaskModel::PRIORITY_HIGH?>" <?= $is_selected(TaskModel::PRIORITY_HIGH, $task['priority']) ?>><?= Lang::translate('High') ?></option>
+        <option value="<?=TaskModel::PRIORITY_NORMAL?>" <?= $is_selected(TaskModel::PRIORITY_NORMAL, $task['priority']) ?>><?= Lang::translate('Normal') ?></option>
+        <option value="<?=TaskModel::PRIORITY_MINOR?>" <?= $is_selected(TaskModel::PRIORITY_MINOR, $task['priority']) ?>><?= Lang::translate('Minor') ?></option>
+        <option value="<?=TaskModel::PRIORITY_LOW?>" <?= $is_selected(TaskModel::PRIORITY_LOW, $task['priority']) ?>><?= Lang::translate('Low') ?></option>
+    </select>
+
+    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.') ?></label>
+    <select name="auto_move">
+        <option value="<?=TaskModel::AUTO_MOVE_NONE?>" <?= $is_selected(TaskModel::AUTO_MOVE_NONE, $task['auto_move']) ?>><?= Lang::translate('Not enabled') ?></option>
+        <option value="<?=TaskModel::AUTO_MOVE_ONE_WEEK?>" <?= $is_selected(TaskModel::AUTO_MOVE_ONE_WEEK, $task['auto_move']) ?>><?= Lang::translate('One week') ?></option>
+        <option value="<?=TaskModel::AUTO_MOVE_FOUR_WEEKS?>" <?= $is_selected(TaskModel::AUTO_MOVE_FOUR_WEEKS, $task['auto_move']) ?>><?= Lang::translate('Four weeks') ?></option>
+        <option value="<?=TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH?>" <?= $is_selected(TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH, $task['auto_move']) ?>><?= Lang::translate('First day of the month') ?></option>
+        <option value="<?=TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH?>" <?= $is_selected(TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH, $task['auto_move']) ?>><?= Lang::translate('Last day of the month') ?></option>
     </select>
 
 
