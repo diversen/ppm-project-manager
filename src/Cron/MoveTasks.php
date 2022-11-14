@@ -31,6 +31,7 @@ class MoveTasks extends StdUtils
             if ($this->isMidnight($timezone)) {
                 
                 try {
+                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_TODAY);
                     $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_ONE_WEEK);
                     $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_FOUR_WEEKS);
                     $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH);
@@ -48,6 +49,7 @@ class MoveTasks extends StdUtils
 
         $date_str = null;
         
+        if ($auto_move_constant == TaskModel::AUTO_MOVE_TODAY) $date_str = 'now';
         if ($auto_move_constant == TaskModel::AUTO_MOVE_ONE_WEEK) $date_str = 'now + 7 day';
         if ($auto_move_constant == TaskModel::AUTO_MOVE_FOUR_WEEKS) $date_str = 'now + 24 days';
         if ($auto_move_constant == TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH) $date_str = 'first day of next month';
@@ -88,6 +90,6 @@ class MoveTasks extends StdUtils
             }
         }
 
-        // $this->run();
+        $this->run();
     }
 }

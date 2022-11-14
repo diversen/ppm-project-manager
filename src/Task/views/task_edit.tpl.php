@@ -55,6 +55,7 @@ $is_selected = function ($value, $current_state) {
     <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.') ?></label>
     <select name="auto_move">
         <option value="<?=TaskModel::AUTO_MOVE_NONE?>" <?= $is_selected(TaskModel::AUTO_MOVE_NONE, $task['auto_move']) ?>><?= Lang::translate('Not enabled') ?></option>
+        <option value="<?=TaskModel::AUTO_MOVE_TODAY?>" <?= $is_selected(TaskModel::AUTO_MOVE_TODAY, $task['auto_move']) ?>><?= Lang::translate('Next day') ?></option>
         <option value="<?=TaskModel::AUTO_MOVE_ONE_WEEK?>" <?= $is_selected(TaskModel::AUTO_MOVE_ONE_WEEK, $task['auto_move']) ?>><?= Lang::translate('One week') ?></option>
         <option value="<?=TaskModel::AUTO_MOVE_FOUR_WEEKS?>" <?= $is_selected(TaskModel::AUTO_MOVE_FOUR_WEEKS, $task['auto_move']) ?>><?= Lang::translate('Four weeks') ?></option>
         <option value="<?=TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH?>" <?= $is_selected(TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH, $task['auto_move']) ?>><?= Lang::translate('First day of the month') ?></option>
