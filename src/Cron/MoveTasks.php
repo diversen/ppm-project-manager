@@ -45,6 +45,7 @@ class MoveTasks extends StdUtils
 
     public function moveTasks($user_id, $auto_move_constant) {
 
+        // All dates in database should be in UTC
         date_default_timezone_set('UTC');
 
         $date_str = null;

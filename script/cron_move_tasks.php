@@ -7,4 +7,4 @@ require ("vendor/autoload.php");
 use \App\Cron\MoveTasks;
 
 $move_tasks = new MoveTasks();
-$users = $move_tasks->run();
+$move_tasks->run();
