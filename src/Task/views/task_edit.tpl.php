@@ -45,23 +45,39 @@ $is_selected = function ($value, $current_state) {
     </select>
     <label for="priority"><?= Lang::translate('Priority') ?></label>
     <select name="priority">
-        <option value="<?=TaskModel::PRIORITY_URGENT?>" <?= $is_selected(TaskModel::PRIORITY_URGENT, $task['priority']) ?>><?= Lang::translate('Urgent') ?></option>
-        <option value="<?=TaskModel::PRIORITY_HIGH?>" <?= $is_selected(TaskModel::PRIORITY_HIGH, $task['priority']) ?>><?= Lang::translate('High') ?></option>
-        <option value="<?=TaskModel::PRIORITY_NORMAL?>" <?= $is_selected(TaskModel::PRIORITY_NORMAL, $task['priority']) ?>><?= Lang::translate('Normal') ?></option>
-        <option value="<?=TaskModel::PRIORITY_MINOR?>" <?= $is_selected(TaskModel::PRIORITY_MINOR, $task['priority']) ?>><?= Lang::translate('Minor') ?></option>
-        <option value="<?=TaskModel::PRIORITY_LOW?>" <?= $is_selected(TaskModel::PRIORITY_LOW, $task['priority']) ?>><?= Lang::translate('Low') ?></option>
+        <option value="<?= TaskModel::PRIORITY_URGENT ?>" <?= $is_selected(TaskModel::PRIORITY_URGENT, $task['priority']) ?>><?= Lang::translate('Urgent') ?></option>
+        <option value="<?= TaskModel::PRIORITY_HIGH ?>" <?= $is_selected(TaskModel::PRIORITY_HIGH, $task['priority']) ?>><?= Lang::translate('High') ?></option>
+        <option value="<?= TaskModel::PRIORITY_NORMAL ?>" <?= $is_selected(TaskModel::PRIORITY_NORMAL, $task['priority']) ?>><?= Lang::translate('Normal') ?></option>
+        <option value="<?= TaskModel::PRIORITY_MINOR ?>" <?= $is_selected(TaskModel::PRIORITY_MINOR, $task['priority']) ?>><?= Lang::translate('Minor') ?></option>
+        <option value="<?= TaskModel::PRIORITY_LOW ?>" <?= $is_selected(TaskModel::PRIORITY_LOW, $task['priority']) ?>><?= Lang::translate('Low') ?></option>
     </select>
 
-    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.') ?></label>
+    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of the task is exceeded.') ?></label>
     <select name="auto_move">
-        <option value="<?=TaskModel::AUTO_MOVE_NONE?>" <?= $is_selected(TaskModel::AUTO_MOVE_NONE, $task['auto_move']) ?>><?= Lang::translate('Not enabled') ?></option>
-        <option value="<?=TaskModel::AUTO_MOVE_TODAY?>" <?= $is_selected(TaskModel::AUTO_MOVE_TODAY, $task['auto_move']) ?>><?= Lang::translate('Next day') ?></option>
-        <option value="<?=TaskModel::AUTO_MOVE_ONE_WEEK?>" <?= $is_selected(TaskModel::AUTO_MOVE_ONE_WEEK, $task['auto_move']) ?>><?= Lang::translate('One week') ?></option>
-        <option value="<?=TaskModel::AUTO_MOVE_FOUR_WEEKS?>" <?= $is_selected(TaskModel::AUTO_MOVE_FOUR_WEEKS, $task['auto_move']) ?>><?= Lang::translate('Four weeks') ?></option>
-        <option value="<?=TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH?>" <?= $is_selected(TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH, $task['auto_move']) ?>><?= Lang::translate('First day of the month') ?></option>
-        <option value="<?=TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH?>" <?= $is_selected(TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH, $task['auto_move']) ?>><?= Lang::translate('Last day of the month') ?></option>
-    </select>
+        <option value="<?= TaskModel::AUTO_MOVE_NONE ?>" <?= $is_selected(TaskModel::AUTO_MOVE_NONE, $task['auto_move']) ?>><?= Lang::translate('Deactivated') ?></option>
+        
+        <optgroup label="<?=Lang::translate("Daily")?>">
+            <option value="<?= TaskModel::AUTO_MOVE_TODAY ?>" <?= $is_selected(TaskModel::AUTO_MOVE_TODAY, $task['auto_move']) ?>><?= Lang::translate('Next day') ?></option>
+        </optgroup>
+        
+        <optgroup label="<?=Lang::translate("Weekly")?>">
+            <option value="<?= TaskModel::AUTO_MOVE_ONE_WEEK ?>" <?= $is_selected(TaskModel::AUTO_MOVE_ONE_WEEK, $task['auto_move']) ?>><?= Lang::translate('One week') ?></option>
+            <option value="<?= TaskModel::AUTO_MOVE_FOUR_WEEKS ?>" <?= $is_selected(TaskModel::AUTO_MOVE_FOUR_WEEKS, $task['auto_move']) ?>><?= Lang::translate('Four weeks') ?></option>
+        </optgroup>
 
+        <optgroup label="<?=Lang::translate("Monthly")?>">
+            <option value="<?= TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH ?>" <?= $is_selected(TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH, $task['auto_move']) ?>><?= Lang::translate('One month. First day of the month') ?></option>
+            <option value="<?= TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH ?>" <?= $is_selected(TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH, $task['auto_move']) ?>><?= Lang::translate('One month. Last day of the month.') ?></option>
+        </optgroup>
+        <optgroup label="<?=Lang::translate("Monthly. Following day name")?>">
+            <option 
+                title="<?=Lang::translate("If the day name of the Task begin date is e.g. Friday, then the task will be moved to the first Friday of the month.")?>"
+                value="<?= TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH ?>" <?= $is_selected(TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH, $task['auto_move']) ?>><?= Lang::translate("One month. First day of the month") ?></option>
+            <option 
+                title="<?=Lang::translate("If the day name of the Task begin date is e.g. Friday, then the task will be moved to the last Friday of the month.")?>"
+                value="<?= TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH ?>" <?= $is_selected(TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH, $task['auto_move']) ?>><?= Lang::translate('One month. Last day of the month') ?></option>
+        </optgroup>
+    </select>
 
     <label for="begin_data"><?= Lang::translate('Task begin date') ?> *</label>
     <input id="begin_date" type="date" name="begin_date" placeholder="<?= Lang::translate('Pick begin date') ?>" value="<?= $begin_date ?>">
@@ -93,9 +109,9 @@ $is_selected = function ($value, $current_state) {
 
 </form>
 
-<script type="module" nonce="<?=AppMain::getNonce()?>">
-    import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
-    import {addMultipleEventListener} from '/js/event.js?v=<?=AppMain::VERSION?>'
+<script type="module" nonce="<?= AppMain::getNonce() ?>">
+    import {Pebble} from '/js/pebble.js?v=<?= AppMain::VERSION ?>';
+    import {addMultipleEventListener} from '/js/event.js?v=<?= AppMain::VERSION ?>'
 
     const return_to = Pebble.getQueryVariable('return_to');
     const title = document.getElementById('title');
@@ -133,7 +149,7 @@ $is_selected = function ($value, $current_state) {
 
 
     async function updateTask(status) {
-        
+
         const form = document.getElementById('task_edit');
         const data = new FormData(form);
 

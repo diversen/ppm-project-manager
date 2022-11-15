@@ -26,6 +26,9 @@ class TaskModel
     public const AUTO_MOVE_LAST_DAY_OF_THIS_MONTH = 4;
     public const AUTO_MOVE_TODAY = 5;
 
+    public const AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH = 6;
+    public const AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH = 7;
+
     public const PRIORITY_URGENT = 4;
     public const PRIORITY_HIGH = 3;
     public const PRIORITY_NORMAL = 2;

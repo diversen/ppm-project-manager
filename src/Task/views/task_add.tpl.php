@@ -1,6 +1,7 @@
 <?php
 
 use App\AppMain;
+use App\Task\TaskModel;
 
 $bd = (new AppMain())->getConfig()->get('App.basedir');
 
@@ -33,6 +34,33 @@ use Diversen\Lang;
         <option value="2" selected><?=Lang::translate('Normal')?></option>
         <option value="1"><?=Lang::translate('Minor')?></option>
         <option value="0"><?=Lang::translate('Low')?></option>
+    </select>
+
+    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of the task is exceeded.') ?></label>
+    <select name="auto_move">
+        <option value="<?= TaskModel::AUTO_MOVE_NONE ?>"><?= Lang::translate('Deactivated') ?></option>
+        
+        <optgroup label="<?=Lang::translate("Daily")?>">
+            <option value="<?= TaskModel::AUTO_MOVE_TODAY ?>"><?= Lang::translate('Next day') ?></option>
+        </optgroup>
+        
+        <optgroup label="<?=Lang::translate("Weekly")?>">
+            <option value="<?= TaskModel::AUTO_MOVE_ONE_WEEK ?>"><?= Lang::translate('One week') ?></option>
+            <option value="<?= TaskModel::AUTO_MOVE_FOUR_WEEKS ?>"><?= Lang::translate('Four weeks') ?></option>
+        </optgroup>
+
+        <optgroup label="<?=Lang::translate("Monthly")?>">
+            <option value="<?= TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH ?>"><?= Lang::translate('One month. First day of the month') ?></option>
+            <option value="<?= TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH ?>"><?= Lang::translate('One month. Last day of the month.') ?></option>
+        </optgroup>
+        <optgroup label="<?=Lang::translate("Monthly. Following day name")?>">
+            <option 
+                title="<?=Lang::translate("If the day name of the Task begin date is e.g. Friday, then the task will be moved to the first Friday of the month.")?>"
+                value="<?= TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH ?>"><?= Lang::translate("One month. First day of the month") ?></option>
+            <option 
+                title="<?=Lang::translate("If the day name of the Task begin date is e.g. Friday, then the task will be moved to the last Friday of the month.")?>"
+                value="<?= TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH ?>"><?= Lang::translate('One month. Last day of the month') ?></option>
+        </optgroup>
     </select>
 
     <label for="begin_data"><?=Lang::translate('Task begin date')?> *</label>
