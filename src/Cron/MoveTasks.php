@@ -23,12 +23,11 @@ class MoveTasks extends StdUtils
 
     public function run()
     {
+        $this->log->debug("MoveTasks. Cron started");
         $users = $this->db->getAll('auth', ['verified' => 1, 'locked' => 0]);
 
         foreach ($users as $user) {
 
-            $default_timezone = date_default_timezone_get();
-            $this->log->debug('MoveTasks. Default timezone: ' . $default_timezone);
             $timezone = $this->date_utils->getUserTimezone($user['id']);
 
             if ($this->isMidnight($timezone)) {
@@ -84,8 +83,9 @@ class MoveTasks extends StdUtils
 
 
         $tasks_to_move = $this->db->getAll('task', $where);
-        $this->log->debug("MoveTasks.", ['tasks' => $tasks_to_move]);
+        if (empty($tasks_to_move)) return;
 
+        $this->log->debug("MoveTasks.", ['tasks' => $tasks_to_move]);
         $this->db->update(
             'task',
             $update_values,
