@@ -40,16 +40,13 @@ class DateUtils extends StdUtils
     public function getUTCDate($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
     {
 
-        $date = new DateTime($datetime_str);
-        $date->setTimezone(new DateTimeZone('UTC'));
+        $date = new DateTime($datetime_str, new DateTimeZone('UTC'));
         return $date->format($format);
     }
 
     public function getUserDateFromUTC($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
     {
-        $date = new DateTime('now');
-        $date->modify($datetime_str);
-        $date->setTimezone(new DateTimeZone($this->user_timezone));
+        $date = new DateTime($datetime_str, new DateTimeZone($this->user_timezone));
         return $date->format($format);
     }
 

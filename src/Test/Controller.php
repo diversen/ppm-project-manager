@@ -9,6 +9,15 @@ use App\Cron\MoveTasks;
 
 class Controller extends StdUtils
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+        if ($this->config->get('App.env') !== 'dev') {
+            throw new \Exception('Not allowed');
+        }
+    }
+    
     /**
      * @route /worker
      * @verbs GET
@@ -32,6 +41,8 @@ class Controller extends StdUtils
      * @verbs GET
      */
     public function test(){
+
+        
         $move_tasks = new MoveTasks();
         $users = $move_tasks->test();
         // var_dump($users);

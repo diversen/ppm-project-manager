@@ -27,9 +27,15 @@ class MoveTasks extends StdUtils
         $users = $this->db->getAll('auth', ['verified' => 1, 'locked' => 0]);
 
         foreach ($users as $user) {
-            $timezone = $this->date_utils->getUserTimezone($user['id']);
+
+            $timezone = $this->date_utils->getUserTimezone($user['id']);    
             if ($this->isMidnight($timezone)) {
                 
+                $date_time = new \DateTime('now', new \DateTimeZone($timezone));
+                $date_format = $date_time->format('Y-m-d H:i:s');
+
+                $this->log->debug("Cron. Movetasks. Moving tasks for user {$user['id']} at {$date_format} in timezone {$timezone}");
+
                 try {
                     $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_TODAY);
                     $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_ONE_WEEK);
@@ -45,9 +51,6 @@ class MoveTasks extends StdUtils
 
     public function moveTasks($user_id, $auto_move_constant) {
 
-        // All dates in database should be in UTC
-        date_default_timezone_set('UTC');
-
         $date_str = null;
         
         if ($auto_move_constant == TaskModel::AUTO_MOVE_TODAY) $date_str = 'now';
@@ -59,22 +62,41 @@ class MoveTasks extends StdUtils
         $date_to_move = $this->date_utils->getUTCDate('now - 1 day');
         $date_new_date = $this->date_utils->getUTCDate($date_str);
 
+        $update_values = [
+            'begin_date' => $date_new_date, 
+            'end_date' => $date_new_date
+        ];
+
+        $where = [
+            'auth_id' => $user_id, 
+            'auto_move' => $auto_move_constant, 
+            'status' => TaskModel::TASK_OPEN, 
+            'begin_date' => $date_to_move
+        ];
+
+
+        $tasks_to_move = $this->db->getAll('task', $where);
+        $this->log->debug("Cron. MoveTasks.", ['tasks' => $tasks_to_move]);
+
         $this->db->update(
             'task', 
-            ['begin_date' => $date_new_date, 'end_date' => $date_new_date],
-            ['auth_id' => $user_id, 'auto_move' => $auto_move_constant, 'status' => TaskModel::TASK_OPEN, 'begin_date' => $date_to_move],  
+            $update_values,
+            $where,  
         );
 
     }
 
+
     /**
-     * method that checks if the hour is 00 (after midnight) from a timezone, e.g 'Europe/London'
+     * Method that checks if the hour is 00 (after midnight) from a timezone, e.g 'Europe/London'
+     * Indicates that the day has changed
      */
     public function isMidnight($timezone)
     {
         $date = new \DateTime('now', new \DateTimeZone($timezone));
         $hour = $date->format('H');
-        if ($hour == '00') {
+        
+        if ($hour === '00') {
             return true;
         }
         return false;
@@ -85,6 +107,7 @@ class MoveTasks extends StdUtils
         $timezones = DateTimeZone::listIdentifiers();
 
         // Find a midnight timezone which is at midnight to test on
+        print("Output of DateTimeZone::listIdentifiers() function:");
         foreach($timezones as $timezone) {
             if ($this->isMidnight($timezone)) {
                 var_dump($timezone);
