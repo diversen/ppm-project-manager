@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Cron;
 
 use DateTimeZone;
@@ -28,13 +27,15 @@ class MoveTasks extends StdUtils
 
         foreach ($users as $user) {
 
+            $default_timezone = date_default_timezone_get();
+            $this->log->debug('MoveTasks. Default timezone: ' . $default_timezone);
             $timezone = $this->date_utils->getUserTimezone($user['id']);    
             if ($this->isMidnight($timezone)) {
                 
                 $date_time = new \DateTime('now', new \DateTimeZone($timezone));
                 $date_format = $date_time->format('Y-m-d H:i:s');
 
-                $this->log->debug("Cron. Movetasks. Moving tasks for user {$user['id']} at {$date_format} in timezone {$timezone}");
+                $this->log->debug("MoveTasks. Moving tasks for user {$user['id']} at {$date_format} in timezone {$timezone}");
 
                 try {
                     $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_TODAY);
@@ -76,7 +77,7 @@ class MoveTasks extends StdUtils
 
 
         $tasks_to_move = $this->db->getAll('task', $where);
-        $this->log->debug("Cron. MoveTasks.", ['tasks' => $tasks_to_move]);
+        $this->log->debug("MoveTasks.", ['tasks' => $tasks_to_move]);
 
         $this->db->update(
             'task', 
@@ -104,6 +105,8 @@ class MoveTasks extends StdUtils
 
     public function test()
     {
+
+        
         $timezones = DateTimeZone::listIdentifiers();
 
         // Find a midnight timezone which is at midnight to test on
