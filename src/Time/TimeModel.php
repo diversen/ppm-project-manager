@@ -10,17 +10,17 @@ use App\AppMain;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\Utils\DateUtils;
+use Pebble\App\StdUtils;
 
-class TimeModel
+class TimeModel extends StdUtils
 {
     private $app_acl;
-    private $db;
 
     public function __construct()
     {
+        parent::__construct();
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
-        $this->db = $app_main->getDB();
     }
 
     /**
@@ -30,7 +30,14 @@ class TimeModel
     {
         $aux = explode(":", $time);
         if (count($aux) == 2) {
-            return ($aux[0] * 60) + $aux[1];
+            $hours = $aux[0];
+            $minutes = $aux[1];
+            if (!is_numeric($hours) || !is_numeric($minutes)) {
+                throw new FormException(Lang::translate('Not a valid time input'));
+            }
+            $hours = (int)$hours;
+            $minutes = (int)$minutes;
+            return ( $hours * 60) + $minutes;
         } else {
             return 0;
         }
