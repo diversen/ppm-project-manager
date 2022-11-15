@@ -309,21 +309,27 @@ $LANG['High'] = 'High';
 $LANG['Normal'] = 'Normal';
 $LANG['Minor'] = 'Minor';
 $LANG['Low'] = 'Low';
-$LANG['Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.'] = 'Repeatable task. Will auto-move the task to a new date when the date of task is exceeded.';
-$LANG['Not enabled'] = 'Not enabled';
+$LANG['Repeatable task. Will auto-move the task to a new date when the date of the task is exceeded.'] = 'Repeatable task. Will auto-move the task to a new date when the date of the task is exceeded.';
+$LANG['Deactivated'] = 'Deactivated';
 $LANG['Next day'] = 'Next day';
 $LANG['One week'] = 'One week';
 $LANG['Four weeks'] = 'Four weeks';
-$LANG['First day of the month'] = 'First day of the month';
-$LANG['Last day of the month'] = 'Last day of the month';
-$LANG['First day (by name) of the month.'] = 'First day (by name) of the month.';
-$LANG['Last day (by name) of the month'] = 'Last day (by name) of the month';
+$LANG['One month. First day of the month'] = 'One month. First day of the month';
+$LANG['One month. Last day of the month.'] = 'One month. Last day of the month.';
+$LANG['One month. Last day of the month'] = 'One month. Last day of the month';
 $LANG['Task begin date'] = 'Task begin date';
 $LANG['Pick begin date'] = 'Pick begin date';
 $LANG['Task end date'] = 'Task end date';
 $LANG['Pick end date'] = 'Pick end date';
 $LANG['Submit'] = 'Submit';
 $LANG['Submit and stay'] = 'Submit and stay';
+$LANG['Daily'] = 'Daily';
+$LANG['Weekly'] = 'Weekly';
+$LANG['Monthly'] = 'Monthly';
+$LANG['Monthly. Following day name'] = 'Monthly. Following day name';
+$LANG['If the day name of the Task begin date is e.g. Friday, then the task will be moved to the first Friday of the month.'] = 'If the day name of the Task begin date is e.g. Friday, then the task will be moved to the first Friday of the month.';
+$LANG['One month. First day of the month'] = 'One month. First day of the month';
+$LANG['If the day name of the Task begin date is e.g. Friday, then the task will be moved to the last Friday of the month.'] = 'If the day name of the Task begin date is e.g. Friday, then the task will be moved to the last Friday of the month.';
 
 // Translation of file src/Task/views/task_edit.tpl.php
 
@@ -345,9 +351,9 @@ $LANG['Deactivated'] = 'Deactivated';
 $LANG['Next day'] = 'Next day';
 $LANG['One week'] = 'One week';
 $LANG['Four weeks'] = 'Four weeks';
-$LANG['One month. First day of the month'] = 'One month. First day of the month';
-$LANG['One month. Last day of the month.'] = 'One month. Last day of the month.';
-$LANG['One month. Last day of the month'] = 'One month. Last day of the month';
+$LANG['One month. First day'] = 'One month. First day';
+$LANG['One month. Last day'] = 'One month. Last day';
+$LANG['One month. Last day same day name'] = 'One month. Last day same day name';
 $LANG['Task begin date'] = 'Task begin date';
 $LANG['Pick begin date'] = 'Pick begin date';
 $LANG['Task end date'] = 'Task end date';
@@ -359,13 +365,7 @@ $LANG['Delete'] = 'Delete';
 $LANG['Complete this task?'] = 'Complete this task?';
 $LANG['Delete this task. Registered time entries will be removed?'] = 'Delete this task. Registered time entries will be removed?';
 $LANG['Open this task?'] = 'Open this task?';
-$LANG['Daily'] = 'Daily';
-$LANG['Weekly'] = 'Weekly';
-$LANG['Monthly'] = 'Monthly';
-$LANG['Monthly. Following day name'] = 'Monthly. Following day name';
-$LANG['If the day name of the Task begin date is e.g. Friday, then the task will be moved to the first Friday of the month.'] = 'If the day name of the Task begin date is e.g. Friday, then the task will be moved to the first Friday of the month.';
-$LANG['One month. First day of the month'] = 'One month. First day of the month';
-$LANG['If the day name of the Task begin date is e.g. Friday, then the task will be moved to the last Friday of the month.'] = 'If the day name of the Task begin date is e.g. Friday, then the task will be moved to the last Friday of the month.';
+$LANG['One month. First day same day name.'] = 'One month. First day same day name.';
 
 // Translation of file src/Task/views/task_view.tpl.php
 
