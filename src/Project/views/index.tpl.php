@@ -24,10 +24,13 @@ function render_project($project)
     $date_utils = new DateUtils();
 
     // Stored in UTC, convert to user local timezone
+    
     $updated = $project['updated'];
-    $updated = $date_utils->getUserDateFormatFromUTC($updated, 'Y-m-d H:i:s');
+    
+    $updated = $date_utils->getUserDateFormatFromUTC($updated, 'd/m/Y H:i');
+    // var_dump($updated);
 
-    $updated = date('d/m/Y', strtotime($updated)); ?>
+    // $updated = date('d/m/Y H:i:s', strtotime($updated)); ?>
     <tr>
         <td class="td-overflow"><a title="<?= $project['note'] ?>" href='/project/view/<?= $project['id'] ?>'><?= $project['title'] ?></a></td>
         <td><?= $updated ?></td>

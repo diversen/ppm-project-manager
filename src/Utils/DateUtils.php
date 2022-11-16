@@ -45,21 +45,25 @@ class DateUtils extends StdUtils
 
 
     /**
-     * Get a datetime formatted using a DateTime constructor string, the format and implicitly the user's timezone
+     * Convert a UTC timestamp into a user's timezone and return a formatted date
+     * Used for data saved as UTC in the database
      */
     public function getUserDateFormatFromUTC($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
     {
-        return $this->getDateFormat($datetime_str, $this->user_timezone, $format);
+        $date_time = new DateTime($datetime_str, new DateTimeZone('UTC'));
+        $date_time->setTimezone(new DateTimeZone($this->user_timezone));
+        return $date_time->format($format);
     }
 
     /**
-     * Get a DateTime object from a unix timestamp and implicit the user's timezone
+     * Get a DateTime object from a unix timestamp and implicit the script's timezone
+     * (which is the user's timezone)
      */
     public function getUserDateTimeFromUnixTs($timestamp): DateTime
     {
-        $date_time = new DateTime('now', new DateTimeZone('UTC'));
+        // User timezone is implicit set by date_default_timezone_set() in AppMain
+        $date_time = new DateTime('now');
         $date_time->setTimestamp($timestamp);
-        $date_time->setTimezone(new DateTimeZone($this->user_timezone));
         return $date_time;
     }
 }
