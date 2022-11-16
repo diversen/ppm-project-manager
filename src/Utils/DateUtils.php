@@ -35,31 +35,31 @@ class DateUtils extends StdUtils
     }
 
     /**
-     * Get a UTC date in format Y-m-d H:i:s from a supplied datetime string, e.g. 'now'
+     * Get a datetime formatted using a DateTime constructor string, a timezone, and the format
      */
-    public function getUTCDate($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
+    public function getDateFormat($datetime_str = 'now', $timezone='UTC', $format = 'Y-m-d 00:00:00')
     {
-
-        $date = new DateTime($datetime_str, new DateTimeZone('UTC'));
+        $date = new DateTime($datetime_str, new DateTimeZone($timezone));
         return $date->format($format);
     }
 
-    public function getUserDateFromUTC($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
+
+    /**
+     * Get a datetime formatted using a DateTime constructor string, the format and implicitly the user's timezone
+     */
+    public function getUserDateFormatFromUTC($datetime_str = 'now', $format = 'Y-m-d 00:00:00')
     {
-        $date = new DateTime($datetime_str, new DateTimeZone($this->user_timezone));
-        return $date->format($format);
+        return $this->getDateFormat($datetime_str, $this->user_timezone, $format);
     }
 
     /**
-     * function that get a DateTime object from a unix timestamp
+     * Get a DateTime object from a unix timestamp and implicit the user's timezone
      */
     public function getUserDateTimeFromUnixTs($timestamp): DateTime
     {
-        $date = new DateTime('now', new DateTimeZone('UTC'));
-        $date->setTimestamp($timestamp);
-        $date->setTimezone(new DateTimeZone($this->user_timezone));
-
-        return $date;
+        $date_time = new DateTime('now', new DateTimeZone('UTC'));
+        $date_time->setTimestamp($timestamp);
+        $date_time->setTimezone(new DateTimeZone($this->user_timezone));
+        return $date_time;
     }
-    
 }

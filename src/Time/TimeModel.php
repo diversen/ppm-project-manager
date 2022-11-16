@@ -15,10 +15,12 @@ use Pebble\App\StdUtils;
 class TimeModel extends StdUtils
 {
     private $app_acl;
+    private $date_utils;
 
     public function __construct()
     {
         parent::__construct();
+        $this->date_utils = new DateUtils();
         $app_main = new AppMain();
         $this->app_acl = $app_main->getAppACL();
     }
@@ -58,9 +60,8 @@ class TimeModel extends StdUtils
      */
     private function sanitize($post)
     {
-        $date_utils = new DateUtils();
         $post['minutes'] = $this->totalMinutes($post['minutes']);
-        $post['created'] = $date_utils->getUTCDate('now', 'Y-m-d H:i:s');
+        $post['created'] = $this->date_utils->getDateFormat('now', 'UTC', 'Y-m-d H:i:s');
         return $post;
     }
 

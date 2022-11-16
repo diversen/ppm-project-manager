@@ -25,7 +25,7 @@ function render_project($project)
 
     // Stored in UTC, convert to user local timezone
     $updated = $project['updated'];
-    $updated = $date_utils->getUserDateFromUTC($updated, 'Y-m-d H:i:s');
+    $updated = $date_utils->getUserDateFormatFromUTC($updated, 'Y-m-d H:i:s');
 
     $updated = date('d/m/Y', strtotime($updated)); ?>
     <tr>

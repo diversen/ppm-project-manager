@@ -23,7 +23,7 @@ class MoveTasks extends StdUtils
 
     public function run()
     {
-        $this->log->debug("MoveTasks. Cron started");
+        $this->log->info("MoveTasks. Cron started");
         $users = $this->db->getAll('auth', ['verified' => 1, 'locked' => 0]);
 
         foreach ($users as $user) {
@@ -32,19 +32,14 @@ class MoveTasks extends StdUtils
 
             if ($this->isMidnight($timezone)) {
 
-                $date_time = new \DateTime('now', new \DateTimeZone($timezone));
-                $date_format = $date_time->format('Y-m-d H:i:s');
-
-                $this->log->debug("MoveTasks. Moving tasks for user {$user['id']} at {$date_format} in timezone {$timezone}");
-
                 try {
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_TODAY);
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_ONE_WEEK);
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_FOUR_WEEKS);
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH);
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH);
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH);
-                    $this->moveTasks($user['id'], TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_TODAY);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_ONE_WEEK);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_FOUR_WEEKS);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH);
                 } catch (Exception $e) {
                     $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
                 }
@@ -52,11 +47,11 @@ class MoveTasks extends StdUtils
         }
     }
 
-    public function moveTasks($user_id, $auto_move_constant)
+    public function moveTasks($user_id, $timezone, $auto_move_constant)
     {
-
+        
         $date_str = null;
-        $day_name = $this->date_utils->getUTCDate('now - 1 day', 'l');
+        $day_name = $this->date_utils->getDateFormat('now - 1 day', $timezone, 'l');
 
         if ($auto_move_constant == TaskModel::AUTO_MOVE_TODAY) $date_str = 'now';
         if ($auto_move_constant == TaskModel::AUTO_MOVE_ONE_WEEK) $date_str = 'now + 7 day';
@@ -66,8 +61,8 @@ class MoveTasks extends StdUtils
         if ($auto_move_constant == TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH) $date_str = "first {$day_name} of next month";
         if ($auto_move_constant == TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH) $date_str = "last {$day_name} of this month";
 
-        $date_to_move = $this->date_utils->getUTCDate('now - 1 day');
-        $date_new_date = $this->date_utils->getUTCDate($date_str);
+        $date_to_move = $this->date_utils->getDateFormat('now - 1 day', $timezone);
+        $date_new_date = $this->date_utils->getDateFormat($date_str, $timezone);
         
         $update_values = [
             'begin_date' => $date_new_date,
@@ -81,11 +76,10 @@ class MoveTasks extends StdUtils
             'begin_date' => $date_to_move
         ];
 
-
         $tasks_to_move = $this->db->getAll('task', $where);
         if (empty($tasks_to_move)) return;
 
-        $this->log->debug("MoveTasks.", ['tasks' => $tasks_to_move]);
+        $this->log->info("MoveTask user_id {$user_id}", ['tasks' => $tasks_to_move]);
         $this->db->update(
             'task',
             $update_values,
@@ -100,9 +94,7 @@ class MoveTasks extends StdUtils
      */
     public function isMidnight($timezone)
     {
-        $date = new \DateTime('now', new \DateTimeZone($timezone));
-        $hour = $date->format('H');
-
+        $hour = $this->date_utils->getDateFormat('now', $timezone, 'H');
         if ($hour === '00') {
             return true;
         }
@@ -112,13 +104,6 @@ class MoveTasks extends StdUtils
     public function test()
     {
 
-        $date_str = 'first wednesday of next month';
-        $date_new_date = $this->date_utils->getUTCDate($date_str);
-        echo $date_new_date . "<br />";
-
-        $date_str = 'last wednesday of next month';
-        $date_new_date = $this->date_utils->getUTCDate($date_str);
-        echo $date_new_date;
         // die;
 
         $timezones = DateTimeZone::listIdentifiers();

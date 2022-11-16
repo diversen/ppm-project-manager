@@ -86,8 +86,8 @@ class ProjectModel
         $this->validate($post);
 
         // Store in UTC
-        $post['updated'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
-        $post['created'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
+        $post['updated'] = $this->date_utils->getDateFormat('now', 'UTC', 'Y-m-d H:i:s');
+        $post['created'] = $this->date_utils->getDateFormat('now', 'UTC', 'Y-m-d H:i:s');
 
         $this->db->inTransactionExec(function () use ($post) {
             $this->db->insert('project', $post);
@@ -104,7 +104,7 @@ class ProjectModel
         $this->validate($post);
 
         // Force an update
-        $post['updated'] = $this->date_utils->getUTCDate('now', 'Y-m-d H:i:s');
+        $post['updated'] = $this->date_utils->getDateFormat('now', 'UTC', 'Y-m-d H:i:s');
 
         $this->db->inTransactionExec(function () use ($post, $project_id) {
             $this->db->update('project', $post, ['id' => $project_id]);
