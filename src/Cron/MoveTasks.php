@@ -73,7 +73,7 @@ class MoveTasks extends StdUtils
             'auth_id' => $user_id,
             'auto_move' => $auto_move_constant,
             'status' => TaskModel::TASK_OPEN,
-            'begin_date' => $date_to_move
+            'end_date' => $date_to_move
         ];
 
         $tasks_to_move = $this->db->getAll('task', $where);

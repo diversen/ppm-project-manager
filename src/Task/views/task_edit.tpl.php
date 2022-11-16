@@ -52,7 +52,7 @@ $is_selected = function ($value, $current_state) {
         <option value="<?= TaskModel::PRIORITY_LOW ?>" <?= $is_selected(TaskModel::PRIORITY_LOW, $task['priority']) ?>><?= Lang::translate('Low') ?></option>
     </select>
 
-    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of the task is exceeded.') ?></label>
+    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the end date of the task is exceeded.') ?></label>
     <select name="auto_move">
         <option value="<?= TaskModel::AUTO_MOVE_NONE ?>" <?= $is_selected(TaskModel::AUTO_MOVE_NONE, $task['auto_move']) ?>><?= Lang::translate('Deactivated') ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_TODAY ?>" <?= $is_selected(TaskModel::AUTO_MOVE_TODAY, $task['auto_move']) ?>><?= Lang::translate('Next day') ?></option>

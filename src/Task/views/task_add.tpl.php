@@ -36,7 +36,7 @@ use Diversen\Lang;
         <option value="0"><?=Lang::translate('Low')?></option>
     </select>
 
-    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the date of the task is exceeded.') ?></label>
+    <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the end date of the task is exceeded.') ?></label>
     <select name="auto_move">
         <option value="<?= TaskModel::AUTO_MOVE_NONE ?>"><?= Lang::translate('Deactivated') ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_TODAY ?>"><?= Lang::translate('Next day') ?></option>
