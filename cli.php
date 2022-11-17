@@ -7,6 +7,7 @@ use Pebble\CLI\User;
 use Pebble\CLI\DB;
 use Pebble\CLI\Migrate;
 use Pebble\CLI\Translate;
+use App\Cron\MoveTasks;
 
 $cli = new MinimalCli();
 $cli->header = 'PPM CLI';
@@ -15,6 +16,7 @@ $cli->commands = [
     'db' => new DB(),
     'migrate' => new Migrate(),
     'translate' => new Translate(),
+    'cron-move-tasks' => new MoveTasks(),
 ];
 
 $cli->runMain();

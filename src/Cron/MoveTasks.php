@@ -104,18 +104,31 @@ class MoveTasks extends StdUtils
     public function test()
     {
 
-        // die;
-
         $timezones = DateTimeZone::listIdentifiers();
 
         // Find a midnight timezone which is at midnight to test on
-        print("Output of DateTimeZone::listIdentifiers() function:");
+        print("Just past idnight in the follwing timezones:");
         foreach ($timezones as $timezone) {
+            
             if ($this->isMidnight($timezone)) {
-                var_dump($timezone);
+                echo "\n" . $timezone; 
             }
         }
 
+        echo "\n";
+
+        $this->run();
+    }
+
+    public function getCommand() {
+        return ["usage" => "Will auto-move tasks if conditions are met"];
+    }
+
+    /**
+     * As CLI command
+     */
+    public function runCommand() {
+        echo "Running MoveTasks cron\n";
         $this->run();
     }
 }
