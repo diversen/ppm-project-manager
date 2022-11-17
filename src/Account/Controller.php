@@ -29,7 +29,7 @@ class Controller extends StdUtils
      * @route /account/signin
      * @verbs GET
      */
-    public function index(array $params, stdClass $obj)
+    public function index()
     {
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
@@ -81,7 +81,6 @@ class Controller extends StdUtils
             'Account/views/signout.php',
             ['title' => Lang::translate('Sign out')]
         );
-        return;
     }
 
     /**

@@ -25,7 +25,7 @@ class ControllerExt extends Controller
      * @route /account/signin
      * @verbs GET
      */
-    public function index(array $params, stdClass $obj)
+    public function index()
     {
         $google_auth_url = $this->getGoogleAuthUrl();
         $template_vars = [];
