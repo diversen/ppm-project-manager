@@ -34,7 +34,7 @@ class TaskModel
     public const PRIORITY_NORMAL = 2;
     public const PRIORITY_MINOR = 1;
     public const PRIORITY_LOW = 0;
-    
+
 
     private $db;
     private $time_model;
@@ -54,7 +54,6 @@ class TaskModel
      */
     private function sanitize($post)
     {
-
         if (!isset($post['begin_date'])) {
             $post['begin_date'] = $this->date_utils->getUserDateFormatFromUTC('now', 'Y-m-d 00:00:00');
         }
@@ -155,8 +154,8 @@ class TaskModel
 
         $this->db->inTransactionExec(function () use ($post, $where) {
             $task = $this->getOne($where);
-            
-            
+
+
             $this->db->update('time', ['project_id' => $post['project_id']], ['task_id' => $task['id']]);
             $this->db->update('task', $post, $where);
         });

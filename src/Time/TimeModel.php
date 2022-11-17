@@ -39,7 +39,7 @@ class TimeModel extends StdUtils
             }
             $hours = (int)$hours;
             $minutes = (int)$minutes;
-            return ( $hours * 60) + $minutes;
+            return ($hours * 60) + $minutes;
         } else {
             return 0;
         }

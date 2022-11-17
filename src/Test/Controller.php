@@ -9,7 +9,6 @@ use App\Cron\MoveTasks;
 
 class Controller extends StdUtils
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -17,7 +16,7 @@ class Controller extends StdUtils
             throw new \Exception('Not allowed');
         }
     }
-    
+
     /**
      * @route /worker
      * @verbs GET
@@ -35,14 +34,13 @@ class Controller extends StdUtils
     {
         $this->template->render('Test/translate.tpl.php');
     }
-    
+
     /**
      * @route /test
      * @verbs GET
      */
-    public function test(){
-
-        
+    public function test()
+    {
         $move_tasks = new MoveTasks();
         $users = $move_tasks->test();
         // var_dump($users);

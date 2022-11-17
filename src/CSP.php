@@ -9,8 +9,8 @@ use Aidantwoods\SecureHeaders\SecureHeaders;
 use Pebble\Random;
 use Pebble\Service\ConfigService;
 
-trait CSP {
-
+trait CSP
+{
     public static $nonce;
 
     public function sendCSPHeaders()
@@ -46,4 +46,3 @@ trait CSP {
         return self::$nonce;
     }
 }
-  

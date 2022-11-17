@@ -21,12 +21,11 @@ class DateUtils extends StdUtils
 
     public function getUserTimeZone(string $auth_id = null)
     {
-    
         $settings_model = new SettingsModel();
         if (!$auth_id) {
             $auth_id = $this->auth->getAuthId();
         }
-        
+
         $timezone = $settings_model->getSingleProfileSetting($auth_id, 'timezone');
         if (!$timezone) {
             $timezone = $this->config->get('App.timezone');

@@ -79,7 +79,6 @@ function get_date($ts)
  */
 function render_week($week_data, $week_state, $week_user_day_times)
 {
-
     $date_utils = new DateUtils();
 
 
@@ -90,24 +89,20 @@ function render_week($week_data, $week_state, $week_user_day_times)
             continue;
         }
 
-        $date_time_user = $date_utils->getUserDateTimeFromUnixTs($ts);
+    $date_time_user = $date_utils->getUserDateTimeFromUnixTs($ts);
+    $day_number = $date_time_user->format("N");
+    $is_today = is_today($ts);
 
-        $day_number = $date_time_user->format("N");
-        
-        $is_today = is_today($ts);
+    if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
+        continue;
+    }
 
-        if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
-            continue;
-        }
+    $day_class = '';
+    if ($is_today) {
+        $day_class = ' class="today" ';
+    }
 
-        $day_class = '';
-        if ($is_today) {
-            $day_class = ' class="today" ';
-        } 
-
-        $date = $date_time_user->format('M d, Y');
-
-        ?>
+    $date = $date_time_user->format('M d, Y'); ?>
 
         <p><strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?= $date ?>)
             <?= Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts])) ?>
@@ -123,12 +118,11 @@ function render_week($week_data, $week_state, $week_user_day_times)
                 </tr>
             </thead>
 
-            <tbody>
-                <?php
+            <tbody><?php
 
-                foreach ($day_data as $task) :
-                    render_task($task, $is_today);
-                endforeach; ?>
+    foreach ($day_data as $task) :
+        render_task($task, $is_today);
+    endforeach; ?>
 
             </tbody>
         </table>
