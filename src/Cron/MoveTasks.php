@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Cron;
 
+use DateTime;
 use DateTimeZone;
 use Pebble\App\StdUtils;
 use App\Utils\DateUtils;
@@ -49,7 +50,7 @@ class MoveTasks extends StdUtils
 
     public function moveTasks($user_id, $timezone, $auto_move_constant)
     {
-        
+
         $date_str = null;
         $day_name = $this->date_utils->getDateFormat('now - 1 day', $timezone, 'l');
 
@@ -62,12 +63,6 @@ class MoveTasks extends StdUtils
         if ($auto_move_constant == TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH) $date_str = "last {$day_name} of this month";
 
         $date_to_move = $this->date_utils->getDateFormat('now - 1 day', $timezone);
-        $date_new_date = $this->date_utils->getDateFormat($date_str, $timezone);
-        
-        $update_values = [
-            'begin_date' => $date_new_date,
-            'end_date' => $date_new_date
-        ];
 
         $where = [
             'auth_id' => $user_id,
@@ -77,14 +72,19 @@ class MoveTasks extends StdUtils
         ];
 
         $tasks_to_move = $this->db->getAll('task', $where);
-        if (empty($tasks_to_move)) return;
+        foreach($tasks_to_move as $task) {
 
-        $this->log->info("MoveTask user_id {$user_id}", ['tasks' => $tasks_to_move]);
-        $this->db->update(
-            'task',
-            $update_values,
-            $where,
-        );
+            $days_diff = $this->getDaysDiff($task['begin_date'], $task['end_date']);
+            $date_new_begin_date = $this->date_utils->getDateFormat($date_str, $timezone);
+            $date_new_end_date = $this->date_utils->getDateFormat($date_new_begin_date . " + $days_diff days", $timezone);
+ 
+            $update_values = [
+                'begin_date' => $date_new_begin_date,
+                'end_date' => $date_new_end_date
+            ];
+
+            $this->db->update('task', $update_values, ['id' => $task['id']]);
+        }
     }
 
 
@@ -101,13 +101,25 @@ class MoveTasks extends StdUtils
         return false;
     }
 
+    /**
+     * Method that takes date string and returns the difference in days
+     * e.g. 2021-01-01 and 2021-01-03 returns 2
+     */
+    public function getDaysDiff($date1, $date2){
+        $date1 = new DateTime($date1);
+        $date2 = new DateTime($date2);
+        $diff = $date1->diff($date2);
+        return $diff->days;
+    }
+
+
     public function test()
     {
 
         $timezones = DateTimeZone::listIdentifiers();
 
         // Find a midnight timezone which is at midnight to test on
-        print("Just past idnight in the follwing timezones:");
+        print("Just past midnight in the follwing timezones:");
         foreach ($timezones as $timezone) {
             
             if ($this->isMidnight($timezone)) {
@@ -115,20 +127,30 @@ class MoveTasks extends StdUtils
             }
         }
 
-        echo "\n";
+        // echo $this->getDaysDiff('2021-01-01 00:00:00', '2022-01-03 00:00:00');
 
         $this->run();
     }
 
     public function getCommand() {
-        return ["usage" => "Will auto-move tasks if conditions are met"];
+        return [
+            "usage" => "Will auto-move tasks if conditions are met",
+            "options" => [
+                "test" => "Run the test method"
+            ],
+        ];
     }
 
     /**
      * As CLI command
      */
-    public function runCommand() {
-        echo "Running MoveTasks cron\n";
-        $this->run();
+    public function runCommand(\Diversen\ParseArgv $args) {
+    
+        if ($args->getOption('test')) {
+            $this->test();
+        } else {
+            echo "Running MoveTasks cron\n";
+            $this->run();
+        }
     }
 }
