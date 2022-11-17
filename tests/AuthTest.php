@@ -99,6 +99,7 @@ final class AuthTest extends TestCase
         $this->curlAssert('/project/post', ['title' => 'Test project', 'note' => 'Test'], 200);
 
         $project_id = $this->getTestProjectID();
+        $put_data = ['title' => 'Updated',  'note' => 'Updated test',  'id' => $project_id,'status' => '1'];
 
         // Anon user. Login and check if user 1 project gives 403
         $this->curlAssert('/account/logout', [], 200);
