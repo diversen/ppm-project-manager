@@ -16,7 +16,6 @@ use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
 
 use Exception;
-use stdClass;
 
 class Controller extends StdUtils
 {

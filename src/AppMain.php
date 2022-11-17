@@ -8,7 +8,6 @@ use Pebble\Router;
 use Pebble\App\AppBase;
 use App\AppACL;
 use App\Settings\SettingsModel;
-
 use Diversen\Lang;
 
 /**
@@ -57,7 +56,6 @@ class AppMain extends AppBase
         $language = $user_settings['language'] ?? $this->getRequestLanguage();
         $translations->loadLanguage($language);
     }
-
 
     public function run()
     {
