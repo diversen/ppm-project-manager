@@ -38,15 +38,6 @@ class AppACL extends ACL
         $this->hasAccessRightsOrThrow($access_ary, Lang::translate('You are not the owner of this project.'));
     }
 
-    /**
-     * Check if a current authenticated user is the owner of a task (he is if the task is connected to a owned project)
-     */
-    public function authUserIsTaskOwner(string $task_id)
-    {
-        $task = $this->getTask($task_id);
-        $this->authUserIsProjectOwner($task['project_id']);
-    }
-
 
     public function setProjectRights($project_id)
     {
