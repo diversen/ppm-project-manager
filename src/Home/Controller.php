@@ -7,7 +7,6 @@ namespace App\Home;
 use Parsedown;
 use Pebble\Exception\NotFoundException;
 use Pebble\App\StdUtils;
-use App\AppMain;
 
 class Controller extends StdUtils
 {
