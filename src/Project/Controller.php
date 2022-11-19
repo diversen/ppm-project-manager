@@ -172,7 +172,6 @@ class Controller extends StdUtils
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
         } catch (Exception $e) {
-            http_response_code(403);
             $this->log->error('Project.post.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
@@ -196,7 +195,6 @@ class Controller extends StdUtils
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
         } catch (Exception $e) {
-            http_response_code(403);
             $this->log->error('Project.put.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }
@@ -217,7 +215,7 @@ class Controller extends StdUtils
             $this->project_model->delete($params['project_id']);
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
-            http_response_code(403);
+
             $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }

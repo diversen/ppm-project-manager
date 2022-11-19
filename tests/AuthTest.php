@@ -52,74 +52,136 @@ final class AuthTest extends TestCase
         $this->auth = (new AuthService())->getAuth();
         $this->db = (new DBService())->getDB();
 
-        $this->db->delete('auth', ['email' => $this->user_email]);
-        $this->db->delete('auth', ['email' => $this->user_email_2]);
-        $this->db->delete('auth_cookie', ['expires' => 0]);
+        unlink($this->cookie_file);
 
         // User 1
-        $this->auth->create($this->user_email, $this->user_password);
-        $user = $this->db->getOne('auth', ['email' => $this->user_email]);
-        $this->auth->verifyKey($user['random']);
+        $this->db->delete('auth', ['email' => $this->user_email]);
+        $this->auth->createAndVerify($this->user_email, $this->user_password);
 
         // User 2
-        $this->auth->create($this->user_email_2, $this->user_password_2);
-        $user = $this->db->getOne('auth', ['email' => $this->user_email_2]);
-        $this->auth->verifyKey($user['random']);
+        $this->db->delete('auth', ['email' => $this->user_email_2]);
+        $this->auth->createAndVerify($this->user_email_2, $this->user_password_2);        
 
         $this->db->delete('project', ['title' => 'Test project']);
         
     }
 
-    public function getTestProjectID() {
+    private $project_id;
+    private $task_id;
+    private $time_id;
+
+    private function setProjectID() {
         $row = $this->db->getOne('project', ['title' => 'Test project']);
-        $project_id = $row['id'];
-        return $project_id;
+        $this->project_id = $row['id'];
+    }
+
+    private function setTaskID() {
+        $row = $this->db->getOne('task', ['title' => 'Test task']);
+        $this->task_id = $row['id'];
+    }
+
+    private function setTimeID() {
+        $row = $this->db->getOne('time', ['note' => 'Time note']);
+        $this->time_id = $row['id'];
     }
 
     public function test_project_routes(): void
     {
         $post_data = ['title' => 'Test project', 'note' => 'Test'];
-        
 
         // User 1
+        
         $this->curlAssert('/account/signin', [], 200);
         $this->curlAssert('/overview', [], 403);
         $this->curlAssert('/account/post_login', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
         $this->curlAssert('/overview', [], 200);
         $this->curlAssert('/project/add', [], 200);
         $this->curlAssert('/project/post', $post_data, 200);
+        $this->setProjectID();
+        $this->curlAssert("/project/view/$this->project_id", [], 200);
+        $this->curlAssert("/project/edit/$this->project_id", [], 200);
 
-        $project_id = $this->getTestProjectID();
-        $this->curlAssert("/project/edit/$project_id", [], 200);
-        
-        $put_data = ['title' => 'Updated',  'note' => 'Updated test',  'id' => $project_id,'status' => '1'];
-
-        $this->curlAssert("/project/put/$project_id", $put_data, 200);
-        $this->curlAssert("/project/delete/$project_id", ['test' => 1], 200);
+        $put_data = ['title' => 'Updated',  'note' => 'Updated test',  'id' => $this->project_id,'status' => '1'];
+        $this->curlAssert("/project/put/$this->project_id", $put_data, 200);
+        $this->curlAssert("/project/delete/$this->project_id", ['test' => 1], 200);
+        $this->curlAssert("/project/edit/$this->project_id", [], 403);
         $this->curlAssert('/project/post', ['title' => 'Test project', 'note' => 'Test'], 200);
 
-        $project_id = $this->getTestProjectID();
-        $put_data = ['title' => 'Updated',  'note' => 'Updated test',  'id' => $project_id,'status' => '1'];
+        $this->setProjectID();
+        $put_data = ['title' => 'Updated',  'note' => 'Updated test',  'id' => $this->project_id,'status' => '1'];   
 
         // Anon user. Login and check if user 1 project gives 403
         $this->curlAssert('/account/logout', [], 200);
-        unlink($this->cookie_file);
-
         $this->curlAssert('/project/add', [], 403);
+        $this->curlAssert("/project/view/$this->project_id", [], 403);
         $this->curlAssert('/project/post', ['title' => 'Test project', 'note' => 'Test'], 403);
-        $this->curlAssert("/project/edit/$project_id", [], 403);
-        $this->curlAssert('/project/put/' . $project_id, $put_data, 403);
-        $this->curlAssert("/project/delete/$project_id", ['test' => 1], 403);
+        $this->curlAssert("/project/edit/$this->project_id", [], 403);
+        $this->curlAssert("/project/put/$this->project_id", $put_data, 403);
+        $this->curlAssert("/project/delete/$this->project_id", ['test' => 1], 403);
 
         // User 2. Login and check if user 1 project gives 403
         $this->curlAssert('/account/post_login', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
         $this->curlAssert('/project/add', [], 200);
-        $this->curlAssert("/project/edit/$project_id", [], 403);
-        $this->curlAssert('/project/put/' . $project_id, $put_data, 403);
-        $this->curlAssert("/project/delete/$project_id", ['test' => 1], 403);
+        $this->curlAssert("/project/view/$this->project_id", [], 403);
+        $this->curlAssert("/project/edit/$this->project_id", [], 403);
+        $this->curlAssert("/project/put/$this->project_id", $put_data, 403);
+        $this->curlAssert("/project/delete/$this->project_id", ['test' => 1], 403);
+        $this->curlAssert('/account/logout', [], 200);
+        
+        // TASK and time routes
 
+        // User 1.
+        $this->curlAssert('/account/post_login', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
+        $this->curlAssert("/task/add/$this->project_id", [], 200);
+        $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 200);
+        $this->setTaskID();
+        $this->curlAssert("/task/view/$this->task_id", [], 200);
+        $this->curlAssert("/task/edit/$this->task_id", [], 200); 
+        $this->curlAssert("/task/put/$this->task_id", ['title' => 'Test task', 'note' => 'Test'], 200);
+        $this->curlAssert("/task/delete/$this->task_id", ['post' => 1], 200);
+        $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 200);
+        $this->setTaskID();
+
+        $this->curlAssert("/time/add/$this->task_id", [], 200);
+        $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 200);
+        $this->setTimeID();
+        $this->curlAssert("/time/delete/$this->time_id", ['post' => 1], 200);
+        $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 200);
+        $this->setTimeID();
+        
+        $this->curlAssert('/account/logout', [], 200);
+
+        // Anon user
+        $this->curlAssert("/task/add/$this->project_id", [], 403);
+        $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 403);
+        $this->curlAssert("/task/view/$this->task_id", [], 403);
+        $this->curlAssert("/task/edit/$this->task_id", [], 403); 
+        $this->curlAssert("/task/put/$this->task_id", ['title' => 'Test task', 'note' => 'Test'], 403);
+        $this->curlAssert("/task/delete/$this->task_id", ['post' => 1], 403);
+        $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 403);
+        $this->curlAssert("/time/add/$this->task_id", [], 403);
+        $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 403);
+        $this->curlAssert("/time/delete/$this->time_id", ['post' => 1], 403);
+        $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 403);
+        $this->curlAssert('/account/logout', [], 200);
+
+        // User 2
+        $this->curlAssert('/account/post_login', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
+        $this->curlAssert("/task/add/$this->project_id", [], 403);
+        $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 403);
+        $this->curlAssert("/task/view/$this->task_id", [], 403);
+        $this->curlAssert("/task/edit/$this->task_id", [], 403); 
+        $this->curlAssert("/task/put/$this->task_id", ['title' => 'Test task', 'note' => 'Test'], 403);
+        $this->curlAssert("/task/delete/$this->task_id", ['post' => 1], 403);
+        $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 403);
+        $this->curlAssert("/time/add/$this->task_id", [], 403);
+        $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 403);
+        $this->curlAssert("/time/delete/$this->time_id", ['post' => 1], 403);
+        $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 403);
+        $this->curlAssert('/account/logout', [], 200);
 
     }
+
     
     protected function tearDown(): void
     {
