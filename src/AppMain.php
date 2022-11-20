@@ -73,6 +73,7 @@ class AppMain extends AppBase
 
         $router = new Router();
         $router->addClass(\App\Test\Controller::class);
+        $router->addClass(\App\Admin\Controller::class);
         $router->addClass(\App\Notification\Controller::class);
         $router->addClass(\App\Account\ControllerExt::class);
         $router->addClass(\App\Home\Controller::class);
