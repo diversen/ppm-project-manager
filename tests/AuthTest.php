@@ -21,6 +21,9 @@ final class AuthTest extends TestCase
     private $db;
     private $auth;
     private $cookie_file = '/tmp/cookie.txt';
+    private $project_id;
+    private $task_id;
+    private $time_id;
 
     private function curl($url, $post_params = [], $headers = []): CurlHandle
     {
@@ -68,10 +71,6 @@ final class AuthTest extends TestCase
 
         $this->db->delete('project', ['title' => 'Test project']);
     }
-
-    private $project_id;
-    private $task_id;
-    private $time_id;
 
     private function setProjectID()
     {
