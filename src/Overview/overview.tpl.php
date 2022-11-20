@@ -22,7 +22,7 @@ function render_task($task, $today)
     }
 
     $project_title = $task['project_title'] . "\n" .
-        Lang::translate('Total time used on project: ') . $task['project_time_total']; ?>
+        Lang::translate('Total time used on project:') . ' ' . $task['project_time_total']; ?>
     <tr>
         <td class="td-overflow <?= $task_box_class ?>" title="<?= $title_attr ?>">
             <span class="priority <?= get_task_priority_class($task) ?>"></span>

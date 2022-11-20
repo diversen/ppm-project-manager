@@ -52,8 +52,6 @@ final class AuthTest extends TestCase
         $this->auth = (new AuthService())->getAuth();
         $this->db = (new DBService())->getDB();
 
-        unlink($this->cookie_file);
-
         // User 1
         $this->db->delete('auth', ['email' => $this->user_email]);
         $this->auth->createAndVerify($this->user_email, $this->user_password);
@@ -94,6 +92,8 @@ final class AuthTest extends TestCase
         $this->curlAssert('/account/signin', [], 200);
         $this->curlAssert('/overview', [], 403);
         $this->curlAssert('/account/post_login', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
+        $this->curlAssert('/settings', [], 200);
+        $this->curlAssert('/settings/put', ['timezone' => 'Africa/Accra', 'language' => 'de', 'theme_dark_mode' => 1], 200);
         $this->curlAssert('/overview', [], 200);
         $this->curlAssert('/project/add', [], 200);
         $this->curlAssert('/project/post', $post_data, 200);
@@ -113,6 +113,8 @@ final class AuthTest extends TestCase
         // Anon user. Login and check if user 1 project gives 403
         $this->curlAssert('/account/logout', [], 200);
         $this->curlAssert('/project/add', [], 403);
+        $this->curlAssert('/settings', [], 403);
+        $this->curlAssert('/settings/put', ['timezone' => 'Africa/Accra', 'language' => 'de', 'theme_dark_mode' => 1], 403);
         $this->curlAssert("/project/view/$this->project_id", [], 403);
         $this->curlAssert('/project/post', ['title' => 'Test project', 'note' => 'Test'], 403);
         $this->curlAssert("/project/edit/$this->project_id", [], 403);
@@ -179,6 +181,8 @@ final class AuthTest extends TestCase
         $this->curlAssert("/time/delete/$this->time_id", ['post' => 1], 403);
         $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 403);
         $this->curlAssert('/account/logout', [], 200);
+
+        unlink($this->cookie_file);
 
     }
 
