@@ -3,7 +3,6 @@
 namespace App\Admin;
 
 use Pebble\App\StdUtils;
-use Pebble\ACLRole;
 
 class Controller extends StdUtils
 {

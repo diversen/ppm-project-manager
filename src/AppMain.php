@@ -18,7 +18,7 @@ class AppMain extends AppBase
 {
     use \App\CSP;
 
-    public const VERSION = "1.3.3";
+    public const VERSION = "1.5.3";
     public static $appAcl = null;
 
     /**
