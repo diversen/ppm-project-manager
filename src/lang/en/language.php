@@ -128,10 +128,11 @@ $LANG['There is no such time ID'] = 'There is no such time ID';
 
 // Translation of file src/Error/Controller.php
 
-$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
 $LANG['404 Page not found'] = '404 Page not found';
 $LANG['403 Forbidden'] = '403 Forbidden';
+$LANG['510 Template error'] = '510 Template error';
 $LANG['500 Internal Server Error'] = '500 Internal Server Error';
+$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
 
 // Translation of file src/Google/Controller.php
 

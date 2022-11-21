@@ -88,19 +88,7 @@ class Controller
         return $env;
     }
 
-    public function templateException(Exception $e)
-    {
-        $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
 
-        // Template errors may come in the middle of some content. So we do not display a complete new page.
-        $error_message = "<pre>" . ExceptionTrace::get($e) . "</pre>";
-
-        if ($this->getEnv() !== 'dev') {
-            $error_message . "<pre>" . Lang::translate('A sever error happened. The incidence has been logged.') . "</pre>";
-        }
-
-        echo $error_message;
-    }
 
     private function getErrorCode(Throwable $e)
     {
@@ -155,10 +143,16 @@ class Controller
         $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
     }
 
+    private function templateException(Throwable $e)
+    {
+        $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
+        $this->baseError(Lang::translate('510 Template error'), $this->getErrorMessage($e));
+    }
+
     private function internalException(Throwable $e)
     {
         $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
-
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
+
 }
