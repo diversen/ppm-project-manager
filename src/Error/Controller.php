@@ -91,7 +91,6 @@ class Controller
     public function templateException(Exception $e)
     {
         $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
-        http_response_code(500);
 
         // Template errors may come in the middle of some content. So we do not display a complete new page.
         $error_message = "<pre>" . ExceptionTrace::get($e) . "</pre>";
@@ -126,16 +125,14 @@ class Controller
         $error_code = $this->getErrorCode($e);
 
         if ($error_code === 404) {
-            http_response_code(404);
             $this->notFoundException($e);
         } elseif ($error_code === 403) {
-            http_response_code(403);
             $this->forbiddenException($e);
         } elseif ($error_code === 510) {
             $this->templateException($e);
         }
 
-        // 500. And anything else
+        // Anything else
         else {
             if (is_int($error_code)) {
                 http_response_code($error_code);

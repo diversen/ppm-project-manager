@@ -36,6 +36,14 @@ class Controller extends StdUtils
     }
 
     /**
+     * @route /test/template/exception
+     * @verbs GET
+     */
+    public function templateException() {
+        $this->template->render('Test/template_exception.tpl.php');
+    }
+    
+    /**
      * @route /test
      * @verbs GET
      */
