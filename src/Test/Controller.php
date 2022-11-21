@@ -13,7 +13,7 @@ class Controller extends StdUtils
     {
         parent::__construct();
         if ($this->config->get('App.env') !== 'dev') {
-            // throw new \Exception('Not allowed');
+            throw new \Exception('Not allowed');
         }
     }
 
