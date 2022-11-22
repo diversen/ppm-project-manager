@@ -8,7 +8,6 @@ use App\AppUtils;
 use Pebble\Exception\NotFoundException;
 use App\Cron\MoveTasks;
 
-
 class Controller extends AppUtils
 {
     public function __construct()
@@ -41,10 +40,11 @@ class Controller extends AppUtils
      * @route /test/template/exception
      * @verbs GET
      */
-    public function templateException() {
+    public function templateException()
+    {
         $this->template->render('Test/template_exception.tpl.php');
     }
-    
+
     /**
      * @route /test
      * @verbs GET

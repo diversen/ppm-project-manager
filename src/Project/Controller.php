@@ -14,9 +14,8 @@ use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
 use Exception;
 
-class Controller extends AppUtils 
+class Controller extends AppUtils
 {
-
     private $project_model;
     private $pagination_utils;
 
@@ -211,7 +210,6 @@ class Controller extends AppUtils
             $this->project_model->delete($params['project_id']);
             $response['project_redirect'] = "/project";
         } catch (Exception $e) {
-
             $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
         }

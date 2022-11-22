@@ -2,7 +2,6 @@
 
 use Diversen\Lang;
 use App\AppMain;
-use Pebble\Template;
 
 ?>
 <h3 class="sub-menu"><?= Lang::translate('Email sign up') ?></h3>

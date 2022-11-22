@@ -11,8 +11,8 @@ use App\AppACL;
 /**
  * A base app class with some utilities
  */
-class AppUtils extends StdUtils {
-
+class AppUtils extends StdUtils
+{
     /**
      * @var \App\AppACL
      */
@@ -36,9 +36,11 @@ class AppUtils extends StdUtils {
             $container->set('app_acl', $app_acl);
         }
         return $container->get('app_acl');
-
     }
 
+    /**
+     * Render a template including header and footer
+     */
     public function renderPage(string $template, array $data = [])
     {
         $this->template->render('templates/header.tpl.php', $data);

@@ -35,7 +35,6 @@ class Controller extends AppUtils
     public function __construct()
     {
         try {
-
             $this->template = $this->getTemplate();
             $this->json = $this->getJSON();
             $this->log = $this->getLog();
@@ -153,5 +152,4 @@ class Controller extends AppUtils
         $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
-
 }

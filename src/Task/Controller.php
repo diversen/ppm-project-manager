@@ -105,7 +105,6 @@ class Controller extends AppUtils
             $task_model = new TaskModel();
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
-
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
         } catch (Exception $e) {

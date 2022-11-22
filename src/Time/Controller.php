@@ -13,7 +13,6 @@ use Pebble\Pager;
 use Pebble\ExceptionTrace;
 use JasonGrimes\Paginator;
 
-
 class Controller extends AppUtils
 {
     private $pagination_utils;
