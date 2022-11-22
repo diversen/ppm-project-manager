@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\AppMain;
-use Pebble\Template;
-
-Template::render('templates/header.tpl.php');
 
 ?>
 
@@ -85,7 +82,3 @@ endif;
     });
 
 </script>
-
-<?php
-
-Template::render('templates/footer.tpl.php');

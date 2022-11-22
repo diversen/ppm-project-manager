@@ -33,7 +33,7 @@ class Controller extends AppUtils
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
             $template_vars['title'] = Lang::translate('Sign out');
-            $this->template->render(
+            $this->renderPage(
                 'Account/views/signout.php',
                 $template_vars
             );
@@ -41,7 +41,7 @@ class Controller extends AppUtils
             $template_vars['title'] = Lang::translate('Sign in');
             $template_vars['csrf_token'] = (new CSRF())->getToken();
 
-            $this->template->render(
+            $this->renderPage(
                 'Account/views/signin.php',
                 $template_vars
             );
@@ -76,7 +76,7 @@ class Controller extends AppUtils
      */
     public function signout()
     {
-        $this->template->render(
+        $this->renderPage(
             'Account/views/signout.php',
             ['title' => Lang::translate('Sign out')]
         );
@@ -157,7 +157,7 @@ class Controller extends AppUtils
             'token' => (new CSRF())->getToken(),
         ];
 
-        $this->template->render(
+        $this->renderPage(
             'Account/views/signup.php',
             $template_vars
         );
@@ -268,7 +268,7 @@ class Controller extends AppUtils
             'title' => Lang::translate('Forgotten password'),
         ];
 
-        $this->template->render(
+        $this->renderPage(
             'Account/views/recover.php',
             $template_vars
         );
@@ -348,7 +348,7 @@ class Controller extends AppUtils
 
         $template_vars['token'] = (new CSRF())->getToken();
 
-        $this->template->render(
+        $this->renderPage(
             'Account/views/newpassword.php',
             $template_vars
         );

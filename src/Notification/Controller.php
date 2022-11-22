@@ -18,6 +18,6 @@ class Controller extends AppUtils
      */
     public function notificaton()
     {
-        $this->template->render('Notification/notification.tpl.php');
+        $this->renderPage('Notification/notification.tpl.php');
     }
 }

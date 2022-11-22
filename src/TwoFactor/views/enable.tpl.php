@@ -3,8 +3,6 @@
 use Diversen\Lang;
 use App\AppMain;
 
-require 'templates/header.tpl.php';
-
 ?>
 <h3 class="sub-menu"><?=Lang::translate('Enable two factor authentication')?></h3>
 
@@ -64,6 +62,3 @@ require 'templates/header.tpl.php';
         
     });
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

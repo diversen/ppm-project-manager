@@ -6,8 +6,6 @@ use Diversen\Lang;
 use App\AppMain;
 use Pebble\HTML\Tag;
 
-require 'templates/header.tpl.php';
-
 function select($name, $select_options, $selected = null)
 {
     $str = "<select name='$name'>";
@@ -111,6 +109,3 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
         
     });
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

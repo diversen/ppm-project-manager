@@ -1,9 +1,6 @@
 <?php declare(strict_types=1);
 
 use Diversen\Lang;
-use Pebble\Template;
-
-Template::render('templates/header.tpl.php');
 
 $has_error = $error ?? null;
 
@@ -25,6 +22,3 @@ if (!$has_error): ?>
 <?php
 
 endif;
-
-
-Template::render('templates/footer.tpl.php');

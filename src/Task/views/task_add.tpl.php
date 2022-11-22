@@ -2,12 +2,6 @@
 
 use App\AppMain;
 use App\Task\TaskModel;
-
-$bd = (new AppMain())->getConfig()->get('App.basedir');
-
-require 'templates/header.tpl.php';
-require 'templates/flash.tpl.php';
-
 use Diversen\Lang;
 
 ?>
@@ -130,7 +124,3 @@ use Diversen\Lang;
     });
 
 </script>
-
-<?php
-
-require 'templates/footer.tpl.php';

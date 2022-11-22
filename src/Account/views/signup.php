@@ -4,9 +4,6 @@ use Diversen\Lang;
 use App\AppMain;
 use Pebble\Template;
 
-Template::render('templates/header.tpl.php');
-Template::render('templates/flash.tpl.php');
-
 ?>
 <h3 class="sub-menu"><?= Lang::translate('Email sign up') ?></h3>
 
@@ -66,6 +63,3 @@ Template::render('templates/flash.tpl.php');
         spinner.classList.toggle('hidden');
     });
 </script>
-<?php
-
-Template::render('templates/footer.tpl.php');

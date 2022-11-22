@@ -38,4 +38,11 @@ class AppUtils extends StdUtils {
         return $container->get('app_acl');
 
     }
+
+    public function renderPage(string $template, array $data = [])
+    {
+        $this->template->render('templates/header.tpl.php', $data);
+        $this->template->render($template, $data);
+        $this->template->render('templates/footer.tpl.php', $data);
+    }
 }

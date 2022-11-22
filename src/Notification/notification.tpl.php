@@ -2,8 +2,6 @@
 
 use App\AppMain;
 
-require 'templates/header.tpl.php';
-
 ?>
 
 <div id="app"></div>
@@ -107,6 +105,3 @@ require 'templates/header.tpl.php';
 
 
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

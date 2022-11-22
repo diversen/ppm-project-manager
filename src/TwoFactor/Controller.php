@@ -83,13 +83,13 @@ class Controller extends AppUtils
 
             $vars = ['qr_image' => $qr_image, 'enabled' => false];
 
-            $this->template->render(
+            $this->renderPage(
                 'TwoFactor/views/enable.tpl.php',
                 $vars
             );
         } else {
             $vars = ['enabled' => true];
-            $this->template->render(
+            $this->renderPage(
                 'TwoFactor/views/is_enabled.tpl.php',
                 $vars
             );
@@ -174,7 +174,7 @@ class Controller extends AppUtils
     public function verify()
     {
         $vars = [];
-        $this->template->render(
+        $this->renderPage(
             'TwoFactor/views/verify.tpl.php',
             $vars
         );

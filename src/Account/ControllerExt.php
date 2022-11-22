@@ -6,10 +6,8 @@ namespace App\Account;
 
 use Diversen\Lang;
 use Pebble\CSRF;
-
 use App\Google\GoogleUtils;
 use App\Account\Controller;
-use stdClass;
 
 /**
  * Extends the normal controler to include google auth
@@ -28,10 +26,11 @@ class ControllerExt extends Controller
     public function index()
     {
         $google_auth_url = $this->getGoogleAuthUrl();
-        $template_vars = [];
+        $template_vars = ['title' => Lang::translate('Sign out')];
         if ($this->auth->isAuthenticated()) {
-            $this->template->render(
-                'Account/views/signout.php'
+            $this->renderPage(
+                'Account/views/signout.php',
+                $template_vars,
             );
         } else {
             $template_vars = [
@@ -40,7 +39,7 @@ class ControllerExt extends Controller
                 'csrf_token' => (new CSRF())->getToken(),
             ];
 
-            $this->template->render(
+            $this->renderPage(
                 'Account/views/signin_ext.php',
                 $template_vars
             );

@@ -65,7 +65,7 @@ class Controller extends AppUtils
             'description' => Lang::translate('Overview by week'),
         ];
 
-        $this->template->render('Overview/overview.tpl.php', $data);
+        $this->renderPage('Overview/overview.tpl.php', $data);
     }
 
     /**

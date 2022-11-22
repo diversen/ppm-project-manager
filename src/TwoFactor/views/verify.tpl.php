@@ -3,9 +3,6 @@
 use Diversen\Lang;
 use App\AppMain;
 
-require 'templates/header.tpl.php';
-
-
 ?>
 <h3 class="sub-menu"><?=Lang::translate('Verify login using two factor authentication')?></h3>
 
@@ -17,8 +14,6 @@ require 'templates/header.tpl.php';
     <button id="check"><?= Lang::translate('Submit') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
-
-
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
@@ -52,6 +47,3 @@ require 'templates/header.tpl.php';
         
     });
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

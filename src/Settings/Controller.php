@@ -31,7 +31,7 @@ class Controller extends AppUtils
 
         $vars['user_settings'] = $user_settings;
 
-        $this->template->render('Settings/views/settings.tpl.php', $vars);
+        $this->renderPage('Settings/views/settings.tpl.php', $vars);
     }
 
     /**
@@ -48,7 +48,7 @@ class Controller extends AppUtils
         $settings = new SettingsModel();
         $user = $settings->getUserSetting($params['auth_id'], 'profile');
 
-        $this->template->render('Settings/views/user.tpl.php', ['user' => $user]);
+        $this->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
     }
 
     /**

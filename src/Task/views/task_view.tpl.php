@@ -10,8 +10,6 @@ $parsedown->setSafeMode(true);
 $note = \Pebble\Special::decodeStr($task['note']);
 $note_markdown = $parsedown->text($note);
 
-require 'templates/header.tpl.php';
-
 $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 
 ?>
@@ -111,6 +109,3 @@ document.addEventListener('click', async function(event) {
     }
 });
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

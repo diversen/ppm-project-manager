@@ -6,9 +6,6 @@ use App\Utils\AppPagination;
 use App\Utils\AppPaginationUtils;
 use App\AppMain;
 
-require 'templates/header.tpl.php';
-require 'templates/flash.tpl.php';
-
 ?>
 
 <h3><?= Lang::translate('Add time') ?>: <?= $task['title'] ?></h3>
@@ -185,7 +182,3 @@ if (!empty($time_rows)) {
         }
     });
 </script>
-
-<?php
-
-require 'templates/footer.tpl.php';

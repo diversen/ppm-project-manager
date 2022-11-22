@@ -6,8 +6,6 @@ use App\AppMAin;
 
 $csrf_token = (new CSRF())->getToken();
 
-require 'templates/header.tpl.php';
-
 ?>
 <h3 class="sub-menu"><?= Lang::translate('Add project') ?></h3>
 
@@ -58,7 +56,3 @@ require 'templates/header.tpl.php';
         }
     })
 </script>
-
-<?php
-
-require 'templates/footer.tpl.php';

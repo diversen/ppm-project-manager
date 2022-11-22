@@ -5,9 +5,6 @@ declare(strict_types=1);
 use Diversen\Lang;
 use Pebble\Special;
 
-require 'templates/header.tpl.php';
-
-
 $md = new Parsedown();
 $md->setSafeMode(true);
 
@@ -29,6 +26,3 @@ if (empty($bio)) {
 }
 
 echo $bio;
-
-
-require 'templates/footer.tpl.php';

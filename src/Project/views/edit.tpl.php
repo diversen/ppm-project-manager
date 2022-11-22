@@ -3,8 +3,6 @@
 use Diversen\Lang;
 use App\AppMain;
 
-include 'templates/header.tpl.php';
-
 $checked = '';
 if ($project['status'] == 1) {
     $checked = 'checked="checked"';
@@ -119,6 +117,3 @@ if ($project['status'] == 1) {
         deleteProject()
     })
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

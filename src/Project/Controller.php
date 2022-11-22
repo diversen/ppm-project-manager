@@ -67,7 +67,7 @@ class Controller extends AppUtils
         $order_by = $this->pagination_utils->getOrderByFromRequest('project');
         $template_data = $this->getProjectData($where, $order_by);
 
-        $this->template->render(
+        $this->renderPage(
             'Project/views/index.tpl.php',
             $template_data
         );
@@ -90,7 +90,7 @@ class Controller extends AppUtils
         $order_by = $this->pagination_utils->getOrderByFromRequest('project');
         $template_data = $this->getProjectData($where, $order_by);
 
-        $this->template->render(
+        $this->renderPage(
             'Project/views/index.tpl.php',
             $template_data
         );
@@ -107,7 +107,7 @@ class Controller extends AppUtils
         $template_data = $this->project_model->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
 
-        $this->template->render(
+        $this->renderPage(
             'Project/views/view.tpl.php',
             $template_data
         );
@@ -125,7 +125,7 @@ class Controller extends AppUtils
             'title' => Lang::translate('Add project'),
         ];
 
-        $this->template->render(
+        $this->renderPage(
             'Project/views/add.tpl.php',
             $form_vars
         );
@@ -145,7 +145,7 @@ class Controller extends AppUtils
             'project' => $project,
         ];
 
-        $this->template->render(
+        $this->renderPage(
             'Project/views/edit.tpl.php',
             $form_vars
         );

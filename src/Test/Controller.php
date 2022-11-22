@@ -25,7 +25,7 @@ class Controller extends AppUtils
      */
     public function worker()
     {
-        $this->template->render('Test/worker.tpl.php');
+        $this->renderPage('Test/worker.tpl.php');
     }
 
     /**

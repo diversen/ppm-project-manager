@@ -7,8 +7,6 @@ use Diversen\Lang;
 use App\AppMain;
 use App\Utils\DateUtils;
 
-require 'templates/header.tpl.php';
-
 /**
  * Render a single task
  */
@@ -248,8 +246,3 @@ render_week($week_data, $week_state, $week_user_day_times);
         }
     });
 </script>
-
-
-<?php
-
-require 'templates/footer.tpl.php';

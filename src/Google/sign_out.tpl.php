@@ -2,9 +2,6 @@
 
 use Diversen\Lang;
 
-require 'templates/header.tpl.php';
-require 'templates/flash.tpl.php';
-
 ?>
 
 <h3><?=Lang::translate('You are signed in')?></h3>
@@ -22,6 +19,3 @@ Or <a href="https://myaccount.google.com/permissions">revoke the app on google s
 You can always add it again. And your work is not lost.
 </p>
 -->
-<?php
-
-require 'templates/footer.tpl.php';

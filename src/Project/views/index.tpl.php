@@ -7,8 +7,6 @@ use App\Utils\AppPagination;
 use App\Utils\AppPaginationUtils;
 use App\Utils\DateUtils;
 
-require 'templates/header.tpl.php';
-
 ?>
 
 <h3 class="sub-menu"><?= Lang::Translate('Projects') ?></h3>
@@ -98,5 +96,3 @@ $pagination->render($paginator);
 if (isset($inactive_link)) {
     render_projects_inactive_link();
 }
-
-require 'templates/footer.tpl.php';

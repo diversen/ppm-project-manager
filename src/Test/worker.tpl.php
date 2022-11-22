@@ -2,8 +2,6 @@
 
 use App\AppMain;
 
-require 'templates/header.tpl.php';
-
 ?>
 
 <h3>Worker</h3>
@@ -22,7 +20,3 @@ require 'templates/header.tpl.php';
     }
 
 </script>
-<?php
-
-
-require 'templates/footer.tpl.php';

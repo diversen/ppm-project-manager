@@ -6,8 +6,6 @@ use App\AppMain;
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
 
-require 'templates/header.tpl.php';
-
 $note = \Pebble\Special::decodeStr($project['note']);
 $note_markdown = $parsedown->text($note);
 
@@ -135,6 +133,3 @@ if (!empty($tasks_completed)) { ?>
         }
     });
 </script>
-<?php
-
-require 'templates/footer.tpl.php';

@@ -4,9 +4,6 @@ use Diversen\Lang;
 use App\AppMain;
 use App\Task\TaskModel;
 
-require 'templates/header.tpl.php';
-require 'templates/flash.tpl.php';
-
 $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 $end_date = date('Y-m-d', strtotime($task['end_date']));
 
@@ -207,7 +204,3 @@ $is_selected = function ($value, $current_state) {
         })
     }
 </script>
-
-<?php
-
-require 'templates/footer.tpl.php';
