@@ -39,7 +39,7 @@ use Diversen\Lang;
     <label for="auto_move"><?= Lang::translate('Repeatable task. Will auto-move the task to a new date when the end date of the task is exceeded.') ?></label>
     <select name="auto_move">
         <option value="<?= TaskModel::AUTO_MOVE_NONE ?>"><?= Lang::translate('Deactivated') ?></option>
-        <option value="<?= TaskModel::AUTO_MOVE_TODAY ?>"><?= Lang::translate('Next day') ?></option>
+        <option value="<?= TaskModel::AUTO_MOVE_TODAY ?>" selected><?= Lang::translate('Next day') ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_ONE_WEEK ?>"><?= Lang::translate('One week') ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_FOUR_WEEKS ?>"><?= Lang::translate('Four weeks') ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH ?>"><?= Lang::translate('One month. First day') ?></option>
