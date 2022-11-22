@@ -220,14 +220,16 @@ class Controller extends AppUtils
 
         $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
+
             $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
             $row = $this->auth->getByWhere(['email' => $_POST['email']]);
+
             if ($this->config->get('Account.no_email_verify')) {
                 $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
                 $message = Lang::translate('Account has been created. You may log in');
                 $mail_success = true;
             } else {
-                
+
                 $mail = new Mail();
 
                 try {
@@ -293,7 +295,7 @@ class Controller extends AppUtils
             return;
         }
 
-        $row = $validate->getByEmail($_POST['email']);
+        $row = $this->auth->getByWhere(['email' => $_POST['email']]);
 
         if (empty($row)) {
             $response['message'] = Lang::translate('No such email in our system');

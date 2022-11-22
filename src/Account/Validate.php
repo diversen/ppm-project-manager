@@ -7,12 +7,13 @@ namespace App\Account;
 use Pebble\CSRF;
 use Diversen\Lang;
 use App\AppMain;
+use App\AppUtils;
 
-class Validate
+class Validate extends AppUtils
 {
     public function __construct()
     {
-        $this->db = (new AppMain())->getDB();
+        parent::__construct();
     }
 
     public function postLogin()
@@ -27,16 +28,6 @@ class Validate
 
         $response['error'] = false;
         return $response;
-    }
-
-    /**
-     * Get 'Auth' row by email
-     */
-    public function getByEmail(string $email): array
-    {
-        $sql = "SELECT * FROM auth WHERE email = ?";
-        $row = $this->db->prepareFetch($sql, [$email]);
-        return $row;
     }
 
     /**
@@ -55,7 +46,7 @@ class Validate
      */
     public function emailExists(string $email): bool
     {
-        $row = $this->getByEmail($email);
+        $row = $this->auth->getByWhere(['email' => $email]);
         if (!empty($row)) {
             return true;
         }
