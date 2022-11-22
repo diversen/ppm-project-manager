@@ -5,27 +5,21 @@ declare(strict_types=1);
 namespace App\Task;
 
 use Pebble\ExceptionTrace;
-use Pebble\App\StdUtils;
-
 use App\Project\ProjectModel;
 use App\Task\TaskModel;
-use App\AppMain;
+use App\AppUtils;
 use App\Exception\FormException;
 
 use Exception;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     private $project_model;
     private $task_model;
-    private $app_acl;
 
     public function __construct()
     {
         parent::__construct();
-
-        $app_main = new AppMain();
-        $this->app_acl = $app_main->getAppACL();
         $this->project_model = new ProjectModel();
         $this->task_model = new TaskModel();
     }
@@ -111,7 +105,7 @@ class Controller extends StdUtils
             $task_model = new TaskModel();
             $task_model->create($_POST);
             $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
-            // $this->flash->setMessage(Lang::translate('Task added to project'), 'success', ['flash_remove' => true]);
+
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
         } catch (Exception $e) {

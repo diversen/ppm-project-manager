@@ -6,23 +6,20 @@ namespace App\Time;
 
 use Diversen\Lang;
 
-use App\AppMain;
+use App\AppUtils;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\Utils\DateUtils;
 use Pebble\App\StdUtils;
 
-class TimeModel extends StdUtils
+class TimeModel extends AppUtils
 {
-    private $app_acl;
     private $date_utils;
 
     public function __construct()
     {
         parent::__construct();
         $this->date_utils = new DateUtils();
-        $app_main = new AppMain();
-        $this->app_acl = $app_main->getAppACL();
     }
 
     /**

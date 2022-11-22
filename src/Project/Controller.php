@@ -10,22 +10,23 @@ use Pebble\Pager;
 use Pebble\App\StdUtils;
 use App\Utils\AppPaginationUtils;
 use App\AppMain;
+use App\AppUtils;
 use App\Exception\FormException;
 use App\Project\ProjectModel;
 use JasonGrimes\Paginator;
 use Exception;
 
-class Controller extends StdUtils
+class Controller extends AppUtils 
 {
-    private $app_acl;
+
     private $project_model;
     private $pagination_utils;
 
     public function __construct()
     {
         parent::__construct();
-        $app_main = new AppMain();
-        $this->app_acl = $app_main->getAppACL();
+        // $app_main = new AppMain();
+        // $this->app_acl = $this->getAppACL();
 
         $this->project_model = new ProjectModel();
         $this->pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);

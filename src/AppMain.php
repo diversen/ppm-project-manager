@@ -19,20 +19,6 @@ class AppMain extends AppBase
     use \App\CSP;
 
     public const VERSION = "1.5.5";
-    public static $appAcl = null;
-
-    /**
-     * @return \App\AppACL
-     */
-    public function getAppACL()
-    {
-        if (!self::$appAcl) {
-            $auth_cookie_settings = $this->getConfig()->getSection('Auth');
-            self::$appAcl = new AppAcl($this->getDB(), $auth_cookie_settings);
-        }
-
-        return self::$appAcl;
-    }
 
     /**
      * Load user language and timezone if set else load default language

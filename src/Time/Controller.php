@@ -9,16 +9,14 @@ use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use App\Utils\AppPaginationUtils;
 use App\Exception\FormException;
-
+use App\AppUtils;
 use Pebble\Pager;
 use Pebble\ExceptionTrace;
-
 use JasonGrimes\Paginator;
-use Pebble\App\StdUtils;
 
-class Controller extends StdUtils
+
+class Controller extends AppUtils
 {
-    private $app_acl;
     private $pagination_utils;
     private $time_model;
     private $project_model;
@@ -27,8 +25,6 @@ class Controller extends StdUtils
     {
         parent::__construct();
 
-        $app_main = new AppMain();
-        $this->app_acl = $app_main->getAppACL();
         $this->pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
         $this->time_model = new TimeModel();
         $this->project_model = new ProjectModel();

@@ -10,31 +10,24 @@ use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
 use App\Exception\FormException;
-use App\AppMain;
+use App\AppUtils;
 use App\Utils\DateUtils;
 
 /**
  * Project related model
  */
-class ProjectModel
+class ProjectModel extends AppUtils
 {
     public const PROJECT_CLOSED = 0;
     public const PROJECT_OPEN = 1;
     public const PROJECT_DELETED = 2;
 
-    private $app_acl;
     private $task_model;
-    private $db;
-    private $config;
     private $date_utils;
 
     public function __construct()
     {
-        $app_main = new AppMain();
-
-        $this->app_acl = $app_main->getAppACL();
-        $this->db = $app_main->getDB();
-        $this->config = $app_main->getConfig();
+        parent::__construct();
         $this->task_model = new TaskModel();
         $this->time_model = new TimeModel();
         $this->date_utils = new DateUtils();
