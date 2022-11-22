@@ -6,7 +6,6 @@ namespace App;
 
 use Pebble\Router;
 use Pebble\App\AppBase;
-use App\AppACL;
 use App\Settings\SettingsModel;
 use Diversen\Lang;
 

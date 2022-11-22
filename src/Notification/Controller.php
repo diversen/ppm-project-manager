@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Notification;
 
-use Pebble\Template;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

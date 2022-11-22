@@ -2,11 +2,10 @@
 
 namespace App\Admin;
 
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
-
 
     public function __construct()
     {

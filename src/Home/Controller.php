@@ -6,9 +6,9 @@ namespace App\Home;
 
 use Parsedown;
 use Pebble\Exception\NotFoundException;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Test;
 
-use Pebble\App\StdUtils;
+use App\AppUtils;
 use Pebble\Exception\NotFoundException;
 use App\Cron\MoveTasks;
 
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

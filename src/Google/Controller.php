@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Google;
 
 use Pebble\SessionTimed;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 use Diversen\Lang;
 use App\Google\GoogleUtils;
 use App\TwoFactor\TwoFactorModel;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

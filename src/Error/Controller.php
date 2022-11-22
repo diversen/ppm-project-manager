@@ -8,10 +8,10 @@ use Pebble\Path;
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
 use Exception;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 use Throwable;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     /**
      * @var \Pebble\Log

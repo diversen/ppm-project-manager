@@ -2,9 +2,9 @@
 
 namespace App\TwoFactor;
 
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
-class TwoFactorModel extends StdUtils
+class TwoFactorModel extends AppUtils
 {
     public function __construct()
     {

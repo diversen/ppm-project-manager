@@ -7,9 +7,7 @@ namespace App\Project;
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
 use Pebble\Pager;
-use Pebble\App\StdUtils;
 use App\Utils\AppPaginationUtils;
-use App\AppMain;
 use App\AppUtils;
 use App\Exception\FormException;
 use App\Project\ProjectModel;
@@ -25,9 +23,6 @@ class Controller extends AppUtils
     public function __construct()
     {
         parent::__construct();
-        // $app_main = new AppMain();
-        // $this->app_acl = $this->getAppACL();
-
         $this->project_model = new ProjectModel();
         $this->pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);
     }

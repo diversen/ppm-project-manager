@@ -9,18 +9,13 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 
 use Diversen\Lang;
-
-use Pebble\Flash;
 use Pebble\SessionTimed;
-use Pebble\App\StdUtils;
-
+use App\AppUtils;
 use App\TwoFactor\TwoFactorModel;
-use App\AppMain;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     private $twoFactorModel;
-
 
     public function __construct()
     {

@@ -6,17 +6,13 @@ namespace App\Settings;
 
 use Diversen\Lang;
 
-use Pebble\JSON;
 use Pebble\Exception\NotFoundException;
 use Pebble\ExceptionTrace;
-use Pebble\Flash;
-use Pebble\App\StdUtils;
-
+use App\AppUtils;
 use App\Settings\SettingsModel;
-use App\AppMain;
 use Exception;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

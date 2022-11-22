@@ -9,7 +9,7 @@ use Pebble\Captcha;
 use Pebble\CSRF;
 use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
 use App\Account\Mail;
 use App\Account\Validate;
@@ -17,7 +17,7 @@ use App\TwoFactor\TwoFactorModel;
 
 use Exception;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

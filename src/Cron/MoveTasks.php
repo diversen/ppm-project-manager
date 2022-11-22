@@ -6,13 +6,13 @@ namespace App\Cron;
 
 use DateTime;
 use DateTimeZone;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 use App\Utils\DateUtils;
 use App\Task\TaskModel;
 use Exception;
 use Pebble\ExceptionTrace;
 
-class MoveTasks extends StdUtils
+class MoveTasks extends AppUtils
 {
     private $date_utils;
     public function __construct()

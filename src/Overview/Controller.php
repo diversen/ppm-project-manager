@@ -6,7 +6,7 @@ namespace App\Overview;
 
 use Pebble\URL;
 use Pebble\ExceptionTrace;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
 use App\AppMain;
 use App\Utils\AppCal;
@@ -16,7 +16,7 @@ use App\Settings\SettingsModel;
 use Diversen\Lang;
 use Exception;
 
-class Controller extends StdUtils
+class Controller extends AppUtils
 {
     public function __construct()
     {

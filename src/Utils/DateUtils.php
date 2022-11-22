@@ -7,9 +7,9 @@ namespace App\Utils;
 use App\Settings\SettingsModel;
 use DateTime;
 use DateTimeZone;
-use Pebble\App\StdUtils;
+use App\AppUtils;
 
-class DateUtils extends StdUtils
+class DateUtils extends AppUtils
 {
     private $user_timezone;
 
