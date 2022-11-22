@@ -18,7 +18,7 @@ class AppMain extends AppBase
 {
     use \App\CSP;
 
-    public const VERSION = "1.5.3";
+    public const VERSION = "1.5.5";
     public static $appAcl = null;
 
     /**
@@ -60,8 +60,10 @@ class AppMain extends AppBase
     public function run()
     {
 
-        // Add src/ to include path (template include)
+        // Add . to include path
         $this->addBaseToIncudePath();
+
+        // Add src/ to include path
         $this->addSrcToIncludePath();
 
         $this->setErrorHandler();
