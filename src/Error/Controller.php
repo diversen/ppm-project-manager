@@ -7,40 +7,39 @@ use Monolog\Handler\StreamHandler;
 use Pebble\Path;
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
-use Pebble\App\AppBase;
 use Exception;
+use Pebble\App\StdUtils;
 use Throwable;
 
-class Controller
+class Controller extends StdUtils
 {
     /**
      * @var \Pebble\Log
      */
-    private $log;
+    protected $log;
 
     /**
      * @var \Pebble\Config
      */
-    private $config;
+    protected $config;
 
     /**
      * @var \Pebble\Template
      */
-    private $template;
+    protected $template;
 
     /**
-     * Notice this does not extend StdUtils because
-     * we only want as few requirements as possible here.
-     * In order to almost always show an appropriate error message
+     * Notice that there is no parent::__construct() call here.
+     * This is because we want to initialize as few services as possible.
      */
     public function __construct()
     {
         try {
-            $this->app_base = new AppBase();
-            $this->template = $this->app_base->getTemplate();
-            $this->json = $this->app_base->getJSON();
-            $this->log = $this->app_base->getLog();
-            $this->config = $this->app_base->getConfig();
+
+            $this->template = $this->getTemplate();
+            $this->json = $this->getJSON();
+            $this->log = $this->getLog();
+            $this->config = $this->getConfig();
         } catch (Exception $e) {
 
             // This is most likely a config dir that can not be read

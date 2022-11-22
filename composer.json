@@ -10,7 +10,7 @@
         "aidantwoods/secureheaders": "^2.0",
         "diversen/simple-php-translation": "^3.0",
         "diversen/minimal-cli-framework": "^6.0",
-        "diversen/pebble-framework": "^6.0",
+        "diversen/pebble-framework": "^7.0",
         "diversen/captcha": "^2.0"
     },
     "require-dev": {
