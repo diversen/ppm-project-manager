@@ -20,6 +20,8 @@ if (!isset($description)) {
     $description = $title;
 }
 
+require_once "templates/helpers.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
