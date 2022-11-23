@@ -9,7 +9,7 @@ use Monolog\Handler\RotatingFileHandler;
 $logger = new Logger('base');
 $base_path = Path::getBasePath();
 
-$rotating_handler = new RotatingFileHandler($base_path . '/logs/main.log', 30, Logger::DEBUG);
+$rotating_handler = new RotatingFileHandler($base_path . '/logs/main.log', 365, Logger::DEBUG);
 $logger->pushHandler($rotating_handler);
 
 return [
