@@ -59,6 +59,7 @@ class AppMain extends AppBase
         $this->setDebug();
 
         $router = new Router();
+        $router->setFasterRouter();
         $router->addClass(\App\Test\Controller::class);
         $router->addClass(\App\Admin\Controller::class);
         $router->addClass(\App\Notification\Controller::class);

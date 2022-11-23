@@ -162,6 +162,49 @@ class Pebble {
         // window.location.assign(url)
         window.location.replace(url)
     }
+
+
+    /**
+     * @param {*} settings 
+     */
+    static addPostEventListener(settings) {
+
+        const route = settings.route;
+        const eventListenerElem = document.querySelector(settings.eventElem) || document.querySelector('#click');
+        const loaderElem = document.querySelector(settings.loaderElem) || document.querySelector('.loadingspinner');
+        const formElem = document.querySelector(settings.formElem) || document.querySelector('#form');
+
+        const onSuccessCallbackDefault = function (response) {
+            if (response.error === false) {
+                if (response.redirect) {
+                    Pebble.redirect(response.redirect)
+                } else {
+                    Pebble.setFlashMessage(response.message, 'success');
+                }
+            } else {
+                Pebble.setFlashMessage(response.message, 'error');
+            }
+        };
+
+        const onSuccessCallback = settings.onSuccessCallback || onSuccessCallbackDefault 
+            
+        eventListenerElem.addEventListener("click", async function(e) {
+
+            e.preventDefault();
+            loaderElem.classList.toggle('hidden');
+    
+            try {
+                const data = new FormData(formElem);
+                const res = await Pebble.asyncPost(route, data);
+                onSuccessCallback(res);
+
+            } catch (e) {
+                await Pebble.asyncPostError('/error/log', e.stack);
+            }
+    
+            loaderElem.classList.toggle('hidden');
+        });
+    }
 }
 
 export { Pebble }

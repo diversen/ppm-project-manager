@@ -287,7 +287,6 @@ class Controller extends AppUtils
     public function post_recover()
     {
         $captcha = new Captcha();
-        $validate = new Validate();
 
         $response = ['error' => true];
 
@@ -329,6 +328,7 @@ class Controller extends AppUtils
                     'success'
                 );
                 $response['error'] = false;
+                $response['redirect'] = '/account/signin';
             } else {
                 $response['message'] = Lang::translate('E-mail could not be sent. Try again later.');
             }
