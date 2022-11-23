@@ -54,7 +54,7 @@ if ($project['status'] == 1) {
 
             const res = await Pebble.asyncPost('/project/put/' + project_id, data);
             if (res.error === false) {
-                Pebble.redirect(res.project_redirect);
+                Pebble.redirect(res.redirect);
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }
