@@ -106,7 +106,6 @@ if (!empty($tasks_completed)) { ?>
 
     import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
-
     document.addEventListener('click', async function(event) {
 
         if (!event.target.matches('.move_to_today')) return;

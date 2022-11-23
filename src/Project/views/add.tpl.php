@@ -18,6 +18,7 @@ $csrf_token = (new CSRF())->getToken();
     <div class="loadingspinner hidden"></div>
 </form>
 
+
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     import {
         Pebble
@@ -26,7 +27,7 @@ $csrf_token = (new CSRF())->getToken();
     const title = document.getElementById('title');
     title.focus();
 
-    const return_to = Pebble.getQueryVariable('return_to');
+    const returnTo = Pebble.getQueryVariable('return_to');
     const spinner = document.querySelector('.loadingspinner');
 
     var elem = document.getElementById('project_submit');
@@ -42,13 +43,13 @@ $csrf_token = (new CSRF())->getToken();
             const res = await Pebble.asyncPost('/project/post', data);
             spinner.classList.toggle('hidden');
             if (res.error === false) {
-                if (return_to) {
-                    Pebble.redirect(return_to);
+                if (returnTo) {
+                    Pebble.redirect(returnTo);
                 } else {
-                    Pebble.redirect(res.project_redirect);
+                    Pebble.redirect(res.redirect);
                 }
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             spinner.classList.toggle('hidden');

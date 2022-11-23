@@ -33,7 +33,6 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 	<tbody>
 	<?php
 
-
     $today = is_today(strtotime($task['begin_date']));
     $task_title = $title_attr = "$task[title]";
     $task_box_class = '';
@@ -41,7 +40,6 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
         $task_title = "<s>$task_title</s>";
         $task_box_class = ' task-done ';
     }
-
 
     ?>
     <tr>

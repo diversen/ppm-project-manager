@@ -48,13 +48,7 @@ if ($project['status'] == 1) {
 
         const form = document.getElementById('project_edit');
         const data = new FormData(form);
-
         const project_id = document.getElementById('id').value;
-
-        // Manipulate status so we can send it to the same endpoint
-        if (!data.has('status')) {
-            data.set('status', '0');
-        }
 
         try {
 
@@ -62,7 +56,7 @@ if ($project['status'] == 1) {
             if (res.error === false) {
                 Pebble.redirect(res.project_redirect);
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
@@ -76,22 +70,15 @@ if ($project['status'] == 1) {
 
         const form = document.getElementById('project_edit');
         const data = new FormData(form);
-
-        // Manipulate status so we can send it to the same endpoint
-        if (!data.has('status')) {
-            data.set('status', '0');
-        }
-
         const project_id = document.getElementById('id').value;
 
         try {
 
             const res = await Pebble.asyncPost('/project/delete/' + project_id, data);
-
             if (res.error === false) {
-                Pebble.redirect(res.project_redirect);
+                Pebble.redirect(res.redirect);
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
