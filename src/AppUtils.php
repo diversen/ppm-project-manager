@@ -41,10 +41,10 @@ class AppUtils extends StdUtils
     /**
      * Render a template including header and footer
      */
-    public function renderPage(string $template, array $data = [])
+    public function renderPage(string $template, array $data = [], $options = [])
     {
-        $this->template->render('templates/header.tpl.php', $data);
-        $this->template->render($template, $data);
-        $this->template->render('templates/footer.tpl.php', $data);
+        $this->template->render('templates/header.tpl.php', $data, $options);
+        $this->template->render($template, $data, $options);
+        $this->template->render('templates/footer.tpl.php', $data, $options);
     }
 }

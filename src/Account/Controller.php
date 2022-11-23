@@ -9,11 +9,14 @@ use Pebble\Captcha;
 use Pebble\CSRF;
 use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
-use App\AppUtils;
+use Parsedown;
+use Pebble\Exception\NotFoundException;
 
+use App\AppUtils;
 use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
+
 
 use Exception;
 
@@ -383,5 +386,28 @@ class Controller extends AppUtils
                 header("Location: /account/signin");
             }
         }
+    }
+
+
+    /**
+     * @route /account/terms/:document
+     * @verbs GET,POST
+     */
+    public function terms($params)
+    {
+        $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.md';
+
+        if (!file_exists($markdown_file) || !is_file($markdown_file)) {
+            throw new NotFoundException('File does not exists.');
+        }
+
+        $markdown_text = file_get_contents($markdown_file);
+        $parsedown = new Parsedown();
+
+        $parsedown->setSafeMode(false);
+
+        $data['note_markdown'] = $parsedown->text($markdown_text);
+
+        $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
     }
 }
