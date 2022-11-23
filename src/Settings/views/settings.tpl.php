@@ -53,8 +53,6 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
 <?=get_settings_links()?>
 </p>
 <form name="settings" id="seetings" method="post">
-    <label for="company"><?= Lang::translate('Organization') ?></label>
-    <input type="text" name="company" value="<?= $user_settings['company'] ?? '' ?>" placeholder="<?= Lang::translate('Organization') ?>">
 
     <label for="name"><?= Lang::translate('Your name') ?></label>
     <input type="text" name="name" value="<?= $user_settings['name'] ?? '' ?>" placeholder="<?= Lang::translate('Your name') ?>">
