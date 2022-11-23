@@ -20,7 +20,7 @@ CREATE TABLE `auth` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verified` tinyint(1) DEFAULT '0',
   `random` varchar(255) NOT NULL,
-  `super` int(1) DEFAULT '0',
+  `super` tinyint(1) DEFAULT '0',
   `locked` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
