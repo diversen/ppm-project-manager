@@ -44,7 +44,7 @@ class Controller extends AppUtils
     }
 
     /**
-     * @route /2fa/recreate
+     * @route /twofactor/recreate
      * @verbs GET
      */
     public function recreate()
@@ -55,11 +55,11 @@ class Controller extends AppUtils
             $this->flash->setMessage(Lang::translate('New QR code has been created'), 'success', ['flash_remove' => true]);
         }
 
-        header('Location: /2fa/enable', true);
+        header('Location: /twofactor/enable', true);
     }
 
     /**
-     * @route /2fa/enable
+     * @route /twofactor/enable
      * @verbs GET
      */
     public function enable()
@@ -97,7 +97,7 @@ class Controller extends AppUtils
     }
 
     /**
-     * @route /2fa/put
+     * @route /twofactor/put
      * @verbs POST
      */
     public function put()
@@ -121,7 +121,7 @@ class Controller extends AppUtils
     }
 
     /**
-     * @route /2fa/verify/post
+     * @route /twofactor/verify/post
      * @verbs POST
      */
     public function verify_post()
@@ -168,7 +168,7 @@ class Controller extends AppUtils
     }
 
     /**
-     * @route /2fa/verify
+     * @route /twofactor/verify
      * @verbs GET
      */
     public function verify()

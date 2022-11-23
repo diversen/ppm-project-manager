@@ -141,7 +141,7 @@ class Controller extends AppUtils
                 $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
                 $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
                 $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
-                $response['redirect'] = '/2fa/verify';
+                $response['redirect'] = '/twofactor/verify';
                 $this->json->render($response);
                 return true;
             }

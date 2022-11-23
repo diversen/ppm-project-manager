@@ -34,7 +34,7 @@ function get_settings_links()
     $config = (new AppMain())->getConfig();
     $links = [];
     if ($config->get('TwoFactor.enabled')) {
-        $links[] = Tag::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/2fa/enable', 'disabled' => null]);
+        $links[] = Tag::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/twofactor/enable', 'disabled' => null]);
     }
     if ($config->get('Notification.enabled')) {
         $links[] = Tag::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);

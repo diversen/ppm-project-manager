@@ -47,7 +47,7 @@ use App\AppMain;
         let res;
 
         try {
-            res = await Pebble.asyncPost('/2fa/put', formData);
+            res = await Pebble.asyncPost('/twofactor/put', formData);
             if (res.error) {
                 Pebble.setFlashMessage(res.error, 'error');
             } else {

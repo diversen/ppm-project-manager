@@ -30,12 +30,11 @@ use App\AppMain;
         let res;
 
         try {
-            res = await Pebble.asyncPost('/2fa/verify/post', formData);
+            res = await Pebble.asyncPost('/twofactor/verify/post', formData);
             
             if (res.error) {
                 Pebble.setFlashMessage(res.error, 'error');
             } else {
-                // Pebble.setFlashMessage(res.message, 'success');
                 Pebble.redirect(res.redirect);
             }
         } catch (e) {

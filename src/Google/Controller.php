@@ -125,7 +125,7 @@ class Controller extends AppUtils
                 $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
                 $session_timed->setValue('keep_login', true, $this->config->get('TwoFactor.time_to_verify'));
                 $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
-                header("Location: " . '/2fa/verify');
+                header("Location: " . '/twofactor/verify');
                 return;
             }
         }
