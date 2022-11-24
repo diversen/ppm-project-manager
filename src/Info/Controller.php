@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin;
+namespace App\Info;
 
 use App\AppUtils;
 
@@ -12,7 +12,7 @@ class Controller extends AppUtils
     }
 
     /**
-     * @route /admin/phpinfo
+     * @route /info/phpinfo
      * @verbs GET
      */
     public function phpinfo()
