@@ -45,7 +45,7 @@ class Controller extends AppUtils
         $pagination_utils = new AppPaginationUtils();
         $paginator = $pagination_utils->getPaginator(
             total_items: $project_count,
-            items_per_page: 1,
+            items_per_page: $this->config->get('App.pager_limit'),
             current_page: $pager->page,
             url: $url,
             default_order: ['updated' => 'DESC', 'title' => 'DESC'],
