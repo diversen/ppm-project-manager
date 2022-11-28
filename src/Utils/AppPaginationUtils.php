@@ -23,7 +23,6 @@ class AppPaginationUtils
 
         return $paginator;
 
-
     }
     /**
      * @param string $table_name table to paginate

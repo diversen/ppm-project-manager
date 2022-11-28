@@ -87,7 +87,7 @@ class Controller extends AppUtils
             primary_key: $table['primary_key'],
             url_pattern: "/admin/table/$table_name",
             column_order: $column_order,
-            per_page: 10,
+            per_page: $this->config->get('App.pager_limit'),
             max_pages: 10
         );
 

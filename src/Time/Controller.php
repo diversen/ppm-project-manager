@@ -55,7 +55,7 @@ class Controller extends AppUtils
             url: '/time/add/' . $task['id'],
             default_order: ['begin_date' => 'DESC'],
             session_key : 'time',
-            max_pages: $this->config->get('App.pager_limit'),
+
         );
 
         $time_vars = [
