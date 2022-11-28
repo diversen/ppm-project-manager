@@ -10,8 +10,8 @@ use App\Utils\AppPaginationUtils;
 use App\Exception\FormException;
 use App\AppUtils;
 use Pebble\Pager;
+use Pebble\Pagination\PaginationUtils;
 use Pebble\ExceptionTrace;
-use JasonGrimes\Paginator;
 
 class Controller extends AppUtils
 {
@@ -23,7 +23,7 @@ class Controller extends AppUtils
     {
         parent::__construct();
 
-        $this->pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']);
+        $this->pagination_utils = new PaginationUtils(['begin_date' => 'DESC'], 'time');
         $this->time_model = new TimeModel();
         $this->project_model = new ProjectModel();
     }
@@ -42,14 +42,21 @@ class Controller extends AppUtils
         $where = ['task_id' => $task['id']];
         $total = $this->time_model->getNumTime($where);
 
-        $this->config->get('App.pager_limit');
         $pager = new Pager($total, $this->config->get('App.pager_limit'));
         $order_by = $this->pagination_utils->getOrderByFromQuery();
 
-        $url_pattern = $this->pagination_utils->getPaginationURLPattern('/time/add/' . $task['id']);
-        $paginator = new Paginator($total, $pager->limit, $pager->page, $url_pattern);
-
         $time_rows = $this->time_model->getAll($where, $order_by, [$pager->offset, $pager->limit]);
+        
+        $pagination_utils = new AppPaginationUtils();
+        $paginator = $pagination_utils->getPaginator(
+            total_items: $total,
+            items_per_page: $this->config->get('App.pager_limit'),
+            current_page: $pager->page,
+            url: '/time/add/' . $task['id'],
+            default_order: ['begin_date' => 'DESC'],
+            session_key : 'time',
+            max_pages: $this->config->get('App.pager_limit'),
+        );
 
         $time_vars = [
             'task' => $task,

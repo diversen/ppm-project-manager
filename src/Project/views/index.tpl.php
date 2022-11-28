@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\Utils\AppPagination;
-use App\Utils\AppPaginationUtils;
+use Pebble\Pagination\PaginationUtils;
 use App\Utils\DateUtils;
 
 ?>
@@ -39,7 +39,7 @@ function render_project($project)
 
 function render_projects($projects)
 {
-    $pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC'], 'project');
+    $pagination_utils = new PaginationUtils(['updated' => 'DESC', 'title' => 'DESC'], 'project');
 
     if (empty($projects)) { ?>
         <p><?= Lang::translate('Your have no projects yet') ?></p>

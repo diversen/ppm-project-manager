@@ -28,6 +28,7 @@ $LANG['Your password has been updated'] = 'Your password has been updated';
 
 // Translation of file src/Account/ControllerExt.php
 
+$LANG['Sign out'] = 'Sign out';
 $LANG['Sign in'] = 'Sign in';
 
 // Translation of file src/Account/Mail.php
@@ -119,6 +120,10 @@ $LANG['You have connected with the following site and requested an account'] = '
 $LANG['In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line'] = 'In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line';
 $LANG['Kind Regards'] = 'Kind Regards';
 
+// Translation of file src/Admin/views/edit.tpl.php
+
+$LANG['Update'] = 'Update';
+
 // Translation of file src/AppACL.php
 
 $LANG['You are not logged in. Please log in.'] = 'You are not logged in. Please log in.';
@@ -132,7 +137,6 @@ $LANG['404 Page not found'] = '404 Page not found';
 $LANG['403 Forbidden'] = '403 Forbidden';
 $LANG['510 Template error'] = '510 Template error';
 $LANG['500 Internal Server Error'] = '500 Internal Server Error';
-$LANG['A sever error happened. The incidence has been logged.'] = 'A sever error happened. The incidence has been logged.';
 
 // Translation of file src/Google/Controller.php
 
@@ -271,7 +275,6 @@ $LANG['Your settings could not be saved. Check if you are logged in'] = 'Your se
 $LANG['Two factor authentication'] = 'Two factor authentication';
 $LANG['Notifications'] = 'Notifications';
 $LANG['Settings'] = 'Settings';
-$LANG['Organization'] = 'Organization';
 $LANG['Your name'] = 'Your name';
 $LANG['Bio'] = 'Bio';
 $LANG['Add a bio'] = 'Add a bio';
@@ -285,10 +288,6 @@ $LANG['Update'] = 'Update';
 $LANG['User has not entered any user info yet'] = 'User has not entered any user info yet';
 $LANG['User'] = 'User';
 $LANG['No user info'] = 'No user info';
-
-// Translation of file src/Task/Controller.php
-
-$LANG['Task added to project'] = 'Task added to project';
 
 // Translation of file src/Task/TaskModel.php
 
@@ -448,5 +447,6 @@ $LANG['Home'] = 'Home';
 $LANG['Projects'] = 'Projects';
 $LANG['Settings'] = 'Settings';
 $LANG['Sign out'] = 'Sign out';
+$LANG['Admin'] = 'Admin';
 $LANG['Toggle timer'] = 'Toggle timer';
 $LANG['Timer'] = 'Timer';

@@ -3,7 +3,7 @@
 use Diversen\Lang;
 
 use App\Utils\AppPagination;
-use App\Utils\AppPaginationUtils;
+use Pebble\Pagination\PaginationUtils;
 use App\AppMain;
 
 ?>
@@ -35,7 +35,7 @@ use App\AppMain;
 
 function output_time_table($time_rows)
 {
-    $pagination_utils = new AppPaginationUtils(['begin_date' => 'DESC']); ?>
+    $pagination_utils = new PaginationUtils(['begin_date' => 'DESC'], 'time'); ?>
 
 <div>
     <table>

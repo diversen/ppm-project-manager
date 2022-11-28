@@ -130,7 +130,6 @@ table {
     font-size: 1em;
     margin-top: 10px;
     border: 1px solid transparent;
-    
 }
 
 
@@ -279,4 +278,15 @@ table {
 
 body {
     overflow: scroll; /* Show scrollbars */
-  }
+}
+
+/* table css style that ensure only one line of text per cell */ 
+table.admin {
+    table-layout: fixed;
+    width: 100%;
+}
+table.admin td, table.admin th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

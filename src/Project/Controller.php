@@ -7,11 +7,11 @@ namespace App\Project;
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
 use Pebble\Pager;
+use Pebble\Pagination\PaginationUtils;
 use App\Utils\AppPaginationUtils;
 use App\AppUtils;
 use App\Exception\FormException;
 use App\Project\ProjectModel;
-use JasonGrimes\Paginator;
 use Exception;
 
 class Controller extends AppUtils
@@ -23,7 +23,7 @@ class Controller extends AppUtils
     {
         parent::__construct();
         $this->project_model = new ProjectModel();
-        $this->pagination_utils = new AppPaginationUtils(['updated' => 'DESC', 'title' => 'DESC']);
+        $this->pagination_utils = new PaginationUtils(['updated' => 'DESC', 'title' => 'DESC'], 'project');
     }
 
     private function getProjectData(array $where, array $order_by)
@@ -37,15 +37,24 @@ class Controller extends AppUtils
 
         if ($where['status'] === ProjectModel::PROJECT_OPEN) {
             $template_data['inactive_link'] = 1;
-            $url_pattern = $this->pagination_utils->getPaginationURLPattern('/project');
+            $url = '/project';
         } else {
-            $url_pattern = $this->pagination_utils->getPaginationURLPattern('/project/inactive');
+            $url = '/project/inactive';
         }
 
-        $paginator = new Paginator($project_count, $pager->limit, $pager->page, $url_pattern);
-        $paginator->setMaxPagesToShow(5);
-        $template_data['paginator'] = $paginator;
+        $pagination_utils = new AppPaginationUtils();
+        $paginator = $pagination_utils->getPaginator(
+            total_items: $project_count,
+            items_per_page: 1,
+            current_page: $pager->page,
+            url: $url,
+            default_order: ['updated' => 'DESC', 'title' => 'DESC'],
+            session_key : 'project',
+            max_pages: 10,
+            
+        );
 
+        $template_data['paginator'] = $paginator;
         return $template_data;
     }
 

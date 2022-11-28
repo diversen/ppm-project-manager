@@ -2,6 +2,9 @@
 
 namespace App\Utils;
 
+/**
+ * Class that renders the pagination links in HTML using the JasonGrimes/Paginator library.
+ */
 class AppPagination
 {
     public function render(\JasonGrimes\Paginator $paginator) { ?>

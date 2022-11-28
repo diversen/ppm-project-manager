@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Pebble\Service\AuthService;
 use Pebble\Service\DBService;
+use Pebble\Service\ACLRoleService;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,8 +19,9 @@ final class AuthTest extends TestCase
     private $user_email_2 = 'test_2';
     private $user_password = 'password';
     private $user_password_2 = 'password_2';
-    private $db;
     private $auth;
+    private $db;
+    private $acl_role;
     private $cookie_file = '/tmp/cookie.txt';
     private $project_id;
     private $task_id;
@@ -50,20 +52,28 @@ final class AuthTest extends TestCase
     {
         $ch = $this->curl($url, $post_params);
         $result = curl_exec($ch);
+        $this->last_result = $result;
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $this->assertEquals($return_code, $httpcode);
         return $result;
     }
+
+    
 
     protected function setUp(): void
     {
 
         $this->auth = (new AuthService())->getAuth();
         $this->db = (new DBService())->getDB();
+        $this->acl_role = (new ACLRoleService())->getACLRole();
 
-        // User 1
+        // User 1 Admin
         $this->db->delete('auth', ['email' => $this->user_email]);
         $this->auth->createAndVerify($this->user_email, $this->user_password);
+
+        // Set user 1 as admin
+        $auth = $this->auth->getByWhere(['email' => $this->user_email]);
+        $this->acl_role->setRole(['right' => 'admin', 'auth_id' => $auth['id']]);
 
         // User 2
         $this->db->delete('auth', ['email' => $this->user_email_2]);
@@ -92,6 +102,11 @@ final class AuthTest extends TestCase
 
     public function test_project_routes(): void
     {
+
+        if (file_exists($this->cookie_file)) {
+            unlink($this->cookie_file);
+        }
+
         $post_data = ['title' => 'Test project', 'note' => 'Test'];
 
         // User 1
@@ -107,6 +122,8 @@ final class AuthTest extends TestCase
         $this->setProjectID();
         $this->curlAssert("/project/view/$this->project_id", [], 200);
         $this->curlAssert("/project/edit/$this->project_id", [], 200);
+
+        $this->curlAssert("/admin", [], 200);
 
         $put_data = ['title' => 'Updated',  'note' => 'Updated test',  'id' => $this->project_id, 'status' => '1'];
         $this->curlAssert("/project/put/$this->project_id", $put_data, 200);
@@ -128,6 +145,8 @@ final class AuthTest extends TestCase
         $this->curlAssert("/project/put/$this->project_id", $put_data, 403);
         $this->curlAssert("/project/delete/$this->project_id", ['test' => 1], 403);
 
+        $this->curlAssert("/admin", [], 403);
+
         // User 2. Login and check if user 1 project gives 403
         $this->curlAssert('/account/post_login', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
         $this->curlAssert('/project/add', [], 200);
@@ -136,6 +155,8 @@ final class AuthTest extends TestCase
         $this->curlAssert("/project/put/$this->project_id", $put_data, 403);
         $this->curlAssert("/project/delete/$this->project_id", ['test' => 1], 403);
         $this->curlAssert('/account/logout', [], 200);
+
+        $this->curlAssert("/admin", [], 403);
 
         // TASK and time routes
 
@@ -191,9 +212,6 @@ final class AuthTest extends TestCase
 
         $this->curlAssert('/test/template/exception', [], 510);
         $this->curlAssert('/test/not/found', [], 404);
-
-
-        unlink($this->cookie_file);
     }
 
 

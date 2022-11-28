@@ -17,7 +17,7 @@ class AppMain extends AppBase
 {
     use \App\CSP;
 
-    public const VERSION = "1.6.1";
+    public const VERSION = "1.6.3";
 
     /**
      * Load user language and timezone if set else load default language
@@ -62,6 +62,7 @@ class AppMain extends AppBase
         $router->setFasterRouter();
         $router->addClass(\App\Test\Controller::class);
         $router->addClass(\App\Info\Controller::class);
+        $router->addClass(\App\Admin\Controller::class);
         $router->addClass(\App\Notification\Controller::class);
         $router->addClass(\App\Account\ControllerExt::class);
         $router->addClass(\App\Home\Controller::class);

@@ -74,7 +74,7 @@ class Controller extends AppUtils
             'message' => $error_message,
         ];
 
-        $this->template->render(
+        $this->renderPage(
             'Error/error.tpl.php',
             $error_vars
         );
@@ -131,25 +131,35 @@ class Controller extends AppUtils
 
     private function notFoundException(Exception $e)
     {
-        $this->log->notice("App.index.not_found ", ['url' => $_SERVER['REQUEST_URI']]);
+        $this->log->notice("App.not_found.exception", ['url' => $_SERVER['REQUEST_URI']]);
         $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
     }
 
     private function forbiddenException(Exception $e)
     {
-        $this->log->notice("App.index.forbidden", ['url' => $_SERVER['REQUEST_URI']]);
+        $this->log->notice("App.forbidden.exception", ['url' => $_SERVER['REQUEST_URI']]);
         $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
     }
 
     private function templateException(Throwable $e)
     {
-        $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
-        $this->baseError(Lang::translate('510 Template error'), $this->getErrorMessage($e));
+
+        $error_vars = [
+            'title' => Lang::translate('510 Template error'),
+            'message' => ExceptionTrace::get($e),
+        ];
+
+        $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
+        $this->template->render(
+            'Error/error.tpl.php',
+            $error_vars
+        );
+
     }
 
     private function internalException(Throwable $e)
     {
-        $this->log->error('App.index.exception', ['exception' => ExceptionTrace::get($e)]);
+        $this->log->error('App.internal.exception', ['exception' => ExceptionTrace::get($e)]);
         $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
 }
