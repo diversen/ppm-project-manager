@@ -121,11 +121,7 @@ class ProjectModel extends AppUtils
             $projects[$key]['project_time_total_human'] = $this->time_model->minutesToHoursMinutes($project_time);
         }
 
-        $data = [
-            'projects' => $projects,
-        ];
-
-        return $data;
+        return $projects;
     }
 
     /**
