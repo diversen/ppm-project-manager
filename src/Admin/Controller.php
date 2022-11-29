@@ -120,7 +120,7 @@ class Controller extends AppUtils
      * @route /admin/table/:table/edit/:id
      * @verbs GET
      */
-    public function editGET(array $params)
+    public function edit(array $params)
     {
 
         $table = $this->getTableWithColumnTypes($params['table']);
@@ -128,19 +128,37 @@ class Controller extends AppUtils
         $primary_key = $table['primary_key'];
 
         $row = $this->db->getOne($table_name, [$primary_key => $params['id']]);
+        $error = $this->validateRow($row, $table_name, $params['id']);
         $template_data = [
             'table' => $table,
             'row' => $row,
+            'error' => $error,
         ];
 
         $this->renderPage('Admin/views/edit.tpl.php', $template_data);
     }
 
     /**
-     * @route /admin/table/:table/edit/:id
+     * @route /admin/table/:table/add
+     * @verbs GET
+     */
+    public function create(array $params)
+    {
+
+        $table = $this->getTableWithColumnTypes($params['table']);
+        $template_data = [
+            'table' => $table,
+            'error' => null,
+        ];
+
+        $this->renderPage('Admin/views/add.tpl.php', $template_data);
+    }
+
+    /**
+     * @route /admin/table/:table/put/:id
      * @verbs POST
      */
-    public function editPOST(array $params)
+    public function put(array $params)
     {
         $response['error'] = true;
         $table = $this->getTableWithColumnTypes($params['table']);
@@ -157,6 +175,28 @@ class Controller extends AppUtils
             $this->db->update($table_name, $_POST, [$primary_key => $params['id']]);
             $response['message'] = 'Row updated';
             $response['error'] = false;
+        } catch (Exception $e) {
+            $response['message'] = $e->getMessage();
+        }
+
+        echo $this->json->response($response);
+    }
+
+    /**
+     * @route /admin/table/:table/delete/:id
+     * @verbs POST
+     */
+    public function delete(array $params)
+    {
+        $response['error'] = true;
+        $table = $this->getTableWithColumnTypes($params['table']);
+        $table_name = $table['table'];
+        $primary_key = $table['primary_key'];
+
+        try {
+            $this->db->delete($table_name, [$primary_key => $params['id']]);
+            $response['error'] = false;
+            $this->flash->setMessage('Row deleted', 'success', ['flash_remove' => true]);
         } catch (Exception $e) {
             $response['message'] = $e->getMessage();
         }

@@ -34,9 +34,12 @@ $pagination_utils = new PaginationUtils($column_order, $table['table']);
                 <?php endforeach; ?>
                 <td>
                     <div class="action-links">
-                        <a href="/admin/table/<?=$table['table']?>/view/<?=$row[$table['primary_key']]?>"><i class="fa-sharp fa-solid fa-eye"></i></a>
-                        <a href="/admin/table/<?=$table['table']?>/edit/<?=$row[$table['primary_key']]?>"><i class="fa-solid fa-edit"></i></a>
-                        <a href="/admin/table/<?=$table['table']?>/delete/<?=$row[$table['primary_key']]?>"><i class="fa-solid fa-trash"></i></a>
+                        <a 
+                            title="View row"
+                            href="/admin/table/<?=$table['table']?>/view/<?=$row[$table['primary_key']]?>"><i class="fa-sharp fa-solid fa-eye"></i></a>
+                        <a 
+                            title="Edit row"
+                            href="/admin/table/<?=$table['table']?>/edit/<?=$row[$table['primary_key']]?>"><i class="fa-solid fa-edit"></i></a>
                     </div>
                 </td>
             </tr>
