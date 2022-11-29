@@ -31,7 +31,9 @@ class Controller extends AppUtils
         $project_count = $this->project_model->getNumProjects($where);
         $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
 
-        $template_data['projects'] = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
+        $projects = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
+        $template_data['projects'] = $projects;
+
         $template_data['title'] = Lang::translate('All projects');
         $template_data['total_time_human'] = 0;
 

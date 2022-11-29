@@ -37,7 +37,7 @@ function output_time_table($time_rows)
 {
     $pagination_utils = new PaginationUtils(['begin_date' => 'DESC'], 'time'); ?>
 
-<div>
+<div id="time-entries">
     <table>
         <thead>
             <tr>
@@ -45,7 +45,7 @@ function output_time_table($time_rows)
                     <?= Lang::translate('Time') ?>
                 </td>
                 <td>
-                    <a href="<?=$pagination_utils->getAlterOrderUrl('begin_date')?>">
+                    <a href="<?=$pagination_utils->getAlterOrderUrl('begin_date')?>#time-entries">
                         <?= Lang::Translate('Date') ?> <?=$pagination_utils->getCurrentDirectionArrow('begin_date')?>
                     </a>
                 </td>

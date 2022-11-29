@@ -48,13 +48,21 @@ function render_projects($projects)
         <table>
             <thead>
                 <tr>
-                    <td><a href="<?= $pagination_utils->getAlterOrderUrl('title') ?>">
-                            <?= Lang::translate('Title') ?> <?= $pagination_utils->getCurrentDirectionArrow('title') ?></a>
+                    <td>
+                        <a href="<?= $pagination_utils->getAlterOrderUrl('title') ?>">
+                            <?= Lang::translate('Title') ?> <?= $pagination_utils->getCurrentDirectionArrow('title') ?>
+                        </a>
                     </td>
-                    <td><a href="<?= $pagination_utils->getAlterOrderUrl('updated') ?>">
-                            <?= Lang::translate('Updated') ?> <?= $pagination_utils->getCurrentDirectionArrow('updated') ?></a> </td>
-                    <td class="xs-hide"><?= Lang::translate('Time used') ?></td>
-                    <td></td>
+                    <td>
+                        <a href="<?= $pagination_utils->getAlterOrderUrl('updated') ?>">
+                        <?= Lang::translate('Updated') ?> <?= $pagination_utils->getCurrentDirectionArrow('updated') ?></a>
+                    </td>
+                    <td class="xs-hide">
+                        <?= Lang::translate('Time used') ?>
+                    </td>
+                    <td>
+
+                    </td>
                 </tr>
             </thead>
             <tbody>

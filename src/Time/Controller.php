@@ -44,7 +44,6 @@ class Controller extends AppUtils
 
         $pager = new Pager($total, $this->config->get('App.pager_limit'));
         $order_by = $this->pagination_utils->getOrderByFromQuery();
-
         $time_rows = $this->time_model->getAll($where, $order_by, [$pager->offset, $pager->limit]);
         
         $pagination_utils = new AppPaginationUtils();

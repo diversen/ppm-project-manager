@@ -24,6 +24,7 @@ class ProjectModel extends AppUtils
 
     private $task_model;
     private $date_utils;
+    private $time_model;
 
     public function __construct()
     {
@@ -115,6 +116,7 @@ class ProjectModel extends AppUtils
     public function getIndexData(array $where, array $order = [], array $limit = [])
     {
         $projects = $this->getAll($where, $order, $limit);
+        
         foreach ($projects as $key => $project) {
             $project_time = $this->time_model->sumTime(['project_id' => $project['id']]);
             $projects[$key]['project_time_total'] = $project_time;
