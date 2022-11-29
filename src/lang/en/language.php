@@ -123,6 +123,8 @@ $LANG['Kind Regards'] = 'Kind Regards';
 // Translation of file src/Admin/views/edit.tpl.php
 
 $LANG['Update'] = 'Update';
+$LANG['Delete'] = 'Delete';
+$LANG['Are you sure you want to delete this row?'] = 'Are you sure you want to delete this row?';
 
 // Translation of file src/AppACL.php
 
@@ -317,6 +319,7 @@ $LANG['Four weeks'] = 'Four weeks';
 $LANG['One month. First day'] = 'One month. First day';
 $LANG['One month. Last day'] = 'One month. Last day';
 $LANG['One month. Last day same day name'] = 'One month. Last day same day name';
+$LANG['Close task after end date'] = 'Close task after end date';
 $LANG['Task begin date'] = 'Task begin date';
 $LANG['Pick begin date'] = 'Pick begin date';
 $LANG['Task end date'] = 'Task end date';
@@ -348,6 +351,7 @@ $LANG['Four weeks'] = 'Four weeks';
 $LANG['One month. First day'] = 'One month. First day';
 $LANG['One month. Last day'] = 'One month. Last day';
 $LANG['One month. Last day same day name'] = 'One month. Last day same day name';
+$LANG['Close task after end date'] = 'Close task after end date';
 $LANG['Task begin date'] = 'Task begin date';
 $LANG['Pick begin date'] = 'Pick begin date';
 $LANG['Task end date'] = 'Task end date';

@@ -40,6 +40,7 @@ use Diversen\Lang;
         <option value="<?= TaskModel::AUTO_MOVE_LAST_DAY_OF_THIS_MONTH ?>"><?= Lang::translate('One month. Last day') ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_FIRST_SAME_DAY_NEXT_MONTH ?>"><?= Lang::translate("One month. First day same day name.") ?></option>
         <option value="<?= TaskModel::AUTO_MOVE_LAST_SAME_DAY_NEXT_MONTH ?>"><?= Lang::translate('One month. Last day same day name') ?></option>
+        <option value="<?= TaskModel::AUTO_MOVE_CLOSE_TODAY ?>"><?= Lang::translate('Close task after end date') ?></option>
     </select>
 
     <label for="begin_data"><?=Lang::translate('Task begin date')?> *</label>

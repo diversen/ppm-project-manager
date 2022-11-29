@@ -32,6 +32,7 @@ class MoveTasks extends AppUtils
             if ($this->isMidnight($timezone)) {
                 try {
                     $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_TODAY);
+                    $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_CLOSE_TODAY);
                     $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_ONE_WEEK);
                     $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_FOUR_WEEKS);
                     $this->moveTasks($user['id'], $timezone, TaskModel::AUTO_MOVE_FIRST_DAY_OF_NEXT_MONTH);
@@ -50,7 +51,7 @@ class MoveTasks extends AppUtils
         $date_str = null;
         $day_name = $this->date_utils->getDateFormat('now - 1 day', $timezone, 'l');
 
-        if ($auto_move_constant == TaskModel::AUTO_MOVE_TODAY) {
+        if ($auto_move_constant == TaskModel::AUTO_MOVE_TODAY || $auto_move_constant == TaskModel::AUTO_MOVE_CLOSE_TODAY) {
             $date_str = 'now';
         }
         if ($auto_move_constant == TaskModel::AUTO_MOVE_ONE_WEEK) {
@@ -91,6 +92,11 @@ class MoveTasks extends AppUtils
                 'begin_date' => $date_new_begin_date,
                 'end_date' => $date_new_end_date
             ];
+
+            if ($auto_move_constant == TaskModel::AUTO_MOVE_CLOSE_TODAY) {
+                $update_values = [];
+                $update_values['status'] = TaskModel::TASK_CLOSED;
+            }
 
             $this->db->update('task', $update_values, ['id' => $task['id']]);
         }
