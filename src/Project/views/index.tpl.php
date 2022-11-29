@@ -39,7 +39,7 @@ function render_project($project)
 
 function render_projects($projects)
 {
-    $pagination_utils = new PaginationUtils(['updated' => 'DESC', 'title' => 'DESC'], 'project');
+    $pagination_utils = new PaginationUtils(['p.updated' => 'DESC', 'p.title' => 'DESC'], 'project');
 
     if (empty($projects)) { ?>
         <p><?= Lang::translate('Your have no projects yet') ?></p>
@@ -49,13 +49,13 @@ function render_projects($projects)
             <thead>
                 <tr>
                     <td>
-                        <a href="<?= $pagination_utils->getAlterOrderUrl('title') ?>">
-                            <?= Lang::translate('Title') ?> <?= $pagination_utils->getCurrentDirectionArrow('title') ?>
+                        <a href="<?= $pagination_utils->getAlterOrderUrl('p.title') ?>">
+                            <?= Lang::translate('Title') ?> <?= $pagination_utils->getCurrentDirectionArrow('p.title') ?>
                         </a>
                     </td>
                     <td>
-                        <a href="<?= $pagination_utils->getAlterOrderUrl('updated') ?>">
-                        <?= Lang::translate('Updated') ?> <?= $pagination_utils->getCurrentDirectionArrow('updated') ?></a>
+                        <a href="<?= $pagination_utils->getAlterOrderUrl('p.updated') ?>">
+                        <?= Lang::translate('Updated') ?> <?= $pagination_utils->getCurrentDirectionArrow('p.updated') ?></a>
                     </td>
                     <td class="xs-hide">
                         <?= Lang::translate('Time used') ?>

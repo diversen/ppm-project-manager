@@ -113,14 +113,25 @@ class ProjectModel extends AppUtils
     /**
      * Get project index data from an $auth_id
      */
-    public function getIndexData(array $where, array $order = [], array $limit = [])
+    public function getIndexData(array $where, array $order_by = [], array $limit = [])
     {
-        $projects = $this->getAll($where, $order, $limit);
-        
-        foreach ($projects as $key => $project) {
-            $project_time = $this->time_model->sumTime(['project_id' => $project['id']]);
-            $projects[$key]['project_time_total'] = $project_time;
-            $projects[$key]['project_time_total_human'] = $this->time_model->minutesToHoursMinutes($project_time);
+        $sql = "
+            SELECT p.*, SUM(t.minutes) AS project_time_total 
+            FROM project p 
+            LEFT JOIN time t ON p.id = t.project_id 
+            WHERE p.auth_id = :auth_id AND p.status= :status GROUP by p.id ";
+
+        $sql .= $this->db->getOrderBySql($order_by);
+        $sql .= $this->db->getLimitSql($limit);
+
+        $projects = $this->db->getStmt($sql, $where)->fetchAll();
+        foreach ($projects as &$project) {
+
+            if (!$project['project_time_total']) {
+                $project['project_time_total'] = 0;
+            }
+            $project_time = (int)$project['project_time_total'];
+            $project['project_time_total_human'] = $this->time_model->minutesToHoursMinutes($project_time);
         }
 
         return $projects;

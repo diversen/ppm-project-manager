@@ -23,7 +23,7 @@ class Controller extends AppUtils
     {
         parent::__construct();
         $this->project_model = new ProjectModel();
-        $this->pagination_utils = new PaginationUtils(['updated' => 'DESC', 'title' => 'DESC'], 'project');
+        $this->pagination_utils = new PaginationUtils(['p.updated' => 'DESC', 'p.title' => 'DESC'], 'project');
     }
 
     private function getProjectData(array $where, array $order_by)
@@ -32,8 +32,8 @@ class Controller extends AppUtils
         $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
 
         $projects = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
-        $template_data['projects'] = $projects;
 
+        $template_data['projects'] = $projects; 
         $template_data['title'] = Lang::translate('All projects');
         $template_data['total_time_human'] = 0;
 
@@ -50,7 +50,7 @@ class Controller extends AppUtils
             items_per_page: $this->config->get('App.pager_limit'),
             current_page: $pager->page,
             url: $url,
-            default_order: ['updated' => 'DESC', 'title' => 'DESC'],
+            default_order: ['p.updated' => 'DESC', 'p.title' => 'DESC'],
             session_key : 'project',
             max_pages: 10,
             
@@ -96,7 +96,10 @@ class Controller extends AppUtils
             'auth_id' => $this->app_acl->getAuthId(),
             'status' => ProjectModel::PROJECT_OPEN,
         ];
+        
 
+        $this->pagination_utils = new PaginationUtils(['p.updated' => 'DESC', 'p.title' => 'DESC'], 'project');
+        
         $order_by = $this->pagination_utils->getOrderByFromRequest('project');
         $template_data = $this->getProjectData($where, $order_by);
 

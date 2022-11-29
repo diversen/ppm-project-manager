@@ -64,7 +64,7 @@ class TimeModel extends AppUtils
     /**
      * Convert minutes to 'hours and minutes' (hh:mm)
      */
-    public function minutesToHoursMinutes($time, $format = '%02d:%02d')
+    public function minutesToHoursMinutes(int $time, $format = '%02d:%02d')
     {
         if ($time < 1) {
             return sprintf($format, 0, 0);
@@ -77,7 +77,7 @@ class TimeModel extends AppUtils
     /**
      * Get total task time in minutes from where conditions
      */
-    public function sumTime($where)
+    public function sumTime(array $where): int
     {
         $sql = 'SELECT SUM(minutes) as total_time FROM time ';
         $sql.=  $this->db->getWhereSql($where);
@@ -86,10 +86,10 @@ class TimeModel extends AppUtils
         $total = $row['total_time'];
 
         if ($total === null) {
-            $total = '0';
+            $total = 0;
         }
 
-        return $total;
+        return (int)$total;
     }
 
     public function getNumTime(array $where): int
@@ -105,7 +105,8 @@ class TimeModel extends AppUtils
         $time_rows = $this->db->getAllQuery('SELECT * FROM time', $where, $order, $limit);
 
         foreach ($time_rows as $key => $time) {
-            $time_rows[$key]['minutes_hours'] = $this->minutesToHoursMinutes($time['minutes']);
+            $minutes = $time['minutes'];
+            $time_rows[$key]['minutes_hours'] = $this->minutesToHoursMinutes($minutes);
             if (empty($time_rows[$key]['note'])) {
                 $time_rows[$key]['note'] = Lang::translate('No note');
             }
