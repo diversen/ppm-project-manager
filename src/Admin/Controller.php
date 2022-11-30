@@ -100,7 +100,8 @@ class Controller extends AppUtils
             'paginator' => $paginator,
             'rows' => $rows,
             'table' => $table,
-            'order_by' => $order_by,
+            'order_by' => $default_order_by,
+            'session_key' => $session_key,
             'title' => 'Admin :: ' . $table['table_human'],
         ];
 

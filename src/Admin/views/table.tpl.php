@@ -6,7 +6,7 @@ use App\Utils\AppPagination;
 use App\Admin\HTMLUtils;
 use Pebble\Pagination\PaginationUtils;
 
-$pagination_utils = new PaginationUtils($order_by, $table['table']);
+$pagination_utils = new PaginationUtils($order_by, $session_key);
 
 ?>
 <h3><a href="/admin">Admin</a> <?=ADMIN_SUB_MENU_SEP?> <?= $table['table_human'] ?></h3>
