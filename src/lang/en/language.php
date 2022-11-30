@@ -205,7 +205,8 @@ $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] 
 
 // Translation of file src/Project/Controller.php
 
-$LANG['All projects'] = 'All projects';
+$LANG['All inactive projects'] = 'All inactive projects';
+$LANG['All active projects'] = 'All active projects';
 $LANG['View project'] = 'View project';
 $LANG['Add project'] = 'Add project';
 $LANG['Edit project'] = 'Edit project';
