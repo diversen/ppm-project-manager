@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Pebble\Service\AuthService;
 use Pebble\Service\DBService;
 use Pebble\Service\ACLRoleService;
+use Pebble\Service\LogService;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,6 +51,7 @@ final class AuthTest extends TestCase
 
     private function curlAssert($url, $post_params, $return_code)
     {
+        $this->log->debug('curlAssert: ' . $url);
         $ch = $this->curl($url, $post_params);
         $result = curl_exec($ch);
         $this->last_result = $result;
@@ -66,6 +68,7 @@ final class AuthTest extends TestCase
         $this->auth = (new AuthService())->getAuth();
         $this->db = (new DBService())->getDB();
         $this->acl_role = (new ACLRoleService())->getACLRole();
+        $this->log = (new LogService())->getLog();
 
         // User 1 Admin
         $this->db->delete('auth', ['email' => $this->user_email]);
@@ -167,7 +170,7 @@ final class AuthTest extends TestCase
         $this->setTaskID();
         $this->curlAssert("/task/view/$this->task_id", [], 200);
         $this->curlAssert("/task/edit/$this->task_id", [], 200);
-        $this->curlAssert("/task/put/$this->task_id", ['title' => 'Test task', 'note' => 'Test'], 200);
+        $this->curlAssert("/task/put/$this->task_id", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 200);
         $this->curlAssert("/task/delete/$this->task_id", ['post' => 1], 200);
         $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 200);
         $this->setTaskID();

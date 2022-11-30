@@ -125,7 +125,7 @@ class TaskModel
         return $this->db->delete('task', ['id' => $id]);
     }
 
-    public function setExceededUserTasksToday(string $auth_id)
+    public function setExceededUserTasksToday(int $auth_id)
     {
         $today = $this->date_utils->getUserDateFormatFromUTC('now', 'Y-m-d 00:00:00');
 
