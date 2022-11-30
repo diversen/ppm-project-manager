@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Utils\AppPagination;
+use App\AppPagination;
 use App\Admin\HTMLUtils;
 use Pebble\Pagination\PaginationUtils;
 

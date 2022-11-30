@@ -8,6 +8,9 @@ use Pebble\App\StdUtils;
 use Pebble\Service\Container;
 use App\AppACL;
 
+/**
+ * App spcific utils that extends StdUtils
+ */
 class AppUtils extends StdUtils
 {
     /**
@@ -34,6 +37,7 @@ class AppUtils extends StdUtils
         }
         return $container->get('app_acl');
     }
+
 
     /**
      * Render a template including header and footer

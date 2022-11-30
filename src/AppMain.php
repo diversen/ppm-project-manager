@@ -10,8 +10,8 @@ use App\Settings\SettingsModel;
 use Diversen\Lang;
 
 /**
- * AppMain contains the application logic.
- * It initializes the application logic and runs it.
+ * App class. This is the main class for the app. 
+ * It is used in www/index.php
  */
 class AppMain extends AppBase
 {

@@ -12,6 +12,9 @@ use Pebble\Exception\NotFoundException;
 use Pebble\Exception\ForbiddenException;
 use Pebble\DB;
 
+/**
+ * App spcific ACL
+ */
 class AppACL extends ACL
 {
     public function __construct(DB $db, array $auth_cookie_settings)
