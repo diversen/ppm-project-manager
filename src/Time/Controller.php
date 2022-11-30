@@ -6,7 +6,6 @@ use Exception;
 
 use App\Project\ProjectModel;
 use App\Time\TimeModel;
-use App\Utils\AppPaginationUtils;
 use App\Exception\FormException;
 use App\AppUtils;
 use Pebble\Pager;
@@ -46,8 +45,7 @@ class Controller extends AppUtils
         $order_by = $this->pagination_utils->getOrderByFromQuery();
         $time_rows = $this->time_model->getAll($where, $order_by, [$pager->offset, $pager->limit]);
         
-        $pagination_utils = new AppPaginationUtils();
-        $paginator = $pagination_utils->getPaginator(
+        $paginator = PaginationUtils::getPaginator(
             total_items: $total,
             items_per_page: $this->config->get('App.pager_limit'),
             current_page: $pager->page,

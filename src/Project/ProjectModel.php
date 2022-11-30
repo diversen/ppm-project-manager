@@ -13,7 +13,6 @@ use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\AppUtils;
 use App\Utils\DateUtils;
-use App\Utils\AppPaginationUtils;
 
 /**
  * Project related model
@@ -213,8 +212,7 @@ class ProjectModel extends AppUtils
             $url = '/project/inactive';
         }
 
-        $pagination_utils = new AppPaginationUtils();
-        $paginator = $pagination_utils->getPaginator(
+        $paginator = PaginationUtils::getPaginator(
             total_items: $project_count,
             items_per_page: $this->config->get('App.pager_limit'),
             current_page: $pager->page,

@@ -17,7 +17,6 @@ use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
 
-
 use Exception;
 
 class Controller extends AppUtils
