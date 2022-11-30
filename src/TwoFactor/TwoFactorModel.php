@@ -17,7 +17,7 @@ class TwoFactorModel extends AppUtils
         return $row;
     }
 
-    public function getUserSecret(string $auth_id): ?string
+    public function getUserSecret(int $auth_id): ?string
     {
         $row = $this->getUserRow(['auth_id' => $auth_id]);
         if ($row) {
@@ -25,7 +25,7 @@ class TwoFactorModel extends AppUtils
         }
     }
 
-    public function isTwoFactorEnabled(string $auth_id): bool
+    public function isTwoFactorEnabled(int $auth_id): bool
     {
         if (empty($this->getUserRow(['auth_id' => $auth_id, 'verified' => '1']))) {
             return false;
@@ -33,18 +33,18 @@ class TwoFactorModel extends AppUtils
         return true;
     }
 
-    public function verify(string $auth_id): bool
+    public function verify(int $auth_id): bool
     {
         return $this->db->update('two_factor', ['verified' => '1'], ['auth_id' => $auth_id]);
     }
 
-    public function create(string $auth_id, string $secret): bool
+    public function create(int $auth_id, string $secret): bool
     {
         $this->delete($auth_id);
         return $this->db->insert('two_factor', ['auth_id' => $auth_id, 'secret' => $secret]);
     }
 
-    public function delete(string $auth_id): bool
+    public function delete(int $auth_id): bool
     {
         return $this->db->delete('two_factor', ['auth_id' => $auth_id]);
     }

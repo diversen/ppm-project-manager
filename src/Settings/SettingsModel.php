@@ -25,7 +25,7 @@ class SettingsModel
     /**
      * Get a user setting
      */
-    public function getUserSetting($auth_id, $setting)
+    public function getUserSetting(int $auth_id, string $setting)
     {
         $key = $auth_id . '_settings_' . $setting;
         return $this->cache->get($key);
@@ -72,7 +72,7 @@ class SettingsModel
     /**
      * Get a single setting from the 'profile' settings
      */
-    public function getSingleProfileSetting(string $auth_id, string $profile_setting)
+    public function getSingleProfileSetting(int $auth_id, string $profile_setting)
     {
         $profile = $this->getUserSetting($auth_id, 'profile');
 

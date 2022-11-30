@@ -19,7 +19,7 @@ class DateUtils extends AppUtils
         $this->user_timezone = $this->getUserTimezone();
     }
 
-    public function getUserTimeZone(string $auth_id = null)
+    public function getUserTimeZone(int $auth_id = null)
     {
         $settings_model = new SettingsModel();
         if (!$auth_id) {

@@ -11,7 +11,7 @@
         "diversen/simple-php-translation": "^3.0",
         "diversen/minimal-cli-framework": "^6.0",
         "diversen/captcha": "^2.0",
-        "diversen/pebble-framework": "^7.1"
+        "diversen/pebble-framework": "^8.0"
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",
