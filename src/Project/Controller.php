@@ -6,9 +6,6 @@ namespace App\Project;
 
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
-use Pebble\Pager;
-use Pebble\Pagination\PaginationUtils;
-use App\Utils\AppPaginationUtils;
 use App\AppUtils;
 use App\Exception\FormException;
 use App\Project\ProjectModel;
@@ -17,49 +14,11 @@ use Exception;
 class Controller extends AppUtils
 {
     private $project_model;
-    private $pagination_utils;
-
     public function __construct()
     {
         parent::__construct();
         $this->project_model = new ProjectModel();
-        $this->pagination_utils = new PaginationUtils(['p.updated' => 'DESC', 'p.title' => 'DESC'], 'project');
     }
-
-    private function getProjectData(array $where, array $order_by)
-    {
-        $project_count = $this->project_model->getNumProjects($where);
-        $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
-
-        $projects = $this->project_model->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
-
-        $template_data['projects'] = $projects; 
-        $template_data['title'] = Lang::translate('All projects');
-        $template_data['total_time_human'] = 0;
-
-        if ($where['status'] === ProjectModel::PROJECT_OPEN) {
-            $template_data['inactive_link'] = 1;
-            $url = '/project';
-        } else {
-            $url = '/project/inactive';
-        }
-
-        $pagination_utils = new AppPaginationUtils();
-        $paginator = $pagination_utils->getPaginator(
-            total_items: $project_count,
-            items_per_page: $this->config->get('App.pager_limit'),
-            current_page: $pager->page,
-            url: $url,
-            default_order: ['p.updated' => 'DESC', 'p.title' => 'DESC'],
-            session_key : 'project',
-            max_pages: 10,
-            
-        );
-
-        $template_data['paginator'] = $paginator;
-        return $template_data;
-    }
-
 
     /**
      * @route /project/inactive
@@ -74,8 +33,8 @@ class Controller extends AppUtils
             'status' => ProjectModel::PROJECT_CLOSED,
         ];
 
-        $order_by = $this->pagination_utils->getOrderByFromRequest('project');
-        $template_data = $this->getProjectData($where, $order_by);
+        $template_data = $this->project_model->getProjectData($where);
+        $template_data['title'] = Lang::translate('All inactive projects');
 
         $this->renderPage(
             'Project/views/index.tpl.php',
@@ -97,12 +56,9 @@ class Controller extends AppUtils
             'status' => ProjectModel::PROJECT_OPEN,
         ];
         
-
-        $this->pagination_utils = new PaginationUtils(['p.updated' => 'DESC', 'p.title' => 'DESC'], 'project');
+        $template_data = $this->project_model->getProjectData($where);
+        $template_data['title'] = Lang::translate('All active projects');
         
-        $order_by = $this->pagination_utils->getOrderByFromRequest('project');
-        $template_data = $this->getProjectData($where, $order_by);
-
         $this->renderPage(
             'Project/views/index.tpl.php',
             $template_data

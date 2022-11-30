@@ -6,12 +6,14 @@ namespace App\Project;
 
 use Pebble\URL;
 use Pebble\Pager;
+use Pebble\Pagination\PaginationUtils;
 use Diversen\Lang;
 use App\Time\TimeModel;
 use App\Task\TaskModel;
 use App\Exception\FormException;
 use App\AppUtils;
 use App\Utils\DateUtils;
+use App\Utils\AppPaginationUtils;
 
 /**
  * Project related model
@@ -25,6 +27,7 @@ class ProjectModel extends AppUtils
     private $task_model;
     private $date_utils;
     private $time_model;
+    private $default_order_by = ['p.updated' => 'DESC', 'p.title' => 'DESC', 'project_time_total' => 'DESC'];
 
     public function __construct()
     {
@@ -32,6 +35,7 @@ class ProjectModel extends AppUtils
         $this->task_model = new TaskModel();
         $this->time_model = new TimeModel();
         $this->date_utils = new DateUtils();
+        $this->pagination_utils = new PaginationUtils($this->default_order_by, 'project');
     }
 
     /**
@@ -125,6 +129,7 @@ class ProjectModel extends AppUtils
         $sql .= $this->db->getLimitSql($limit);
 
         $projects = $this->db->getStmt($sql, $where)->fetchAll();
+    
         foreach ($projects as &$project) {
 
             if (!$project['project_time_total']) {
@@ -170,7 +175,6 @@ class ProjectModel extends AppUtils
     public function getTasksData(array $params): array
     {
 
-        // Where
         $project_id = $params['project_id'];
         $status = URL::getQueryPart('status');
         $where['project_id'] = $project_id;
@@ -187,5 +191,41 @@ class ProjectModel extends AppUtils
         }
 
         return $data;
+    }
+
+    public function getProjectData(array $where)
+    {   
+        $order_by = $this->pagination_utils->getOrderByFromRequest('project');
+        
+        $project_count = $this->getNumProjects($where);
+        $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
+
+        $projects = $this->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
+
+        $template_data['projects'] = $projects; 
+        $template_data['total_time_human'] = 0;
+        $template_data['default_order_by'] = $this->default_order_by;
+
+        if ($where['status'] === ProjectModel::PROJECT_OPEN) {
+            $template_data['inactive_link'] = 1;
+            $url = '/project';
+        } else {
+            $url = '/project/inactive';
+        }
+
+        $pagination_utils = new AppPaginationUtils();
+        $paginator = $pagination_utils->getPaginator(
+            total_items: $project_count,
+            items_per_page: $this->config->get('App.pager_limit'),
+            current_page: $pager->page,
+            url: $url,
+            default_order: $this->default_order_by,
+            session_key : 'project',
+            max_pages: 10,
+            
+        );
+
+        $template_data['paginator'] = $paginator;
+        return $template_data;
     }
 }

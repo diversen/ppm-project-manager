@@ -37,9 +37,9 @@ function render_project($project)
     <?php
 }
 
-function render_projects($projects)
+function render_projects($projects, $default_order_by)
 {
-    $pagination_utils = new PaginationUtils(['p.updated' => 'DESC', 'p.title' => 'DESC'], 'project');
+    $pagination_utils = new PaginationUtils($default_order_by, 'project');
 
     if (empty($projects)) { ?>
         <p><?= Lang::translate('Your have no projects yet') ?></p>
@@ -58,7 +58,8 @@ function render_projects($projects)
                         <?= Lang::translate('Updated') ?> <?= $pagination_utils->getCurrentDirectionArrow('p.updated') ?></a>
                     </td>
                     <td class="xs-hide">
-                        <?= Lang::translate('Time used') ?>
+                        <a href="<?= $pagination_utils->getAlterOrderUrl('project_time_total') ?>">
+                        <?= Lang::translate('Time used') ?> <?= $pagination_utils->getCurrentDirectionArrow('project_time_total') ?></a>
                     </td>
                     <td>
 
@@ -96,7 +97,7 @@ function render_projects_total_time($total_time_human)
 <?php
 }
 
-render_projects($projects);
+render_projects($projects, $default_order_by);
 
 $pagination = new AppPagination();
 $pagination->render($paginator);

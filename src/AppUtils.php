@@ -8,9 +8,6 @@ use Pebble\App\StdUtils;
 use Pebble\Service\Container;
 use App\AppACL;
 
-/**
- * A base app class with some utilities
- */
 class AppUtils extends StdUtils
 {
     /**
