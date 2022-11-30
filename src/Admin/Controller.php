@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\AppUtils;
-use App\Utils\AppPaginationUtils;
+use JasonGrimes\Paginator;
+use Pebble\Pagination\PaginationUtils;
+use Pebble\Pager;
 use App\Admin\TableUtils as DBUtils;
 use Exception;
 
@@ -75,27 +77,31 @@ class Controller extends AppUtils
         // Get table definition
         $table = $this->tables[$params['table']];
         $table_name = $table['table'];
+        $primary_key = $table['primary_key'];
 
         // Default column order
-        $column_order = [];
+        $default_order_by = [];
         foreach ($table['columns'] as $column) {
-            $column_order[$column] = 'ASC';
+            $default_order_by[$column] = 'ASC';
         }
 
-        list($rows, $paginator) = AppPaginationUtils::getRowsAndPaginator(
-            table_name: $table_name,
-            primary_key: $table['primary_key'],
-            url_pattern: "/admin/table/$table_name",
-            column_order: $column_order,
-            per_page: $this->config->get('App.pager_limit'),
-            max_pages: 10
-        );
+        $session_key = "admin_$table_name";
+        $pagination_utils = new PaginationUtils($default_order_by, $session_key);
+        $order_by = $pagination_utils->getOrderByFromRequest($session_key);
 
+        $num_rows = $this->db->getTableNumRows($table_name, $primary_key);
+        $url_pattern = $pagination_utils->getPaginationURLPattern("/admin/table/$table_name");
+        $pager = new Pager($num_rows, 10);
+        
+        $paginator = new Paginator($num_rows, $pager->limit, $pager->page, $url_pattern);
+        $rows = $this->db->getAll($table_name, [], $order_by, [$pager->offset, $pager->limit]);
+        
         $template_data = [
             'paginator' => $paginator,
             'rows' => $rows,
             'table' => $table,
-            'column_order' => $column_order,
+            'order_by' => $order_by,
+            'title' => 'Admin :: ' . $table['table_human'],
         ];
 
         $this->renderPage('Admin/views/table.tpl.php', $template_data);
