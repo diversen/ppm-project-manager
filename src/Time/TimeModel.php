@@ -105,7 +105,7 @@ class TimeModel extends AppUtils
         $time_rows = $this->db->getAllQuery('SELECT * FROM time', $where, $order, $limit);
 
         foreach ($time_rows as $key => $time) {
-            $minutes = $time['minutes'];
+            $minutes = (int)$time['minutes'];
             $time_rows[$key]['minutes_hours'] = $this->minutesToHoursMinutes($minutes);
             if (empty($time_rows[$key]['note'])) {
                 $time_rows[$key]['note'] = Lang::translate('No note');
