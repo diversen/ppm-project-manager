@@ -125,7 +125,9 @@ class Controller extends AppUtils
      * @verbs POST
      */
     public function verify_post()
-    {
+    {   
+        // Sleep 1 second to prevent brute force attacks
+        usleep(1000000);
         $session_timed = new SessionTimed();
         $auth_id = $session_timed->getValue('auth_id_to_login');
         $keep_login = $session_timed->getValue('keep_login');
