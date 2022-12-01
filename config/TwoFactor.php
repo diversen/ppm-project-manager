@@ -5,5 +5,5 @@ return [
     'totp_label' => 'PPM',
     'enabled' => true,
     // The time to verify login in seconds
-    'time_to_verify' => 60*5
+    'time_to_verify' => 60,
 ];
