@@ -180,9 +180,9 @@ $LANG['Your settings could not be saved. Check if you are logged in'] = 'Your se
 // Translation of file src/Overview/overview.tpl.php
 
 $LANG['Total time used on project:'] = 'Total time used on project:';
+$LANG['Add new task to'] = 'Add new task to';
+$LANG['Add time to'] = 'Add time to';
 $LANG['Edit task'] = 'Edit task';
-$LANG['Add new task to project'] = 'Add new task to project';
-$LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
 $LANG['monday'] = 'monday';
 $LANG['tuesday'] = 'tuesday';
