@@ -19,8 +19,15 @@ function render_task($task, $today)
         $task_box_class = ' task-done ';
     }
 
-    $project_title = $task['project_title'] . "\n" .
-        Lang::translate('Total time used on project:') . ' ' . $task['project_time_total']; ?>
+    $project_title = $task['project_title'] . "\n";
+    $project_title.= Lang::translate('Total time used on project:') . " $task[project_time_total]"; 
+    
+    $add_new_task_title = Lang::translate('Add new task to') . " '$task[project_title]'";
+    $add_time_title = Lang::translate('Add time to') . " '$task[title]'";
+    $edit_task_title = Lang::translate('Edit task') . " '$task[title]'";
+    $move_to_today_title = Lang::translate('Move to today');
+
+    ?>
     <tr>
         <td class="td-overflow <?= $task_box_class ?>" title="<?= $title_attr ?>">
             <span class="priority <?= get_task_priority_class($task) ?>"></span>
@@ -35,15 +42,22 @@ function render_task($task, $today)
 
         <td>
             <div class="action-links">
-                <a title="<?= Lang::translate('Edit task') ?>" href="<?= URL::returnTo("/task/edit/$task[id]") ?>"><?= get_icon('edit') ?>
+                <a title="<?= $edit_task_title ?>" href="<?= URL::returnTo("/task/edit/$task[id]") ?>">
+                    <?= get_icon('edit') ?>
                 </a>
-                <a title="<?= Lang::translate('Add new task to project') ?>" href='<?= URL::returnTo("/task/add/$task[project_id]") ?>'><?= get_icon('add') ?></a>
-                <a title="<?= Lang::translate('Add time to task') ?>" href='<?= URL::returnTo("/time/add/$task[id]") ?>'><?= get_icon('clock') ?></a>
+                <a title="<?= $add_new_task_title ?>" href='<?= URL::returnTo("/task/add/$task[project_id]") ?>'>
+                    <?= get_icon('add') ?>
+                </a>
+                <a title="<?= $add_time_title ?>" href='<?= URL::returnTo("/time/add/$task[id]") ?>'>
+                    <?= get_icon('clock') ?>
+                </a>
 
                 <?php
 
                 if (!$today) : ?>
-                    <a title="<?= Lang::translate('Move to today') ?>" class="move_to_today xs-hide" href='#' data-id="<?= $task['id'] ?>"><?= get_icon('today') ?></a>
+                    <a title="<?= $move_to_today_title ?>" class="move_to_today xs-hide" href='#' data-id="<?= $task['id'] ?>">
+                        <?= get_icon('today') ?>
+                    </a>
                 <?php endif; ?>
             </div>
         </td>
@@ -102,7 +116,8 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
     $date = $date_time_user->format('M d, Y'); ?>
 
-        <p><strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?= $date ?>)
+        <p>
+            <strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?= $date ?>)
             <?= Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts])) ?>
         </p>
         <table>
@@ -138,8 +153,12 @@ function render_week_nav($week_state, $week_user_total)
     ?>
     <h3><?= Lang::translate('Week') ?> <?= $week_state['week_number_delta'] ?></h3>
     <div class="action-links">
-        <a href="/overview?week_delta=<?= $week_state['prev'] ?>"><?= Lang::translate('Show week') ?> <?= $week_state['week_number_delta_prev'] ?></a>
-        <a href="/overview?week_delta=<?= $week_state['next'] ?>"><?= Lang::translate('Show week') ?> <?= $week_state['week_number_delta_next'] ?></a>
+        <a href="/overview?week_delta=<?= $week_state['prev'] ?>">
+            <?= Lang::translate('Show week') ?> <?= $week_state['week_number_delta_prev'] ?>
+        </a>
+        <a href="/overview?week_delta=<?= $week_state['next'] ?>"><?= Lang::translate('Show week') ?> 
+            <?= $week_state['week_number_delta_next'] ?>
+        </a>
         <?php if ($week_state['current'] != '0') : ?>
             <a href="/overview"><?= Lang::translate('Current week') ?></a>
         <?php endif; ?>
@@ -154,12 +173,18 @@ function render_week_nav($week_state, $week_user_total)
     } ?>
     <div class="clear"></div>
     <div class="action-links">
-        <a href="/overview" class="move_exceeded_today"><?= Lang::translate('Move exceeded to today') ?></a>
+        <a href="/overview" class="move_exceeded_today">
+            <?= Lang::translate('Move exceeded to today') ?>
+        </a>
         <?php if ($week_state['current'] == '0') : ?>
-            <a href="/overview" class="toggle_current_day" data-current-day-state="<?= $week_state['current_day_state'] ?>"><?= $current_day_state_text ?></a>
+            <a href="/overview" class="toggle_current_day" data-current-day-state="<?= $week_state['current_day_state'] ?>">
+                <?= $current_day_state_text ?>
+            </a>
         <?php endif; ?>
     </div>
-    <p><?= Lang::translate('Activity this week: <span class="notranslate">{week_user_total}</span>', array('week_user_total' => $week_user_total)) ?></p>
+    <p>
+        <?= Lang::translate('Activity this week: <span class="notranslate">{week_user_total}</span>', array('week_user_total' => $week_user_total)) ?>
+    </p>
 
 <?php
 };
