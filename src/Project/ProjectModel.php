@@ -110,7 +110,17 @@ class ProjectModel extends AppUtils
 
     public function getNumProjects(array $where): int
     {
-        return $this->db->getTableNumRows('project', 'id', $where);
+        $num_projects = $this->db->getTableNumRows('project', 'id', $where);
+        return $num_projects;
+    }
+
+    public function userHasProjects(int $user_id): bool
+    {
+        $where = [
+            'auth_id' => $user_id
+        ];
+        $num = $this->getNumProjects($where);
+        return $num > 0;
     }
 
     /**

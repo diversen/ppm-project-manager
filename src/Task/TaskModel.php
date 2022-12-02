@@ -70,7 +70,7 @@ class TaskModel
         }
 
         // This is not pretty.Find better solution
-        unset($post['task_time_total']);
+        unset($post['task_time_total'], $post['session_flash']);
 
         return $post;
     }

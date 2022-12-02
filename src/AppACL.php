@@ -27,9 +27,7 @@ class AppACL extends ACL
      */
     public function authUserIsProjectOwner($project_id)
     {
-        if (!$this->isAuthenticated()) {
-            throw new ForbiddenException(Lang::translate('You are not logged in. Please log in.'));
-        }
+        $this->isAuthenticatedOrThrow(Lang::translate('You are not logged in. Please log in.'));
 
         $access_ary = [
             'entity' => 'project',

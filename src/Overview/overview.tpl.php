@@ -148,7 +148,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 /**
  * Render navigation
  */
-function render_week_nav($week_state, $week_user_total)
+function render_navigation($week_state, $week_user_total, $has_projects)
 {
     ?>
     <h3><?= Lang::translate('Week') ?> <?= $week_state['week_number_delta'] ?></h3>
@@ -181,6 +181,11 @@ function render_week_nav($week_state, $week_user_total)
                 <?= $current_day_state_text ?>
             </a>
         <?php endif; ?>
+        <?php if ($has_projects) : ?>
+            <a href="<?= URL::returnTo("/task/add/project-unknown") ?>" class="add_new_task">
+                <?= Lang::translate('Add new task') ?>
+            </a>
+        <?php endif; ?>
     </div>
     <p>
         <?= Lang::translate('Activity this week: <span class="notranslate">{week_user_total}</span>', array('week_user_total' => $week_user_total)) ?>
@@ -189,7 +194,7 @@ function render_week_nav($week_state, $week_user_total)
 <?php
 };
 
-render_week_nav($week_state, $week_user_total);
+render_navigation($week_state, $week_user_total, $has_projects);
 render_week($week_data, $week_state, $week_user_day_times);
 
 ?>

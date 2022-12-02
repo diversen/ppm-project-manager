@@ -9,6 +9,7 @@ use App\Project\ProjectModel;
 use App\Task\TaskModel;
 use App\AppUtils;
 use App\Exception\FormException;
+use Diversen\Lang;
 
 use Exception;
 
@@ -28,16 +29,20 @@ class Controller extends AppUtils
      * @route /task/add/:project_id
      * @verbs GET
      */
-    public function add($params)
+    public function add(array $params)
     {
-        $this->app_acl->authUserIsProjectOwner($params['project_id']);
-
-        $project = $this->project_model->getOne(['id' => $params['project_id']]);
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
-        $template_vars = [
-            'project' => $project,
-            'task' => $task,
-        ];
+        $template_vars = ['task' => $task];
+        
+        if ($params['project_id'] === 'project-unknown') {
+            $this->app_acl->isAuthenticatedOrThrow();
+            $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()]);
+            $template_vars['project'] = null;
+        } else {
+            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+            $project = $this->project_model->getOne(['id' => $params['project_id']]);
+            $template_vars['project'] = $project;
+        }
 
         $this->renderPage(
             'Task/views/task_add.tpl.php',
@@ -96,7 +101,7 @@ class Controller extends AppUtils
      */
     public function post()
     {
-        $response['error'] = false;
+        $response['error'] = true;
         try {
             $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
 
@@ -104,12 +109,20 @@ class Controller extends AppUtils
 
             $task_model = new TaskModel();
             $task_model->create($_POST);
-            $response['project_redirect'] = "/project/view/" . $_POST['project_id'];
+
+            $response['redirect'] = "/project/view/" . $_POST['project_id'];
+            $response['message'] = Lang::translate('Task created');
+            $response['error'] = false;
+            
+            if (isset($_POST['session_flash'])) {
+                $this->flash->setMessage(Lang::translate('Task created'), 'success', ['flash_remove' => true]);
+            }
+            
         } catch (FormException $e) {
-            $response['error'] = $e->getMessage();
+            $response['message'] = $e->getMessage();
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            $response['message'] = $e->getMessage();
         }
 
         $this->json->render($response);

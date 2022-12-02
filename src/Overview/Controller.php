@@ -12,6 +12,7 @@ use App\AppMain;
 use App\Utils\AppCal;
 use App\Time\TimeModel;
 use App\Settings\SettingsModel;
+use App\Project\ProjectModel;
 
 use Diversen\Lang;
 use Exception;
@@ -23,6 +24,7 @@ class Controller extends AppUtils
         parent::__construct();
         $this->app_main = new AppMain();
         $this->auth_id = $this->auth->getAuthId();
+        $this->project_model = new ProjectModel();
     }
 
     /**
@@ -56,16 +58,17 @@ class Controller extends AppUtils
         $week_data = $timeModel->getWeekData($week_ts);
         $week_time = $timeModel->getWeekTimes($week_ts);
 
-        $data = [
+        $template_data = [
             'week_data' =>              $week_data,
             'week_state' =>             $week_state,
             'week_user_day_times' =>    $week_time['week_user_day_times'],
             'week_user_total' =>        $week_time['week_user_total'],
             'title' => Lang::translate('Overview'),
             'description' => Lang::translate('Overview by week'),
+            'has_projects' => $this->project_model->userHasProjects($this->auth_id),
         ];
 
-        $this->renderPage('Overview/overview.tpl.php', $data);
+        $this->renderPage('Overview/overview.tpl.php', $template_data);
     }
 
     /**
