@@ -201,6 +201,7 @@ $LANG['Current week'] = 'Current week';
 $LANG['Show full week'] = 'Show full week';
 $LANG['Show today'] = 'Show today';
 $LANG['Move exceeded to today'] = 'Move exceeded to today';
+$LANG['Add new task'] = 'Add new task';
 $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
 
 // Translation of file src/Project/Controller.php
@@ -292,6 +293,10 @@ $LANG['User has not entered any user info yet'] = 'User has not entered any user
 $LANG['User'] = 'User';
 $LANG['No user info'] = 'No user info';
 
+// Translation of file src/Task/Controller.php
+
+$LANG['Task created'] = 'Task created';
+
 // Translation of file src/Task/TaskModel.php
 
 $LANG['Title is required'] = 'Title is required';
@@ -306,6 +311,7 @@ $LANG['Title'] = 'Title';
 $LANG['Enter title'] = 'Enter title';
 $LANG['Add note'] = 'Add note';
 $LANG['Add an optional task note'] = 'Add an optional task note';
+$LANG['Project'] = 'Project';
 $LANG['Priority'] = 'Priority';
 $LANG['Urgent'] = 'Urgent';
 $LANG['High'] = 'High';
