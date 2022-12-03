@@ -29,6 +29,13 @@ const Translation =
     "Passwords does not match": "Passwort ist falsch",
     "Passwords should be at least 7 chars long": "Passw\u00f6rter sollten mindestens 7 Zeichen lang sein",
     "Image text does not match": "Bildtext stimmt nicht \u00fcberein",
+    "Hi": "Hi",
+    "You have connected with the following site because you have lost your password": "Sie haben sich mit der folgenden Website verbunden, weil Sie Ihr Passwort vergessen haben",
+    "If you have not requested a new password then you can just delete this message": "Wenn Sie kein neues Passwort angefordert haben, k\u00f6nnen Sie diese Nachricht einfach l\u00f6schen",
+    "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line": "Um Ihr Passwort zur\u00fcckzusetzen, m\u00fcssen Sie nur den folgenden Link dr\u00fccken - oder kopieren und in die URL-Zeile Ihres Browsers einf\u00fcgen",
+    "Kind Regards": "Mit freundlichen Gr\u00fc\u00dfen",
+    "You have connected with the following site and requested an account": "Sie haben sich mit der folgenden Website verbunden und ein Konto angefordert",
+    "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line": "Um Ihr Konto zu aktivieren, m\u00fcssen Sie nur auf den folgenden Link klicken oder ihn kopieren und in die URL-Zeile Ihres Browsers einf\u00fcgen",
     "Lost password": "Passwort vergessen",
     "Create new password": "Neues Passwort erstellen",
     "Repeat new password": "Wiederhole das neue Passwort",
@@ -36,11 +43,6 @@ const Translation =
     "E-mail": "Email",
     "Click to get a new image": "Klicken Sie hier, um ein neues Bild zu erhalten",
     "Enter above image text (click to get a new image). Case of the text does not matter": "Geben Sie den obigen Bildtext ein (klicken Sie, um ein neues Bild zu erhalten). Gro\u00df- und Kleinschreibung spielt keine Rolle",
-    "Hi": "Hi",
-    "You have connected with the following site because you have lost your password": "Sie haben sich mit der folgenden Website verbunden, weil Sie Ihr Passwort vergessen haben",
-    "If you have not requested a new password then you can just delete this message": "Wenn Sie kein neues Passwort angefordert haben, k\u00f6nnen Sie diese Nachricht einfach l\u00f6schen",
-    "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line": "Um Ihr Passwort zur\u00fcckzusetzen, m\u00fcssen Sie nur den folgenden Link dr\u00fccken - oder kopieren und in die URL-Zeile Ihres Browsers einf\u00fcgen",
-    "Kind Regards": "Mit freundlichen Gr\u00fc\u00dfen",
     "By signing in you agree to the following terms of service, privacy policy, and disclaimer": "Durch die Anmeldung stimmen Sie den folgenden Nutzungsbedingungen, Datenschutzrichtlinien und Haftungsausschl\u00fcssen zu",
     "Terms of service": "Nutzungsbedingungen",
     "Privacy policy": "Datenschutz-Bestimmungen",
@@ -51,8 +53,6 @@ const Translation =
     "Or": "Oder",
     "Sign out of all devices": "Melden Sie sich von allen Ger\u00e4ten ab",
     "Repeat password": "Passwort wiederholen",
-    "You have connected with the following site and requested an account": "Sie haben sich mit der folgenden Website verbunden und ein Konto angefordert",
-    "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line": "Um Ihr Konto zu aktivieren, m\u00fcssen Sie nur auf den folgenden Link klicken oder ihn kopieren und in die URL-Zeile Ihres Browsers einf\u00fcgen",
     "Update": "Aktualisieren",
     "Delete": "L\u00f6schen",
     "Are you sure you want to delete this row?": "M\u00f6chten Sie diese Zeile wirklich l\u00f6schen?",
@@ -207,9 +207,9 @@ const Translation =
     "Edit": "Bearbeiten",
     "New": "Neu",
     "Home": "Heim",
-    "Admin": "Administrator",
     "Toggle timer": "Timer umschalten",
-    "Timer": "Timer"
+    "Timer": "Timer",
+    "Admin": "Administrator"
 }
 
 export {Translation}

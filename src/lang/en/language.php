@@ -45,6 +45,21 @@ $LANG['Passwords does not match'] = 'Passwords does not match';
 $LANG['Passwords should be at least 7 chars long'] = 'Passwords should be at least 7 chars long';
 $LANG['Image text does not match'] = 'Image text does not match';
 
+// Translation of file src/Account/views/mails/recover_email.php
+
+$LANG['Hi'] = 'Hi';
+$LANG['You have connected with the following site because you have lost your password'] = 'You have connected with the following site because you have lost your password';
+$LANG['If you have not requested a new password then you can just delete this message'] = 'If you have not requested a new password then you can just delete this message';
+$LANG['In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line'] = 'In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line';
+$LANG['Kind Regards'] = 'Kind Regards';
+
+// Translation of file src/Account/views/mails/signup_email.php
+
+$LANG['Hi'] = 'Hi';
+$LANG['You have connected with the following site and requested an account'] = 'You have connected with the following site and requested an account';
+$LANG['In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line'] = 'In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line';
+$LANG['Kind Regards'] = 'Kind Regards';
+
 // Translation of file src/Account/views/menu.php
 
 $LANG['Sign in'] = 'Sign in';
@@ -65,14 +80,6 @@ $LANG['E-mail'] = 'E-mail';
 $LANG['Click to get a new image'] = 'Click to get a new image';
 $LANG['Enter above image text (click to get a new image). Case of the text does not matter'] = 'Enter above image text (click to get a new image). Case of the text does not matter';
 $LANG['Send'] = 'Send';
-
-// Translation of file src/Account/views/recover_email.php
-
-$LANG['Hi'] = 'Hi';
-$LANG['You have connected with the following site because you have lost your password'] = 'You have connected with the following site because you have lost your password';
-$LANG['If you have not requested a new password then you can just delete this message'] = 'If you have not requested a new password then you can just delete this message';
-$LANG['In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line'] = 'In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line';
-$LANG['Kind Regards'] = 'Kind Regards';
 
 // Translation of file src/Account/views/signin.php
 
@@ -112,13 +119,6 @@ $LANG['Repeat password'] = 'Repeat password';
 $LANG['Click to get a new image'] = 'Click to get a new image';
 $LANG['Enter above image text (click to get a new image). Case of the text does not matter'] = 'Enter above image text (click to get a new image). Case of the text does not matter';
 $LANG['Send'] = 'Send';
-
-// Translation of file src/Account/views/signup_email.php
-
-$LANG['Hi'] = 'Hi';
-$LANG['You have connected with the following site and requested an account'] = 'You have connected with the following site and requested an account';
-$LANG['In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line'] = 'In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line';
-$LANG['Kind Regards'] = 'Kind Regards';
 
 // Translation of file src/Admin/views/edit.tpl.php
 
@@ -458,6 +458,6 @@ $LANG['Home'] = 'Home';
 $LANG['Projects'] = 'Projects';
 $LANG['Settings'] = 'Settings';
 $LANG['Sign out'] = 'Sign out';
-$LANG['Admin'] = 'Admin';
 $LANG['Toggle timer'] = 'Toggle timer';
 $LANG['Timer'] = 'Timer';
+$LANG['Admin'] = 'Admin';

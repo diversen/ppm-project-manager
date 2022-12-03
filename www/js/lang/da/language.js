@@ -29,6 +29,13 @@ const Translation =
     "Passwords does not match": "Adgangskoder stemmer ikke overens",
     "Passwords should be at least 7 chars long": "Adgangskoder skal v\u00e6re mindst 7 tegn lange",
     "Image text does not match": "Billedtekst stemmer ikke overens",
+    "Hi": "Hej",
+    "You have connected with the following site because you have lost your password": "Du har oprettet forbindelse til f\u00f8lgende websted, fordi du har mistet din adgangskode",
+    "If you have not requested a new password then you can just delete this message": "Hvis du ikke har anmodet om en ny adgangskode, kan du bare slette denne besked",
+    "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line": "For at nulstille din adgangskode skal du bare trykke p\u00e5 f\u00f8lgende link - eller kopiere og inds\u00e6tte i din browsers URL-linje",
+    "Kind Regards": "Med venlig hilsen",
+    "You have connected with the following site and requested an account": "Du har oprettet forbindelse til f\u00f8lgende websted og anmodet om en konto",
+    "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line": "For at aktivere din konto skal du bare trykke p\u00e5 f\u00f8lgende link eller kopiere og inds\u00e6tte i din browsers URL-linje",
     "Lost password": "Glemt adgangskode",
     "Create new password": "Opret ny adgangskode",
     "Repeat new password": "Gentag ny adgangskode",
@@ -36,11 +43,6 @@ const Translation =
     "E-mail": "E-mail",
     "Click to get a new image": "Klik for at f\u00e5 et nyt billede",
     "Enter above image text (click to get a new image). Case of the text does not matter": "Indtast billedteksten ovenfor (klik for at f\u00e5 et nyt billede). Det er uden betydning om du indtaster store eller sm\u00e5 bogstaver",
-    "Hi": "Hej",
-    "You have connected with the following site because you have lost your password": "Du har oprettet forbindelse til f\u00f8lgende websted, fordi du har mistet din adgangskode",
-    "If you have not requested a new password then you can just delete this message": "Hvis du ikke har anmodet om en ny adgangskode, kan du bare slette denne besked",
-    "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line": "For at nulstille din adgangskode skal du bare trykke p\u00e5 f\u00f8lgende link - eller kopiere og inds\u00e6tte i din browsers URL-linje",
-    "Kind Regards": "Med venlig hilsen",
     "By signing in you agree to the following terms of service, privacy policy, and disclaimer": "Ved at logge ind accepterer du f\u00f8lgende servicevilk\u00e5r, fortrolighedspolitik og ansvarsfraskrivelse",
     "Terms of service": "Servicevilk\u00e5r",
     "Privacy policy": "Fortrolighedspolitik",
@@ -51,8 +53,6 @@ const Translation =
     "Or": "Eller",
     "Sign out of all devices": "Log ud af alle enheder",
     "Repeat password": "Gentag adgangskode",
-    "You have connected with the following site and requested an account": "Du har oprettet forbindelse til f\u00f8lgende websted og anmodet om en konto",
-    "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line": "For at aktivere din konto skal du bare trykke p\u00e5 f\u00f8lgende link eller kopiere og inds\u00e6tte i din browsers URL-linje",
     "Update": "Opdater",
     "Delete": "Slet",
     "Are you sure you want to delete this row?": "Er du sikker p\u00e5, at du vil slette denne r\u00e6kke?",
@@ -207,9 +207,9 @@ const Translation =
     "Edit": "Ret",
     "New": "Ny",
     "Home": "Hjem",
-    "Admin": "Admin",
     "Toggle timer": "Skift timer",
-    "Timer": "Timer"
+    "Timer": "Timer",
+    "Admin": "Admin"
 }
 
 export {Translation}

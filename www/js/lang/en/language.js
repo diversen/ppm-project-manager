@@ -29,6 +29,13 @@ const Translation =
     "Passwords does not match": "Passwords does not match",
     "Passwords should be at least 7 chars long": "Passwords should be at least 7 chars long",
     "Image text does not match": "Image text does not match",
+    "Hi": "Hi",
+    "You have connected with the following site because you have lost your password": "You have connected with the following site because you have lost your password",
+    "If you have not requested a new password then you can just delete this message": "If you have not requested a new password then you can just delete this message",
+    "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line": "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line",
+    "Kind Regards": "Kind Regards",
+    "You have connected with the following site and requested an account": "You have connected with the following site and requested an account",
+    "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line": "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line",
     "Lost password": "Lost password",
     "Create new password": "Create new password",
     "Repeat new password": "Repeat new password",
@@ -36,11 +43,6 @@ const Translation =
     "E-mail": "E-mail",
     "Click to get a new image": "Click to get a new image",
     "Enter above image text (click to get a new image). Case of the text does not matter": "Enter above image text (click to get a new image). Case of the text does not matter",
-    "Hi": "Hi",
-    "You have connected with the following site because you have lost your password": "You have connected with the following site because you have lost your password",
-    "If you have not requested a new password then you can just delete this message": "If you have not requested a new password then you can just delete this message",
-    "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line": "In order to reset your password you just have to press the following link - or copy and paste into your browsers URL line",
-    "Kind Regards": "Kind Regards",
     "By signing in you agree to the following terms of service, privacy policy, and disclaimer": "By signing in you agree to the following terms of service, privacy policy, and disclaimer",
     "Terms of service": "Terms of service",
     "Privacy policy": "Privacy policy",
@@ -51,8 +53,6 @@ const Translation =
     "Or": "Or",
     "Sign out of all devices": "Sign out of all devices",
     "Repeat password": "Repeat password",
-    "You have connected with the following site and requested an account": "You have connected with the following site and requested an account",
-    "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line": "In order to activate your account, you just have to press the following link or copy and paste into your browsers URL line",
     "Update": "Update",
     "Delete": "Delete",
     "Are you sure you want to delete this row?": "Are you sure you want to delete this row?",
@@ -207,9 +207,9 @@ const Translation =
     "Edit": "Edit",
     "New": "New",
     "Home": "Home",
-    "Admin": "Admin",
     "Toggle timer": "Toggle timer",
-    "Timer": "Timer"
+    "Timer": "Timer",
+    "Admin": "Admin"
 }
 
 export {Translation}
