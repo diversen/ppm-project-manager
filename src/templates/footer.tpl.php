@@ -1,7 +1,9 @@
-</div>
 
-<div class="footer">
-    <hr />        
+
+    <div class="footer">
+        <hr />        
+    </div>
+
 </div>
 
 </body>
