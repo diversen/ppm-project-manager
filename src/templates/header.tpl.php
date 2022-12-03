@@ -51,7 +51,6 @@ require_once "templates/helpers.php";
         crossorigin="anonymous" 
         referrerpolicy="no-referrer" />
     <link rel="manifest" href="/assets/manifest.json?version=<?=AppMain::VERSION?>">
-
     <script type="module" nonce="<?=AppMain::getNonce()?>">
     	import {GlobalEvents} from '/js/global_events.js?version=<?=AppMain::VERSION?>';
     </script>

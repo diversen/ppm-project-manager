@@ -45,10 +45,8 @@ class AppMain extends AppBase
     public function run()
     {
 
-        // Add . to include path
+        // Add '.' and 'src' to include path
         $this->addBaseToIncudePath();
-
-        // Add src/ to include path
         $this->addSrcToIncludePath();
 
         $this->setErrorHandler();

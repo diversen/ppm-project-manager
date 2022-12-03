@@ -29,7 +29,7 @@ class Mail
         $activation_url = (new Server())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
 
-        $text = Template::getOutput('Account/views/signup_email.php', $vars);
+        $text = Template::getOutput('Account/views/mails/signup_email.php', $vars);
         $smtp = new SMTP($this->config->getSection('SMTP'));
         $smtp->sendMarkdown($row['email'], Lang::translate('Activation link'), $text);
     }
@@ -45,7 +45,7 @@ class Mail
         $activation_url = (new Server())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
         $vars['activation_url'] = $activation_url;
 
-        $text = Template::getOutput('Account/views/recover_email.php', $vars);
+        $text = Template::getOutput('Account/views/mails/recover_email.php', $vars);
         $smtp = new SMTP($this->config->getSection('SMTP'));
         $smtp->sendMarkdown($row['email'], Lang::translate('Recover your account'), $text);
     }
