@@ -41,7 +41,7 @@ $csrf_token = (new CSRF())->getToken();
 
         try {
             const res = await Pebble.asyncPost('/project/post', data);
-            spinner.classList.toggle('hidden');
+            
             if (res.error === false) {
                 if (returnTo) {
                     Pebble.redirect(returnTo);
@@ -52,8 +52,9 @@ $csrf_token = (new CSRF())->getToken();
                 Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
-            spinner.classList.toggle('hidden');
             Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
         }
     })
 </script>

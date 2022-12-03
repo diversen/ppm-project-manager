@@ -82,9 +82,9 @@ if ($project['status'] == 1) {
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
         }
-
-        spinner.classList.toggle('hidden');
     }
 
     const project_submit = document.getElementById('project_submit');
