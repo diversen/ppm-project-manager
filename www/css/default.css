@@ -126,6 +126,10 @@ span.loadingspinner {
     color: var(--form-text);
 }
 
+.app-menu-admin {
+    margin-top: 10px;
+}
+
 table {
     font-size: 1em;
     margin-top: 10px;

@@ -34,7 +34,7 @@ if ($is_authenticated) {
     <a href="/account/signout" data-path="/account/signout"><?= Lang::translate('Sign out') ?></a>
     <a id="timer_toggle" title="<?= Lang::translate('Toggle timer') ?>" href="#">&#128337; <?= Lang::translate('Timer') ?></a>
 </div>
-<div class="app-menu" style="margin-top:10px">
+<div class="app-menu app-menu-admin">
     <?php if ($acl_role->inSessionHasRole('admin')) : ?>
         <a href="/admin" data-path="/admin"><?= Lang::translate('Admin') ?></a>
     <?php endif; ?>
