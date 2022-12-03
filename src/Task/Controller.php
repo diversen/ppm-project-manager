@@ -60,7 +60,7 @@ class Controller extends AppUtils
         $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
-        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['updated' => 'DESC']);
+        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['title' => 'ASC']);
 
         $template_vars = [
             'task' => $task,
