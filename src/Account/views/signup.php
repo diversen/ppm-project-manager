@@ -9,20 +9,19 @@ use App\AppMain;
 <form id="signup-form">
     <input type="hidden" name="csrf_token" value="<?= $token ?>" />
     <label for="email"><?= Lang::translate('E-mail') ?></label>
-    <input type="text" name="email">
+    <input id="email" type="text" name="email">
 
     <label for="password"><?= Lang::translate('Password') ?></label>
-    <input type="password" name="password">
+    <input id="password" type="password" name="password">
 
-    <label for="password"><?= Lang::translate('Repeat password') ?></label>
-    <input type="password" name="password_2">
-
+    <label for="password_2"><?= Lang::translate('Repeat password') ?></label>
+    <input id="password_2" type="password" name="password_2">
 
     <img id="captcha" title="<?= Lang::translate('Click to get a new image') ?>" src="/account/captcha">
     <br />
 
     <label for="captcha"><?= Lang::translate('Enter above image text (click to get a new image). Case of the text does not matter') ?>:</label>
-    <input  autocomplete="off" type="text" name="captcha">
+    <input id="captcha" autocomplete="off" type="text" name="captcha">
 
     <button id="submit" class="btn btn-primary"><?= Lang::translate('Send') ?></button>
     <div class="loadingspinner hidden"></div>

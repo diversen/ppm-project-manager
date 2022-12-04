@@ -272,8 +272,12 @@ table {
 }
 
 #timer_toggle:hover {
-    /* background-color: unset !important; */
     background-color: var(--background-alt);
+    cursor: pointer;
+}
+
+#timer_start, #timer_pause, #timer_reset {
+    cursor: pointer;
 }
 
 .button-timer {

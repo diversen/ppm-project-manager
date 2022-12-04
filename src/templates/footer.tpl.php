@@ -1,10 +1,10 @@
 
 
-    <div class="footer">
-        <hr />        
-    </div>
+        <div class="footer">
+            <hr />        
+        </div>
 
-</div>
+    </div>
 
 </body>
 </html>

@@ -126,7 +126,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
                     <td class="width-35"><?= Lang::translate('Task') ?></td>
                     <td><?= Lang::translate('Project') ?></td>
-                    <td class='xs-hide' class="width-50"><?= Lang::translate('Time') ?></td>
+                    <td class='xs-hide' ><?= Lang::translate('Time') ?></td>
                     <td></td>
                 </tr>
             </thead>

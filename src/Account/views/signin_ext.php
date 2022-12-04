@@ -21,7 +21,7 @@ use App\AppMain;
 if ($google_auth_url): ?>
 
 <div class="row">
-    <p><a href="<?=$google_auth_url?>"><img src="/assets/google-signin.png" /></a></p>
+    <p><a href="<?=$google_auth_url?>"><img alt="Google Signin" src="/assets/google-signin.png" /></a></p>
 </div>
 
 <?php
@@ -34,10 +34,10 @@ endif;
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>" />
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
-    <input type="email" type="text" name="email">
+    <input id="email" type="text" name="email">
 
     <label for="password"><?= Lang::translate('Password') ?></label>
-    <input type="password" name="password">
+    <input id="password" type="password" name="password">
 
     <label for="keep_login">
         <?= Lang::translate('Keep me signed in') ?>

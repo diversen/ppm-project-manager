@@ -13,7 +13,7 @@ use App\AppMain;
 
     <input type="hidden" name="csrf_token" value="<?= $token ?>" />
     <label for="email"><?= Lang::translate('E-mail') ?></label>
-    <input  type="text" name="email">
+    <input id="email" type="text" name="email">
 
     <img id="captcha" title="<?= Lang::translate('Click to get a new image') ?>" src="/account/captcha">
     <br />

@@ -18,10 +18,10 @@ use App\AppMain;
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>" />
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
-    <input type="email" type="text" name="email">
+    <input id="email" type="text" name="email">
 
     <label for="password"><?= Lang::translate('Password') ?></label>
-    <input type="password" name="password">
+    <input id="password" type="password" name="password">
 
     <label for="keep_login">
         <?= Lang::translate('Keep me signed in') ?>
