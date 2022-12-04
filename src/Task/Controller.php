@@ -36,7 +36,7 @@ class Controller extends AppUtils
         
         if ($params['project_id'] === 'project-unknown') {
             $this->app_acl->isAuthenticatedOrThrow();
-            $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()]);
+            $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()], ['title' => 'ASC']);
             $template_vars['project'] = null;
         } else {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);

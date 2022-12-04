@@ -2,7 +2,7 @@
 
 use Diversen\Lang;
 
-use App\AppPagination;
+use App\Utils\AppPagination;
 use Pebble\Pagination\PaginationUtils;
 use App\AppMain;
 

@@ -9,7 +9,6 @@ use App\Task\TaskModel;
 use App\Time\TimeModel;
 use Diversen\Lang;
 use Pebble\Exception\NotFoundException;
-use Pebble\Exception\ForbiddenException;
 use Pebble\DB;
 
 /**

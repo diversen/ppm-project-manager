@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
-use App\AppPagination;
+use App\Utils\AppPagination;
 use Pebble\Pagination\PaginationUtils;
 use App\Utils\DateUtils;
 
