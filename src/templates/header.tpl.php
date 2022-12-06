@@ -53,6 +53,22 @@ require_once "templates/helpers.php";
     <link rel="manifest" href="/assets/manifest.json?version=<?=AppMain::VERSION?>">
     <script type="module" nonce="<?=AppMain::getNonce()?>">
     	import {GlobalEvents} from '/js/global_events.js?version=<?=AppMain::VERSION?>';
+        import Cookies from '/js/js.cookie.min.js?v=<?=AppMain::VERSION?>';
+
+        var cookieConsentAnswer = Cookies.get('cookie-consent');
+        
+        if (cookieConsentAnswer === 'enabled') {
+            console.log('enabled');
+            // Enable analytics, etc.
+        }
+
+        if (cookieConsentAnswer === 'disabled') {
+            // Disable analytics, etc.
+            console.log('disabled')
+        }
+
+
+
     </script>
 </head>
 <body>

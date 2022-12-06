@@ -2,11 +2,7 @@
 
 use App\AppMain;
 
-if (isset($_COOKIE['theme_dark_mode'])) {
-    $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
-} else {
-    $use_theme_dark_mode = false;
-}
+$use_theme_dark_mode = $_COOKIE['theme_dark_mode'] ?? false;
 
 if (!isset($title)) {
     $title = '';
