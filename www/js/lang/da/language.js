@@ -22,6 +22,7 @@ const Translation =
     "New password": "Ny adgangskode",
     "No such account connected to supplied key": "Ingen s\u00e5dan konto er forbundet med den leverede n\u00f8gle",
     "Your password has been updated": "Din adgangskode er blevet opdateret",
+    "Route is not allowed": "Rute er ikke tilladt",
     "Activation link": "Aktivering link",
     "Recover your account": "Gendan din konto",
     "E-mail does already exists": "E-mail findes allerede",

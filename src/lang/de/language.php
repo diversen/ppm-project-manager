@@ -23,6 +23,7 @@ $LANG['E-mail could not be sent. Try again later.'] = 'E-Mail konnte nicht gesen
 $LANG['New password'] = 'Neues Kennwort';
 $LANG['No such account connected to supplied key'] = 'Kein solches Konto mit dem bereitgestellten Schlüssel verbunden';
 $LANG['Your password has been updated'] = 'Ihr Passwort wurde aktualisiert';
+$LANG['Route is not allowed'] = 'Strecke ist nicht erlaubt';
 $LANG['Activation link'] = 'Aktivierungslink';
 $LANG['Recover your account'] = 'Stellen Sie Ihr Konto wieder her';
 $LANG['E-mail does already exists'] = 'E-Mail ist bereits vorhanden';

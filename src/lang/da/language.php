@@ -23,6 +23,7 @@ $LANG['E-mail could not be sent. Try again later.'] = 'E-mail kunne ikke sendes.
 $LANG['New password'] = 'Ny adgangskode';
 $LANG['No such account connected to supplied key'] = 'Ingen sådan konto er forbundet med den leverede nøgle';
 $LANG['Your password has been updated'] = 'Din adgangskode er blevet opdateret';
+$LANG['Route is not allowed'] = 'Rute er ikke tilladt';
 $LANG['Activation link'] = 'Aktivering link';
 $LANG['Recover your account'] = 'Gendan din konto';
 $LANG['E-mail does already exists'] = 'E-mail findes allerede';

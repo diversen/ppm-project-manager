@@ -22,6 +22,7 @@ const Translation =
     "New password": "New password",
     "No such account connected to supplied key": "No such account connected to supplied key",
     "Your password has been updated": "Your password has been updated",
+    "Route is not allowed": "Route is not allowed",
     "Activation link": "Activation link",
     "Recover your account": "Recover your account",
     "E-mail does already exists": "E-mail does already exists",

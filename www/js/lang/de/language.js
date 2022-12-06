@@ -22,6 +22,7 @@ const Translation =
     "New password": "Neues Kennwort",
     "No such account connected to supplied key": "Kein solches Konto mit dem bereitgestellten Schl\u00fcssel verbunden",
     "Your password has been updated": "Ihr Passwort wurde aktualisiert",
+    "Route is not allowed": "Strecke ist nicht erlaubt",
     "Activation link": "Aktivierungslink",
     "Recover your account": "Stellen Sie Ihr Konto wieder her",
     "E-mail does already exists": "E-Mail ist bereits vorhanden",

@@ -31,6 +31,10 @@ $LANG['Your password has been updated'] = 'Your password has been updated';
 $LANG['Sign out'] = 'Sign out';
 $LANG['Sign in'] = 'Sign in';
 
+// Translation of file src/Account/DisableRegistration.php
+
+$LANG['Route is not allowed'] = 'Route is not allowed';
+
 // Translation of file src/Account/Mail.php
 
 $LANG['Activation link'] = 'Activation link';
