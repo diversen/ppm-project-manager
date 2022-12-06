@@ -445,6 +445,15 @@ $LANG['Verify login using two factor authentication'] = 'Verify login using two 
 $LANG['1. Enter code as seen on your phone'] = '1. Enter code as seen on your phone';
 $LANG['Submit'] = 'Submit';
 
+// Translation of file src/templates/cookie_consent.php
+
+$LANG['Notice'] = 'Notice';
+$LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
+$LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
+$LANG['Read more'] = 'Read more';
+$LANG['Accept'] = 'Accept';
+$LANG['Reject'] = 'Reject';
+
 // Translation of file src/templates/helpers.php
 
 $LANG['Today'] = 'Today';
