@@ -11,18 +11,24 @@ use Pebble\Service\ConfigService;
 
 trait CSP
 {
-    public static $nonce;
+
+    private static $nonce;
+    public static function getNonce()
+    {
+        return self::$nonce;
+    }
 
     public function sendCSPHeaders()
     {
         $config = (new ConfigService())->getConfig();
 
-        $env = $config->get("App.env");
-        if ($env === 'dev') {
+        if (!$config->get("CSP.enabled")) {
             return;
         }
 
-        self::$nonce = $nonce = Random::generateRandomString(16);
+        self::$nonce = Random::generateRandomString(16);
+
+        $nonce = self::$nonce;
 
         $headers = new SecureHeaders();
         $headers->strictMode(false);
@@ -41,8 +47,5 @@ trait CSP
         $headers->apply();
     }
 
-    public static function getNonce()
-    {
-        return self::$nonce;
-    }
+
 }
