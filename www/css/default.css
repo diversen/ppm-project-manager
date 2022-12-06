@@ -90,6 +90,10 @@ span.loadingspinner {
 
 }
 
+.action-links {
+    display: block;
+}
+
 .action-links>a {
     color: var(--text-main);
     font-size: 0.90em;
@@ -106,6 +110,10 @@ span.loadingspinner {
 
 .action-links>a.large {
     font-size: 1.2em;
+}
+
+.app-menu {
+    display:block;
 }
 
 .app-menu>a {
