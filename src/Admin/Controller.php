@@ -51,7 +51,6 @@ class Controller extends AppUtils
             'disabled' => ['id', 'project_id', 'auth_id'],
         ];
 
-        $this->db_name = $this->db_utils->getDBName();
         $this->tables = $tables;
 
         define('ADMIN_SUB_MENU_SEP', ' ::');
