@@ -141,6 +141,10 @@ class Controller extends AppUtils
         $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
     }
 
+    /**
+     * template is a bit different, as we want only render the template Error/error.tpl.php
+     * The is because the header may be rendered already - and we don't use any output buffering
+     */
     private function templateException(Throwable $e)
     {
 

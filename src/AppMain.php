@@ -15,7 +15,7 @@ use Diversen\Lang;
  */
 class AppMain extends AppBase
 {
-    use \App\CSP;
+    use \App\Utils\CSP;
 
     public const VERSION = "2.0.7";
 
