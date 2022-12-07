@@ -6,7 +6,11 @@ use App\Settings\SettingsModel;
 use App\AppMain;
 
 $settings = new SettingsModel();
-$auth = (new AppMain())->getAuth();
+$app_main = new AppMain();
+$auth = $app_main->getAuth();
+$config = $app_main->getConfig();
+$analytics_tag = $config->get('Analytics.tag');
+
 if (!$auth->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
 } else {
@@ -22,7 +26,9 @@ if (!isset($description)) {
     $description = $title;
 }
 
-require_once "templates/helpers.php";
+if (file_exists('../src/templates/utils.php')) {
+    require_once "templates/utils.php";
+}
 
 ?>
 <!DOCTYPE html>
@@ -46,39 +52,28 @@ require_once "templates/helpers.php";
     <?php endif; ?>
 
     <link rel="stylesheet" href="/css/default.css?version=<?= AppMain::VERSION ?>">
+    <link rel="stylesheet" href="/css/cookie-consent.css?version=<?= AppMain::VERSION ?>">
+
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?version=<?= AppMain::VERSION ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?version=<?= AppMain::VERSION ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png?version=<?= AppMain::VERSION ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css?version=<?= AppMain::VERSION ?>" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="manifest" href="/assets/manifest.json?version=<?= AppMain::VERSION ?>">
-    <script type="module" nonce="<?= AppMain::getNonce() ?>">
-        import {
-            GlobalEvents
-        } from '/js/global_events.js?version=<?= AppMain::VERSION ?>';
-    </script>
-</head>
-<!-- Google tag (gtag.js) -->
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3QMZ9MJX62" nonce="<?= AppMain::getNonce() ?>"></script>
-<script type="module" nonce="<?= AppMain::getNonce() ?>">
-    import Cookies from '/js/js.cookie.min.js?v=<?= AppMain::VERSION ?>';
+    <?php
 
-    var cookieConsentAnswer = Cookies.get('cookie-consent');
-    if (cookieConsentAnswer === 'enabled') {
-
-        // Almost anyone serves google analytics without consent,
-        // but this is not doing it
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
+        if (file_exists('../src/templates/parts/head_scripts.php')) {
+            require 'templates/parts/body_begin.php';
         }
-        gtag('js', new Date());
-        gtag('config', 'G-3QMZ9MJX62');
-    }
-    
-</script>
+    ?>
+</head>
+<?php
 
+if (file_exists('../src/templates/parts/body_begin.php')) {
+    require 'templates/parts/body_begin.php';
+}
+
+?>
 <body>
     <div class="page">
 

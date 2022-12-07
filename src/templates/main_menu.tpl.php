@@ -7,6 +7,7 @@ $app_main = new AppMain();
 $auth = $app_main->getAuth();
 $is_authenticated = $auth->isAuthenticated();
 $acl_role = $app_main->getACLRole();
+
 if ($is_authenticated) {
     $home_url = '/overview';
 } else {
