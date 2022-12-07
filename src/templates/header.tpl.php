@@ -63,7 +63,7 @@ if (file_exists('../src/templates/utils.php')) {
     <?php
 
         if (file_exists('../src/templates/parts/head_scripts.php')) {
-            require 'templates/parts/body_begin.php';
+            require 'templates/parts/head_scripts.php';
         }
     ?>
 </head>
