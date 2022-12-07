@@ -38,7 +38,12 @@ trait CSP
         $headers->csp('base-uri', $config->get('App.server_url'));
         $headers->csp('img-src', 'data:');
         $headers->csp('img-src', $config->get('App.server_url'));
+        
         $headers->csp('script-src', "'nonce-$nonce'");
+
+        $headers->csp('script-src', "https://*.googletagmanager.com");
+        $headers->csp('img-src', 'https://*.google-analytics.com https://*.googletagmanager.com');
+        $headers->csp('connect-src', 'https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com');
         $headers->csp('style-src', 'self');
         $headers->csp('style-src', 'https://cdnjs.cloudflare.com');
         $headers->csp('font-src', 'https://cdnjs.cloudflare.com');
