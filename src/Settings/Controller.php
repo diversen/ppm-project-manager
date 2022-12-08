@@ -30,7 +30,6 @@ class Controller extends AppUtils
         $user_settings = $settings->getUserSetting($this->acl->getAuthId(), 'profile');
 
         $vars['user_settings'] = $user_settings;
-        $vars['title'] = Lang::translate('Settings');
 
         $this->renderPage('Settings/views/settings.tpl.php', $vars);
     }
@@ -47,7 +46,7 @@ class Controller extends AppUtils
         }
 
         $settings = new SettingsModel();
-        $user = $settings->getUserSetting($params['auth_id'], 'profile');
+        $user = $settings->getUserSetting((int)$params['auth_id'], 'profile');
 
         $this->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
     }
