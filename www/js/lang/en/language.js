@@ -137,9 +137,9 @@ const Translation =
     "Tasks waiting": "Tasks waiting",
     "Date": "Date",
     "Completed tasks": "Completed tasks",
+    "Settings": "Settings",
     "Settings have been updated": "Settings have been updated",
     "Two factor authentication": "Two factor authentication",
-    "Settings": "Settings",
     "Your name": "Your name",
     "Bio": "Bio",
     "Add a bio": "Add a bio",
@@ -189,10 +189,13 @@ const Translation =
     "Submit and close task": "Submit and close task",
     "Are you sure you want to delete time entry?": "Are you sure you want to delete time entry?",
     "New QR code has been created": "New QR code has been created",
+    "Enable two factor": "Enable two factor",
+    "Two factor is enabled": "Two factor is enabled",
     "The code could not be verified. Try again.": "The code could not be verified. Try again.",
     "The code is verified. Two factor is enabled.": "The code is verified. Two factor is enabled.",
     "You were to slow to enter two factor code. You will need to login again.": "You were to slow to enter two factor code. You will need to login again.",
     "The code is verified. You are logged in.": "The code is verified. You are logged in.",
+    "Verify two factor": "Verify two factor",
     "Enable two factor authentication": "Enable two factor authentication",
     "You will need a two factor app on your mobile phone": "You will need a two factor app on your mobile phone",
     "Download a two factor app in your app store": "Download a two factor app in your app store",
@@ -204,6 +207,10 @@ const Translation =
     "If you create a new QR code then the old code will be deleted": "If you create a new QR code then the old code will be deleted",
     "Verify login using two factor authentication": "Verify login using two factor authentication",
     "1. Enter code as seen on your phone": "1. Enter code as seen on your phone",
+    "Home": "Home",
+    "Toggle timer": "Toggle timer",
+    "Timer": "Timer",
+    "Admin": "Admin",
     "Notice": "Notice",
     "This website may use non-essential cookies for statistical usage and improving experience.": "This website may use non-essential cookies for statistical usage and improving experience.",
     "You may accept or reject any non-essential cookies.": "You may accept or reject any non-essential cookies.",
@@ -212,11 +219,7 @@ const Translation =
     "Reject": "Reject",
     "Today": "Today",
     "Edit": "Edit",
-    "New": "New",
-    "Home": "Home",
-    "Toggle timer": "Toggle timer",
-    "Timer": "Timer",
-    "Admin": "Admin"
+    "New": "New"
 }
 
 export {Translation}

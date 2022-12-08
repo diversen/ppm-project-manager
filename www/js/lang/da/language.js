@@ -137,9 +137,9 @@ const Translation =
     "Tasks waiting": "Opgaver, der venter",
     "Date": "Dato",
     "Completed tasks": "Afsluttede opgaver",
+    "Settings": "Indstillinger",
     "Settings have been updated": "Indstillinger er opdateret",
     "Two factor authentication": "To-faktor login",
-    "Settings": "Indstillinger",
     "Your name": "Dit navn",
     "Bio": "Bio",
     "Add a bio": "Tilf\u00f8j en biografi",
@@ -189,10 +189,13 @@ const Translation =
     "Submit and close task": "Opdater og luk opgaven",
     "Are you sure you want to delete time entry?": "Er du sikker p\u00e5, at du vil slette tidsangivelse?",
     "New QR code has been created": "Ny QR-kode er blevet oprettet",
+    "Enable two factor": "Aktiver to-faktor",
+    "Two factor is enabled": "To faktor er aktiveret",
     "The code could not be verified. Try again.": "Koden kunne ikke bekr\u00e6ftes. Pr\u00f8v igen.",
     "The code is verified. Two factor is enabled.": "Koden er verificeret. To faktor er aktiveret.",
     "You were to slow to enter two factor code. You will need to login again.": "Du var for langsom til at indtaste tofaktorkode. Du skal logge ind igen.",
     "The code is verified. You are logged in.": "Koden er verificeret. Du er logget ind.",
+    "Verify two factor": "Bekr\u00e6ft to faktorer",
     "Enable two factor authentication": "Aktiver to-faktor-godkendelse",
     "You will need a two factor app on your mobile phone": "Du skal bruge en tofaktor-app p\u00e5 din mobiltelefon",
     "Download a two factor app in your app store": "Download en tofaktor-app i din app-butik",
@@ -204,6 +207,10 @@ const Translation =
     "If you create a new QR code then the old code will be deleted": "Hvis du opretter en ny QR-kode, vil den gamle kode blive slettet",
     "Verify login using two factor authentication": "Bekr\u00e6ft login ved hj\u00e6lp af tofaktorautentificering",
     "1. Enter code as seen on your phone": "1. Indtast koden som vist p\u00e5 din telefon",
+    "Home": "Hjem",
+    "Toggle timer": "Skift timer",
+    "Timer": "Timer",
+    "Admin": "Admin",
     "Notice": "Varsel",
     "This website may use non-essential cookies for statistical usage and improving experience.": "Denne hjemmeside kan bruge ikke-essentielle cookies til statistisk brug og forbedring af oplevelsen.",
     "You may accept or reject any non-essential cookies.": "Du kan acceptere eller afvise alle ikke-v\u00e6sentlige cookies.",
@@ -212,11 +219,7 @@ const Translation =
     "Reject": "Afvis",
     "Today": "I dag",
     "Edit": "Ret",
-    "New": "Ny",
-    "Home": "Hjem",
-    "Toggle timer": "Skift timer",
-    "Timer": "Timer",
-    "Admin": "Admin"
+    "New": "Ny"
 }
 
 export {Translation}

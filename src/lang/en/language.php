@@ -275,6 +275,7 @@ $LANG['Completed tasks'] = 'Completed tasks';
 
 // Translation of file src/Settings/Controller.php
 
+$LANG['Settings'] = 'Settings';
 $LANG['Settings have been updated'] = 'Settings have been updated';
 $LANG['Your settings could not be saved. Check if you are logged in'] = 'Your settings could not be saved. Check if you are logged in';
 
@@ -416,11 +417,14 @@ $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to
 // Translation of file src/TwoFactor/Controller.php
 
 $LANG['New QR code has been created'] = 'New QR code has been created';
+$LANG['Enable two factor'] = 'Enable two factor';
+$LANG['Two factor is enabled'] = 'Two factor is enabled';
 $LANG['The code could not be verified. Try again.'] = 'The code could not be verified. Try again.';
 $LANG['The code is verified. Two factor is enabled.'] = 'The code is verified. Two factor is enabled.';
 $LANG['You were to slow to enter two factor code. You will need to login again.'] = 'You were to slow to enter two factor code. You will need to login again.';
 $LANG['The code is verified. You are logged in.'] = 'The code is verified. You are logged in.';
 $LANG['You are signed in.'] = 'You are signed in.';
+$LANG['Verify two factor'] = 'Verify two factor';
 
 // Translation of file src/TwoFactor/views/enable.tpl.php
 
@@ -445,23 +449,6 @@ $LANG['Verify login using two factor authentication'] = 'Verify login using two 
 $LANG['1. Enter code as seen on your phone'] = '1. Enter code as seen on your phone';
 $LANG['Submit'] = 'Submit';
 
-// Translation of file src/templates/cookie_consent.php
-
-$LANG['Notice'] = 'Notice';
-$LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
-$LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
-$LANG['Read more'] = 'Read more';
-$LANG['Accept'] = 'Accept';
-$LANG['Reject'] = 'Reject';
-
-// Translation of file src/templates/helpers.php
-
-$LANG['Today'] = 'Today';
-$LANG['Delete'] = 'Delete';
-$LANG['Edit'] = 'Edit';
-$LANG['New'] = 'New';
-$LANG['Time'] = 'Time';
-
 // Translation of file src/templates/main_menu.tpl.php
 
 $LANG['Sign in'] = 'Sign in';
@@ -474,3 +461,20 @@ $LANG['Sign out'] = 'Sign out';
 $LANG['Toggle timer'] = 'Toggle timer';
 $LANG['Timer'] = 'Timer';
 $LANG['Admin'] = 'Admin';
+
+// Translation of file src/templates/parts/body_end.php
+
+$LANG['Notice'] = 'Notice';
+$LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
+$LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
+$LANG['Read more'] = 'Read more';
+$LANG['Accept'] = 'Accept';
+$LANG['Reject'] = 'Reject';
+
+// Translation of file src/templates/utils.php
+
+$LANG['Today'] = 'Today';
+$LANG['Delete'] = 'Delete';
+$LANG['Edit'] = 'Edit';
+$LANG['New'] = 'New';
+$LANG['Time'] = 'Time';

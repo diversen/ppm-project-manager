@@ -137,9 +137,9 @@ const Translation =
     "Tasks waiting": "Aufgaben warten",
     "Date": "Datum",
     "Completed tasks": "Erledigte Aufgaben",
+    "Settings": "Einstellungen",
     "Settings have been updated": "Die Einstellungen wurden aktualisiert",
     "Two factor authentication": "Zwei-Faktor-Authentifizierung",
-    "Settings": "Einstellungen",
     "Your name": "Dein Name",
     "Bio": "Bio",
     "Add a bio": "F\u00fcgen Sie eine Biografie hinzu",
@@ -189,10 +189,13 @@ const Translation =
     "Submit and close task": "Aufgabe senden und schlie\u00dfen",
     "Are you sure you want to delete time entry?": "M\u00f6chten Sie den Zeiteintrag wirklich l\u00f6schen?",
     "New QR code has been created": "Neuer QR-Code wurde erstellt",
+    "Enable two factor": "Zwei Faktor aktivieren",
+    "Two factor is enabled": "Zwei Faktor ist aktiviert",
     "The code could not be verified. Try again.": "Der Code konnte nicht verifiziert werden. Versuchen Sie es nochmal.",
     "The code is verified. Two factor is enabled.": "Der Code ist verifiziert. Zwei Faktor ist aktiviert.",
     "You were to slow to enter two factor code. You will need to login again.": "Sie waren zu langsam, um den Zwei-Faktor-Code einzugeben. Sie m\u00fcssen sich erneut anmelden.",
     "The code is verified. You are logged in.": "Der Code ist verifiziert. Du bist eingeloggt.",
+    "Verify two factor": "\u00dcberpr\u00fcfen Sie zwei Faktoren",
     "Enable two factor authentication": "Aktivieren Sie die Zwei-Faktor-Authentifizierung",
     "You will need a two factor app on your mobile phone": "Sie ben\u00f6tigen eine Zwei-Faktor-App auf Ihrem Mobiltelefon",
     "Download a two factor app in your app store": "Laden Sie eine Zwei-Faktor-App in Ihrem App Store herunter",
@@ -204,6 +207,10 @@ const Translation =
     "If you create a new QR code then the old code will be deleted": "Wenn Sie einen neuen QR-Code erstellen, wird der alte Code gel\u00f6scht",
     "Verify login using two factor authentication": "Verifizieren Sie die Anmeldung mit der Zwei-Faktor-Authentifizierung",
     "1. Enter code as seen on your phone": "1. Geben Sie den Code ein, der auf Ihrem Telefon angezeigt wird",
+    "Home": "Heim",
+    "Toggle timer": "Timer umschalten",
+    "Timer": "Timer",
+    "Admin": "Administrator",
     "Notice": "Notiz",
     "This website may use non-essential cookies for statistical usage and improving experience.": "Diese Website kann nicht unbedingt erforderliche Cookies f\u00fcr statistische Zwecke und zur Verbesserung der Erfahrung verwenden.",
     "You may accept or reject any non-essential cookies.": "Sie k\u00f6nnen alle nicht wesentlichen Cookies akzeptieren oder ablehnen.",
@@ -212,11 +219,7 @@ const Translation =
     "Reject": "Ablehnen",
     "Today": "Heute",
     "Edit": "Bearbeiten",
-    "New": "Neu",
-    "Home": "Heim",
-    "Toggle timer": "Timer umschalten",
-    "Timer": "Timer",
-    "Admin": "Administrator"
+    "New": "Neu"
 }
 
 export {Translation}
