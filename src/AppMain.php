@@ -17,7 +17,7 @@ class AppMain extends AppBase
 {
     use \App\Utils\CSP;
 
-    public const VERSION = "2.0.7";
+    public const VERSION = "2.0.8";
 
     /**
      * Load user language and timezone if set else load default language

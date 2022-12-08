@@ -81,14 +81,21 @@ class Controller extends AppUtils
 
             $this->twoFactorModel->create($this->acl->getAuthId(), $secret);
 
-            $vars = ['qr_image' => $qr_image, 'enabled' => false];
+            $vars = [
+                'qr_image' => $qr_image, 
+                'enabled' => false,
+                'title' => Lang::translate('Enable two factor')];
 
             $this->renderPage(
                 'TwoFactor/views/enable.tpl.php',
+                
                 $vars
             );
         } else {
-            $vars = ['enabled' => true];
+            $vars = [
+                'enabled' => true,
+                'title' => Lang::translate('Two factor is enabled'),
+            ];
             $this->renderPage(
                 'TwoFactor/views/is_enabled.tpl.php',
                 $vars
@@ -175,7 +182,7 @@ class Controller extends AppUtils
      */
     public function verify()
     {
-        $vars = [];
+        $vars = ['title' => Lang::translate('Verify two factor')];
         $this->renderPage(
             'TwoFactor/views/verify.tpl.php',
             $vars
