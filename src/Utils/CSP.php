@@ -9,7 +9,6 @@ use Pebble\Service\ConfigService;
 
 trait CSP
 {
-
     private static $nonce;
     public static function getNonce()
     {
@@ -32,6 +31,4 @@ trait CSP
         $headers = $config->get('CSP.headers');
         $headers->apply();
     }
-
-
 }

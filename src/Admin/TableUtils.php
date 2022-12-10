@@ -7,16 +7,18 @@ namespace App\Admin;
 use App\AppUtils;
 use Pebble\DB\Utils as DBUtils;
 
-class TableUtils extends AppUtils {
-    
-    public function __construct() {
+class TableUtils extends AppUtils
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * Method that gets the column types of the table
      */
-    public function getColumnTypes(string $table) {
+    public function getColumnTypes(string $table)
+    {
         $column_types = [];
         $sql = "SHOW COLUMNS FROM $table";
         $rows = $this->db->getAllQuery($sql);
@@ -34,7 +36,8 @@ class TableUtils extends AppUtils {
     /**
      * Get database name from config
      */
-    public function getDBName(): string {
+    public function getDBName(): string
+    {
         $ary = DBUtils::parsePDOString($this->config->get('DB.url'));
         return $ary['dbname'];
     }

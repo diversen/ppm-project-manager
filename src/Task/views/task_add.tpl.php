@@ -8,7 +8,7 @@ use Diversen\Lang;
 
 <h3 class="sub-menu">
     <?php
-    
+
     if ($project): ?>
 <a href="/project"><?=Lang::translate('Projects')?></a><?=SUB_MENU_SEP?>
 <a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=SUB_MENU_SEP?>

@@ -222,7 +222,6 @@ class Controller extends AppUtils
 
         $res = $this->auth->create($_POST['email'], $_POST['password']);
         if ($res) {
-
             $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
             $row = $this->auth->getByWhere(['email' => $_POST['email']]);
 
@@ -231,7 +230,6 @@ class Controller extends AppUtils
                 $message = Lang::translate('Account has been created. You may log in');
                 $mail_success = true;
             } else {
-
                 $mail = new Mail();
 
                 try {

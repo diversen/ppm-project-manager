@@ -33,7 +33,7 @@ class Controller extends AppUtils
     {
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
         $template_vars = ['task' => $task];
-        
+
         if ($params['project_id'] === 'project-unknown') {
             $this->app_acl->isAuthenticatedOrThrow();
             $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()], ['title' => 'ASC']);
@@ -113,11 +113,10 @@ class Controller extends AppUtils
             $response['redirect'] = "/project/view/" . $_POST['project_id'];
             $response['message'] = Lang::translate('Task created');
             $response['error'] = false;
-            
+
             if (isset($_POST['session_flash'])) {
                 $this->flash->setMessage(Lang::translate('Task created'), 'success', ['flash_remove' => true]);
             }
-            
         } catch (FormException $e) {
             $response['message'] = $e->getMessage();
         } catch (Exception $e) {

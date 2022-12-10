@@ -147,7 +147,6 @@ class Controller extends AppUtils
      */
     private function templateException(Throwable $e)
     {
-
         $error_vars = [
             'title' => Lang::translate('510 Template error'),
             'message' => ExceptionTrace::get($e),
@@ -158,7 +157,6 @@ class Controller extends AppUtils
             'Error/error.tpl.php',
             $error_vars
         );
-
     }
 
     private function internalException(Throwable $e)

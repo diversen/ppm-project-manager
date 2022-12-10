@@ -25,10 +25,10 @@ $pagination_utils = new PaginationUtils($order_by, $session_key);
     <tbody>
         <?php foreach ($rows as $row) : ?>
             <tr>
-                <?php foreach ($table['columns'] as $col) : 
-                    
+                <?php foreach ($table['columns'] as $col) :
+
                     $reference_link = HTMLUtils::getReferenceLinkHTMLOrValue($col, $table['references'], $row[$col]);
-                    
+
                     ?>
                     <td title="<?=$row[$col]?>"><?= $reference_link ?></td>
                 <?php endforeach; ?>

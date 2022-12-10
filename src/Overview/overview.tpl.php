@@ -20,14 +20,12 @@ function render_task($task, $today)
     }
 
     $project_title = $task['project_title'] . "\n";
-    $project_title.= Lang::translate('Total time used on project:') . " $task[project_time_total]"; 
-    
+    $project_title.= Lang::translate('Total time used on project:') . " $task[project_time_total]";
+
     $add_new_task_title = Lang::translate('Add new task to') . " '$task[project_title]'";
     $add_time_title = Lang::translate('Add time to') . " '$task[title]'";
     $edit_task_title = Lang::translate('Edit task') . " '$task[title]'";
-    $move_to_today_title = Lang::translate('Move to today');
-
-    ?>
+    $move_to_today_title = Lang::translate('Move to today'); ?>
     <tr>
         <td class="td-overflow <?= $task_box_class ?>" title="<?= $title_attr ?>">
             <span class="priority <?= get_task_priority_class($task) ?>"></span>

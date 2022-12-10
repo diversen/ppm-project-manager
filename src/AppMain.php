@@ -10,7 +10,7 @@ use App\Settings\SettingsModel;
 use Diversen\Lang;
 
 /**
- * App class. This is the main class for the app. 
+ * App class. This is the main class for the app.
  * It is used in www/index.php
  */
 class AppMain extends AppBase

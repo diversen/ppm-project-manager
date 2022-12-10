@@ -20,13 +20,13 @@ return;
 
 endif;
 
-foreach ($table['columns'] as $key => $column): 
+foreach ($table['columns'] as $key => $column):
     $reference_link = HTMLUtils::getReferenceLink($column, $table['references'], $row[$column]);
     $link = $row[$column];
     if ($reference_link) {
         $link = "<a href='$reference_link'>$row[$column]</a>";
-    } 
-    
+    }
+
 ?>
 <p><b><?=$table['columns_human'][$key]?></b>: <?=$link?></p><?php
 endforeach;

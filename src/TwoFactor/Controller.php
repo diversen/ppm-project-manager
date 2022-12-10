@@ -82,13 +82,12 @@ class Controller extends AppUtils
             $this->twoFactorModel->create($this->acl->getAuthId(), $secret);
 
             $vars = [
-                'qr_image' => $qr_image, 
+                'qr_image' => $qr_image,
                 'enabled' => false,
                 'title' => Lang::translate('Enable two factor')];
 
             $this->renderPage(
                 'TwoFactor/views/enable.tpl.php',
-                
                 $vars
             );
         } else {
@@ -132,7 +131,7 @@ class Controller extends AppUtils
      * @verbs POST
      */
     public function verify_post()
-    {   
+    {
         // Sleep 1 second to prevent brute force attacks
         usleep(1000000);
         $session_timed = new SessionTimed();

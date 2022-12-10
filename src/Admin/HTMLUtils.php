@@ -6,7 +6,6 @@ namespace App\Admin;
 
 class HTMLUtils
 {
-
     /**
      * Get a reference link
      */

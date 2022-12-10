@@ -44,7 +44,7 @@ class Controller extends AppUtils
         $pager = new Pager($total, $this->config->get('App.pager_limit'));
         $order_by = $this->pagination_utils->getOrderByFromQuery();
         $time_rows = $this->time_model->getAll($where, $order_by, [$pager->offset, $pager->limit]);
-        
+
         $paginator = PaginationUtils::getPaginator(
             total_items: $total,
             items_per_page: $this->config->get('App.pager_limit'),
@@ -52,7 +52,6 @@ class Controller extends AppUtils
             url: '/time/add/' . $task['id'],
             default_order: ['begin_date' => 'DESC'],
             session_key : 'time',
-
         );
 
         $time_vars = [

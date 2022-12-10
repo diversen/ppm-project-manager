@@ -55,10 +55,10 @@ class Controller extends AppUtils
             'auth_id' => $this->app_acl->getAuthId(),
             'status' => ProjectModel::PROJECT_OPEN,
         ];
-        
+
         $template_data = $this->project_model->getProjectData($where);
         $template_data['title'] = Lang::translate('All active projects');
-        
+
         $this->renderPage(
             'Project/views/index.tpl.php',
             $template_data

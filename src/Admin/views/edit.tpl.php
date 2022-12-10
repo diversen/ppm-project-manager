@@ -34,7 +34,7 @@ endif;
         $attr['class'] = 'form-control';
         $attr['id'] = $column;
         $attr['name'] = $column;
-        
+
         if (HTMLUtils::isDisabled($column, $disabled)) {
             $attr['disabled'] = 'disabled';
         }

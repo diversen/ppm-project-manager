@@ -138,9 +138,8 @@ class ProjectModel extends AppUtils
         $sql .= $this->db->getLimitSql($limit);
 
         $projects = $this->db->getStmt($sql, $where)->fetchAll();
-    
-        foreach ($projects as &$project) {
 
+        foreach ($projects as &$project) {
             if (!$project['project_time_total']) {
                 $project['project_time_total'] = 0;
             }
@@ -183,7 +182,6 @@ class ProjectModel extends AppUtils
      */
     public function getTasksData(array $params): array
     {
-
         $project_id = $params['project_id'];
         $status = URL::getQueryPart('status');
         $where['project_id'] = $project_id;
@@ -203,15 +201,15 @@ class ProjectModel extends AppUtils
     }
 
     public function getProjectData(array $where)
-    {   
+    {
         $order_by = $this->pagination_utils->getOrderByFromRequest('project');
-        
+
         $project_count = $this->getNumProjects($where);
         $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
 
         $projects = $this->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
 
-        $template_data['projects'] = $projects; 
+        $template_data['projects'] = $projects;
         $template_data['total_time_human'] = 0;
         $template_data['default_order_by'] = $this->default_order_by;
 
@@ -230,7 +228,6 @@ class ProjectModel extends AppUtils
             default_order: $this->default_order_by,
             session_key : 'project',
             max_pages: 10,
-            
         );
 
         $template_data['paginator'] = $paginator;
