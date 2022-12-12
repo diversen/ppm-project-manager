@@ -15,7 +15,6 @@ use Pebble\HTTP\AcceptLanguage;
  */
 class SetupIntl extends AppUtils
 {
-
     public function getRequestLanguage(): ?string
     {
         $default = $this->getConfig()->get('Language.default');
@@ -23,7 +22,7 @@ class SetupIntl extends AppUtils
 
         return AcceptLanguage::getLanguage($supported, $default);
     }
-    
+
     /**
      * Load user language and timezone if set else load default language
      * Init translations
@@ -47,6 +46,3 @@ class SetupIntl extends AppUtils
         $translations->loadLanguage($language);
     }
 }
-
-
-

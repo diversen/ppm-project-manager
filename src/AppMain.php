@@ -6,9 +6,7 @@ namespace App;
 
 use Pebble\Router;
 use Pebble\App\AppBase;
-// use App\Settings\SettingsModel;
 use App\Settings\SetupIntl;
-// use Diversen\Lang;
 
 /**
  * App class. This is the main class for the app.

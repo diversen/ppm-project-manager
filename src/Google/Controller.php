@@ -93,9 +93,11 @@ class Controller extends AppUtils
 
         $this->flash->setMessage(
             Lang::translate(
-                'Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'), 
-                'error');
-                
+                'Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'
+            ),
+            'error'
+        );
+
         header("Location: " . $this->login_redirect);
     }
 

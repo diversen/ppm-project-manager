@@ -394,7 +394,6 @@ class Controller extends AppUtils
      */
     public function terms($params): void
     {
-
         $terms_dir = '../src/Account/views/terms/';
         $allowed_files = File::dirToArray($terms_dir);
 
