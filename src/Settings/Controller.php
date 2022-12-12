@@ -22,7 +22,7 @@ class Controller extends AppUtils
      * @route /settings
      * @verbs GET
      */
-    public function index()
+    public function index(): void
     {
         $this->acl->isAuthenticatedOrThrow();
 
@@ -39,7 +39,7 @@ class Controller extends AppUtils
      * @route /user/:auth_id
      * @verbs GET
      */
-    public function user($params)
+    public function user(array $params): void
     {
         if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {
             throw new NotFoundException();
@@ -55,7 +55,7 @@ class Controller extends AppUtils
      * @route /settings/put
      * @verbs POST
      */
-    public function put()
+    public function put(): void
     {
         $settings = new SettingsModel();
         $post = $_POST;

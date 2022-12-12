@@ -25,7 +25,7 @@ class SettingsModel
     /**
      * Get a user setting
      */
-    public function getUserSetting(int $auth_id, string $setting)
+    public function getUserSetting(int $auth_id, string $setting): mixed
     {
         $key = $auth_id . '_settings_' . $setting;
         return $this->cache->get($key);
@@ -34,17 +34,16 @@ class SettingsModel
     /**
      * set a user setting
      */
-
-    public function setUserSetting($auth_id, $setting, $value)
+    public function setUserSetting(int $auth_id, string $setting, string $value): mixed
     {
-        $key = $auth_id . '_settings_' . $setting;
+        $key = (string)$auth_id . '_settings_' . $setting;
         return $this->cache->set($key, $value);
     }
 
     /**
      * Get allowed values from POST
      */
-    private function getAllowed($post)
+    private function getAllowed($post): array
     {
         $profile_values = array_intersect_key($post, array_flip($this->allowed));
         return $profile_values;
@@ -53,7 +52,7 @@ class SettingsModel
     /**
      * Set profile form values in cache
      */
-    public function setProfileSetting($auth_id, $setting, $values)
+    public function setProfileSetting(int $auth_id, string $setting, array $values)
     {
         $cookie_lifetime = $this->config->get('Cookie.cookie_seconds');
         $cookie = new Cookie($this->config->getSection('Cookie'));
@@ -72,12 +71,13 @@ class SettingsModel
     /**
      * Get a single setting from the 'profile' settings
      */
-    public function getSingleProfileSetting(int $auth_id, string $profile_setting)
+    public function getSingleProfileSetting(int $auth_id, string $profile_setting): ?string
     {
         $profile = $this->getUserSetting($auth_id, 'profile');
 
         if (isset($profile[$profile_setting])) {
             return $profile[$profile_setting];
         }
+        return null;
     }
 }
