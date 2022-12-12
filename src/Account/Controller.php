@@ -11,11 +11,13 @@ use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
 use Parsedown;
 use Pebble\Exception\NotFoundException;
+use Pebble\File;
 
 use App\AppUtils;
 use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
+
 
 use Exception;
 
@@ -392,17 +394,18 @@ class Controller extends AppUtils
      */
     public function terms($params): void
     {
-        $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.md';
 
-        if (!file_exists($markdown_file) || !is_file($markdown_file)) {
+        $terms_dir = '../src/Account/views/terms/';
+        $allowed_files = File::dirToArray($terms_dir);
+
+        if (!in_array($params['document'] . '.md', $allowed_files)) {
             throw new NotFoundException('File does not exists.');
         }
 
+        $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.md';
         $markdown_text = file_get_contents($markdown_file);
         $parsedown = new Parsedown();
-
         $parsedown->setSafeMode(false);
-
         $data['note_markdown'] = $parsedown->text($markdown_text);
 
         $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
