@@ -25,6 +25,7 @@ $LANG['E-mail could not be sent. Try again later.'] = 'E-mail could not be sent.
 $LANG['New password'] = 'New password';
 $LANG['No such account connected to supplied key'] = 'No such account connected to supplied key';
 $LANG['Your password has been updated'] = 'Your password has been updated';
+$LANG['Page not found'] = 'Page not found';
 
 // Translation of file src/Account/ControllerExt.php
 
@@ -148,7 +149,6 @@ $LANG['500 Internal Server Error'] = '500 Internal Server Error';
 
 $LANG['Error trying to signin using Google'] = 'Error trying to signin using Google';
 $LANG['No ID token. Try again later'] = 'No ID token. Try again later';
-$LANG['Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'] = 'Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified';
 $LANG['You are signed in.'] = 'You are signed in.';
 $LANG['Verify your login.'] = 'Verify your login.';
 
@@ -275,7 +275,6 @@ $LANG['Completed tasks'] = 'Completed tasks';
 
 // Translation of file src/Settings/Controller.php
 
-$LANG['Settings'] = 'Settings';
 $LANG['Settings have been updated'] = 'Settings have been updated';
 $LANG['Your settings could not be saved. Check if you are logged in'] = 'Your settings could not be saved. Check if you are logged in';
 
