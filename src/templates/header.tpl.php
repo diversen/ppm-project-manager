@@ -18,8 +18,9 @@ if (!$auth->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $profile['theme_dark_mode'] ?? null;
 }
 
+
 if (!isset($title)) {
-    $title = 'PPM';
+    $title = $config->get('App.site_name');
 }
 
 if (!isset($description)) {
