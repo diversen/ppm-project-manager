@@ -3,7 +3,8 @@
 use Pebble\URL;
 use Diversen\Lang;
 
-require_once 'templates/helpers.php';
+// This is included in the header - but this template does not have a header
+require_once 'templates/utils.php';
 
 if (isset($error)) {
     echo "<p class='error'>$error</p>";
