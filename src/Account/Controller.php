@@ -399,7 +399,7 @@ class Controller extends AppUtils
         $allowed_files = File::dirToArray($terms_dir);
 
         if (!in_array($params['document'] . '.md', $allowed_files)) {
-            throw new NotFoundException('File does not exists.');
+            throw new NotFoundException(Lang::translate('Page not found'));
         }
 
         $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.md';
