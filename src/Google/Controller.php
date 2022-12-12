@@ -23,7 +23,7 @@ class Controller extends AppUtils
      * @route /google/signout
      * @verbs GET
      */
-    public function signout()
+    public function signout(): void
     {
         $this->auth->unlinkCurrentCookie();
         $location = "Location: " . $this->logout_redirect;
@@ -34,7 +34,7 @@ class Controller extends AppUtils
      * @route /google
      * @verbs GET
      */
-    public function index()
+    public function index(): void
     {
         if ($this->auth->isAuthenticated()) {
             $vars = [];
@@ -91,11 +91,15 @@ class Controller extends AppUtils
             return;
         }
 
-        $this->flash->setMessage(Lang::translate('Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'), 'error');
+        $this->flash->setMessage(
+            Lang::translate(
+                'Error trying to signin using Google. You will need to give this application access to your email and the email needs to be verified'), 
+                'error');
+                
         header("Location: " . $this->login_redirect);
     }
 
-    private function createUser($payload)
+    private function createUser($payload): void
     {
         $password = bin2hex(random_bytes(32));
         $this->auth->create($payload['email'], $password);
@@ -114,7 +118,7 @@ class Controller extends AppUtils
         header("Location: " . $this->login_redirect);
     }
 
-    private function loginUser($row)
+    private function loginUser($row): void
     {
 
         // Verify using two factor
@@ -135,6 +139,5 @@ class Controller extends AppUtils
 
         $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
         header("Location: " . $this->login_redirect);
-        return;
     }
 }

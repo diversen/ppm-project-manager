@@ -12,7 +12,7 @@ use Diversen\Lang;
  */
 class DisableRegistration
 {
-    public function check()
+    public function check(): void
     {
         $base_path = URL::getUrlPath(0);
         if ($base_path !== 'account') {

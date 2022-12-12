@@ -30,7 +30,7 @@ class Controller extends AppUtils
      * @route /account/signin
      * @verbs GET
      */
-    public function index()
+    public function index(): void
     {
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
@@ -55,7 +55,7 @@ class Controller extends AppUtils
      * @route /account/logout
      * @verbs GET
      */
-    public function logout()
+    public function logout(): void
     {
         $auth_id = $this->auth->getAuthId();
 
@@ -76,7 +76,7 @@ class Controller extends AppUtils
      * @route /account/signout
      * @verbs GET
      */
-    public function signout()
+    public function signout(): void
     {
         $this->renderPage(
             'Account/views/signout.php',
@@ -88,7 +88,7 @@ class Controller extends AppUtils
      * @route /account/post_login
      * @verbs POST
      */
-    public function post_login()
+    public function post_login(): void
     {
         usleep(100000);
 
@@ -131,7 +131,7 @@ class Controller extends AppUtils
      * redirect to the two factor page
      * @return bool $res True if the user has two factor enabled
      */
-    private function twoFactor(array $response, array $row)
+    private function twoFactor(array $response, array $row): bool
     {
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
@@ -152,7 +152,7 @@ class Controller extends AppUtils
      * @route /account/signup
      * @verbs GET
      */
-    public function signup()
+    public function signup(): void
     {
         $template_vars = [
             'title' => Lang::translate('Email sign up'),
@@ -169,7 +169,7 @@ class Controller extends AppUtils
      * @route /account/verify
      * @verbs GET
      */
-    public function verify()
+    public function verify(): void
     {
         $key = $_GET['key'] ?? '';
 
@@ -197,7 +197,7 @@ class Controller extends AppUtils
      * @route /account/captcha
      * @verbs GET
      */
-    public function captcha()
+    public function captcha(): void
     {
         $captcha = new Captcha();
         $captcha->outputImage();
@@ -207,7 +207,7 @@ class Controller extends AppUtils
      * @route /account/post_signup
      * @verbs POST
      */
-    public function post_signup()
+    public function post_signup(): void
     {
         usleep(100000);
 
@@ -264,7 +264,7 @@ class Controller extends AppUtils
      * @route /account/recover
      * @verbs GET
      */
-    public function recover()
+    public function recover(): void
     {
         $template_vars = [
             'token' => (new CSRF())->getToken(),
@@ -281,7 +281,7 @@ class Controller extends AppUtils
      * @route /account/post_recover
      * @verbs POST
      */
-    public function post_recover()
+    public function post_recover(): void
     {
         $captcha = new Captcha();
 
@@ -338,7 +338,7 @@ class Controller extends AppUtils
      * @route /account/newpassword
      * @verbs GET
      */
-    public function newpassword()
+    public function newpassword(): void
     {
         $key = $_GET['key'] ?? null;
         $row = $this->auth->getByWhere(['random' => $key]);
@@ -361,7 +361,7 @@ class Controller extends AppUtils
      * @route /account/newpassword
      * @verbs POST
      */
-    public function post_newpassword()
+    public function post_newpassword(): void
     {
         $key = $_GET['key'] ?? null;
         $row = $this->auth->getByWhere(['random' => $key]);
@@ -390,7 +390,7 @@ class Controller extends AppUtils
      * @route /account/terms/:document
      * @verbs GET,POST
      */
-    public function terms($params)
+    public function terms($params): void
     {
         $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.md';
 

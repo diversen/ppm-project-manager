@@ -23,7 +23,7 @@ class Mail
      * @param array $row
      * @return boolean $ret
      */
-    public function sendSignupMail(array $row)
+    public function sendSignupMail(array $row): void
     {
         $vars = $this->config->getSection('App');
         $activation_url = (new Server())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
@@ -39,7 +39,7 @@ class Mail
      * @param array $row
      * @return boolean $ret
      */
-    public function sendRecoverMail(array $row)
+    public function sendRecoverMail(array $row): void
     {
         $vars = $this->config->getSection('App');
         $activation_url = (new Server())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];

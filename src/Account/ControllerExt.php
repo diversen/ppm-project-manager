@@ -8,6 +8,7 @@ use Diversen\Lang;
 use Pebble\CSRF;
 use App\Google\GoogleUtils;
 use App\Account\Controller;
+use Exception;
 
 /**
  * Extends the normal controler to include google auth
@@ -23,7 +24,7 @@ class ControllerExt extends Controller
      * @route /account/signin
      * @verbs GET
      */
-    public function index()
+    public function index(): void
     {
         $google_auth_url = $this->getGoogleAuthUrl();
         $template_vars = ['title' => Lang::translate('Sign out')];
@@ -46,10 +47,10 @@ class ControllerExt extends Controller
         }
     }
 
-    private function getGoogleAuthUrl()
+    private function getGoogleAuthUrl(): string
     {
         if (!$this->config->get('Account.google')) {
-            return false;
+            return throw new Exception("Configurations file 'google.php' is not enabled", 500);
         }
 
         $google_helpers = new GoogleUtils();

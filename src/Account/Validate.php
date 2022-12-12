@@ -6,7 +6,6 @@ namespace App\Account;
 
 use Pebble\CSRF;
 use Diversen\Lang;
-use App\AppMain;
 use App\AppUtils;
 
 class Validate extends AppUtils
@@ -16,7 +15,7 @@ class Validate extends AppUtils
         parent::__construct();
     }
 
-    public function postLogin()
+    public function postLogin(): array
     {
         $response = ['error' => true];
 
@@ -64,7 +63,7 @@ class Validate extends AppUtils
         return true;
     }
 
-    private function token()
+    private function token(): bool
     {
         $csrf = new CSRF();
         if (!$csrf->validateToken()) {
