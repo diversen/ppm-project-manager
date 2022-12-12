@@ -10,7 +10,7 @@ use App\Settings\SettingsModel;
 use Pebble\HTTP\AcceptLanguage;
 
 /**
- * Middleware that loads language and timezone based on user settings
+ * Loads language and timezone based on user settings
  * Fallback to using browser language
  */
 class SetupIntl extends AppUtils

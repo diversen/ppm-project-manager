@@ -30,8 +30,8 @@ class AppMain extends AppBase
         $this->sessionStart();
         $this->setDebug();
 
+        (new SetupIntl())->setupIntl();
         $router = new Router();
-        $router->use([new SetupIntl(), 'setupIntl']);
 
         $router->setFasterRouter();
         $router->addClass(\App\Test\Controller::class);
