@@ -75,8 +75,10 @@ class Pebble {
     /**
      * Path a segment of the window.location.pathname
      */
-    static getPathPart(num) {
-        var path = window.location.pathname;
+    static getPathPart(num, path) {
+        if (!path) {
+            path = window.location.pathname;
+        }
         var ary = path.split('/');
         ary.shift();
         return ary[num];
