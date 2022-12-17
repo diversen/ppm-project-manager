@@ -18,12 +18,14 @@ class MoveTasks extends AppUtils
     public function __construct()
     {
         parent::__construct();
-        $this->date_utils = new DateUtils();
     }
 
     public function run()
     {
         $this->log->info("MoveTasks. Cron started");
+
+        $this->date_utils = new DateUtils();
+
         $users = $this->db->getAll('auth', ['verified' => 1, 'locked' => 0]);
 
         foreach ($users as $user) {
