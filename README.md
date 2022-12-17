@@ -34,7 +34,7 @@ Install composer packages:
 
     cd ppm-project-manager && composer install
 
-Create a `config-locale` dir were you can different settings from machine to machine. 
+Create a `config-locale` dir were you can store different settings from machine to machine. 
 
 The `config-locale` dir will override settings in `config`.
 
@@ -71,18 +71,22 @@ On an apache2 server you will need something like the following added to your co
 
 ## Login
 
-Point a browser to http://localhost:8000, create an account and log in.
-
-In the folder `config-locale` you can add any locale configuration the will override settings in `config`. 
+Point a browser to http://localhost:8000, create an account and log in. There is no verification of email address.
 
 Using SMTP for email confirmation:
 
-* Remove `no_email_verify` in `Config/Account.php` or set it to false. 
-* Edit the `SMTP` configuration in `config/SMTP.php`. 
+    cp config/SMTP.php config-locale/SMTP.php
+    cp config/Account.php config-locale/Acoount.php
+
+* Remove `no_email_verify` in `Config-locale/Account.php` or set it to false. 
+* Edit the `SMTP` configuration in `config-locale/SMTP.php`. 
 
 Google login using OAuth:
 
-* Setup google OAuth in `config/Google.php`.
+    cp config/Google.php config-locale/Google.php
+
+* Set `google` in `config-locale/Account.php` to `true`.
+* Setup google OAuth in `config-locale/Google.php`.
 
 # Docker commands
 
