@@ -29,10 +29,15 @@ Works on:  `PHP >= 8.1`
 Clone the source code: 
 
     git clone https://github.com/diversen/ppm-project-manager
+    cd ppm-project-manager
+
+You may want to checkout a specific version:
+
+    git checkout 2.0.10
 
 Install composer packages:
 
-    cd ppm-project-manager && composer install
+    composer install
 
 Create a `config-locale` dir were you can store different settings from machine to machine. 
 
