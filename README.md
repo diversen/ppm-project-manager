@@ -31,10 +31,6 @@ Clone the source code:
     git clone https://github.com/diversen/ppm-project-manager
     cd ppm-project-manager
 
-You may want to checkout a specific version:
-
-    git checkout v2.0.10
-
 Install composer packages:
 
     composer install
