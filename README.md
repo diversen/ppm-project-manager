@@ -33,7 +33,7 @@ Clone the source code:
 
 You may want to checkout a specific version:
 
-    git checkout 2.0.10
+    git checkout v2.0.10
 
 Install composer packages:
 
