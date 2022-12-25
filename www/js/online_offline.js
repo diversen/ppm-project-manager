@@ -1,6 +1,5 @@
 import { Pebble } from '/js/pebble.js';
 
-
 window.addEventListener('offline',
     function (e) {
         Pebble.removeFlashMessages();
