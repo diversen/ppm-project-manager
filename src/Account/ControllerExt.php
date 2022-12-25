@@ -26,14 +26,13 @@ class ControllerExt extends Controller
      */
     public function index(): void
     {
-
         if ($this->config->get('Account.google')) {
             $google_auth_url = $this->getGoogleAuthUrl();
         } else {
             $google_auth_url = null;
         }
 
-        
+
         $template_vars = ['title' => Lang::translate('Sign out')];
         if ($this->auth->isAuthenticated()) {
             $this->renderPage(

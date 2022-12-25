@@ -5,11 +5,11 @@ use App\AppMain;
 $use_theme_dark_mode = $_COOKIE['theme_dark_mode'] ?? false;
 
 if (!isset($title)) {
-    $title = '';
+    $title = 'Error';
 }
 
 if (!isset($description)) {
-    $description = '';
+    $description = 'Error';
 }
 
 ?>

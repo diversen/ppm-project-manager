@@ -17,7 +17,6 @@ class MoveTasks extends AppUtils
     private $date_utils;
     public function __construct()
     {
-        
     }
 
     public function run()

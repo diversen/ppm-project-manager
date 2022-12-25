@@ -9,7 +9,7 @@ $settings = new SettingsModel();
 $app_main = new AppMain();
 $auth = $app_main->getAuth();
 $config = $app_main->getConfig();
-$analytics_tag = $config->get('Analytics.tag');
+$template = $app_main->getTemplate();
 
 if (!$auth->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
     $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
@@ -63,9 +63,10 @@ if (file_exists('../src/templates/utils.php')) {
 
     <?php
 
-        if (file_exists('../src/templates/parts/head_scripts.php')) {
-            require 'templates/parts/head_scripts.php';
-        }
+    if (file_exists('../src/templates/parts/head_scripts.php')) {
+        require 'templates/parts/head_scripts.php';
+    }
+    
     ?>
 </head>
 <?php
@@ -75,6 +76,7 @@ if (file_exists('../src/templates/parts/body_begin.php')) {
 }
 
 ?>
+
 <body>
     <div class="page">
 
