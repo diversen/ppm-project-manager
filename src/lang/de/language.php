@@ -32,6 +32,7 @@ $LANG['Please enter a valid E-mail'] = 'Bitte geben Sie eine gültige Email-Adre
 $LANG['Passwords does not match'] = 'Passwort ist falsch';
 $LANG['Passwords should be at least 7 chars long'] = 'Passwörter sollten mindestens 7 Zeichen lang sein';
 $LANG['Image text does not match'] = 'Bildtext stimmt nicht überein';
+$LANG['Google login is disabled'] = 'Google-Login ist deaktiviert';
 $LANG['Hi'] = 'Hi';
 $LANG['You have connected with the following site because you have lost your password'] = 'Sie haben sich mit der folgenden Website verbunden, weil Sie Ihr Passwort vergessen haben';
 $LANG['If you have not requested a new password then you can just delete this message'] = 'Wenn Sie kein neues Passwort angefordert haben, können Sie diese Nachricht einfach löschen';

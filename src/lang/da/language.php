@@ -32,6 +32,7 @@ $LANG['Please enter a valid E-mail'] = 'Indtast venligst en gyldig e-mail';
 $LANG['Passwords does not match'] = 'Adgangskoder stemmer ikke overens';
 $LANG['Passwords should be at least 7 chars long'] = 'Adgangskoder skal være mindst 7 tegn lange';
 $LANG['Image text does not match'] = 'Billedtekst stemmer ikke overens';
+$LANG['Google login is disabled'] = 'Google-login er deaktiveret';
 $LANG['Hi'] = 'Hej';
 $LANG['You have connected with the following site because you have lost your password'] = 'Du har oprettet forbindelse til følgende websted, fordi du har mistet din adgangskode';
 $LANG['If you have not requested a new password then you can just delete this message'] = 'Hvis du ikke har anmodet om en ny adgangskode, kan du bare slette denne besked';

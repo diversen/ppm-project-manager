@@ -50,6 +50,10 @@ $LANG['Passwords does not match'] = 'Passwords does not match';
 $LANG['Passwords should be at least 7 chars long'] = 'Passwords should be at least 7 chars long';
 $LANG['Image text does not match'] = 'Image text does not match';
 
+// Translation of file src/Account/views/google_disabled.php
+
+$LANG['Google login is disabled'] = 'Google login is disabled';
+
 // Translation of file src/Account/views/mails/recover_email.php
 
 $LANG['Hi'] = 'Hi';
