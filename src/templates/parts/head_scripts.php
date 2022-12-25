@@ -21,6 +21,7 @@ use App\AppMain;
     import {FlashEvents} from '/js/flash_events.js?v=<?= AppMain::VERSION ?>';
     import {setActiveClass} from '/js/set_active_class.js?v=<?= AppMain::VERSION ?>';
     import {serviceWorker} from '/js/service_worker.js?v=<?= AppMain::VERSION ?>';
+    import {} from '/js/cookie_consent.js?v=<?=AppMain::VERSION?>';
     
     // set active class on menu links
     setActiveClass();

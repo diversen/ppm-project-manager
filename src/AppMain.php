@@ -18,7 +18,6 @@ class AppMain extends AppBase
 
     public const VERSION = "v2.1.0";
 
-
     public function run()
     {
 

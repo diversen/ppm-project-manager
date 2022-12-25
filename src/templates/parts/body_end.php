@@ -1,7 +1,6 @@
 <?php
 
 use Diversen\Lang;
-use App\AppMain;
 
 ?>
 <div id="cookie-consent">
@@ -17,6 +16,3 @@ use App\AppMain;
         <button id="cookie-reject" class="reject" type="button"><?=Lang::translate('Reject')?></button>
     </p>
 </div>
-<script type="module" nonce="<?=AppMain::getNonce()?>" >
-    import {} from '/js/cookie_consent.js?v=<?=AppMain::VERSION?>';
-</script>
