@@ -18,28 +18,5 @@ use App\AppMain;
     </p>
 </div>
 <script type="module" nonce="<?=AppMain::getNonce()?>" >
-    import Cookies from '/js/js.cookie.min.js?v=<?=AppMain::VERSION?>';
-
-    var cookieConsentAnswer = Cookies.get('cookie-consent');
-    if (!cookieConsentAnswer) {
-        const cookieConsent = document.getElementById('cookie-consent');
-        cookieConsent.style.display = 'block';
-    }
-
-    const cookieAccept = document.getElementById('cookie-accept');
-    const cookieReject = document.getElementById('cookie-reject');
-    const cookieConsentDays = 182
-    
-    cookieAccept.addEventListener('click', () => {
-        Cookies.set('cookie-consent', 'enabled', { expires: cookieConsentDays });
-        const cookieConsent = document.getElementById('cookie-consent');
-        cookieConsent.style.display = 'none';
-    })
-
-    cookieReject.addEventListener('click', () => {
-        Cookies.set('cookie-consent', 'disabled', { expires: cookieConsentDays });
-        const cookieConsent = document.getElementById('cookie-consent');
-        cookieConsent.style.display = 'none';
-    })
-
+    import {} from '/js/cookie_consent.js?v=<?=AppMain::VERSION?>';
 </script>

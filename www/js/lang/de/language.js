@@ -31,6 +31,7 @@ const Translation =
     "Passwords does not match": "Passwort ist falsch",
     "Passwords should be at least 7 chars long": "Passw\u00f6rter sollten mindestens 7 Zeichen lang sein",
     "Image text does not match": "Bildtext stimmt nicht \u00fcberein",
+    "Google login is disabled": "Google-Login ist deaktiviert",
     "Hi": "Hi",
     "You have connected with the following site because you have lost your password": "Sie haben sich mit der folgenden Website verbunden, weil Sie Ihr Passwort vergessen haben",
     "If you have not requested a new password then you can just delete this message": "Wenn Sie kein neues Passwort angefordert haben, k\u00f6nnen Sie diese Nachricht einfach l\u00f6schen",

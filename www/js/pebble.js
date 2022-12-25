@@ -15,8 +15,10 @@ class Pebble {
         if (remove_after) {
             class_random = 'random_' + (Math.random() + 1).toString(36).substring(2);
             setTimeout(function () {
-                console.log(class_random)
-                document.querySelector('.' + class_random).remove();
+                let elem = document.querySelector('.' + class_random)
+                if (elem) {
+                    elem.remove();
+                }
             }, remove_after)
         }
 
@@ -146,66 +148,10 @@ class Pebble {
         return Pebble.asyncPost(endpoint, error_data);
     }
 
-    /**
-     * Remove flash messages .flash-remove
-     */
-    static removeFlashMessages() {
-        let elems = document.querySelectorAll('.flash-remove')
-        elems.forEach(function (elem) {
-            elem.remove();
-        })
-    }
-
-    /**
-     * Redirect to URL
-     */
     static redirect(url) {
         // Add to window history
         // window.location.assign(url)
         window.location.replace(url)
-    }
-
-
-    /**
-     * @param {*} settings 
-     */
-    static addPostEventListener(settings) {
-
-        const route = settings.route;
-        const eventListenerElem = document.querySelector(settings.eventElem) || document.querySelector('#click');
-        const loaderElem = document.querySelector(settings.loaderElem) || document.querySelector('.loadingspinner');
-        const formElem = document.querySelector(settings.formElem) || document.querySelector('#form');
-
-        const onSuccessCallbackDefault = function (response) {
-            if (response.error === false) {
-                if (response.redirect) {
-                    Pebble.redirect(response.redirect)
-                } else {
-                    Pebble.setFlashMessage(response.message, 'success');
-                }
-            } else {
-                Pebble.setFlashMessage(response.message, 'error');
-            }
-        };
-
-        const onSuccessCallback = settings.onSuccessCallback || onSuccessCallbackDefault 
-            
-        eventListenerElem.addEventListener("click", async function(e) {
-
-            e.preventDefault();
-            loaderElem.classList.toggle('hidden');
-    
-            try {
-                const data = new FormData(formElem);
-                const res = await Pebble.asyncPost(route, data);
-                onSuccessCallback(res);
-
-            } catch (e) {
-                await Pebble.asyncPostError('/error/log', e.stack);
-            }
-    
-            loaderElem.classList.toggle('hidden');
-        });
     }
 }
 

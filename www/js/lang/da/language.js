@@ -31,6 +31,7 @@ const Translation =
     "Passwords does not match": "Adgangskoder stemmer ikke overens",
     "Passwords should be at least 7 chars long": "Adgangskoder skal v\u00e6re mindst 7 tegn lange",
     "Image text does not match": "Billedtekst stemmer ikke overens",
+    "Google login is disabled": "Google-login er deaktiveret",
     "Hi": "Hej",
     "You have connected with the following site because you have lost your password": "Du har oprettet forbindelse til f\u00f8lgende websted, fordi du har mistet din adgangskode",
     "If you have not requested a new password then you can just delete this message": "Hvis du ikke har anmodet om en ny adgangskode, kan du bare slette denne besked",

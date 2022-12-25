@@ -28,6 +28,20 @@ class NotificationUtils {
         return false;
     }
 
+    async canSendNotification() {
+        const isEnabled = await this.isNotificationEnabled()
+        if (!isEnabled) {
+            return false;
+        }
+
+        if (this.isNotificationPaused()) {
+            return false;
+        }
+
+        return true;
+    }
+
+
     // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
     async sendNotification(message, options) {
 
@@ -40,7 +54,7 @@ class NotificationUtils {
             return false;
         }
 
-        let promise = navigator.serviceWorker.ready.then(function (registration) {
+        navigator.serviceWorker.ready.then(function (registration) {
             registration.showNotification(message, options);
         }).catch(function (e) {
             console.log(e)
