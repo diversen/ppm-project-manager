@@ -61,13 +61,13 @@ function Timer() {
         return i;
     }
 
-    timer_start = document.getElementById('timer_start');
+    const timer_start = document.getElementById('timer_start');
     timer_start.addEventListener('click', function (e) {
         console.log('started clock')
         startTimer();
     });
 
-    let timer_pause = document.getElementById('timer_pause');
+    const timer_pause = document.getElementById('timer_pause');
     timer_pause.addEventListener('click', function (e) {
 
         let timer_state = sessionStorage.getItem('timer_state')
@@ -80,7 +80,7 @@ function Timer() {
         }
     });
 
-    timer_reset = document.getElementById('timer_reset');
+    const timer_reset = document.getElementById('timer_reset');
     timer_reset.addEventListener('click', function (e) {
         resetTimer();
     });
@@ -149,4 +149,4 @@ function Timer() {
     }
 }
 
-Timer();
+export { Timer}
