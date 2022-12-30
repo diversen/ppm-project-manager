@@ -6,3 +6,4 @@ config-locale
 .migration
 .php-cs-fixer.cache
 composer.lock
+start-project.sh
