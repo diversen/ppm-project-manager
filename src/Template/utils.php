@@ -3,7 +3,7 @@
 use Diversen\Lang;
 
 /**
- * Some helper functions for templates
+ * Some helper functions for the Template
  */
 
 /**

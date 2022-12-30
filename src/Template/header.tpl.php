@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use App\Utils\TemplateUtils;
+use App\Template\TemplateUtils;
 use App\AppMain;
 
 $template_utils = new TemplateUtils();
 $use_dark_mode = $template_utils->useDarkMode();
 
-if (file_exists('../src/templates/utils.php')) {
-    require_once "templates/utils.php";
+if (file_exists('../src/Template/utils.php')) {
+    require_once "Template/utils.php";
 }
 
 ?>
@@ -42,16 +42,16 @@ if (file_exists('../src/templates/utils.php')) {
 
     <?php
 
-    if (file_exists('../src/templates/parts/head_scripts.php')) {
-        require 'templates/parts/head_scripts.php';
+    if (file_exists('../src/Template/parts/head_scripts.tpl.php')) {
+        require 'Template/parts/head_scripts.tpl.php';
     }
 
     ?>
 </head>
 <?php
 
-if (file_exists('../src/templates/parts/body_begin.php')) {
-    require 'templates/parts/body_begin.php';
+if (file_exists('../src/Template/parts/body_begin.tpl.php')) {
+    require 'Template/parts/body_begin.tpl.php';
 }
 
 ?>

@@ -54,8 +54,8 @@ class AppUtils extends StdUtils
             $data['description'] = $title;
         }
 
-        $this->template->render('templates/header.tpl.php', $data, $options);
+        $this->template->render('Template/header.tpl.php', $data, $options);
         $this->template->render($template, $data, $options);
-        $this->template->render('templates/footer.tpl.php', $data, $options);
+        $this->template->render('Template/footer.tpl.php', $data, $options);
     }
 }

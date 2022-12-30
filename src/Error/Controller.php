@@ -75,9 +75,9 @@ class Controller extends AppUtils
             'message' => $error_message,
         ];
 
-        $this->template->render('templates/header_error.tpl.php', $data);
+        $this->template->render('Template/header_error.tpl.php', $data);
         $this->template->render('Error/error.tpl.php', $data);
-        $this->template->render('templates/footer.tpl.php', $data);
+        $this->template->render('Template/footer.tpl.php', $data);
     }
 
     private function getEnv()
