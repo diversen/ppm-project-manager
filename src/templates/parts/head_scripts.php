@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\AppMain;
 
+$app_main = (new AppMain())->getAuth();
+
 ?>
 
 <!-- prevent loading of same script twice, e.g. inside imports -->
@@ -24,8 +26,6 @@ use App\AppMain;
     import {setActiveClass} from '/js/set_active_class.js?v=<?= AppMain::VERSION ?>';
     import {serviceWorker} from '/js/service_worker.js?v=<?= AppMain::VERSION ?>';
     import {} from '/js/cookie_consent.js?v=<?=AppMain::VERSION?>';
-    import { Timer } from '/js/timer.js?version=<?=AppMain::VERSION?>';
-    const timer = new Timer();
     
     // set active class on menu links
     setActiveClass();
@@ -33,3 +33,13 @@ use App\AppMain;
     // Loads service worker
     serviceWorker();
 </script>
+<?php
+
+$is_authenticated = $app_main->isAuthenticated();
+
+if ($is_authenticated): ?>
+<script type="module" nonce="<?= AppMain::getNonce() ?>">
+    import { Timer } from '/js/timer.js?version=<?=AppMain::VERSION?>';
+    const timer = new Timer();
+</script>
+<?php endif; ?>
