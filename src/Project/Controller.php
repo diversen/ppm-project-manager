@@ -72,7 +72,7 @@ class Controller extends AppUtils
     public function view(array $params)
     {
         $this->app_acl->authUserIsProjectOwner($params['project_id']);
-        
+
         $template_data = $this->project_model->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
 

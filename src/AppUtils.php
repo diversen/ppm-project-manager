@@ -40,7 +40,7 @@ class AppUtils extends StdUtils
 
 
     /**
-     * Render a template as HTML including a header and footer 
+     * Render a template as HTML including a header and footer
      */
     public function renderPage(string $template, array $data = [], $options = [])
     {
@@ -48,7 +48,7 @@ class AppUtils extends StdUtils
         if (!$title) {
             $data['title'] = $this->config->get('App.site_name');
         }
-        
+
         $description = $data['description'] ?? null;
         if (!$description) {
             $data['description'] = $title;

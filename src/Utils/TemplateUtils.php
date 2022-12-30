@@ -14,7 +14,6 @@ use Diversen\Lang;
  */
 class TemplateUtils extends AppUtils
 {
-
     public function getHomeURL(): string
     {
         $is_authenticated = $this->auth->isAuthenticated();
@@ -43,8 +42,7 @@ class TemplateUtils extends AppUtils
 
     public function renderMainMenu(): void
     {
-        $is_authenticated = $this->auth->isAuthenticated();
-    ?>
+        $is_authenticated = $this->auth->isAuthenticated(); ?>
         <div class="app-menu">
             <?php if (!$is_authenticated) : ?>
                 <a href="/account/signin" data-path="/account/signin"><?= Lang::translate('Sign in') ?></a>
@@ -78,24 +76,19 @@ class TemplateUtils extends AppUtils
 
     public function renderFlashMessages(): void
     {
-        $flash_messages = $this->flash->getMessages();
-        ?>
+        $flash_messages = $this->flash->getMessages(); ?>
         <div class="flash-messages">
             <?php
 
             foreach ($flash_messages as $message) :
                 $remove_class = '';
-                if (isset($message['options']['flash_remove'])) {
-                    $remove_class = ' flash-remove ';
-                }
-
-            ?>
+        if (isset($message['options']['flash_remove'])) {
+            $remove_class = ' flash-remove ';
+        } ?>
                 <div class="flash flash-<?= $message['type'] ?> <?= $remove_class ?>"><?= $message['message'] ?></div>
             <?php
 
-            endforeach;
-
-            ?>
+            endforeach; ?>
         </div>
         <?php
     }

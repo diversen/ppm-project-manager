@@ -40,5 +40,3 @@ $use_dark_mode = $_COOKIE['theme_dark_mode'] ?? false;
 <div class="page">
 
 <?php
-
-
