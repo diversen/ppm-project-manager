@@ -64,8 +64,8 @@ class TemplateUtils extends AppUtils
         <?php endif;
 
 
-        if ($this->auth->isAuthenticated()): ?>
-            <div id="timer" class="timer" >
+        if ($this->auth->isAuthenticated()) : ?>
+            <div id="timer" class="timer">
                 <span id="timer_display"></span>
                 <button id="timer_start" class="button-timer button-small">Start</button>
                 <button id="timer_pause" class="button-timer button-small">Pause</button>
@@ -82,15 +82,15 @@ class TemplateUtils extends AppUtils
 
             foreach ($flash_messages as $message) :
                 $remove_class = '';
-        if (isset($message['options']['flash_remove'])) {
-            $remove_class = ' flash-remove ';
-        } ?>
+                if (isset($message['options']['flash_remove'])) {
+                    $remove_class = ' flash-remove ';
+                } ?>
                 <div class="flash flash-<?= $message['type'] ?> <?= $remove_class ?>"><?= $message['message'] ?></div>
             <?php
 
             endforeach; ?>
         </div>
-        <?php
+<?php
     }
 
     public function useDarkMode()
