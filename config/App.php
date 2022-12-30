@@ -11,4 +11,6 @@ return [
 	'base_path' => dirname(__FILE__) . '/..',
 	'server_url' => 'http://localhost:8000',
 	'pager_limit' => 10,
+	'home_url_authenticated' => '/overview',
+	'home_url' => '/',
 ];
