@@ -69,15 +69,15 @@ class Controller extends AppUtils
 
     private function baseError(string $title, string $error_message)
     {
-        $error_vars = [
+        $data = [
             'title' => $title,
+            'description' => $title,
             'message' => $error_message,
         ];
 
-        $this->renderPage(
-            'Error/error.tpl.php',
-            $error_vars
-        );
+        $this->template->render('templates/header_error.tpl.php', $data);
+        $this->template->render('Error/error.tpl.php', $data);
+        $this->template->render('templates/footer.tpl.php', $data);
     }
 
     private function getEnv()
