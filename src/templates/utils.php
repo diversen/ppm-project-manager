@@ -3,6 +3,10 @@
 use Diversen\Lang;
 
 /**
+ * Some helper functions for templates
+ */
+
+/**
  * Get a priority css class name from task
  */
 function get_task_priority_class($task)

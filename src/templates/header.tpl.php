@@ -2,30 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Settings\SettingsModel;
+use App\Utils\TemplateUtils;
 use App\AppMain;
 
-$settings = new SettingsModel();
-$app_main = new AppMain();
-$auth = $app_main->getAuth();
-$config = $app_main->getConfig();
-$template = $app_main->getTemplate();
-
-if (!$auth->isAuthenticated() && isset($_COOKIE['theme_dark_mode'])) {
-    $use_theme_dark_mode = $_COOKIE['theme_dark_mode'];
-} else {
-    $profile = $settings->getUserSetting($auth->getAuthId(), 'profile');
-    $use_theme_dark_mode = $profile['theme_dark_mode'] ?? null;
-}
-
-
-if (!isset($title)) {
-    $title = $config->get('App.site_name');
-}
-
-if (!isset($description)) {
-    $description = $title;
-}
+$template_utils = new TemplateUtils();
+$use_dark_mode = $template_utils->useDarkMode();
 
 if (file_exists('../src/templates/utils.php')) {
     require_once "templates/utils.php";
@@ -37,16 +18,14 @@ if (file_exists('../src/templates/utils.php')) {
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title><?= $title ?></title>
     <meta name="description" content="<?= $description ?>">
     <meta name="theme-color" content="#ffffff">
 
     <?php
 
-    if ($use_theme_dark_mode) : ?>
+    if ($use_dark_mode) : ?>
         <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/dark.min.css?v=<?= AppMain::VERSION ?>">
     <?php else : ?>
         <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/light.min.css?v=<?= AppMain::VERSION ?>">
@@ -66,7 +45,7 @@ if (file_exists('../src/templates/utils.php')) {
     if (file_exists('../src/templates/parts/head_scripts.php')) {
         require 'templates/parts/head_scripts.php';
     }
-    
+
     ?>
 </head>
 <?php
@@ -82,5 +61,6 @@ if (file_exists('../src/templates/parts/body_begin.php')) {
 
         <?php
 
-        require 'templates/main_menu.tpl.php';
-        require 'templates/flash.tpl.php';
+        $template_utils->renderLogo();
+        $template_utils->renderMainMenu();
+        $template_utils->renderFlashMessages();

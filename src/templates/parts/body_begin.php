@@ -6,8 +6,11 @@ use App\AppMAin;
 use Pebble\Service\ConfigService;
 
 $config = (new ConfigService())->getConfig();
-
 $analytics_tag = $config->get('Analytics.tag');
+
+if (!$analytics_tag) {
+    return;
+}
 
 ?>
 <!-- Google tag (gtag.js) -->

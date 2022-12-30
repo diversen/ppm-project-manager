@@ -2,15 +2,7 @@
 
 use App\AppMain;
 
-$use_theme_dark_mode = $_COOKIE['theme_dark_mode'] ?? false;
-
-if (!isset($title)) {
-    $title = 'Error';
-}
-
-if (!isset($description)) {
-    $description = 'Error';
-}
+$use_dark_mode = $_COOKIE['theme_dark_mode'] ?? false;
 
 ?>
 <!DOCTYPE html>
@@ -21,16 +13,15 @@ if (!isset($description)) {
     <title><?=$title?></title>
     <meta name="description" content="<?=$description?>">
     <meta name="theme-color" content="#ffffff">
-    
     <?php
 
-    if ($use_theme_dark_mode): ?>
+    if ($use_dark_mode): ?>
     <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/dark.min.css?version=<?=AppMain::VERSION?>">
     <?php else: ?>
     <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/light.min.css?version=<?=AppMain::VERSION?>">
     <?php endif; ?>
 
-    <link rel="stylesheet" href="/css/default.css?v=1.1">
+    <link rel="stylesheet" href="/css/default.css?version=<?=AppMain::VERSION?>">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?version=<?=AppMain::VERSION?>">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?version=<?=AppMain::VERSION?>">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png?version=<?=AppMain::VERSION?>">
@@ -49,3 +40,5 @@ if (!isset($description)) {
 <div class="page">
 
 <?php
+
+

@@ -24,6 +24,8 @@ use App\AppMain;
     import {setActiveClass} from '/js/set_active_class.js?v=<?= AppMain::VERSION ?>';
     import {serviceWorker} from '/js/service_worker.js?v=<?= AppMain::VERSION ?>';
     import {} from '/js/cookie_consent.js?v=<?=AppMain::VERSION?>';
+    import { Timer } from '/js/timer.js?version=<?=AppMain::VERSION?>';
+    const timer = new Timer();
     
     // set active class on menu links
     setActiveClass();
