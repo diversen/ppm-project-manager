@@ -199,7 +199,7 @@ $LANG['thursday'] = 'thursday';
 $LANG['friday'] = 'friday';
 $LANG['saturday'] = 'saturday';
 $LANG['sunday'] = 'sunday';
-$LANG['Your activity: <span class="notranslate">{activity}</span> '] = 'Your activity: <span class="notranslate">{activity}</span> ';
+$LANG['Your activity:'] = 'Your activity:';
 $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';
 $LANG['Time'] = 'Time';
@@ -210,7 +210,7 @@ $LANG['Show full week'] = 'Show full week';
 $LANG['Show today'] = 'Show today';
 $LANG['Move exceeded to today'] = 'Move exceeded to today';
 $LANG['Add new task'] = 'Add new task';
-$LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
+$LANG['Activity this week:'] = 'Activity this week:';
 
 // Translation of file src/Project/Controller.php
 
@@ -392,6 +392,36 @@ $LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Note'] = 'Note';
 
+// Translation of file src/Template/TemplateUtils.php
+
+$LANG['Sign in'] = 'Sign in';
+$LANG['Email sign up'] = 'Email sign up';
+$LANG['Lost password'] = 'Lost password';
+$LANG['Home'] = 'Home';
+$LANG['Projects'] = 'Projects';
+$LANG['Settings'] = 'Settings';
+$LANG['Sign out'] = 'Sign out';
+$LANG['Toggle timer'] = 'Toggle timer';
+$LANG['Timer'] = 'Timer';
+$LANG['Admin'] = 'Admin';
+
+// Translation of file src/Template/footer.tpl.php
+
+$LANG['Notice'] = 'Notice';
+$LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
+$LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
+$LANG['Read more'] = 'Read more';
+$LANG['Accept'] = 'Accept';
+$LANG['Reject'] = 'Reject';
+
+// Translation of file src/Template/utils.php
+
+$LANG['Today'] = 'Today';
+$LANG['Delete'] = 'Delete';
+$LANG['Edit'] = 'Edit';
+$LANG['New'] = 'New';
+$LANG['Time'] = 'Time';
+
 // Translation of file src/Test/translate.tpl.php
 
 $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
@@ -451,33 +481,3 @@ $LANG['If you create a new QR code then the old code will be deleted'] = 'If you
 $LANG['Verify login using two factor authentication'] = 'Verify login using two factor authentication';
 $LANG['1. Enter code as seen on your phone'] = '1. Enter code as seen on your phone';
 $LANG['Submit'] = 'Submit';
-
-// Translation of file src/templates/main_menu.tpl.php
-
-$LANG['Sign in'] = 'Sign in';
-$LANG['Email sign up'] = 'Email sign up';
-$LANG['Lost password'] = 'Lost password';
-$LANG['Home'] = 'Home';
-$LANG['Projects'] = 'Projects';
-$LANG['Settings'] = 'Settings';
-$LANG['Sign out'] = 'Sign out';
-$LANG['Toggle timer'] = 'Toggle timer';
-$LANG['Timer'] = 'Timer';
-$LANG['Admin'] = 'Admin';
-
-// Translation of file src/templates/parts/body_end.php
-
-$LANG['Notice'] = 'Notice';
-$LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
-$LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
-$LANG['Read more'] = 'Read more';
-$LANG['Accept'] = 'Accept';
-$LANG['Reject'] = 'Reject';
-
-// Translation of file src/templates/utils.php
-
-$LANG['Today'] = 'Today';
-$LANG['Delete'] = 'Delete';
-$LANG['Edit'] = 'Edit';
-$LANG['New'] = 'New';
-$LANG['Time'] = 'Time';
