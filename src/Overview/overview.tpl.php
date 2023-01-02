@@ -115,8 +115,8 @@ function render_week($week_data, $week_state, $week_user_day_times)
     $date = $date_time_user->format('M d, Y'); ?>
 
         <p>
-            <strong title="" <?= $day_class ?>><?= ucfirst(get_day_name($day_number)) ?> </strong> (<?= $date ?>)
-            <?= Lang::translate('Your activity: <span class="notranslate">{activity}</span> ', array('activity' => $week_user_day_times[$ts])) ?>
+            <strong <?= $day_class ?> ><?= ucfirst(get_day_name($day_number)) ?> </strong>. <?= $date ?>.
+            <?= Lang::translate('Your activity:') . ' ' . $week_user_day_times[$ts]?>
         </p>
         <table>
             <thead>
@@ -149,7 +149,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 function render_navigation($week_state, $week_user_total, $has_projects)
 {
     ?>
-    <h3><?= Lang::translate('Week') ?> <?= $week_state['week_number_delta'] ?></h3>
+    <h3 class="sub-menu"><?= Lang::translate('Week') ?> <?= $week_state['week_number_delta'] ?></h3>
     <div class="action-links">
         <a href="/overview?week_delta=<?= $week_state['prev'] ?>">
             <?= Lang::translate('Show week') ?> <?= $week_state['week_number_delta_prev'] ?>
@@ -186,7 +186,7 @@ function render_navigation($week_state, $week_user_total, $has_projects)
         <?php endif; ?>
     </div>
     <p>
-        <?= Lang::translate('Activity this week: <span class="notranslate">{week_user_total}</span>', array('week_user_total' => $week_user_total)) ?>
+        <?= Lang::translate('Activity this week:') . ' ' . $week_user_total ?>
     </p>
 
 <?php

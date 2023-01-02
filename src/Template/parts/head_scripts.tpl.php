@@ -7,15 +7,11 @@ use App\AppMain;
 $app_main = (new AppMain())->getAuth();
 
 ?>
-
-<!-- prevent loading of same script twice, e.g. inside imports -->
-<!-- 76 procent usage of browsers support import maps at this date: 2022-12-25 -->
 <script type="importmap" nonce="<?= AppMain::getNonce() ?>">
     {
       "imports": {
         "/js/pebble.js": "/js/pebble.js?v=<?= AppMain::VERSION ?>",
         "/js/js.cookie.min.js": "/js/js.cookie.min.js?v=<?= AppMain::VERSION ?>"
-
       }
     }
 </script>

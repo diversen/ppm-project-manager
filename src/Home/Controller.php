@@ -8,6 +8,7 @@ use App\AppUtils;
 
 class Controller extends AppUtils
 {
+    private $auth_id;
     public function __construct()
     {
         parent::__construct();

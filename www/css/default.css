@@ -293,7 +293,7 @@ table {
 }
 
 body {
-    overflow: scroll; /* Show scrollbars */
+    overflow: scroll; 
 }
 
 /* table css style that ensure only one line of text per cell */ 
@@ -305,4 +305,8 @@ table.admin td, table.admin th {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+p {
+    display: flex;
 }

@@ -7,22 +7,20 @@ namespace App\Overview;
 use Pebble\URL;
 use Pebble\ExceptionTrace;
 use App\AppUtils;
-
-use App\AppMain;
 use App\Utils\AppCal;
 use App\Time\TimeModel;
 use App\Settings\SettingsModel;
 use App\Project\ProjectModel;
-
 use Diversen\Lang;
 use Exception;
 
 class Controller extends AppUtils
-{
+{   
+    private $project_model;
+    private $auth_id;
     public function __construct()
     {
         parent::__construct();
-        $this->app_main = new AppMain();
         $this->auth_id = $this->auth->getAuthId();
         $this->project_model = new ProjectModel();
     }

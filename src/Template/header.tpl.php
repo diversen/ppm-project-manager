@@ -48,15 +48,14 @@ if (file_exists('../src/Template/utils.php')) {
 
     ?>
 </head>
+<body>
 <?php
 
-if (file_exists('../src/Template/parts/body_begin.tpl.php')) {
-    require 'Template/parts/body_begin.tpl.php';
-}
+    if (file_exists('../src/Template/parts/body_begin.tpl.php')) {
+        require 'Template/parts/body_begin.tpl.php';
+    }
 
-?>
-
-<body>
+    ?>
     <div class="page">
 
         <?php
