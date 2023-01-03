@@ -303,6 +303,7 @@ $LANG['No user info'] = 'No user info';
 
 // Translation of file src/Task/Controller.php
 
+$LANG['Please choose a project'] = 'Please choose a project';
 $LANG['Task created'] = 'Task created';
 
 // Translation of file src/Task/TaskModel.php
@@ -320,6 +321,7 @@ $LANG['Enter title'] = 'Enter title';
 $LANG['Add note'] = 'Add note';
 $LANG['Add an optional task note'] = 'Add an optional task note';
 $LANG['Project'] = 'Project';
+$LANG['Select project'] = 'Select project';
 $LANG['Priority'] = 'Priority';
 $LANG['Urgent'] = 'Urgent';
 $LANG['High'] = 'High';
