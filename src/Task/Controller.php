@@ -98,13 +98,18 @@ class Controller extends AppUtils
     /**
      * @route /task/post
      * @verbs POST
+     * 
      */
     public function post()
     {
         $response['error'] = true;
         try {
-            $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
 
+            if($_POST['project_id'] === '0') {
+                throw new FormException(Lang::translate('Please choose a project'));
+            }
+
+            $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
             $_POST['auth_id'] = $this->app_acl->getAuthId();
 
             $task_model = new TaskModel();

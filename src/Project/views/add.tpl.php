@@ -13,7 +13,7 @@ $csrf_token = (new CSRF())->getToken();
     <label for="title"><?= Lang::translate('Title') ?> *</label>
     <input id="title" type="text" name="title" placeholder="<?= Lang::translate('Enter title') ?>" value="" class="input-large">
     <label for="note"><?= Lang::translate('Note') ?></label>
-    <textarea name="note" placeholder="<?= Lang::translate('Add an optional project note') ?>"></textarea>
+    <textarea id="note" name="note" placeholder="<?= Lang::translate('Add an optional project note') ?>"></textarea>
     <button id="project_submit" type="submit" name="submit" value="submit"><?= Lang::translate('Add') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>

@@ -22,13 +22,11 @@ if ($project['status'] == 1) {
     <label for="title"><?= Lang::translate('Title') ?> *</label>
     <input id="title" type="text" name="title" placeholder="<?= Lang::translate('Enter title') ?>" value="<?= $project['title'] ?>" class="input-large">
     <label for="note">Note</label>
-    <textarea name="note" placeholder="<?= Lang::translate('Add an optional project note') ?>"><?= $project['note'] ?></textarea>
+    <textarea id="note" name="note" placeholder="<?= Lang::translate('Add an optional project note') ?>"><?= $project['note'] ?></textarea>
     <input id="id" type="hidden" name="id" value="<?= $project['id'] ?>">
-
-
-    <input type="checkbox" name="status" value="1" <?= $checked ?>>
+    <input id="status" type="checkbox" name="status" value="1" <?= $checked ?>>
     <label for="status"><?= Lang::translate('Project is active') ?></label>
-    <br />
+    <br>
     <button id="project_submit" type="submit"><?= Lang::translate('Update') ?></button>
     <button id="project_delete" type="submit"><?= Lang::translate('Delete') ?></button>
     <div class="loadingspinner hidden"></div>

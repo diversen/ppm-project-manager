@@ -37,7 +37,7 @@ if (file_exists('../src/Template/utils.php')) {
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?v=<?= AppMain::VERSION ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?v=<?= AppMain::VERSION ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png?v=<?= AppMain::VERSION ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css?v=<?= AppMain::VERSION ?>" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css?v=<?= AppMain::VERSION ?>" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="manifest" href="/assets/manifest.json?v=<?= AppMain::VERSION ?>">
 
     <?php

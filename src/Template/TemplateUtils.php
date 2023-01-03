@@ -34,7 +34,7 @@ class TemplateUtils extends AppUtils
     { ?>
         <div class="logo">
             <a title="<?= $this->config->get('App.site_name') ?>" href="<?= $this->getHomeURL() ?>">
-                <img src="/assets/logo.png?version=<?= AppMain::VERSION ?>" alt="<?= $this->config->get('App.site_name') ?>" title="<?= $this->config->get('App.site_name') ?>" width="70" height="70" />
+                <img src="/assets/logo.png?version=<?= AppMain::VERSION ?>" alt="<?= $this->config->get('App.site_name') ?>" title="<?= $this->config->get('App.site_name') ?>" width="70" height="70">
             </a>
         </div>
     <?php

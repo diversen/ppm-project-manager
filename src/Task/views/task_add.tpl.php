@@ -30,6 +30,7 @@ use Diversen\Lang;
     <?php else: ?>
         <label for="project_id"><?=Lang::translate('Project')?> *</label>
         <select name="project_id">
+            <option value="0"><?=Lang::translate('Select project')?></option>
             <?php foreach ($projects as $project): ?>
                 <option value="<?=$project['id']?>"><?=$project['title']?></option>
             <?php endforeach; ?>

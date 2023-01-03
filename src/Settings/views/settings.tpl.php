@@ -8,11 +8,11 @@ use Pebble\HTML\Tag;
 
 function select($name, $select_options, $selected = null)
 {
-    $str = "<select name='$name'>";
+    $str = "<select id='$name' name='$name'>";
     foreach ($select_options as $key => $option) {
         $checked = '';
         if ($option == $selected) {
-            $checked = ' selected = "true"';
+            $checked = ' selected ';
         }
         $str .= "<option value='$option' $checked>$option</option>";
     }
@@ -34,7 +34,7 @@ function get_settings_links()
     $config = (new AppMain())->getConfig();
     $links = [];
     if ($config->get('TwoFactor.enabled')) {
-        $links[] = Tag::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/twofactor/enable', 'disabled' => null]);
+        $links[] = Tag::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/twofactor/enable']);
     }
     if ($config->get('Notification.enabled')) {
         $links[] = Tag::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);
@@ -55,10 +55,10 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
 <form name="settings" id="seetings" method="post">
 
     <label for="name"><?= Lang::translate('Your name') ?></label>
-    <input type="text" name="name" value="<?= $user_settings['name'] ?? '' ?>" placeholder="<?= Lang::translate('Your name') ?>">
+    <input id="name" type="text" name="name" value="<?= $user_settings['name'] ?? '' ?>" placeholder="<?= Lang::translate('Your name') ?>">
 
     <label for="bio"><?= Lang::translate('Bio') ?></label>
-    <textarea name="bio" placeholder="<?= Lang::translate('Add a bio') ?>"><?= $user_settings['bio'] ?? '' ?></textarea>
+    <textarea id="bio" name="bio" placeholder="<?= Lang::translate('Add a bio') ?>"><?= $user_settings['bio'] ?? '' ?></textarea>
 
     <label for="timezone"><?= Lang::translate('Select your timezone') ?></label>
     <?= select('timezone', $timezones, $user_settings['timezone'] ?? (new AppMain())->getConfig()->get('App.timezone')); ?>
@@ -66,8 +66,8 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
     <label for="language"><?= Lang::translate('Select language') ?></label>
     <?= select('language', $languages, $user_settings['language'] ?? (new AppMain())->getConfig()->get('Language.default')); ?>
 
-    <input type="checkbox" name="theme_dark_mode" value="1" <?= is_checked($user_settings['theme_dark_mode'] ?? null) ?>>
-    <label for="theme_dark_mode"><?= Lang::translate('Theme. Use dark mode') ?></label><br />
+    <input id="theme_dark_mode" type="checkbox" name="theme_dark_mode" value="1" <?= is_checked($user_settings['theme_dark_mode'] ?? null) ?>>
+    <label for="theme_dark_mode"><?= Lang::translate('Theme. Use dark mode') ?></label><br>
 
     <button id="settings_submit" type="submit" name="submit" class="update_settings"><?= Lang::translate('Update') ?></button>
     <div class="loadingspinner hidden"></div>
@@ -76,6 +76,8 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     import {addMultipleEventListener} from '/js/event.js?v=<?=AppMain::VERSION?>'
+
+    document.getElementById('name').focus();
 
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('settings_submit');

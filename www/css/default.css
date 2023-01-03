@@ -310,3 +310,7 @@ table.admin td, table.admin th {
 p {
     display: flex;
 }
+
+ul {
+    display: inline-table;
+}
