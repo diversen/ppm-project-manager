@@ -324,6 +324,6 @@ ul {
 }
 
 .sub-menu {
-    display: inline-block;
+    display: table;
 
 }

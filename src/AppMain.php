@@ -16,7 +16,7 @@ class AppMain extends AppBase
 {
     use \App\Utils\CSP;
 
-    public const VERSION = "v2.1.1";
+    public const VERSION = "v2.1.2-dev";
 
     public function run()
     {
