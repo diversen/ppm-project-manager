@@ -13,8 +13,8 @@ use App\AppMain;
 
 <form id="two-factor-form">
     <label for="code"><?= Lang::translate('2. Enter code as seen on your phone') ?></label>
-    <input type="code" type="text" name="code">
-    <br />
+    <input id="code" type="code" type="text" name="code">
+    <br>
     <button id="check"><?= Lang::translate('Submit') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
@@ -35,6 +35,8 @@ use App\AppMain;
 <script type="module" nonce="<?=AppMain::getNonce()?>">
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
+
+    document.getElementById('code').focus();
 
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('check');

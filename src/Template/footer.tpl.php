@@ -17,7 +17,7 @@ use Diversen\Lang;
             <?=Lang::translate('You may accept or reject any non-essential cookies.') ?> 
             <a href="/account/terms/privacy-policy" target="_blank"><?= Lang::translate('Read more') ?></a>.
         </p>
-        <p>
+        <p style="display: block">
             <button id="cookie-accept" class="accept" type="button"><?=Lang::translate('Accept')?></button>
             <button id="cookie-reject" class="reject" type="button"><?=Lang::translate('Reject')?></button>
         </p>

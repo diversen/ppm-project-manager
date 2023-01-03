@@ -9,8 +9,8 @@ use App\AppMain;
 
 <form id="two-factor-form">
     <label for="code"><?= Lang::translate('1. Enter code as seen on your phone') ?></label>
-    <input type="code" type="text" name="code">
-    <br />
+    <input id="code" type="code" type="text" name="code">
+    <br>
     <button id="check"><?= Lang::translate('Submit') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
@@ -19,12 +19,14 @@ use App\AppMain;
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
+    document.getElementById('code').focus();
+
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('check');
     submitElem.addEventListener('click', async function(event) {
 
         event.preventDefault();
-
+        
         spinner.classList.toggle('hidden');
         let formData = new FormData(document.getElementById('two-factor-form'));
         let res;

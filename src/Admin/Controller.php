@@ -13,6 +13,9 @@ use Exception;
 
 class Controller extends AppUtils
 {
+    private $tables;
+    private $db_utils;
+    
     public function __construct()
     {
         parent::__construct();
