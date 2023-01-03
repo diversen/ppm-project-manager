@@ -16,8 +16,6 @@ if ($project['status'] == 1) {
     <?= Lang::translate('Edit project') ?>
 </h3>
 
-<h3 class="page-title"><?= $project['title'] ?></h3>
-
 <form id="project_edit" name="project" method="post">
     <label for="title"><?= Lang::translate('Title') ?> *</label>
     <input id="title" type="text" name="title" placeholder="<?= Lang::translate('Enter title') ?>" value="<?= $project['title'] ?>" class="input-large">

@@ -19,6 +19,7 @@
 
 #cookie-consent > p {
     text-align: center;
+    display:block;
 }
 
 #cookie-consent > p > .accept {

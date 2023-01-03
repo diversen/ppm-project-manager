@@ -10,11 +10,11 @@ use App\AppMain;
 <h3 class="sub-menu"><?=$title?></h3>
 
 <p><?=Lang::translate('By signing in you agree to the following terms of service, privacy policy, and disclaimer')?></p>
-<p>
-    <a href="/account/terms/terms-of-service"><?=Lang::translate('Terms of service')?></a> | 
-    <a href="/account/terms/privacy-policy"><?=Lang::translate('Privacy policy')?></a> |
+<div class="action-links">
+    <a href="/account/terms/terms-of-service"><?=Lang::translate('Terms of service')?></a>
+    <a href="/account/terms/privacy-policy"><?=Lang::translate('Privacy policy')?></a>
     <a href="/account/terms/disclaimer"><?=Lang::translate('Disclaimer')?></a>
-</p>
+</div>
 
 <?php
 

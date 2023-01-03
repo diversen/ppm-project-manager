@@ -18,11 +18,11 @@ $note_markdown = $parsedown->text($note);
 
 <div class="action-links">
     <a href="/task/add/<?= $project['id'] ?>" title="<?=Lang::translate('Add new task to project')?>"><?=Lang::translate('Add task')?></a>
+    <a href="/project/edit/<?= $project['id'] ?>" title="<?=Lang::translate('Edit project')?>"><?=Lang::translate('Edit project')?></a>
 </div>
 
 <p><?= $note_markdown ?></p>
 <p><?= Lang::translate('Total time used on project') ?>: <strong><?= $project_time ?></strong></p>
-
 
 <?php
 

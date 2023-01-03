@@ -1,4 +1,4 @@
-**PPM (PPM Project Mangement)**
+### PPM (PPM Project Mangement)
 
 PPM (PPM project mangement) is a project, task, and time management system. 
 
@@ -11,7 +11,7 @@ It has the following features:
 
 Made so that you can see what you spend your spare time on.
 
-**Quotes about time**
+### Quotes about time
 
 *Benjamin Franklin:*
 
