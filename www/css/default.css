@@ -1,17 +1,17 @@
 :root {
-    --flash-color:white;
+    --flash-color: white;
     --flash-success-color: #28a745;
     --flash-notice-color: #1b1f23;
-    --flash-error-color:  #d73a49;
+    --flash-error-color: #d73a49;
 }
 
 
 .flash {
-    padding:10px;
+    padding: 10px;
 }
 
 .flash-messages {
-    
+
     width: auto;
     margin-top: 10px;
     bottom: 10px;
@@ -56,7 +56,7 @@ span.loadingspinner {
     position: relative;
     top: 10px;
     margin-top: 0px;
-    padding-top: 0;;
+    padding-top: 0;
     pointer-events: none;
     width: 1.5em;
     height: 1.5em;
@@ -80,12 +80,13 @@ span.loadingspinner {
 .flex-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: center; 
+    align-items: center;
 }
 
-.task-done, .task-done > a {
+.task-done,
+.task-done>a {
     color: grey;
-    font-style:oblique;
+    font-style: oblique;
     text-decoration: none;
 
 }
@@ -113,7 +114,7 @@ span.loadingspinner {
 }
 
 .app-menu {
-    display:block;
+    display: block;
 }
 
 .app-menu>a {
@@ -130,7 +131,7 @@ span.loadingspinner {
     background: var(--button-hover);
 }
 
-.app-menu> a.active {
+.app-menu>a.active {
     color: var(--form-text);
 }
 
@@ -148,7 +149,7 @@ table {
 .button-small {
     margin: 2px;
     padding: 4px;
-    border:none;
+    border: none;
     font-size: 0.8em;
 }
 
@@ -158,7 +159,8 @@ table {
 
 }
 
-.button-small:focus, a:focus {
+.button-small:focus,
+a:focus {
     box-shadow: none;
     box-shadow: none;
 }
@@ -166,23 +168,23 @@ table {
 @media only screen and (max-width: 767px) {
 
 
-    td > .action-links>a {
+    td>.action-links>a {
         padding: 1px;
     }
 
     .xs-hide {
         display: none;
-    
+
     }
 }
 
 .td-overflow {
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden
 }
 
 .timer {
-    margin-top:8px;
+    margin-top: 8px;
     /* display: none; */
 
 }
@@ -193,19 +195,19 @@ table {
 }
 
 .priority-low {
-    background-color: #b1e8fd; 
+    background-color: #b1e8fd;
 }
 
 .priority-minor {
-    background-color: #55d0db; 
+    background-color: #55d0db;
 }
 
 .priority-normal {
-    background-color: #cef2ac; 
+    background-color: #cef2ac;
 }
 
 .priority-high {
-    background-color: #dcacf2; 
+    background-color: #dcacf2;
 }
 
 .priority-urgent {
@@ -213,7 +215,8 @@ table {
 }
 
 .priority-done {
-    background-color: #eee;;
+    background-color: #eee;
+    ;
 }
 
 .page {
@@ -266,9 +269,9 @@ table {
 }
 
 #timer_display {
-    padding:4px; 
-    float: left; 
-    min-width:80px; 
+    padding: 4px;
+    float: left;
+    min-width: 80px;
 }
 
 #captcha {
@@ -284,7 +287,9 @@ table {
     cursor: pointer;
 }
 
-#timer_start, #timer_pause, #timer_reset {
+#timer_start,
+#timer_pause,
+#timer_reset {
     cursor: pointer;
 }
 
@@ -293,15 +298,17 @@ table {
 }
 
 body {
-    overflow: scroll; 
+    overflow: scroll;
 }
 
-/* table css style that ensure only one line of text per cell */ 
+/* table css style that ensure only one line of text per cell */
 table.admin {
     table-layout: fixed;
     width: 100%;
 }
-table.admin td, table.admin th {
+
+table.admin td,
+table.admin th {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -312,5 +319,10 @@ p {
 }
 
 ul {
+    display: inline-table;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
     display: inline-table;
 }
