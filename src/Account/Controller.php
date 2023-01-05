@@ -9,7 +9,7 @@ use Pebble\Captcha;
 use Pebble\CSRF;
 use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
-use Parsedown;
+
 use Pebble\Exception\NotFoundException;
 use Pebble\File;
 
@@ -20,6 +20,7 @@ use App\TwoFactor\TwoFactorModel;
 
 
 use Exception;
+use Parsedown;
 
 class Controller extends AppUtils
 {
@@ -397,16 +398,28 @@ class Controller extends AppUtils
         $terms_dir = '../src/Account/views/terms/';
         $allowed_files = File::dirToArray($terms_dir);
 
-        if (!in_array($params['document'] . '.md', $allowed_files)) {
+        if (!in_array($params['document'] . '.php', $allowed_files)) {
             throw new NotFoundException(Lang::translate('Page not found'));
         }
 
-        $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.md';
+        $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.php';
         $markdown_text = file_get_contents($markdown_file);
+
+
+        // $data['markdown_text'] = $markdown_text;
+        $data['server_url'] = $this->config->get('App.server_url');
+        $data['site_name'] = $this->config->get('App.site_name');
+        $data['title'] = Lang::translate('Terms of service');
+        $data['contact_email'] = $this->config->get('App.contact_email');
+        $data['company_name'] = $this->config->get('App.company_name');
+        
+        // Add veriables into markdown text
+        $markdown_text = $this->template->getOutput($markdown_file, $data);
+
         $parsedown = new Parsedown();
         $parsedown->setSafeMode(false);
         $data['note_markdown'] = $parsedown->text($markdown_text);
 
-        $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
+        $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => false]);
     }
 }
