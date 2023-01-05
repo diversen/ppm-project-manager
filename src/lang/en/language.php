@@ -26,6 +26,7 @@ $LANG['New password'] = 'New password';
 $LANG['No such account connected to supplied key'] = 'No such account connected to supplied key';
 $LANG['Your password has been updated'] = 'Your password has been updated';
 $LANG['Page not found'] = 'Page not found';
+$LANG['Terms of service'] = 'Terms of service';
 
 // Translation of file src/Account/ControllerExt.php
 
@@ -84,7 +85,7 @@ $LANG['Send'] = 'Send';
 
 // Translation of file src/Account/views/recover.php
 
-$LANG['Forgotten password'] = 'Forgotten password';
+$LANG['Lost password'] = 'Lost password';
 $LANG['E-mail'] = 'E-mail';
 $LANG['Click to get a new image'] = 'Click to get a new image';
 $LANG['Enter above image text (click to get a new image). Case of the text does not matter'] = 'Enter above image text (click to get a new image). Case of the text does not matter';
@@ -270,6 +271,7 @@ $LANG['Show more'] = 'Show more';
 $LANG['Projects'] = 'Projects';
 $LANG['Add new task to project'] = 'Add new task to project';
 $LANG['Add task'] = 'Add task';
+$LANG['Edit project'] = 'Edit project';
 $LANG['Total time used on project'] = 'Total time used on project';
 $LANG['Tasks waiting'] = 'Tasks waiting';
 $LANG['Task'] = 'Task';
