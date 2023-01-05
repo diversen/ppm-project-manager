@@ -31,9 +31,6 @@ if (file_exists('../src/Template/utils.php')) {
         <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/light.min.css?v=<?= AppMain::VERSION ?>">
     <?php endif; ?>
 
-    <link rel="stylesheet" href="/css/default.css?v=<?= AppMain::VERSION ?>">
-    <link rel="stylesheet" href="/css/cookie-consent.css?v=<?= AppMain::VERSION ?>">
-
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?v=<?= AppMain::VERSION ?>">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?v=<?= AppMain::VERSION ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png?v=<?= AppMain::VERSION ?>">

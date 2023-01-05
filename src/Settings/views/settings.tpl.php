@@ -40,7 +40,7 @@ function get_settings_links()
         $links[] = Tag::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);
     }
 
-    return implode(' | ', $links);
+    return implode('', $links);
 }
 
 $timezones = timezone_identifiers_list();
@@ -49,9 +49,10 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
 ?>
 
 <h3 class="sub-menu"><?= Lang::translate('Settings') ?></h3>
-<p>
-<?=get_settings_links()?>
-</p>
+<div class="action-links">
+    <?=get_settings_links()?>
+</div>
+<div class="clear"></div>
 <form name="settings" id="seetings" method="post">
 
     <label for="name"><?= Lang::translate('Your name') ?></label>

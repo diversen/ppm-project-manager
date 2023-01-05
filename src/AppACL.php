@@ -30,7 +30,7 @@ class AppACL extends ACL
 
         $access_ary = [
             'entity' => 'project',
-            'entity_id' => $project_id,
+            'entity_id' => (int)$project_id,
             'right' => 'owner',
             'auth_id' => $this->getAuthId(),
         ];
@@ -43,7 +43,7 @@ class AppACL extends ACL
     {
         $access_rights = [
             'entity' => 'project',
-            'entity_id' => $project_id,
+            'entity_id' => (int)$project_id,
             'right' => 'owner',
             'auth_id' => $this->getAuthId(),
         ];
@@ -64,7 +64,7 @@ class AppACL extends ACL
     {
 
         // Check if there is a task
-        $task = (new TaskModel())->getOne(['id' => $task_id]);
+        $task = (new TaskModel())->getOne(['id' => (int)$task_id]);
         if (empty($task)) {
             throw new NotFoundException(Lang::translate('There is no such task ID'));
         }
@@ -77,7 +77,7 @@ class AppACL extends ACL
      */
     public function getTime($time_id)
     {
-        $time = (new TimeModel())->getOne(['id' => $time_id]);
+        $time = (new TimeModel())->getOne(['id' => (int)$time_id]);
         if (empty($time)) {
             throw new NotFoundException(Lang::translate('There is no such time ID'));
         }

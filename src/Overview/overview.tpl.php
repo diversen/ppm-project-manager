@@ -114,7 +114,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
     $date = $date_time_user->format('M d, Y'); ?>
 
-        <p>
+        <p class="flex">
             <strong <?= $day_class ?> ><?= ucfirst(get_day_name($day_number)) ?> </strong>. <?= $date ?>.
             <?= Lang::translate('Your activity:') . ' ' . $week_user_day_times[$ts]?>
         </p>
@@ -185,7 +185,7 @@ function render_navigation($week_state, $week_user_total, $has_projects)
             </a>
         <?php endif; ?>
     </div>
-    <p>
+    <p class="flex">
         <?= Lang::translate('Activity this week:') . ' ' . $week_user_total ?>
     </p>
 
