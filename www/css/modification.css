@@ -1,0 +1,8 @@
+/**
+ * Weird bug on some pages and some devices where the menu 
+ * get's enlarged. This fixes it.
+ */
+
+.text p {
+    display: flex;
+}
