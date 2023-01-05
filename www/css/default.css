@@ -184,8 +184,6 @@ a:focus {
 
 .timer {
     margin-top: 8px;
-    /* display: none; */
-
 }
 
 .priority {
@@ -300,7 +298,6 @@ body {
     overflow: scroll;
 }
 
-/* table css style that ensure only one line of text per cell */
 table.admin {
     table-layout: fixed;
     width: 100%;
@@ -314,7 +311,7 @@ table.admin th {
 }
 
 p {
-    display: flex;
+    display: block;
 }
 
 ul {
@@ -327,6 +324,6 @@ ul {
 
 }
 
-.account-terms > p {
-    display:block;
+.flex {
+    display: flex;
 }
