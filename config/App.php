@@ -13,4 +13,6 @@ return [
 	'pager_limit' => 100,
 	'home_url_authenticated' => '/overview',
 	'home_url' => '/',
+	'contact_email' => 'info@10kilobyte.com',
+	'company_name' => '10Kilobyte',
 ];
