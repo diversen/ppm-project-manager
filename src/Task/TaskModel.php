@@ -125,7 +125,7 @@ class TaskModel
         return $this->db->delete('task', ['id' => $id]);
     }
 
-    public function setExceededUserTasksToday(int $auth_id)
+    public function setExceededUserTasksToday(int $auth_id): int
     {
         $today = $this->date_utils->getUserDateFormatFromUTC('now', 'Y-m-d 00:00:00');
 
@@ -136,6 +136,8 @@ class TaskModel
         foreach ($rows as $row) {
             $this->db->update('task', ['begin_date' => $today, 'end_date' => $today], ['id' => $row['id']]);
         }
+
+        return count($rows);
     }
 
     public function create($post)

@@ -4,12 +4,15 @@ use Diversen\Lang;
 use App\AppMain;
 
 ?>
-<h3 class="sub-menu"><?=Lang::translate('Enable two factor authentication')?></h3>
+<h3 class="sub-menu"><?= Lang::translate('Enable two factor authentication') ?></h3>
 
-<p><?= Lang::translate('You will need a two factor app on your mobile phone')?></p>
-<p><?= Lang::translate('Download a two factor app in your app store')?></p>
-<p><?=Lang::translate('1. Scan the QR code to get started')?></p>
-<img src="<?=$qr_image?>">
+<div class="text">
+    <p><?= Lang::translate('You will need a two factor app on your mobile phone') ?></p>
+    <p><?= Lang::translate('Download a two factor app in your app store') ?></p>
+    <p><?= Lang::translate('1. Scan the QR code to get started') ?></p>
+
+</div>
+<img src="<?= $qr_image ?>">
 
 <form id="two-factor-form">
     <label for="code"><?= Lang::translate('2. Enter code as seen on your phone') ?></label>
@@ -19,7 +22,8 @@ use App\AppMain;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<p><?=Lang::translate('You can use the following apps and many others')?></p>
+<div class="text">
+    <p><?= Lang::translate('You can use the following apps and many others') ?></p>
     <ul>
         <li>Google Authenticator.</li>
         <li>Lastpass.</li>
@@ -29,12 +33,12 @@ use App\AppMain;
         <li>Duo Mobile.</li>
         <li>Aegis Authenticator.</li>
     </ul>
-</p>
+    </p>
+</div>
 
 
-<script type="module" nonce="<?=AppMain::getNonce()?>">
-    
-    import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
+<script type="module" nonce="<?= AppMain::getNonce() ?>">
+    import { Pebble } from '/js/pebble.js?v=<?= AppMain::VERSION ?>';
 
     document.getElementById('code').focus();
 
@@ -61,6 +65,6 @@ use App\AppMain;
             spinner.classList.toggle('hidden');
         }
 
-        
+
     });
 </script>

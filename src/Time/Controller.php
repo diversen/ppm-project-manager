@@ -90,7 +90,7 @@ class Controller extends AppUtils
             $response['error'] = $e->getMessage();
         }
 
-        $response['project_redirect'] = '/project/view/' . $task['project_id'];
+        $response['redirect'] = '/project/view/' . $task['project_id'];
 
         $this->json->render($response);
     }

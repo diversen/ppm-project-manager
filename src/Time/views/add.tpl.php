@@ -133,7 +133,7 @@ if (!empty($time_rows)) {
                     if (return_to) {
                         Pebble.redirect(return_to);
                     } else {
-                        Pebble.redirect(res.project_redirect);
+                        Pebble.redirect(res.redirect);
                     }
                 } else {
                     Pebble.setFlashMessage(res.error, 'error');

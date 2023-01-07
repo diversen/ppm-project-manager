@@ -158,7 +158,7 @@ class Controller extends AppUtils
             $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
 
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
-            $response['project_redirect'] = "/project/view/" . $task['project_id'];
+            $response['redirect'] = "/project/view/" . $task['project_id'];
         } catch (FormException $e) {
             $response['error'] = $e->getMessage();
         } catch (Exception $e) {
@@ -177,9 +177,12 @@ class Controller extends AppUtils
     {
         try {
             $response['error'] = false;
+
             $this->app_acl->isAuthenticatedOrThrow();
-            $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
-            $response['project_redirect'] = '/overview';
+            $num_tasks = $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
+            $flash_message = Lang::translate('Exceeded tasks moved to today') . ': ' . $num_tasks .  ' ' . Lang::translate('tasks');
+            $this->flash->setMessage($flash_message, 'success', ['flash_remove' => true]);
+            $response['redirect'] = '/overview';
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
@@ -201,7 +204,7 @@ class Controller extends AppUtils
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
             $this->task_model->delete($params['task_id']);
-            $response['project_redirect'] = "/project/view/" . $task['project_id'];
+            $response['redirect'] = "/project/view/" . $task['project_id'];
         } catch (Exception $e) {
             $this->log->error('Task.post.delete', ['exception' => ExceptionTrace::get($e)]);
             $response['error'] = $e->getMessage();
