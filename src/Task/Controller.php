@@ -98,14 +98,13 @@ class Controller extends AppUtils
     /**
      * @route /task/post
      * @verbs POST
-     * 
+     *
      */
     public function post()
     {
         $response['error'] = true;
         try {
-
-            if($_POST['project_id'] === '0') {
+            if ($_POST['project_id'] === '0') {
                 throw new FormException(Lang::translate('Please choose a project'));
             }
 

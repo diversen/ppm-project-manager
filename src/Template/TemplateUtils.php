@@ -82,9 +82,9 @@ class TemplateUtils extends AppUtils
 
             foreach ($flash_messages as $message) :
                 $remove_class = '';
-                if (isset($message['options']['flash_remove'])) {
-                    $remove_class = ' flash-remove ';
-                } ?>
+        if (isset($message['options']['flash_remove'])) {
+            $remove_class = ' flash-remove ';
+        } ?>
                 <div class="flash flash-<?= $message['type'] ?> <?= $remove_class ?>"><?= $message['message'] ?></div>
             <?php
 

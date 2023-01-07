@@ -15,7 +15,7 @@ use Diversen\Lang;
 use Exception;
 
 class Controller extends AppUtils
-{   
+{
     private $project_model;
     private $auth_id;
     public function __construct()

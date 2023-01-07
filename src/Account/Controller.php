@@ -412,7 +412,7 @@ class Controller extends AppUtils
         $data['title'] = Lang::translate('Terms of service');
         $data['contact_email'] = $this->config->get('App.contact_email');
         $data['company_name'] = $this->config->get('App.company_name');
-        
+
         // Add veriables into markdown text
         $markdown_text = $this->template->getOutput($markdown_file, $data);
 
