@@ -116,8 +116,6 @@ $LANG['Send'] = 'Send';
 // Translation of file src/Account/views/signout.php
 
 $LANG['Sign out'] = 'Sign out';
-$LANG['You are logged in'] = 'You are logged in';
-$LANG['Or'] = 'Or';
 $LANG['Sign out of all devices'] = 'Sign out of all devices';
 
 // Translation of file src/Account/views/signup.php
@@ -307,6 +305,8 @@ $LANG['No user info'] = 'No user info';
 
 $LANG['Please choose a project'] = 'Please choose a project';
 $LANG['Task created'] = 'Task created';
+$LANG['Exceeded tasks moved to today'] = 'Exceeded tasks moved to today';
+$LANG['tasks'] = 'tasks';
 
 // Translation of file src/Task/TaskModel.php
 
