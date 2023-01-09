@@ -91,7 +91,7 @@ span.loadingspinner {
 }
 
 .action-links {
-    display: table;
+    display: flex;
 }
 
 .action-links>a {
@@ -113,7 +113,7 @@ span.loadingspinner {
 }
 
 .app-menu {
-    display: block;
+    display: flex;
 }
 
 .app-menu>a {

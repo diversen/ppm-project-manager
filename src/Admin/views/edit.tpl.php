@@ -10,7 +10,7 @@ $disabled = $table['disabled'] ?? [];
 $redirect = $_SERVER['HTTP_REFERER'] ?? '/admin';
 
 ?>
-<h3>
+<h3 class="sub-menu">
     <?= HTMLUtils::getBreadcrumb('Edit', $table['table_human']) ?>
 </h3>
 <?php
