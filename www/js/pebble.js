@@ -138,9 +138,25 @@ class Pebble {
         return rawResponse;
     }
 
+    /**
+     * Async GET request. Accept JSON as response 
+     */
+    static async asyncGet(url) {
+        const rawResponse = await fetch(url, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+            },
+        }).then(function (response) {
+            return response.json()
+        }).then(function (response) {
+            return response;
+        });
+
+        return rawResponse;
+    }
 
     /**
-     * 
      * Sends a Error to an endpont (for logging)
      */
     static async asyncPostError(endpoint, error) {
