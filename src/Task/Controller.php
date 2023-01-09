@@ -116,11 +116,12 @@ class Controller extends AppUtils
 
             $response['redirect'] = "/project/view/" . $_POST['project_id'];
             $response['message'] = Lang::translate('Task created');
-            $response['error'] = false;
-
+            
             if (isset($_POST['session_flash'])) {
                 $this->flash->setMessage(Lang::translate('Task created'), 'success', ['flash_remove' => true]);
             }
+
+            $response['error'] = false;
         } catch (FormException $e) {
             $response['message'] = $e->getMessage();
         } catch (Exception $e) {
@@ -137,7 +138,7 @@ class Controller extends AppUtils
      */
     public function put($params)
     {
-        $response['error'] = false;
+        $response['error'] = true;
         $response['post'] = $_POST;
 
         try {
@@ -158,11 +159,12 @@ class Controller extends AppUtils
 
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
             $response['redirect'] = "/project/view/" . $task['project_id'];
+            $response['error'] = false;
         } catch (FormException $e) {
-            $response['error'] = $e->getMessage();
+            $response['message'] = $e->getMessage();
         } catch (Exception $e) {
             $this->log->error('Task.put.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            $response['message'] = $e->getMessage();
         }
 
         $this->json->render($response);
@@ -174,17 +176,16 @@ class Controller extends AppUtils
      */
     public function move_exceeded_today()
     {
+        $response['error'] = true;
         try {
-            $response['error'] = false;
-
+            
             $this->app_acl->isAuthenticatedOrThrow();
-            $num_tasks = $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
-            $flash_message = Lang::translate('Exceeded tasks moved to today') . ': ' . $num_tasks .  ' ' . Lang::translate('tasks');
-            $this->flash->setMessage($flash_message, 'success', ['flash_remove' => true]);
+            $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['redirect'] = '/overview';
+            $response['error'] = false;
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            $response['message'] = $e->getMessage();
         }
 
         $this->json->render($response);
@@ -196,7 +197,7 @@ class Controller extends AppUtils
      */
     public function delete($params)
     {
-        $response['error'] = false;
+        $response['error'] = true;
 
         try {
             $task = $this->app_acl->getTask($params['task_id']);
@@ -204,9 +205,10 @@ class Controller extends AppUtils
 
             $this->task_model->delete($params['task_id']);
             $response['redirect'] = "/project/view/" . $task['project_id'];
+            $response['error'] = false;
         } catch (Exception $e) {
             $this->log->error('Task.post.delete', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            $response['message'] = $e->getMessage();
         }
 
         $this->json->render($response);

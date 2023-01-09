@@ -117,7 +117,7 @@ $is_selected = function ($value, $current_state) {
             if (res.error === false) {
                 Pebble.redirect(res.redirect);
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
@@ -153,7 +153,7 @@ $is_selected = function ($value, $current_state) {
                     Pebble.redirect(res.redirect);
                 }
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
