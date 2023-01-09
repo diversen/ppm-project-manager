@@ -29,6 +29,7 @@ function Timer() {
     var now;
     var runningTime = 0;
     var timer_state_init = sessionStorage.getItem('timer_state');
+    var timer_elapsed;
 
     if (!timer_state_init) {
         sessionStorage.setItem('timer_state', 'stopped');
