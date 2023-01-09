@@ -51,7 +51,7 @@ function Timer() {
         var s = Math.floor(diff % 60);
         m = checkTime(m);
         s = checkTime(s);
-        var time_str = new Date(diff * 1000).toISOString().substr(11, 8)
+        var time_str = new Date(diff * 1000).toISOString().substring(11, 19)
         document.getElementById("timer_display").innerHTML = time_str;
     }
 
