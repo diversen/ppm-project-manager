@@ -144,6 +144,12 @@ table {
     border: 1px solid transparent;
 }
 
+td, th {
+    padding: 4px;
+    vertical-align: unset;
+    font-size: 0.9em;
+}
+
 
 .button-small {
     margin: 2px;
