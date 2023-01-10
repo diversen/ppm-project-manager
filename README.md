@@ -93,7 +93,7 @@ Google login using OAuth:
 
 ## MySQL
 
-Install (run) a MySQL image that will work:
+Install (run) a MySQL image that will work (for development maybe):
 
     docker run -p 3306:3306 --name mysql-server -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0
 
@@ -105,11 +105,13 @@ Connect using bash and create a database:
     exit; # exit from mysql-server 
     exit; # exit from container
 
-Load SQL:
+Or:
 
-    docker exec -i mysql-server mysql -uroot -ppassword ppm  < ./sql/mysql.sql 
+    ./cli.sh db --server-connect
+    create database ppm;
+    exit; # exit from mysql-server
 
-List conainers 
+List containers 
 
     docker container ls
 
@@ -131,15 +133,11 @@ Remove container (you will need run 'run' command again):
 
 # Build svg logo
 
-[text-to-svg-cli](https://github.com/diversen/text-to-svg-cli/) (Create svg logos)
-
-    npm install text-to-svg-cli -g
-    text-to-svg-cli --config=logo.json
-    scripts/logo.sh
+Favicon:
 
 [Favicon generator](https://favicon.io/favicon-generator/)
 
-Convert:
+Convert favicon_io/android-chrome-192x192.png to 70x70 logo:
 
     cd www && convert favicon_io/android-chrome-192x192.png -scale "70x70" assets/logo.png
 	
