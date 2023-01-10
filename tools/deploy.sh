@@ -49,4 +49,4 @@ fi
 
 ## Prod and dev sites: install the application.
 composer install --no-dev --optimize-autoloader
-./cli.sh migration --up
+./cli.sh migrate --up
