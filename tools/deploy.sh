@@ -1,7 +1,7 @@
 #!/bin/bash
 
-## This script adapted from a similar one in wikimedia/toolforge-bundle
-
+## To update: ./tools/deploy.sh prod .
+## Very similar to script found on: https://github.com/samwilson/twyne
 if [[ -z $1 || -z $2 ]]; then
     echo "USAGE: $0 [prod|dev] <app-dir>"
     exit 1
