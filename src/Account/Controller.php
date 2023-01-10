@@ -405,8 +405,6 @@ class Controller extends AppUtils
         $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.php';
         $markdown_text = file_get_contents($markdown_file);
 
-
-        // $data['markdown_text'] = $markdown_text;
         $data['server_url'] = $this->config->get('App.server_url');
         $data['site_name'] = $this->config->get('App.site_name');
         $data['title'] = Lang::translate('Terms of service');
