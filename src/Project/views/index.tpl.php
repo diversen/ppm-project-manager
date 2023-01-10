@@ -6,6 +6,7 @@ use Diversen\Lang;
 use App\Utils\AppPagination;
 use Pebble\Pagination\PaginationUtils;
 use App\Utils\DateUtils;
+use App\Utils\HTMLUtils;
 
 ?>
 
@@ -29,8 +30,8 @@ function render_project($project)
         <td class="xs-hide"><?= $project['project_time_total_human'] ?></td>
         <td>
             <div class="action-links">
-                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit project') ?>"><?= get_icon('edit') ?></a>
-                <a href="/task/add/<?= $project['id'] ?>" title="<?= Lang::translate('Add new task to project') ?>"><?= get_icon('add') ?></a>
+                <a href="/project/edit/<?= $project['id'] ?>" title="<?= Lang::translate('Edit project') ?>"><?= HTMLUtils::getIcon('edit') ?></a>
+                <a href="/task/add/<?= $project['id'] ?>" title="<?= Lang::translate('Add new task to project') ?>"><?= HTMLUtils::getIcon('add') ?></a>
             </div>
         </td>
     </tr>

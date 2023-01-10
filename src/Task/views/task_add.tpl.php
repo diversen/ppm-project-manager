@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use App\AppMain;
 use App\Task\TaskModel;
+use App\Utils\HTMLUtils;
 use Diversen\Lang;
 
 ?>
@@ -10,8 +13,8 @@ use Diversen\Lang;
     <?php
 
     if ($project): ?>
-<a href="/project"><?=Lang::translate('Projects')?></a><?=SUB_MENU_SEP?>
-<a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=SUB_MENU_SEP?>
+<a href="/project"><?=Lang::translate('Projects')?></a><?=HTMLUtils::getMenuSeparator()?>
+<a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=HTMLUtils::getMenuSeparator()?>
     <?php endif; ?>
     <?=Lang::translate('Add task')?>
 </h3>

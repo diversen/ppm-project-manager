@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Diversen\Lang;
 use App\AppMain;
+use App\Utils\HTMLUtils;
 
 $checked = '';
 if ($project['status'] == 1) {
@@ -11,8 +14,8 @@ if ($project['status'] == 1) {
 ?>
 
 <h3 class="sub-menu">
-    <a href="/project"><?= Lang::translate('Projects') ?></a><?= SUB_MENU_SEP ?>
-    <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a><?= SUB_MENU_SEP ?>
+    <a href="/project"><?= Lang::translate('Projects') ?></a><?= HTMLUtils::getMenuSeparator() ?>
+    <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a><?= HTMLUtils::getMenuSeparator() ?>
     <?= Lang::translate('Edit project') ?>
 </h3>
 

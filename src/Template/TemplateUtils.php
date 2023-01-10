@@ -7,7 +7,6 @@ namespace App\Template;
 use App\AppUtils;
 use App\AppMain;
 use App\Settings\SettingsModel;
-use Diversen\Lang;
 
 /**
  * Template utils
@@ -40,40 +39,6 @@ class TemplateUtils extends AppUtils
     <?php
     }
 
-    public function renderMainMenu(): void
-    {
-        $is_authenticated = $this->auth->isAuthenticated(); ?>
-        <div class="app-menu">
-            <?php if (!$is_authenticated) : ?>
-                <a href="/account/signin" data-path="/account/signin"><?= Lang::translate('Sign in') ?></a>
-                <a href="/account/signup" data-path="/account/signup"><?= Lang::translate('Email sign up') ?></a>
-                <a href="/account/recover" data-path="/account/recover"><?= Lang::translate('Lost password') ?></a>
-            <?php else : ?>
-                <a href="/overview" data-path="/overview"><?= Lang::translate('Home') ?></a>
-                <a href="/project" data-path="/project"><?= Lang::translate('Projects') ?></a>
-                <a href="/settings" data-path="/settings"><?= Lang::translate('Settings') ?></a>
-                <a href="/account/signout" data-path="/account/signout"><?= Lang::translate('Sign out') ?></a>
-                <a id="timer_toggle" title="<?= Lang::translate('Toggle timer') ?>">&#128337; <?= Lang::translate('Timer') ?></a>
-            <?php endif; ?>
-        </div>
-
-        <?php if ($this->acl_role->inSessionHasRole('admin')) : ?>
-            <div class="app-menu app-menu-admin">
-                <a href="/admin" data-path="/admin"><?= Lang::translate('Admin') ?></a>
-            </div>
-        <?php endif;
-
-
-        if ($this->auth->isAuthenticated()) : ?>
-            <div id="timer" class="timer">
-                <span id="timer_display"></span>
-                <button id="timer_start" class="button-timer button-small">Start</button>
-                <button id="timer_pause" class="button-timer button-small">Pause</button>
-                <button id="timer_reset" class="button-timer button-small">Reset</button>
-            </div>
-        <?php endif;
-    }
-
     public function renderFlashMessages(): void
     {
         $flash_messages = $this->flash->getMessages(); ?>
@@ -82,16 +47,16 @@ class TemplateUtils extends AppUtils
 
             foreach ($flash_messages as $message) :
                 $remove_class = '';
-        if (isset($message['options']['flash_remove'])) {
-            $remove_class = ' flash-remove ';
-        } ?>
+                if (isset($message['options']['flash_remove'])) {
+                    $remove_class = ' flash-remove ';
+                } ?>
                 <div class="flash flash-<?= $message['type'] ?> <?= $remove_class ?>"><?= $message['message'] ?></div>
-            <?php
-
-            endforeach; ?>
+            <?php endforeach; ?>
         </div>
 <?php
+
     }
+
 
     public function useDarkMode()
     {

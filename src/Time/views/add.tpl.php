@@ -5,6 +5,7 @@ use Diversen\Lang;
 use App\Utils\AppPagination;
 use Pebble\Pagination\PaginationUtils;
 use App\AppMain;
+use App\Utils\HTMLUtils;
 
 ?>
 
@@ -71,7 +72,7 @@ function output_time_table($time_rows)
                     <td title="<?= $val['note'] ?>" class="td-overflow"><?= $val['note'] ?></td>
                     <td>
                         <div class="action-links">
-                            <a class='time_delete' data-id="<?= $val['id'] ?>" href="#"><?=get_icon('delete')?></a>
+                            <a class='time_delete' data-id="<?= $val['id'] ?>" href="#"><?=HTMLUtils::getIcon('delete')?></a>
                         </div>
                     <td>
                 </tr>

@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Pebble\URL;
 use Diversen\Lang;
-
-// This is included in the header - but this template does not have a header
-require_once 'Template/utils.php';
+use App\Utils\HTMLUtils;
 
 if (isset($error)) {
     echo "<p class='error'>$error</p>";
@@ -34,22 +34,22 @@ foreach ($tasks as $task) :
 
     <tr>
         <td class="td-overflow <?= $task_box_class ?> ">
-            <span class="priority <?= get_task_priority_class($task) ?>"></span>
+            <span class="priority <?= HTMLUtils::getTaskPriorityClass($task) ?>"></span>
             <a title="<?= $title_attr ?>" href="/task/view/<?= $task['id'] ?>"><?= $task_title ?>
         </td>
         <td><?= $begin_date ?></td>
         <td class='xs-hide'><?= $task['time_used'] ?></td>
         <td>
             <div class="action-links">
-                <a title="<?= Lang::translate('Edit task') ?>" href="<?= $return_to_after_edit ?>"><?=get_icon('edit')?></a>
-                <a title="<?= Lang::translate('Add time to task') ?>" href="<?= $return_to_after_time?>"><?=get_icon('clock')?></a>
+                <a title="<?= Lang::translate('Edit task') ?>" href="<?= $return_to_after_edit ?>"><?=HTMLUtils::getIcon('edit')?></a>
+                <a title="<?= Lang::translate('Add time to task') ?>" href="<?= $return_to_after_time?>"><?=HTMLUtils::getIcon('clock')?></a>
                 <?php
 
                 if (!$is_today) : ?>
                     <a 
                         title="<?= Lang::translate('Move to today') ?>" 
                         class="move_to_today" 
-                        href='#' data-id="<?= $task['id'] ?>"><?=get_icon('today')?>
+                        href='#' data-id="<?= $task['id'] ?>"><?=HTMLUtils::getIcon('today')?>
                     </a>
                 <?php endif; ?>
         </td>

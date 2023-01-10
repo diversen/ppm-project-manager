@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Diversen\Lang;
 use App\AppMain;
+use App\Utils\HTMLUtils;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -12,7 +15,7 @@ $note_markdown = $parsedown->text($note);
 ?>
 
 <h3 class="sub-menu">
-    <a href="/project"><?= Lang::translate('Projects') ?></a><?= SUB_MENU_SEP ?>
+    <a href="/project"><?= Lang::translate('Projects') ?></a><?= HTMLUtils::getMenuSeparator() ?>
     <?= $project['title'] ?>
 </h3>
 
@@ -21,7 +24,7 @@ $note_markdown = $parsedown->text($note);
     <a href="/project/edit/<?= $project['id'] ?>" title="<?=Lang::translate('Edit project')?>"><?=Lang::translate('Edit project')?></a>
 </div>
 
-<div class="text">
+<div>
 <?= $note_markdown ?>
 <p><?= Lang::translate('Total time used on project') ?>: <strong><?= $project_time ?></strong></p>
 </div>

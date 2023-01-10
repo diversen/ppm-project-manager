@@ -6,6 +6,7 @@ use Pebble\URL;
 use Diversen\Lang;
 use App\AppMain;
 use App\Utils\DateUtils;
+use App\Utils\HTMLUtils;
 
 /**
  * Render a single task
@@ -28,7 +29,7 @@ function render_task($task, $today)
     $move_to_today_title = Lang::translate('Move to today'); ?>
     <tr>
         <td class="td-overflow <?= $task_box_class ?>" title="<?= $title_attr ?>">
-            <span class="priority <?= get_task_priority_class($task) ?>"></span>
+            <span class="priority <?= HTMLUtils::getTaskPriorityClass($task) ?>"></span>
             <a href="/task/view/<?= $task['id'] ?>"><?= $task_title ?></a>
         </td>
 
@@ -41,20 +42,20 @@ function render_task($task, $today)
         <td>
             <div class="action-links">
                 <a title="<?= $edit_task_title ?>" href="<?= URL::returnTo("/task/edit/$task[id]") ?>">
-                    <?= get_icon('edit') ?>
+                    <?= HTMLUtils::getIcon('edit') ?>
                 </a>
                 <a title="<?= $add_new_task_title ?>" href='<?= URL::returnTo("/task/add/$task[project_id]") ?>'>
-                    <?= get_icon('add') ?>
+                    <?= HTMLUtils::getIcon('add') ?>
                 </a>
                 <a title="<?= $add_time_title ?>" href='<?= URL::returnTo("/time/add/$task[id]") ?>'>
-                    <?= get_icon('clock') ?>
+                    <?= HTMLUtils::getIcon('clock') ?>
                 </a>
 
                 <?php
 
                 if (!$today) : ?>
                     <a title="<?= $move_to_today_title ?>" class="move_to_today xs-hide" href='#' data-id="<?= $task['id'] ?>">
-                        <?= get_icon('today') ?>
+                        <?= HTMLUtils::getIcon('today') ?>
                     </a>
                 <?php endif; ?>
             </div>
@@ -101,7 +102,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
 
     $date_time_user = $date_utils->getUserDateTimeFromUnixTs($ts);
     $day_number = $date_time_user->format("N");
-    $is_today = is_today($ts);
+    $is_today = HTMLUtils::isToday($ts);
 
     if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
         continue;

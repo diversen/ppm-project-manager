@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Diversen\Lang;
 use Pebble\URL;
 use App\AppMain;
+use App\Utils\HTMLUtils;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -14,8 +17,8 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 
 ?>
 <h3 class="sub-menu">
-    <a href="/project"><?=Lang::translate('Projects')?></a><?=SUB_MENU_SEP?>
-    <a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=SUB_MENU_SEP?>
+    <a href="/project"><?=Lang::translate('Projects')?></a><?=HTMLUtils::getMenuSeparator()?>
+    <a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=HTMLUtils::getMenuSeparator()?>
     <?=$task['title']?>
 </h3>
 
@@ -33,7 +36,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 	<tbody>
 	<?php
 
-    $today = is_today(strtotime($task['begin_date']));
+    $today = HTMLUtils::isToday(strtotime($task['begin_date']));
     $task_title = $title_attr = "$task[title]";
     $task_box_class = '';
     if ($task['status'] == '0') {
@@ -44,7 +47,7 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
     ?>
     <tr>
         <td class="td-overflow <?=$task_box_class?>" title="<?=$title_attr?>">
-            <span class="priority <?=get_task_priority_class($task)?>"></span>
+            <span class="priority <?=HTMLUtils::getTaskPriorityClass($task)?>"></span>
             <span><?=$task_title?></span>
         </td>
 
@@ -56,14 +59,14 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 
         <td>
         <div class="action-links">
-            <a title="<?=Lang::translate('Edit task')?>" href="<?=URL::returnTo("/task/edit/$task[id]")?>"><?=get_icon('edit')?></a>
-            <a title="<?=Lang::translate('Add new task to project')?>" class="xs-hide" href='<?=URL::returnTo("/task/add/$task[project_id]")?>'><?=get_icon('add')?></a>
-            <a title="<?=Lang::translate('Add time to task')?>"  href='<?=URL::returnTo("/time/add/$task[id]")?>'><?=get_icon('clock')?></a>
+            <a title="<?=Lang::translate('Edit task')?>" href="<?=URL::returnTo("/task/edit/$task[id]")?>"><?=HTMLUtils::getIcon('edit')?></a>
+            <a title="<?=Lang::translate('Add new task to project')?>" class="xs-hide" href='<?=URL::returnTo("/task/add/$task[project_id]")?>'><?=HTMLUtils::getIcon('add')?></a>
+            <a title="<?=Lang::translate('Add time to task')?>"  href='<?=URL::returnTo("/time/add/$task[id]")?>'><?=HTMLUtils::getIcon('clock')?></a>
 
             <?php
 
             if (!$today): ?>
-            <a title="<?=Lang::translate('Move to today')?>"  class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=get_icon('today')?></a>
+            <a title="<?=Lang::translate('Move to today')?>"  class="xs-hide" href='#' data-id="<?=$task['id']?>" class="move_to_today"><?=HTMLUtils::getIcon('today')?></a>
             <?php endif;?>
         </td>
     </tr>

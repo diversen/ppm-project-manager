@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Diversen\Lang;
 use App\AppMain;
 use App\Task\TaskModel;
+use App\Utils\HTMLUtils;
 
 $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 $end_date = date('Y-m-d', strtotime($task['end_date']));
@@ -17,8 +20,8 @@ $is_selected = function ($value, $current_state) {
 ?>
 
 <h3 class="sub-menu">
-    <a href="/project"><?= Lang::translate('Projects') ?></a><?= SUB_MENU_SEP ?>
-    <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a><?= SUB_MENU_SEP ?>
+    <a href="/project"><?= Lang::translate('Projects') ?></a><?= HTMLUtils::getMenuSeparator() ?>
+    <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a><?= HTMLUtils::getMenuSeparator() ?>
     <?= Lang::translate('Edit task') ?>
 </h3>
 

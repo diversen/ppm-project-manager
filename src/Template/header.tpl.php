@@ -3,14 +3,13 @@
 declare(strict_types=1);
 
 use App\Template\TemplateUtils;
+use App\Template\TemplateMenu;
 use App\AppMain;
 
 $template_utils = new TemplateUtils();
+$template_menu = new TemplateMenu();
+ 
 $use_dark_mode = $template_utils->useDarkMode();
-
-if (file_exists('../src/Template/utils.php')) {
-    require_once "Template/utils.php";
-}
 
 ?>
 <!DOCTYPE html>
@@ -62,5 +61,7 @@ if (file_exists('../src/Template/utils.php')) {
         <?php
 
         $template_utils->renderLogo();
-        $template_utils->renderMainMenu();
+
+        $template_menu->renderMainMenu();
+        
         $template_utils->renderFlashMessages();
