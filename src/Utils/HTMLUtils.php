@@ -9,7 +9,6 @@ use Diversen\Lang;
 /**
  * Some helper functions for the Template
  */
-
 class HTMLUtils
 {
 

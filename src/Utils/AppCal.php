@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
+/**
+ * A class for getting calendar information
+ * about weeks and days
+ */
 class AppCal
 {
     /**

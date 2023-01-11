@@ -9,6 +9,10 @@ use DateTime;
 use DateTimeZone;
 use App\AppUtils;
 
+/**
+ * A class for date and time related functions
+ * Mainly converting between UTC and user's timezone
+ */
 class DateUtils extends AppUtils
 {
     private $user_timezone;

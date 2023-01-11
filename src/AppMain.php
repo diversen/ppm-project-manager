@@ -9,7 +9,7 @@ use Pebble\App\AppBase;
 use App\Settings\SetupIntl;
 
 /**
- * App class. This is the main class for the app.
+ * AppMain class. This is the main class for the app.
  * It is used in www/index.php
  */
 class AppMain extends AppBase

@@ -10,6 +10,7 @@ use App\AppACL;
 
 /**
  * App spcific utils that extends StdUtils
+ * Extend this class and you can use the methods in your controllers or models
  */
 class AppUtils extends StdUtils
 {

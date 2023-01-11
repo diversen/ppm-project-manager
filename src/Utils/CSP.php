@@ -7,6 +7,10 @@ namespace App\Utils;
 use Aidantwoods\SecureHeaders\SecureHeaders;
 use Pebble\Service\ConfigService;
 
+/**
+ * A trait for sending CSP headers
+ * You may want to add this to your AppMain class
+ */
 trait CSP
 {
     private static $nonce;
