@@ -15,6 +15,7 @@ use App\Settings\SetupIntl;
 class AppMain extends AppBase
 {
     use \Pebble\Trait\CSP;
+    use \Pebble\Trait\CSRF;
 
     public const VERSION = "v2.1.4";
 
@@ -28,7 +29,14 @@ class AppMain extends AppBase
         $this->sendSSLHeaders();
         $this->sendCSPHeaders();
         $this->sessionStart();
-        $this->setDebug();
+
+        $request_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        
+        // Set CSFR token if GET request and not captcha
+        // Captcha is a GET REQUEST but is fetched via AJAX which alters the CSRF token
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && $request_path !== '/account/captcha') {
+            $this->setCSRFToken();
+        }
 
         (new SetupIntl())->setupIntl();
         $router = new Router();

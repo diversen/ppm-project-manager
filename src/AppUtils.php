@@ -7,6 +7,7 @@ namespace App;
 use Pebble\App\StdUtils;
 use Pebble\Service\Container;
 use App\AppACL;
+use Diversen\Lang;
 
 /**
  * App spcific utils that extends StdUtils
@@ -22,6 +23,7 @@ class AppUtils extends StdUtils
     public function __construct()
     {
         parent::__construct();
+        $this->csrf->setErrorMessage(Lang::translate('Invalid Request. We will look in to this'));
         $this->app_acl = $this->getAppACL();
     }
 
