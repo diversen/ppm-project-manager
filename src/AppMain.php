@@ -14,7 +14,7 @@ use App\Settings\SetupIntl;
  */
 class AppMain extends AppBase
 {
-    use \App\Utils\CSP;
+    use \Pebble\Trait\CSP;
 
     public const VERSION = "v2.1.4-beta-5";
 
