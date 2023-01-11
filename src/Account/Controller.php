@@ -75,11 +75,12 @@ class Controller extends AppUtils
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
-            $response['error'] = false;
-            if ($this->twoFactor($response, $row)) {
+            
+            if ($this->twoFactor($row['id'])) {
                 return;
             }
 
+            $response['error'] = false;
             $response['redirect'] = $this->config->get('App.login_redirect');
             if (isset($_POST['keep_login'])) {
                 $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
@@ -135,19 +136,11 @@ class Controller extends AppUtils
      * redirect to the two factor page
      * @return bool $res True if the user has two factor enabled
      */
-    private function twoFactor(array $response, array $row): bool
+    private function twoFactor(int $auth_id): bool
     {
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
-            if ($two_factor->isTwoFactorEnabled($row['id'])) {
-                $session_timed = new SessionTimed();
-                $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
-                $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
-                $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
-                $response['redirect'] = '/twofactor/verify';
-                $this->json->render($response);
-                return true;
-            }
+            return $two_factor->checkAndRedirect($auth_id);  
         }
         return false;
     }
