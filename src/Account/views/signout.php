@@ -3,7 +3,6 @@
 use Diversen\Lang;
 
 ?>
-
 <h3 class="sub-menu"><?=Lang::translate('Sign out')?></h3>
 <div class="action-links">
     <a href="/account/logout"><?=Lang::translate('Sign out')?></a>

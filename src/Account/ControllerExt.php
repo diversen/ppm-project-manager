@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Account;
 
 use Diversen\Lang;
-use Pebble\CSRF;
 use App\Google\GoogleUtils;
 use App\Account\Controller;
 use Exception;
@@ -24,7 +23,7 @@ class ControllerExt extends Controller
      * @route /account/signin
      * @verbs GET
      */
-    public function index(): void
+    public function signin(): void
     {
         if ($this->config->get('Account.google')) {
             $google_auth_url = $this->getGoogleAuthUrl();
@@ -43,7 +42,6 @@ class ControllerExt extends Controller
             $template_vars = [
                 'google_auth_url' => $google_auth_url,
                 'title' => Lang::translate('Sign in'),
-                'csrf_token' => (new CSRF())->getToken(),
             ];
 
             $this->renderPage(

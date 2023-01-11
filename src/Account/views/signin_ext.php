@@ -31,7 +31,8 @@ endif;
 ?>
 
 <form id="login-form">
-    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>" />
+    
+    <?=AppMain::getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
@@ -71,6 +72,7 @@ endif;
             if (res.error === false) {
                 Pebble.redirect(res.redirect);
             } else {
+                console.log(res)
                 Pebble.setFlashMessage(res.message, 'error');
             }
 

@@ -15,7 +15,8 @@ use App\AppMain;
 </div>
 
 <form id="login-form">
-    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>" />
+
+    <?=AppMain::getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">

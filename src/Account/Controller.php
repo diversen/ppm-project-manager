@@ -6,21 +6,16 @@ namespace App\Account;
 
 use Diversen\Lang;
 use Pebble\Captcha;
-use Pebble\CSRF;
-use Pebble\SessionTimed;
 use Pebble\ExceptionTrace;
-
 use Pebble\Exception\NotFoundException;
 use Pebble\File;
-
 use App\AppUtils;
 use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
-
-
 use Exception;
 use Parsedown;
+use Pebble\Exception\JSONException;
 
 class Controller extends AppUtils
 {
@@ -44,8 +39,6 @@ class Controller extends AppUtils
             );
         } else {
             $template_vars['title'] = Lang::translate('Sign in');
-            $template_vars['csrf_token'] = (new CSRF())->getToken();
-
             $this->renderPage(
                 'Account/views/signin.php',
                 $template_vars
@@ -62,20 +55,13 @@ class Controller extends AppUtils
     {
         usleep(100000);
 
-        $validate = new Validate();
-        $response = $validate->postSignin();
-        if ($response['error'] === true) {
-            $this->json->render($response);
-            return;
-        }
-
-        $this->log->info('Account.post_signin.email', ['email' => $_POST['email']]);
+        $this->csrf->validateTokenJSON();
 
         $response['error'] = true;
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
-            
+
             if ($this->twoFactor($row['id'])) {
                 return;
             }
@@ -125,10 +111,7 @@ class Controller extends AppUtils
      */
     public function signout(): void
     {
-        $this->renderPage(
-            'Account/views/signout.php',
-            ['title' => Lang::translate('Sign out')]
-        );
+        $this->renderPage('Account/views/signout.php', ['title' => Lang::translate('Sign out')]);
     }
 
     /**
@@ -140,7 +123,7 @@ class Controller extends AppUtils
     {
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
-            return $two_factor->checkAndRedirect($auth_id);  
+            return $two_factor->checkAndRedirect($auth_id);
         }
         return false;
     }
@@ -153,7 +136,6 @@ class Controller extends AppUtils
     {
         $template_vars = [
             'title' => Lang::translate('Email sign up'),
-            'token' => (new CSRF())->getToken(),
         ];
 
         $this->renderPage(
@@ -162,43 +144,6 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /account/verify
-     * @verbs GET
-     */
-    public function verify(): void
-    {
-        $key = $_GET['key'] ?? '';
-
-        $row = $this->auth->getByWhere(['random' => $key]);
-        if (empty($row)) {
-            $this->flash->setMessage(Lang::translate('No valid verification key could be found'), 'error');
-            $this->log->info('Account.verify.failed', ['get' => $_GET]);
-            header("Location: /account/signin");
-            return;
-        }
-
-        $res = $this->auth->verifyKey($key);
-        if ($res) {
-            $this->flash->setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
-            $this->log->info('Account.verify.success', ['auth_id' => $row['id']]);
-        } else {
-            $this->flash->setMessage(Lang::translate('The key supplied has already been used'), 'error');
-            $this->log->info('Account.verify.failed', ['auth_id' => $row['id']]);
-        }
-
-        header("Location: /account/signin");
-    }
-
-    /**
-     * @route /account/captcha
-     * @verbs GET
-     */
-    public function captcha(): void
-    {
-        $captcha = new Captcha();
-        $captcha->outputImage();
-    }
 
     /**
      * @route /account/post_signup
@@ -208,12 +153,10 @@ class Controller extends AppUtils
     {
         usleep(100000);
 
+        $this->csrf->validateTokenJSON();
+
         $validate = new Validate();
-        $response = $validate->postSignup();
-        if ($response['error'] === true) {
-            $this->json->render($response);
-            return;
-        }
+        $validate->postSignup();
 
         $this->db->beginTransaction();
 
@@ -258,13 +201,51 @@ class Controller extends AppUtils
     }
 
     /**
+     * @route /account/verify
+     * @verbs GET
+     */
+    public function verify(): void
+    {
+        $key = $_GET['key'] ?? '';
+
+        $row = $this->auth->getByWhere(['random' => $key]);
+        if (empty($row)) {
+            $this->flash->setMessage(Lang::translate('No valid verification key could be found'), 'error');
+            $this->log->info('Account.verify.failed', ['get' => $_GET]);
+            header("Location: /account/signin");
+            return;
+        }
+
+        $res = $this->auth->verifyKey($key);
+        if ($res) {
+            $this->flash->setMessage(Lang::translate('Your account has been verified. You may log in'), 'success');
+            $this->log->info('Account.verify.success', ['auth_id' => $row['id']]);
+        } else {
+            $this->flash->setMessage(Lang::translate('The key supplied has already been used'), 'error');
+            $this->log->info('Account.verify.failed', ['auth_id' => $row['id']]);
+        }
+
+        header("Location: /account/signin");
+    }
+
+    /**
+     * @route /account/captcha
+     * @verbs GET
+     */
+    public function captcha(): void
+    {
+        $captcha = new Captcha();
+        $captcha->outputImage();
+    }
+
+
+    /**
      * @route /account/recover
      * @verbs GET
      */
     public function recover(): void
     {
         $template_vars = [
-            'token' => (new CSRF())->getToken(),
             'title' => Lang::translate('Forgotten password'),
         ];
 
@@ -281,15 +262,10 @@ class Controller extends AppUtils
     public function post_recover(): void
     {
         $captcha = new Captcha();
-
+        
+        $this->csrf->validateTokenJSON();
+        
         $response = ['error' => true];
-
-        $csrf = new CSRF();
-        if (!$csrf->validateToken()) {
-            $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            $this->json->render($response);
-            return;
-        }
 
         $row = $this->auth->getByWhere(['email' => $_POST['email']]);
 
@@ -319,7 +295,7 @@ class Controller extends AppUtils
                 $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
                 $this->flash->setMessage(
                     Lang::translate('A notification email has been sent with instructions to create a new password'),
-                    'success', 
+                    'success',
                     ['flash_remove' => true]
                 );
                 $response['error'] = false;
@@ -339,15 +315,11 @@ class Controller extends AppUtils
     public function newpassword(): void
     {
         $key = $_GET['key'] ?? null;
-        $row = $this->auth->getByWhere(['random' => $key]);
 
-        $template_vars = ['title' => Lang::translate('New password')];
-        if (empty($row)) {
-            $template_vars['error'] = true;
-            $this->flash->setMessage(Lang::translate('No such account connected to supplied key'), 'error');
-        }
-
-        $template_vars['token'] = (new CSRF())->getToken();
+        $template_vars = [
+            'title' => Lang::translate('New password'),
+            'key' => $key
+        ];
 
         $this->renderPage(
             'Account/views/newpassword.php',
@@ -356,33 +328,36 @@ class Controller extends AppUtils
     }
 
     /**
-     * @route /account/newpassword
+     * @route /account/post_newpassword
      * @verbs POST
      */
     public function post_newpassword(): void
     {
-        $key = $_GET['key'] ?? null;
-        $row = $this->auth->getByWhere(['random' => $key]);
+        $this->csrf->validateTokenJSON();
 
-        if (!empty($_POST) && !empty($row)) {
-            $validate = new Validate();
-            $response = $validate->passwords();
-
-            if ($response['error'] === true) {
-                $this->flash->setMessage($response['message'], 'error');
-                header("Location: $_SERVER[REQUEST_URI]");
-            } else {
-                $this->auth->unlinkAllCookies($row['id']);
-                $this->auth->updatePassword($row['id'], $_POST['password']);
-
-                $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
-                $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success', ['flash_remove' => true]);
-
-                header("Location: /account/signin");
-            }
+        $row = $this->auth->getByWhere(['random' => $_POST['key']]);
+        
+        if (empty($row)) {
+            throw new JSONException(Lang::translate('No such account connected to supplied key'), 404);
         }
-    }
 
+        // Validate or throw exception
+        $validate = new Validate();
+        $validate->passwords();
+
+        // Ok, update password
+        $this->auth->unlinkAllCookies($row['id']);
+        $this->auth->updatePassword($row['id'], $_POST['password']);
+
+        $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
+        $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success', ['flash_remove' => true]);
+
+        $response['error'] = false;
+        $response['redirect'] = '/account/signin';
+
+        $this->json->render($response);
+        
+    }
 
     /**
      * @route /account/terms/:document

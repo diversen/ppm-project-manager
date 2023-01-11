@@ -4,29 +4,15 @@ declare(strict_types=1);
 
 namespace App\Account;
 
-use Pebble\CSRF;
 use Diversen\Lang;
 use App\AppUtils;
+use Pebble\Exception\JSONException;
 
 class Validate extends AppUtils
 {
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function postSignin(): array
-    {
-        $response = ['error' => true];
-
-        if (!$this->token()) {
-            http_response_code(403);
-            $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            return $response;
-        }
-
-        $response['error'] = false;
-        return $response;
     }
 
     /**
@@ -63,86 +49,50 @@ class Validate extends AppUtils
         return true;
     }
 
-    private function token(): bool
-    {
-        $csrf = new CSRF();
-        if (!$csrf->validateToken()) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Validate signup form from $_POST
+     * Throw exception if not valid
      */
-    public function postSignup(): array
+    public function postSignup(): void
     {
-        $response = ['error' => true];
-
-        if (!$this->token()) {
-            http_response_code(403);
-            $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            return $response;
-        }
 
         if ($this->emailExists($_POST['email'])) {
-            $response['message'] = Lang::translate('E-mail does already exists');
-            return $response;
+            throw new JSONException(Lang::translate('E-mail does already exists'));
         }
 
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $response['message'] = Lang::translate('Please enter a valid E-mail');
-            return $response;
+            throw new JSONException(Lang::translate('Please enter a valid E-mail'));
         }
 
         $res = $this->passwordsMatch($_POST['password'], $_POST['password_2']);
         if (!$res) {
-            $response['message'] = Lang::translate('Passwords does not match');
-            return $response;
+            throw new JSONException(Lang::translate('Passwords does not match'));
         }
 
         $res = $this->passwordStrength($_POST['password']);
         if (!$res) {
-            $response['message'] = Lang::translate('Passwords should be at least 7 chars long');
-            return $response;
+            throw new JSONException(Lang::translate('Passwords should be at least 7 chars long'));
         }
 
         if (mb_strtolower($_POST['captcha']) != mb_strtolower($_SESSION['captcha_phrase'])) {
-            $response['message'] = Lang::translate('Image text does not match');
-            return $response;
+            throw new JSONException(Lang::translate('Image text does not match'));
         }
-
-        $response['error'] = false;
-        return $response;
     }
 
     /**
      * Validate passwords from $_POST
      */
-    public function passwords(): array
+    public function passwords(): void
     {
-        $csrf = new CSRF();
-
-        $response = ['error' => true];
-
-        if (!$csrf->validateToken()) {
-            $response['message'] = Lang::translate('Invalid Request. We will look in to this');
-            return $response;
-        }
 
         $res = $this->passwordsMatch($_POST['password'], $_POST['password_2']);
         if (!$res) {
-            $response['message'] = Lang::translate('Passwords does not match');
-            return $response;
+            throw new JSONException(Lang::translate('Passwords does not match'));
         }
 
         $res = $this->passwordStrength($_POST['password']);
         if (!$res) {
-            $response['message'] = Lang::translate('Passwords should be at least 7 chars long');
-            return $response;
+            throw new JSONException(Lang::translate('Passwords should be at least 7 chars long'));
         }
-
-        $response['error'] = false;
-        return $response;
     }
 }

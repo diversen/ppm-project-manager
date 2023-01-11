@@ -11,7 +11,8 @@ use App\AppMain;
 
 <form id="signup-form">
 
-    <input type="hidden" name="csrf_token" value="<?= $token ?>" />
+    <?=AppMain::getCSRFFormField()?>
+    
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
 

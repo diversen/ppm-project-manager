@@ -7,7 +7,9 @@ use App\AppMain;
 <h3 class="sub-menu"><?= Lang::translate('Email sign up') ?></h3>
 
 <form id="signup-form">
-    <input type="hidden" name="csrf_token" value="<?= $token ?>" />
+    
+    <?=AppMain::getCSRFFormField()?>
+    
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
 
@@ -52,6 +54,7 @@ use App\AppMain;
             if (res.error === false) {
                 Pebble.redirect(res.redirect);
             } else {
+                
                 Pebble.setFlashMessage(res.message, 'error');
             }
 
