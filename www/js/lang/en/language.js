@@ -129,6 +129,7 @@ const Translation =
     "Updated": "Updated",
     "Time used": "Time used",
     "View inactive projects": "View inactive projects",
+    "View active projects": "View active projects",
     "Total time used on all projects": "Total time used on all projects",
     "Add time to task": "Add time to task",
     "Show more": "Show more",
@@ -151,8 +152,6 @@ const Translation =
     "No user info": "No user info",
     "Please choose a project": "Please choose a project",
     "Task created": "Task created",
-    "Exceeded tasks moved to today": "Exceeded tasks moved to today",
-    "tasks": "tasks",
     "The end date can not be before the begin date": "The end date can not be before the begin date",
     "There is no such task": "There is no such task",
     "Add note": "Add note",
@@ -194,9 +193,6 @@ const Translation =
     "Read more": "Read more",
     "Accept": "Accept",
     "Reject": "Reject",
-    "Today": "Today",
-    "Edit": "Edit",
-    "New": "New",
     "Activity this week: <span class=\"notranslate\">{week_user_total}<\/span>": "Activity this week: <span class=\"notranslate\">{week_user_total}<\/span>",
     "Not a valid time input": "Not a valid time input",
     "No note": "No note",
@@ -224,7 +220,8 @@ const Translation =
     "Get a new QR code": "Get a new QR code",
     "If you create a new QR code then the old code will be deleted": "If you create a new QR code then the old code will be deleted",
     "Verify login using two factor authentication": "Verify login using two factor authentication",
-    "1. Enter code as seen on your phone": "1. Enter code as seen on your phone"
+    "1. Enter code as seen on your phone": "1. Enter code as seen on your phone",
+    "Today": "Today"
 }
 
 export {Translation}

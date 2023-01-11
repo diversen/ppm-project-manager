@@ -89,6 +89,15 @@ function render_projects_inactive_link()
 
 }
 
+function render_projects_active_link()
+{ ?>
+    <div class="action-links">
+        <a href='/project'><?= Lang::translate('View active projects') ?></a>
+    </div>
+<?php
+
+}
+
 function render_projects_total_time($total_time_human)
 {
     ?>
@@ -105,4 +114,6 @@ $pagination->render($paginator);
 
 if (isset($inactive_link)) {
     render_projects_inactive_link();
-}
+} else {
+    render_projects_active_link();
+}   

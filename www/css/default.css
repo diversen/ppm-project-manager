@@ -91,7 +91,7 @@ span.loadingspinner {
 }
 
 .action-links {
-    display: flex;
+    display: table;
 }
 
 .action-links>a {
@@ -113,7 +113,7 @@ span.loadingspinner {
 }
 
 .app-menu {
-    display: flex;
+    display: table;
 }
 
 .app-menu>a {
@@ -222,10 +222,12 @@ a:focus {
     ;
 }
 
-/*
+
 .page {
+    display: block;
+    min-width: 100%;
     min-height: calc(100vh - 100px);
-}*/
+}
 
 .footer {
     background-color: var(--background-alt);

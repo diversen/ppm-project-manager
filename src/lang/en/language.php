@@ -255,6 +255,7 @@ $LANG['Title'] = 'Title';
 $LANG['Updated'] = 'Updated';
 $LANG['Time used'] = 'Time used';
 $LANG['View inactive projects'] = 'View inactive projects';
+$LANG['View active projects'] = 'View active projects';
 $LANG['Total time used on all projects'] = 'Total time used on all projects';
 
 // Translation of file src/Project/views/task_list.tpl.php
@@ -305,8 +306,6 @@ $LANG['No user info'] = 'No user info';
 
 $LANG['Please choose a project'] = 'Please choose a project';
 $LANG['Task created'] = 'Task created';
-$LANG['Exceeded tasks moved to today'] = 'Exceeded tasks moved to today';
-$LANG['tasks'] = 'tasks';
 
 // Translation of file src/Task/TaskModel.php
 
@@ -396,7 +395,7 @@ $LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Note'] = 'Note';
 
-// Translation of file src/Template/TemplateUtils.php
+// Translation of file src/Template/TemplateMenu.php
 
 $LANG['Sign in'] = 'Sign in';
 $LANG['Email sign up'] = 'Email sign up';
@@ -417,14 +416,6 @@ $LANG['You may accept or reject any non-essential cookies.'] = 'You may accept o
 $LANG['Read more'] = 'Read more';
 $LANG['Accept'] = 'Accept';
 $LANG['Reject'] = 'Reject';
-
-// Translation of file src/Template/utils.php
-
-$LANG['Today'] = 'Today';
-$LANG['Delete'] = 'Delete';
-$LANG['Edit'] = 'Edit';
-$LANG['New'] = 'New';
-$LANG['Time'] = 'Time';
 
 // Translation of file src/Test/translate.tpl.php
 
@@ -485,3 +476,8 @@ $LANG['If you create a new QR code then the old code will be deleted'] = 'If you
 $LANG['Verify login using two factor authentication'] = 'Verify login using two factor authentication';
 $LANG['1. Enter code as seen on your phone'] = '1. Enter code as seen on your phone';
 $LANG['Submit'] = 'Submit';
+
+// Translation of file src/Utils/HTMLUtils.php
+
+$LANG['Today'] = 'Today';
+$LANG['Delete'] = 'Delete';

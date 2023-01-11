@@ -129,6 +129,7 @@ const Translation =
     "Updated": "Aktualisiert",
     "Time used": "Zeit verwendet",
     "View inactive projects": "Zeigen Sie inaktive Projekte an",
+    "View active projects": "Aktive Projekte anzeigen",
     "Total time used on all projects": "Gesamtzeit f\u00fcr alle Projekte",
     "Add time to task": "F\u00fcgen Sie der Aufgabe Zeit hinzu",
     "Show more": "Zeig mehr",
@@ -151,8 +152,6 @@ const Translation =
     "No user info": "Keine Benutzerinfo",
     "Please choose a project": "Bitte w\u00e4hlen Sie ein Projekt aus",
     "Task created": "Aufgabe erstellt",
-    "Exceeded tasks moved to today": "\u00dcberz\u00e4hlige Aufgaben auf heute verschoben",
-    "tasks": "Aufgaben",
     "The end date can not be before the begin date": "Das Enddatum darf nicht vor dem Anfangsdatum liegen",
     "There is no such task": "Es gibt keine solche Aufgabe",
     "Add note": "Notiz hinzuf\u00fcgen",
@@ -194,9 +193,6 @@ const Translation =
     "Read more": "Weiterlesen",
     "Accept": "Annehmen",
     "Reject": "Ablehnen",
-    "Today": "Heute",
-    "Edit": "Bearbeiten",
-    "New": "Neu",
     "Activity this week: <span class=\"notranslate\">{week_user_total}<\/span>": "Aktivit\u00e4t diese Woche: <span class=\"notranslate\">{week_user_total}<\/span>",
     "Not a valid time input": "Keine g\u00fcltige Zeiteingabe",
     "No note": "Keine Notiz",
@@ -224,7 +220,8 @@ const Translation =
     "Get a new QR code": "Holen Sie sich einen neuen QR-Code",
     "If you create a new QR code then the old code will be deleted": "Wenn Sie einen neuen QR-Code erstellen, wird der alte Code gel\u00f6scht",
     "Verify login using two factor authentication": "Verifizieren Sie die Anmeldung mit der Zwei-Faktor-Authentifizierung",
-    "1. Enter code as seen on your phone": "1. Geben Sie den Code ein, der auf Ihrem Telefon angezeigt wird"
+    "1. Enter code as seen on your phone": "1. Geben Sie den Code ein, der auf Ihrem Telefon angezeigt wird",
+    "Today": "Heute"
 }
 
 export {Translation}

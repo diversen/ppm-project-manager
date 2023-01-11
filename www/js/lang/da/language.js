@@ -129,6 +129,7 @@ const Translation =
     "Updated": "Opdateret",
     "Time used": "Brugt tid",
     "View inactive projects": "Se inaktive projekter",
+    "View active projects": "Se aktive projekter",
     "Total time used on all projects": "Samlet tid brugt p\u00e5 alle projekter",
     "Add time to task": "Tilf\u00f8j tid til opgaven",
     "Show more": "Vis mere",
@@ -151,8 +152,6 @@ const Translation =
     "No user info": "Ingen brugerinformation",
     "Please choose a project": "V\u00e6lg venligst et projekt",
     "Task created": "Opgave oprettet",
-    "Exceeded tasks moved to today": "Overskredet opgaver flyttet til i dag",
-    "tasks": "opgaver",
     "The end date can not be before the begin date": "Slutdatoen kan ikke v\u00e6re f\u00f8r startdatoen",
     "There is no such task": "Der er ingen s\u00e5dan opgave",
     "Add note": "Tilf\u00f8j note",
@@ -194,9 +193,6 @@ const Translation =
     "Read more": "L\u00e6s mere",
     "Accept": "Accepter",
     "Reject": "Afvis",
-    "Today": "I dag",
-    "Edit": "Ret",
-    "New": "Ny",
     "Activity this week: <span class=\"notranslate\">{week_user_total}<\/span>": "Aktivitet i denne uge: <span class=\"notranslate\">{week_user_total}<\/span>",
     "Not a valid time input": "Ikke en gyldig tidsindtastning",
     "No note": "Ingen note",
@@ -224,7 +220,8 @@ const Translation =
     "Get a new QR code": "F\u00e5 en ny QR-kode",
     "If you create a new QR code then the old code will be deleted": "Hvis du opretter en ny QR-kode, vil den gamle kode blive slettet",
     "Verify login using two factor authentication": "Bekr\u00e6ft login ved hj\u00e6lp af tofaktorautentificering",
-    "1. Enter code as seen on your phone": "1. Indtast koden som vist p\u00e5 din telefon"
+    "1. Enter code as seen on your phone": "1. Indtast koden som vist p\u00e5 din telefon",
+    "Today": "I dag"
 }
 
 export {Translation}

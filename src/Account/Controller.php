@@ -418,6 +418,6 @@ class Controller extends AppUtils
         $parsedown->setSafeMode(false);
         $data['note_markdown'] = $parsedown->text($markdown_text);
 
-        $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => false]);
+        $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
     }
 }
