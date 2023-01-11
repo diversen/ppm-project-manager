@@ -40,8 +40,6 @@ use App\AppMain;
 <script type="module" nonce="<?= AppMain::getNonce() ?>">
     import { Pebble } from '/js/pebble.js?v=<?= AppMain::VERSION ?>';
 
-    document.getElementById('code').focus();
-
     let spinner = document.querySelector('.loadingspinner');
     let submitElem = document.getElementById('check');
     submitElem.addEventListener('click', async function(event) {
