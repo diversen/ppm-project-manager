@@ -29,6 +29,7 @@ class AppMain extends AppBase
         $this->sendSSLHeaders();
         $this->sendCSPHeaders();
         $this->sessionStart();
+        $this->setDebug();
 
         $request_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         

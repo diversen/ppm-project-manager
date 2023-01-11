@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 final class AuthTest extends TestCase
 {
 
+    private $log;
     private $user_email = 'test';
     private $user_email_2 = 'test_2';
     private $user_password = 'password';
@@ -27,6 +28,7 @@ final class AuthTest extends TestCase
     private $project_id;
     private $task_id;
     private $time_id;
+    private $last_result;
 
     private function curl($url, $post_params = [], $headers = []): CurlHandle
     {
@@ -55,12 +57,16 @@ final class AuthTest extends TestCase
         $ch = $this->curl($url, $post_params);
         $result = curl_exec($ch);
         $this->last_result = $result;
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $this->assertEquals($return_code, $httpcode);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($http_code !== $return_code) {
+            print_r($result);
+        }
+        $this->assertEquals($return_code, $http_code);
         return $result;
     }
 
-    
+
 
     protected function setUp(): void
     {
@@ -116,7 +122,7 @@ final class AuthTest extends TestCase
 
         $this->curlAssert('/account/signin', [], 200);
         $this->curlAssert('/overview', [], 403);
-        $this->curlAssert('/account/post_login', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
+        $this->curlAssert('/account/post_signin', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
         $this->curlAssert('/settings', [], 200);
         $this->curlAssert('/settings/put', ['timezone' => 'Africa/Accra', 'language' => 'de', 'theme_dark_mode' => 1], 200);
         $this->curlAssert('/overview', [], 200);
@@ -151,7 +157,7 @@ final class AuthTest extends TestCase
         $this->curlAssert("/admin", [], 403);
 
         // User 2. Login and check if user 1 project gives 403
-        $this->curlAssert('/account/post_login', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
+        $this->curlAssert('/account/post_signin', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
         $this->curlAssert('/project/add', [], 200);
         $this->curlAssert("/project/view/$this->project_id", [], 403);
         $this->curlAssert("/project/edit/$this->project_id", [], 403);
@@ -164,7 +170,7 @@ final class AuthTest extends TestCase
         // TASK and time routes
 
         // User 1.
-        $this->curlAssert('/account/post_login', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
+        $this->curlAssert('/account/post_signin', ['email' => $this->user_email, 'password' => $this->user_password,], 200);
         $this->curlAssert("/task/add/$this->project_id", [], 200);
         $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 200);
         $this->setTaskID();
@@ -199,7 +205,7 @@ final class AuthTest extends TestCase
         $this->curlAssert('/account/logout', [], 200);
 
         // User 2
-        $this->curlAssert('/account/post_login', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
+        $this->curlAssert('/account/post_signin', ['email' => $this->user_email_2, 'password' => $this->user_password_2,], 200);
         $this->curlAssert("/task/add/$this->project_id", [], 403);
         $this->curlAssert("/task/post", ['title' => 'Test task', 'note' => 'Test', 'project_id' => $this->project_id], 403);
         $this->curlAssert("/task/view/$this->task_id", [], 403);
