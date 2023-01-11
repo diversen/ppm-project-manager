@@ -12,7 +12,6 @@ if ($project['status'] == 1) {
 }
 
 ?>
-
 <h3 class="sub-menu">
     <a href="/project"><?= Lang::translate('Projects') ?></a><?= HTMLUtils::getMenuSeparator() ?>
     <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a><?= HTMLUtils::getMenuSeparator() ?>
