@@ -7,9 +7,14 @@ use Monolog\Handler\StreamHandler;
 use Pebble\Path;
 use Diversen\Lang;
 use Pebble\ExceptionTrace;
+use Pebble\JSON;
 use Exception;
 use App\AppUtils;
 use Throwable;
+use Pebble\Exception\NotFoundException;
+use Pebble\Exception\ForbiddenException;
+use Pebble\Exception\TemplateException;
+use Pebble\Exception\JSONException;
 
 class Controller extends AppUtils
 {
@@ -109,59 +114,42 @@ class Controller extends AppUtils
     public function render(Throwable $e)
     {
         $error_code = $this->getErrorCode($e);
+        $class = get_class($e);
 
-        if ($error_code === 404) {
-            $this->notFoundException($e);
-        } elseif ($error_code === 403) {
-            $this->forbiddenException($e);
-        } elseif ($error_code === 510) {
-            $this->templateException($e);
+        if ($class === NotFoundException::class) {
+
+            $this->log->notice("App.not_found.exception", ['url' => $_SERVER['REQUEST_URI']]);
+            $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
+        } elseif ($class === ForbiddenException::class) {
+
+            $this->log->notice("App.forbidden.exception", ['url' => $_SERVER['REQUEST_URI']]);
+            $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
+        } elseif ($class === TemplateException::class) {
+
+            $error_vars = [
+                'title' => Lang::translate('510 Template error'),
+                'message' => ExceptionTrace::get($e),
+            ];
+
+            $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
+            $this->template->render(
+                'Error/error.tpl.php',
+                $error_vars
+            );
+        } elseif ($class === JSONException::class) {
+
+            $this->log->error('App.json.exception', ['exception' => ExceptionTrace::get($e)]);
+
+            $response['message'] = $e->getMessage();
+            $response['error'] = true;
+            $response['code'] = $error_code;
+
+            $json = new JSON();
+            $json->render($response);
+        } else {
+
+            $this->log->error('App.internal.exception', ['exception' => ExceptionTrace::get($e)]);
+            $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
         }
-
-        // Anything else
-        else {
-            if (is_int($error_code)) {
-                http_response_code($error_code);
-            } else {
-                http_response_code(500);
-            }
-            $this->internalException($e);
-        }
-    }
-
-    private function notFoundException(Exception $e)
-    {
-        $this->log->notice("App.not_found.exception", ['url' => $_SERVER['REQUEST_URI']]);
-        $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
-    }
-
-    private function forbiddenException(Exception $e)
-    {
-        $this->log->notice("App.forbidden.exception", ['url' => $_SERVER['REQUEST_URI']]);
-        $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
-    }
-
-    /**
-     * template is a bit different, as we want only render the template Error/error.tpl.php
-     * The is because the header may be rendered already - and we don't use any output buffering
-     */
-    private function templateException(Throwable $e)
-    {
-        $error_vars = [
-            'title' => Lang::translate('510 Template error'),
-            'message' => ExceptionTrace::get($e),
-        ];
-
-        $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
-        $this->template->render(
-            'Error/error.tpl.php',
-            $error_vars
-        );
-    }
-
-    private function internalException(Throwable $e)
-    {
-        $this->log->error('App.internal.exception', ['exception' => ExceptionTrace::get($e)]);
-        $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
     }
 }
