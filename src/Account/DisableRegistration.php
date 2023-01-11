@@ -25,7 +25,7 @@ class DisableRegistration
         }
 
         $route = Router::getCurrentRoute();
-        $allow_routes = ['/account/signin', '/account/post_login', '/account/logout'];
+        $allow_routes = ['/account/signin', '/account/post_signin', '/account/logout'];
         if (!in_array($route, $allow_routes)) {
             throw new ForbiddenException(Lang::translate('Route is not allowed'));
         }

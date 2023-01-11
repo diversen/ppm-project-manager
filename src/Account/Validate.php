@@ -15,7 +15,7 @@ class Validate extends AppUtils
         parent::__construct();
     }
 
-    public function postLogin(): array
+    public function postSignin(): array
     {
         $response = ['error' => true];
 

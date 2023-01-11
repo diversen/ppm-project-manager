@@ -33,7 +33,7 @@ class Controller extends AppUtils
      * @route /account/signin
      * @verbs GET
      */
-    public function index(): void
+    public function signin(): void
     {
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
@@ -51,6 +51,49 @@ class Controller extends AppUtils
                 $template_vars
             );
         }
+    }
+
+
+    /**
+     * @route /account/post_signin
+     * @verbs POST
+     */
+    public function post_signin(): void
+    {
+        usleep(100000);
+
+        $validate = new Validate();
+        $response = $validate->postSignin();
+        if ($response['error'] === true) {
+            $this->json->render($response);
+            return;
+        }
+
+        $this->log->info('Account.post_signin.email', ['email' => $_POST['email']]);
+
+        $response['error'] = true;
+        $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
+
+        if (!empty($row)) {
+            $response['error'] = false;
+            if ($this->twoFactor($response, $row)) {
+                return;
+            }
+
+            $response['redirect'] = $this->config->get('App.login_redirect');
+            if (isset($_POST['keep_login'])) {
+                $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
+            } else {
+                $this->auth->setCookie($row, 0);
+            }
+
+            $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
+            $this->flash->setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
+        } else {
+            $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
+        }
+
+        $this->json->render($response);
     }
 
     /**
@@ -85,48 +128,6 @@ class Controller extends AppUtils
             'Account/views/signout.php',
             ['title' => Lang::translate('Sign out')]
         );
-    }
-
-    /**
-     * @route /account/post_login
-     * @verbs POST
-     */
-    public function post_login(): void
-    {
-        usleep(100000);
-
-        $validate = new Validate();
-        $response = $validate->postLogin();
-        if ($response['error'] === true) {
-            $this->json->render($response);
-            return;
-        }
-
-        $this->log->info('Account.post_login.email', ['email' => $_POST['email']]);
-
-        $response['error'] = true;
-        $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
-
-        if (!empty($row)) {
-            $response['error'] = false;
-            if ($this->twoFactor($response, $row)) {
-                return;
-            }
-
-            $response['redirect'] = $this->config->get('App.login_redirect');
-            if (isset($_POST['keep_login'])) {
-                $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
-            } else {
-                $this->auth->setCookie($row, 0);
-            }
-
-            $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
-            $this->flash->setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
-        } else {
-            $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
-        }
-
-        $this->json->render($response);
     }
 
     /**
@@ -325,7 +326,8 @@ class Controller extends AppUtils
                 $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
                 $this->flash->setMessage(
                     Lang::translate('A notification email has been sent with instructions to create a new password'),
-                    'success'
+                    'success', 
+                    ['flash_remove' => true]
                 );
                 $response['error'] = false;
                 $response['redirect'] = '/account/signin';
@@ -381,7 +383,7 @@ class Controller extends AppUtils
                 $this->auth->updatePassword($row['id'], $_POST['password']);
 
                 $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
-                $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success');
+                $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success', ['flash_remove' => true]);
 
                 header("Location: /account/signin");
             }

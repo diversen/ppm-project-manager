@@ -66,7 +66,7 @@ endif;
         const data = new FormData(form);
 
         try {
-            const res = await Pebble.asyncPost('/account/post_login', data);
+            const res = await Pebble.asyncPost('/account/post_signin', data);
             
             if (res.error === false) {
                 Pebble.redirect(res.redirect);
