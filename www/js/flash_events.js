@@ -8,12 +8,19 @@ function removeFlashMessages() {
     })
 }
 
+setTimeout(function () {
+    removeFlashMessages();
+}, 5000);
 
-document.addEventListener('DOMContentLoaded', function (e) {
-    setTimeout(function () {
-        removeFlashMessages();
-    }, 5000);
+/**
+ * Remove flash messages when clicked
+ */
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains('flash')) {
+        e.target.remove();
+    }
 })
+
 
 const FlashEvents = {}
 export {FlashEvents}

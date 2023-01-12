@@ -153,9 +153,9 @@ function render_navigation($week_state, $week_user_total, $has_projects)
     <h3 class="sub-menu"><?= Lang::translate('Week') ?> <?= $week_state['week_number_delta'] ?></h3>
     <div class="action-links">
         <a href="/overview?week_delta=<?= $week_state['prev'] ?>">
-            <?= Lang::translate('Show week') ?> <?= $week_state['week_number_delta_prev'] ?>
+            <?= Lang::translate('Week') ?> <?= $week_state['week_number_delta_prev'] ?>
         </a>
-        <a href="/overview?week_delta=<?= $week_state['next'] ?>"><?= Lang::translate('Show week') ?> 
+        <a href="/overview?week_delta=<?= $week_state['next'] ?>"><?= Lang::translate('Week') ?> 
             <?= $week_state['week_number_delta_next'] ?>
         </a>
         <?php if ($week_state['current'] != '0') : ?>
