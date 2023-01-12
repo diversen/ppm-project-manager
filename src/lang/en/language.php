@@ -8,16 +8,14 @@ $LANG['Sign out'] = 'Sign out';
 $LANG['Sign in'] = 'Sign in';
 $LANG['You are logged in'] = 'You are logged in';
 $LANG['Wrong email or password. Or your account has not been activated.'] = 'Wrong email or password. Or your account has not been activated.';
-$LANG['Verify your login.'] = 'Verify your login.';
 $LANG['Email sign up'] = 'Email sign up';
-$LANG['No valid verification key could be found'] = 'No valid verification key could be found';
-$LANG['Your account has been verified. You may log in'] = 'Your account has been verified. You may log in';
-$LANG['The key supplied has already been used'] = 'The key supplied has already been used';
 $LANG['Account has been created. You may log in'] = 'Account has been created. You may log in';
 $LANG['User created. An activation link has been sent to your email. Press the link and your account will be activated'] = 'User created. An activation link has been sent to your email. Press the link and your account will be activated';
 $LANG['The system could not create an account. Please try again another time'] = 'The system could not create an account. Please try again another time';
+$LANG['No valid verification key could be found'] = 'No valid verification key could be found';
+$LANG['Your account has been verified. You may log in'] = 'Your account has been verified. You may log in';
+$LANG['The key supplied has already been used'] = 'The key supplied has already been used';
 $LANG['Forgotten password'] = 'Forgotten password';
-$LANG['Invalid Request. We will look in to this'] = 'Invalid Request. We will look in to this';
 $LANG['No such email in our system'] = 'No such email in our system';
 $LANG['The image text does not match your submission'] = 'The image text does not match your submission';
 $LANG['A notification email has been sent with instructions to create a new password'] = 'A notification email has been sent with instructions to create a new password';
@@ -44,7 +42,6 @@ $LANG['Recover your account'] = 'Recover your account';
 
 // Translation of file src/Account/Validate.php
 
-$LANG['Invalid Request. We will look in to this'] = 'Invalid Request. We will look in to this';
 $LANG['E-mail does already exists'] = 'E-mail does already exists';
 $LANG['Please enter a valid E-mail'] = 'Please enter a valid E-mail';
 $LANG['Passwords does not match'] = 'Passwords does not match';
@@ -141,6 +138,10 @@ $LANG['You are not the owner of this project.'] = 'You are not the owner of this
 $LANG['There is no such task ID'] = 'There is no such task ID';
 $LANG['There is no such time ID'] = 'There is no such time ID';
 
+// Translation of file src/AppUtils.php
+
+$LANG['Invalid Request. We will look in to this'] = 'Invalid Request. We will look in to this';
+
 // Translation of file src/Error/Controller.php
 
 $LANG['404 Page not found'] = '404 Page not found';
@@ -203,12 +204,11 @@ $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';
 $LANG['Time'] = 'Time';
 $LANG['Week'] = 'Week';
-$LANG['Show week'] = 'Show week';
 $LANG['Current week'] = 'Current week';
 $LANG['Show full week'] = 'Show full week';
 $LANG['Show today'] = 'Show today';
 $LANG['Move exceeded to today'] = 'Move exceeded to today';
-$LANG['Add new task'] = 'Add new task';
+$LANG['New task'] = 'New task';
 $LANG['Activity this week:'] = 'Activity this week:';
 
 // Translation of file src/Project/Controller.php
@@ -453,6 +453,10 @@ $LANG['You were to slow to enter two factor code. You will need to login again.'
 $LANG['The code is verified. You are logged in.'] = 'The code is verified. You are logged in.';
 $LANG['You are signed in.'] = 'You are signed in.';
 $LANG['Verify two factor'] = 'Verify two factor';
+
+// Translation of file src/TwoFactor/TwoFactorModel.php
+
+$LANG['Verify your login.'] = 'Verify your login.';
 
 // Translation of file src/TwoFactor/views/enable.tpl.php
 
