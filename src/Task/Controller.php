@@ -156,7 +156,7 @@ class Controller extends AppUtils
 
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $response['error'] = false;
-            
+
             $this->json->render($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());

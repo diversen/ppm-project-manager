@@ -121,7 +121,7 @@ class Controller extends AppUtils
     {
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
-            if($two_factor->shouldRedirect($auth_id)) {          
+            if ($two_factor->shouldRedirect($auth_id)) {
                 $response['error'] = false;
                 $response['redirect'] = '/twofactor/verify';
                 $this->json->render($response);

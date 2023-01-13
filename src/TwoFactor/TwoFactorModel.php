@@ -56,7 +56,6 @@ class TwoFactorModel extends AppUtils
     public function shouldRedirect(int $auth_id): bool
     {
         if ($this->isTwoFactorEnabled($auth_id)) {
-
             $session_timed = new SessionTimed();
             $session_timed->setValue('auth_id_to_login', $auth_id, $this->config->get('TwoFactor.time_to_verify'));
             $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));

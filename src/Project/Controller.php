@@ -141,8 +141,6 @@ class Controller extends AppUtils
             $this->log->error('Project.post.exception', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());
         }
-
-        
     }
 
     /**
@@ -166,8 +164,6 @@ class Controller extends AppUtils
             $this->log->error('Project.put.exception', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());
         }
-
-        
     }
 
     /**
@@ -186,8 +182,6 @@ class Controller extends AppUtils
             $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());
         }
-
-        
     }
 
     /**
