@@ -116,7 +116,7 @@ function render_week($week_data, $week_state, $week_user_day_times)
     $date = $date_time_user->format('M d, Y'); ?>
 
         <p>
-            <strong <?= $day_class ?> ><?= ucfirst(get_day_name($day_number)) ?> </strong>. <?= $date ?>.
+            <strong <?= $day_class ?> ><?= ucfirst(get_day_name($day_number)) ?></strong>. <?= $date ?>.
             <?= Lang::translate('Your activity:') . ' ' . $week_user_day_times[$ts]?>
         </p>
         <table>
@@ -182,7 +182,7 @@ function render_navigation($week_state, $week_user_total, $has_projects)
         <?php endif; ?>
         <?php if ($has_projects) : ?>
             <a href="<?= URL::returnTo("/task/add/project-unknown") ?>" class="add_new_task">
-                <?= Lang::translate('Add new task') ?>
+                <?= Lang::translate('New task') ?>
             </a>
         <?php endif; ?>
     </div>
