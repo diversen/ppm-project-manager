@@ -155,49 +155,58 @@ class Controller extends AppUtils
 
         $this->csrf->validateTokenJSON();
 
+        // Validate or throw JSONException
         $validate = new Validate();
         $validate->postSignup();
 
+        try {
+            $this->createAndSendVerificationKey();
+        } catch (Exception $e) {
+            throw new JSONException($e->getMessage());
+        }
+    }
+
+    /**
+     * Create a new user and send a verification key
+     */
+    private function createAndSendVerificationKey(): void
+    {
         $this->db->beginTransaction();
 
-        $res = $this->auth->create($_POST['email'], $_POST['password']);
-        if ($res) {
-            $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
-            $row = $this->auth->getByWhere(['email' => $_POST['email']]);
+        $this->auth->create($_POST['email'], $_POST['password']);
+        $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
+        $row = $this->auth->getByWhere(['email' => $_POST['email']]);
+        
+        if ($this->config->get('Account.no_email_verify')) {
+            $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
+            $message = Lang::translate('Account has been created. You may log in');
+            $mail_success = true;
+        } else {
+            $mail = new Mail();
 
-            if ($this->config->get('Account.no_email_verify')) {
-                $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
-                $message = Lang::translate('Account has been created. You may log in');
+            try {
                 $mail_success = true;
-            } else {
-                $mail = new Mail();
-
-                try {
-                    $mail_success = true;
-                    $mail->sendSignupMail($row);
-                } catch (Exception $e) {
-                    $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
-                    $mail_success = false;
-                }
-
-                $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
+                $mail->sendSignupMail($row);
+            } catch (Exception $e) {
+                $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
+                $mail_success = false;
             }
 
-            if (!$mail_success) {
-                $this->db->rollback();
-                $this->log->info('Account.post_signup.rollback');
-                $response['error'] = true;
-                $response['message'] = Lang::translate('The system could not create an account. Please try again another time');
-            } else {
-                $this->db->commit();
-                $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
-                $this->flash->setMessage($message, 'success');
-                $response['error'] = false;
-                $response['redirect'] = '/account/signin';
-            }
+            $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
         }
 
-        $this->json->render($response);
+        if (!$mail_success) {
+            $this->db->rollback();
+            $this->log->info('Account.post_signup.rollback');
+            throw new JSONException(Lang::translate('The system could not create an account. Please try again another time'));
+        } else {
+            $this->db->commit();
+            $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
+            $this->flash->setMessage($message, 'success');
+            $response['error'] = false;
+            $response['redirect'] = '/account/signin';
+            $this->json->render($response);
+        }
     }
 
     /**
