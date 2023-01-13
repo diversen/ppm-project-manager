@@ -147,7 +147,6 @@ class TimeModel extends AppUtils
         return $this->db->delete('time', $post);
     }
 
-
     /**
      * Get a full week from an array of week days
      */
