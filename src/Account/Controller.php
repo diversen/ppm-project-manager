@@ -283,34 +283,30 @@ class Controller extends AppUtils
             throw new JSONException(Lang::translate('The image text does not match your submission'));
         }
 
-        if (!empty($row)) {
-            $mail = new mail();
-            try {
-                $mail->sendRecoverMail($row);
-                $mail_success = true;
-            } catch (Exception $e) {
-                $this->log->error('Account.post_recover.exception', ['exception' => ExceptionTrace::get($e)]);
-                $mail_success = false;
-            }
-
-            if ($mail_success) {
-                $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
-                $this->flash->setMessage(
-                    Lang::translate('A notification email has been sent with instructions to create a new password'),
-                    'success',
-                    ['flash_remove' => true]
-                );
-                $response['error'] = false;
-                $response['redirect'] = '/account/signin';
-
-                $this->json->render($response);
-
-            } else {
-                throw new JSONException(Lang::translate('E-mail could not be sent. Try again later.'));
-            }
+        $mail = new mail();
+        try {
+            $mail->sendRecoverMail($row);
+            $mail_success = true;
+        } catch (Exception $e) {
+            $this->log->error('Account.post_recover.exception', ['exception' => ExceptionTrace::get($e)]);
+            $mail_success = false;
         }
 
-        
+        if ($mail_success) {
+            $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
+            $this->flash->setMessage(
+                Lang::translate('A notification email has been sent with instructions to create a new password'),
+                'success',
+                ['flash_remove' => true]
+            );
+            $response['error'] = false;
+            $response['redirect'] = '/account/signin';
+
+            $this->json->render($response);
+
+        } else {
+            throw new JSONException(Lang::translate('E-mail could not be sent. Try again later.'));
+        } 
     }
 
     /**
