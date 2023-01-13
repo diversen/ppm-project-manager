@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\TwoFactor;
 
 use App\AppUtils;
@@ -51,7 +53,7 @@ class TwoFactorModel extends AppUtils
         return $this->db->delete('two_factor', ['auth_id' => $auth_id]);
     }
 
-    public function checkAndRedirect(int $auth_id): bool {
+    public function checkAndRedirect(int $auth_id, bool $json_response = true): bool {
         if ($this->isTwoFactorEnabled($auth_id)) {
 
             // Set session values to verify login
@@ -63,8 +65,14 @@ class TwoFactorModel extends AppUtils
             $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
             
             // Render json response
-            $response['redirect'] = '/twofactor/verify';
-            $this->json->render($response);
+            if ($json_response) {
+                $response['error'] = false;
+                $response['redirect'] = '/twofactor/verify';
+                $this->json->render($response);
+            } else {
+                header("Location: " . '/twofactor/verify');
+            }
+            
             return true;
         }
 

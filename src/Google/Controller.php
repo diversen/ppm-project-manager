@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Google;
 
-use Pebble\SessionTimed;
 use App\AppUtils;
 use Diversen\Lang;
 use App\Google\GoogleUtils;
@@ -12,8 +11,11 @@ use App\TwoFactor\TwoFactorModel;
 
 class Controller extends AppUtils
 {
+    private $login_redirect;
+    private $logout_redirect;
+
     public function __construct()
-    {
+    {   
         parent::__construct();
         $this->login_redirect = $this->config->get('App.login_redirect');
         $this->logout_redirect = $this->config->get('App.logout_redirect');
@@ -78,7 +80,6 @@ class Controller extends AppUtils
         }
     }
 
-
     private function verifyPayload(array $payload): void
     {
         if (isset($payload['email_verified']) && isset($payload['email'])) {
@@ -122,16 +123,11 @@ class Controller extends AppUtils
 
     private function loginUser($row): void
     {
-
         // Verify using two factor
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
-            if ($two_factor->isTwoFactorEnabled($row['id'])) {
-                $session_timed = new SessionTimed();
-                $session_timed->setValue('auth_id_to_login', $row['id'], $this->config->get('TwoFactor.time_to_verify'));
-                $session_timed->setValue('keep_login', true, $this->config->get('TwoFactor.time_to_verify'));
-                $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
-                header("Location: " . '/twofactor/verify');
+            $res = $two_factor->checkAndRedirect($row['id'], json_response: false);
+            if ($res) {
                 return;
             }
         }
@@ -143,3 +139,4 @@ class Controller extends AppUtils
         header("Location: " . $this->login_redirect);
     }
 }
+
