@@ -57,7 +57,6 @@ class Controller extends AppUtils
 
         $this->csrf->validateTokenJSON();
 
-        $response['error'] = true;
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
@@ -66,8 +65,6 @@ class Controller extends AppUtils
                 return;
             }
 
-            $response['error'] = false;
-            $response['redirect'] = $this->config->get('App.login_redirect');
             if (isset($_POST['keep_login'])) {
                 $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
             } else {
@@ -76,11 +73,14 @@ class Controller extends AppUtils
 
             $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
             $this->flash->setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
-        } else {
-            $response['message'] = Lang::translate('Wrong email or password. Or your account has not been activated.');
-        }
 
-        $this->json->render($response);
+            $response['error'] = false;
+            $response['redirect'] = $this->config->get('App.login_redirect');
+            $this->json->render($response);
+
+        } else {
+            throw new JSONException(Lang::translate('Wrong email or password. Or your account has not been activated.'));
+        }
     }
 
     /**
@@ -264,21 +264,14 @@ class Controller extends AppUtils
         $captcha = new Captcha();
         
         $this->csrf->validateTokenJSON();
-        
-        $response = ['error' => true];
 
         $row = $this->auth->getByWhere(['email' => $_POST['email']]);
-
         if (empty($row)) {
-            $response['message'] = Lang::translate('No such email in our system');
-            $this->json->render($response);
-            return;
+            throw new JSONException(Lang::translate('No such email in our system'));
         }
 
         if (!$captcha->validate($_POST['captcha'])) {
-            $response['message'] = Lang::translate('The image text does not match your submission');
-            $this->json->render($response);
-            return;
+            throw new JSONException(Lang::translate('The image text does not match your submission'));
         }
 
         if (!empty($row)) {
@@ -300,12 +293,15 @@ class Controller extends AppUtils
                 );
                 $response['error'] = false;
                 $response['redirect'] = '/account/signin';
+
+                $this->json->render($response);
+
             } else {
-                $response['message'] = Lang::translate('E-mail could not be sent. Try again later.');
+                throw new JSONException(Lang::translate('E-mail could not be sent. Try again later.'));
             }
         }
 
-        $this->json->render($response);
+        
     }
 
     /**
@@ -345,7 +341,7 @@ class Controller extends AppUtils
         $validate = new Validate();
         $validate->passwords();
 
-        // Ok, update password
+        // OK. Update password
         $this->auth->unlinkAllCookies($row['id']);
         $this->auth->updatePassword($row['id'], $_POST['password']);
 
