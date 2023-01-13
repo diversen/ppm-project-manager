@@ -13,6 +13,7 @@ use App\Settings\SettingsModel;
 use App\Project\ProjectModel;
 use Diversen\Lang;
 use Exception;
+use Pebble\Exception\JSONException;
 
 class Controller extends AppUtils
 {
@@ -78,8 +79,6 @@ class Controller extends AppUtils
         $settings = new SettingsModel();
         $post = $_POST;
 
-        $response['error'] = false;
-
         try {
             $this->acl->isAuthenticatedOrThrow();
             $auth_id = $this->acl->getAuthId();
@@ -87,12 +86,11 @@ class Controller extends AppUtils
             if (isset($post['overview_current_day_state'])) {
                 $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
             }
+            $response['error'] = false;
+            $this->json->render($response);
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');
+            throw new JSONException(Lang::translate('Your settings could not be saved. Check if you are logged in'));
         }
-
-        header('Content-Type: application/json');
-        $this->json->render($response);
     }
 }

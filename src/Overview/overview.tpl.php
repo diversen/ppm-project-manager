@@ -220,7 +220,7 @@ render_week($week_data, $week_state, $week_user_day_times);
             if (res.error === false) {
                 location.reload();
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
@@ -242,7 +242,7 @@ render_week($week_data, $week_state, $week_user_day_times);
             if (res.error === false) {
                 location.reload();
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)
@@ -268,7 +268,7 @@ render_week($week_data, $week_state, $week_user_day_times);
             if (res.error === false) {
                 location.reload();
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             Pebble.asyncPostError('/error/log', e.stack)

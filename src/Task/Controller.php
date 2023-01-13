@@ -152,11 +152,11 @@ class Controller extends AppUtils
 
             // Is a new project chosen for the task
             $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
-
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
 
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $response['error'] = false;
+            
             $this->json->render($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
