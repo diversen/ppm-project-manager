@@ -114,13 +114,12 @@ class Controller extends AppUtils
             $task_model = new TaskModel();
             $task_model->create($_POST);
 
-            $response['redirect'] = "/project/view/" . $_POST['project_id'];
-            $response['message'] = Lang::translate('Task created');
-
             if (isset($_POST['session_flash'])) {
                 $this->flash->setMessage(Lang::translate('Task created'), 'success', ['flash_remove' => true]);
             }
 
+            $response['redirect'] = "/project/view/" . $_POST['project_id'];
+            $response['message'] = Lang::translate('Task created');
             $response['error'] = false;
 
             $this->json->render($response);

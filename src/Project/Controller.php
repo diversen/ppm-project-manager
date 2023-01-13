@@ -134,6 +134,7 @@ class Controller extends AppUtils
             $this->project_model->create($_POST);
             $response['redirect'] = "/project";
             $response['error'] = false;
+            $this->json->render($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -141,7 +142,7 @@ class Controller extends AppUtils
             throw new JSONException($e->getMessage());
         }
 
-        $this->json->render($response);
+        
     }
 
     /**
@@ -158,6 +159,7 @@ class Controller extends AppUtils
             $this->project_model->update($_POST, $params['project_id']);
             $response['error'] = false;
             $response['redirect'] = "/project";
+            $this->json->render($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -165,7 +167,7 @@ class Controller extends AppUtils
             throw new JSONException($e->getMessage());
         }
 
-        $this->json->render($response);
+        
     }
 
     /**
@@ -179,12 +181,13 @@ class Controller extends AppUtils
             $this->project_model->delete($params['project_id']);
             $response['error'] = false;
             $response['redirect'] = "/project";
+            $this->json->render($response);
         } catch (Exception $e) {
             $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());
         }
 
-        $this->json->render($response);
+        
     }
 
     /**

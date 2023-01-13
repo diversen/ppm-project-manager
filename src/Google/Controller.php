@@ -126,10 +126,11 @@ class Controller extends AppUtils
         // Verify using two factor
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
-            $res = $two_factor->checkAndRedirect($row['id'], json_response: false);
-            if ($res) {
+            if($two_factor->shouldRedirect($row['id'])) {
+                header("Location: " . '/twofactor/verify');
                 return;
             }
+            
         }
 
         $this->auth->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));

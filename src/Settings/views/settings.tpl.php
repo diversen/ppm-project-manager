@@ -91,15 +91,13 @@ $languages = (new AppMain())->getConfig()->get('Language.enabled');
         if (!formData.get('theme_dark_mode')) {
             formData.set('theme_dark_mode', '0');
         }
-
-        let res;
-
+        
         try {
-            res = await Pebble.asyncPost('/settings/put/', formData);
+            const res = await Pebble.asyncPost('/settings/put/', formData);
             if (res.error === false) {
                 location.reload();
             } else {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             }
         } catch (e) {
             await Pebble.asyncPostError('/error/log', e.stack);

@@ -53,27 +53,15 @@ class TwoFactorModel extends AppUtils
         return $this->db->delete('two_factor', ['auth_id' => $auth_id]);
     }
 
-    public function checkAndRedirect(int $auth_id, bool $json_response = true): bool
+    public function shouldRedirect(int $auth_id): bool
     {
         if ($this->isTwoFactorEnabled($auth_id)) {
 
-            // Set session values to verify login
             $session_timed = new SessionTimed();
             $session_timed->setValue('auth_id_to_login', $auth_id, $this->config->get('TwoFactor.time_to_verify'));
             $session_timed->setValue('keep_login', isset($_POST['keep_login']), $this->config->get('TwoFactor.time_to_verify'));
 
-            // Flash
             $this->flash->setMessage(Lang::translate('Verify your login.'), 'success', ['flash_remove' => true]);
-
-            // Render json response
-            if ($json_response) {
-                $response['error'] = false;
-                $response['redirect'] = '/twofactor/verify';
-                $this->json->render($response);
-            } else {
-                header("Location: " . '/twofactor/verify');
-            }
-
             return true;
         }
 

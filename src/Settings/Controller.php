@@ -7,7 +7,9 @@ namespace App\Settings;
 use Diversen\Lang;
 
 use Pebble\Exception\NotFoundException;
+use Pebble\Exception\JSONException;
 use Pebble\ExceptionTrace;
+
 use App\AppUtils;
 use App\Settings\SettingsModel;
 use Exception;
@@ -59,21 +61,18 @@ class Controller extends AppUtils
     {
         $settings = new SettingsModel();
         $post = $_POST;
-
-        $response['error'] = false;
-
         try {
+
             $this->acl->isAuthenticatedOrThrow();
             $auth_id = $this->acl->getAuthId();
-
             $settings->setProfileSetting($auth_id, 'profile', $post);
             $this->flash->setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
+            $response['error'] = false;
+            $this->json->render($response);
+            
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = Lang::translate('Your settings could not be saved. Check if you are logged in');
+            throw new JSONException(Lang::translate('Your settings could not be saved. Check if you are logged in'));
         }
-
-        header('Content-Type: application/json');
-        $this->json->render($response);
     }
 }
