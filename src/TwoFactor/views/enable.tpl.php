@@ -53,7 +53,7 @@ use App\AppMain;
         try {
             res = await Pebble.asyncPost('/twofactor/put', formData);
             if (res.error) {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             } else {
                 Pebble.setFlashMessage(res.message, 'success');
             }

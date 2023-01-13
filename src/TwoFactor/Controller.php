@@ -12,6 +12,7 @@ use Diversen\Lang;
 use Pebble\SessionTimed;
 use App\AppUtils;
 use App\TwoFactor\TwoFactorModel;
+use Pebble\Exception\JSONException;
 
 class Controller extends AppUtils
 {
@@ -29,7 +30,6 @@ class Controller extends AppUtils
         $url = "otpauth://totp/$label?secret=$key";
         return $url;
     }
-
 
     private function getQRCode(string $totp_auth_url): string
     {
@@ -84,7 +84,8 @@ class Controller extends AppUtils
             $vars = [
                 'qr_image' => $qr_image,
                 'enabled' => false,
-                'title' => Lang::translate('Enable two factor')];
+                'title' => Lang::translate('Enable two factor')
+            ];
 
             $this->renderPage(
                 'TwoFactor/views/enable.tpl.php',
@@ -114,16 +115,15 @@ class Controller extends AppUtils
         $secret = $this->twoFactorModel->getUserSecret($auth_id);
         $input = $_POST['code'];
         $otp = TOTP::create($secret);
-        $res['error'] = false;
+
         if (!$otp->verify($input)) {
-            $message = Lang::translate('The code could not be verified. Try again.');
-            $res['error'] = $message;
+            throw new JSONException(Lang::translate('The code could not be verified. Try again.'));
         } else {
             $this->twoFactorModel->verify($auth_id);
+            $res['error'] = false;
             $res['message'] = Lang::translate('The code is verified. Two factor is enabled.');
+            $this->json->render($res);
         }
-
-        $this->json->render($res);
     }
 
     /**
@@ -132,17 +132,16 @@ class Controller extends AppUtils
      */
     public function verify_post()
     {
-        // Sleep 1 second to prevent brute force attacks
+
         usleep(1000000);
+
         $session_timed = new SessionTimed();
         $auth_id = $session_timed->getValue('auth_id_to_login');
         $keep_login = $session_timed->getValue('keep_login');
 
         if (!$auth_id) {
             $message = Lang::translate('You were to slow to enter two factor code. You will need to login again.');
-            $res['error'] = $message;
-            $this->json->render($res);
-            return;
+            throw new JSONException($message);
         }
 
         $this->log->info('TwoFactor.verify_post', ['auth_id' => $auth_id]);
@@ -150,18 +149,12 @@ class Controller extends AppUtils
         $secret = $this->twoFactorModel->getUserSecret($auth_id);
         $input = $_POST['code'];
         $otp = TOTP::create($secret);
-        $res['error'] = false;
+
         if (!$otp->verify($input)) {
-            $message = Lang::translate('The code could not be verified. Try again.');
-            $res['error'] = $message;
+            throw new JSONException(Lang::translate('The code could not be verified. Try again.'));
         } else {
-            $login_redirect = $this->config->get('App.login_redirect');
-            $res['message'] = Lang::translate('The code is verified. You are logged in.');
-            $res['redirect'] = $login_redirect;
 
             $row = $this->acl->getByWhere(['id' => $auth_id]);
-
-            $response['redirect'] = $this->config->get('App.login_redirect');
             if ($keep_login) {
                 $this->acl->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));
             } else {
@@ -170,9 +163,13 @@ class Controller extends AppUtils
 
             $this->log->info('TwoFactor.verify_post.success', ['auth_id' => $auth_id]);
             $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
-        }
 
-        $this->json->render($res);
+            $res['error'] = false;
+            $res['message'] = Lang::translate('The code is verified. You are logged in.');
+            $res['redirect'] = $this->config->get('App.login_redirect');
+
+            $this->json->render($res);
+        }
     }
 
     /**

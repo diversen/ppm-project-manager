@@ -35,7 +35,7 @@ use App\AppMain;
             res = await Pebble.asyncPost('/twofactor/verify/post', formData);
             
             if (res.error) {
-                Pebble.setFlashMessage(res.error, 'error');
+                Pebble.setFlashMessage(res.message, 'error');
             } else {
                 Pebble.redirect(res.redirect);
             }

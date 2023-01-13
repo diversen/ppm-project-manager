@@ -10,6 +10,7 @@ use App\AppUtils;
 use App\Exception\FormException;
 use App\Project\ProjectModel;
 use Exception;
+use Pebble\Exception\JSONException;
 
 class Controller extends AppUtils
 {
@@ -126,8 +127,6 @@ class Controller extends AppUtils
      */
     public function post()
     {
-        $response['error'] = true;
-
         try {
             $this->app_acl->isAuthenticatedOrThrow();
             $_POST['auth_id'] = $this->app_acl->getAuthId();
@@ -136,10 +135,10 @@ class Controller extends AppUtils
             $response['redirect'] = "/project";
             $response['error'] = false;
         } catch (FormException $e) {
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         } catch (Exception $e) {
             $this->log->error('Project.post.exception', ['exception' => ExceptionTrace::get($e)]);
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
 
         $this->json->render($response);
@@ -151,8 +150,6 @@ class Controller extends AppUtils
      */
     public function put($params)
     {
-        $response['error'] = true;
-
         try {
             if (!isset($_POST['status'])) {
                 $_POST['status'] = ProjectModel::PROJECT_CLOSED;
@@ -162,12 +159,10 @@ class Controller extends AppUtils
             $response['error'] = false;
             $response['redirect'] = "/project";
         } catch (FormException $e) {
-            $response['error'] = true;
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         } catch (Exception $e) {
             $this->log->error('Project.put.exception', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = true;
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
 
         $this->json->render($response);
@@ -179,8 +174,6 @@ class Controller extends AppUtils
      */
     public function delete($params)
     {
-        $response['error'] = true;
-
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
             $this->project_model->delete($params['project_id']);
@@ -188,7 +181,7 @@ class Controller extends AppUtils
             $response['redirect'] = "/project";
         } catch (Exception $e) {
             $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
 
         $this->json->render($response);

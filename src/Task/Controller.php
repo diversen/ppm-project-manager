@@ -10,6 +10,7 @@ use App\Task\TaskModel;
 use App\AppUtils;
 use App\Exception\FormException;
 use Diversen\Lang;
+use Pebble\Exception\JSONException;
 
 use Exception;
 
@@ -102,7 +103,7 @@ class Controller extends AppUtils
      */
     public function post()
     {
-        $response['error'] = true;
+
         try {
             if ($_POST['project_id'] === '0') {
                 throw new FormException(Lang::translate('Please choose a project'));
@@ -116,20 +117,20 @@ class Controller extends AppUtils
 
             $response['redirect'] = "/project/view/" . $_POST['project_id'];
             $response['message'] = Lang::translate('Task created');
-            
+
             if (isset($_POST['session_flash'])) {
                 $this->flash->setMessage(Lang::translate('Task created'), 'success', ['flash_remove' => true]);
             }
 
             $response['error'] = false;
+
+            $this->json->render($response);
         } catch (FormException $e) {
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
-
-        $this->json->render($response);
     }
 
     /**
@@ -138,8 +139,6 @@ class Controller extends AppUtils
      */
     public function put($params)
     {
-        $response['error'] = true;
-        $response['post'] = $_POST;
 
         try {
             $task = $this->app_acl->getTask($params['task_id']);
@@ -158,16 +157,16 @@ class Controller extends AppUtils
             $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
 
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
+
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $response['error'] = false;
+            $this->json->render($response);
         } catch (FormException $e) {
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         } catch (Exception $e) {
             $this->log->error('Task.put.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
-
-        $this->json->render($response);
     }
 
     /**
@@ -178,17 +177,16 @@ class Controller extends AppUtils
     {
         $response['error'] = true;
         try {
-            
+
             $this->app_acl->isAuthenticatedOrThrow();
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['redirect'] = '/overview';
             $response['error'] = false;
+            $this->json->render($response);
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
-
-        $this->json->render($response);
     }
 
     /**
@@ -197,7 +195,6 @@ class Controller extends AppUtils
      */
     public function delete($params)
     {
-        $response['error'] = true;
 
         try {
             $task = $this->app_acl->getTask($params['task_id']);
@@ -206,11 +203,10 @@ class Controller extends AppUtils
             $this->task_model->delete($params['task_id']);
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $response['error'] = false;
+            $this->json->render($response);
         } catch (Exception $e) {
             $this->log->error('Task.post.delete', ['exception' => ExceptionTrace::get($e)]);
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
-
-        $this->json->render($response);
     }
 }

@@ -11,6 +11,7 @@ use App\AppUtils;
 use Pebble\Pager;
 use Pebble\Pagination\PaginationUtils;
 use Pebble\ExceptionTrace;
+use Pebble\Exception\JSONException;
 
 class Controller extends AppUtils
 {
@@ -73,8 +74,7 @@ class Controller extends AppUtils
      */
     public function post()
     {
-        $response['error'] = false;
-
+        
         try {
             $task = $this->app_acl->getTask($_POST['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
@@ -83,16 +83,18 @@ class Controller extends AppUtils
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
             $this->time_model->create($post);
+            
+            $response['error'] = false;
+            $response['redirect'] = '/project/view/' . $task['project_id'];
+            $this->json->render($response);
         } catch (FormException $e) {
-            $response['error'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         } catch (Exception $e) {
             $this->log->error('Time.post.error', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
 
-        $response['redirect'] = '/project/view/' . $task['project_id'];
-
-        $this->json->render($response);
+        
     }
 
     /**
@@ -101,18 +103,18 @@ class Controller extends AppUtils
      */
     public function delete($params)
     {
-        $response['error'] = false;
-
+        
         try {
+
             $time = $this->app_acl->getTime($params['id']);
             $this->app_acl->authUserIsProjectOwner($time['project_id']);
-
             $this->time_model->delete(['id' => $params['id']]);
+            
+            $response['error'] = false;
+            $this->json->render($response);
         } catch (Exception $e) {
             $this->log->error('Time.post.delete', ['exception' => ExceptionTrace::get($e)]);
-            $response['error'] = $e->getMessage();
+            throw new JSONException($e->getMessage());
         }
-
-        $this->json->render($response);
     }
 }
