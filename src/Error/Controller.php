@@ -91,8 +91,6 @@ class Controller extends AppUtils
         return $env;
     }
 
-
-
     private function getErrorCode(Throwable $e)
     {
         $error_code = $e->getCode();
