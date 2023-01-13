@@ -8,7 +8,7 @@ use App\AppMain;
 
 $template_utils = new TemplateUtils();
 $template_menu = new TemplateMenu();
- 
+
 $use_dark_mode = $template_utils->useDarkMode();
 
 ?>
@@ -62,5 +62,5 @@ $use_dark_mode = $template_utils->useDarkMode();
         $template_utils->renderLogo();
 
         $template_menu->renderMainMenu();
-        
+
         $template_utils->renderFlashMessages();

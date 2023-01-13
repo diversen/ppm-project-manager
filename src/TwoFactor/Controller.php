@@ -134,7 +134,6 @@ class Controller extends AppUtils
      */
     public function verify_post()
     {
-
         usleep(1000000);
 
         $session_timed = new SessionTimed();
@@ -155,7 +154,6 @@ class Controller extends AppUtils
         if (!$otp->verify($input)) {
             throw new JSONException(Lang::translate('The code could not be verified. Try again.'));
         } else {
-
             $row = $this->acl->getByWhere(['id' => $auth_id]);
             if ($keep_login) {
                 $this->acl->setCookie($row, $this->config->get('Auth.cookie_seconds_permanent'));

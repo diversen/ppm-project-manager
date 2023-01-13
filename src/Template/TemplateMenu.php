@@ -12,7 +12,6 @@ use Diversen\Lang;
  */
 class TemplateMenu extends TemplateUtils
 {
-
     public function renderMainMenu(): void
     {
         $is_authenticated = $this->auth->isAuthenticated(); ?>

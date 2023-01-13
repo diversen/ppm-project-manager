@@ -11,8 +11,8 @@ use Diversen\Lang;
  */
 class HTMLUtils
 {
-
-    public static function getMenuSeparator() {
+    public static function getMenuSeparator()
+    {
         return ' :: ';
     }
 

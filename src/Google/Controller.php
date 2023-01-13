@@ -15,7 +15,7 @@ class Controller extends AppUtils
     private $logout_redirect;
 
     public function __construct()
-    {   
+    {
         parent::__construct();
         $this->login_redirect = $this->config->get('App.login_redirect');
         $this->logout_redirect = $this->config->get('App.logout_redirect');
@@ -139,4 +139,3 @@ class Controller extends AppUtils
         header("Location: " . $this->login_redirect);
     }
 }
-

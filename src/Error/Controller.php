@@ -115,15 +115,12 @@ class Controller extends AppUtils
         $class = get_class($e);
 
         if ($class === NotFoundException::class) {
-
             $this->log->notice("App.not_found.exception", ['url' => $_SERVER['REQUEST_URI']]);
             $this->baseError(Lang::translate('404 Page not found'), $this->getErrorMessage($e));
         } elseif ($class === ForbiddenException::class) {
-
             $this->log->notice("App.forbidden.exception", ['url' => $_SERVER['REQUEST_URI']]);
             $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
         } elseif ($class === TemplateException::class) {
-
             $error_vars = [
                 'title' => Lang::translate('510 Template error'),
                 'message' => ExceptionTrace::get($e),
@@ -135,7 +132,6 @@ class Controller extends AppUtils
                 $error_vars
             );
         } elseif ($class === JSONException::class) {
-
             $this->log->error('App.json.exception', ['exception' => ExceptionTrace::get($e)]);
 
             $response['message'] = $e->getMessage();
@@ -145,7 +141,6 @@ class Controller extends AppUtils
             $json = new JSON();
             $json->render($response);
         } else {
-
             $this->log->error('App.internal.exception', ['exception' => ExceptionTrace::get($e)]);
             $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
         }

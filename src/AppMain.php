@@ -17,7 +17,7 @@ class AppMain extends AppBase
     use \Pebble\Trait\CSP;
     use \Pebble\Trait\CSRF;
 
-    public const VERSION = "v2.1.6-beta-1";
+    public const VERSION = "v2.1.6-beta-3";
 
     public function run()
     {

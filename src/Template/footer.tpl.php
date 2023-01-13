@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 
-?>
-        <div class="footer">
-            <hr> 
-        </div>
+?>  
+        <hr>
+        <!-- <div class="footer">
+            <ul>
+                <li><a href="/test">Test</a></li>
+                <li><a href="/test">Another Test</a></li>
+            </ul>
+        </div> -->
     </div>
     <div id="cookie-consent">
         <p class="block">

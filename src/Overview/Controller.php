@@ -42,7 +42,7 @@ class Controller extends AppUtils
         $week_state = [
             'week_number_delta' =>      $cal->getWeekNumberFromDelta($week_delta_current),
             'week_number_delta_next' => $cal->getWeekNumberFromDelta($week_delta_current + 1),
-            'week_number_delta_prev' => $cal->getWeekNumberFromDelta($week_delta_current -1),
+            'week_number_delta_prev' => $cal->getWeekNumberFromDelta($week_delta_current - 1),
             'week_number' =>            $cal->getWeekNumberFromDelta(0),
             'current' =>                $week_delta_current,
             'next' =>                   $week_delta_current + 1,

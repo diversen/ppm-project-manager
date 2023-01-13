@@ -103,7 +103,6 @@ class Controller extends AppUtils
      */
     public function post()
     {
-
         try {
             if ($_POST['project_id'] === '0') {
                 throw new FormException(Lang::translate('Please choose a project'));
@@ -139,7 +138,6 @@ class Controller extends AppUtils
      */
     public function put($params)
     {
-
         try {
             $task = $this->app_acl->getTask($params['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
@@ -177,7 +175,6 @@ class Controller extends AppUtils
     {
         $response['error'] = true;
         try {
-
             $this->app_acl->isAuthenticatedOrThrow();
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['redirect'] = '/overview';
@@ -195,7 +192,6 @@ class Controller extends AppUtils
      */
     public function delete($params)
     {
-
         try {
             $task = $this->app_acl->getTask($params['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);

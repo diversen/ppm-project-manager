@@ -60,7 +60,6 @@ class Controller extends AppUtils
         $row = $this->auth->authenticate($_POST['email'], $_POST['password']);
 
         if (!empty($row)) {
-
             if ($this->twoFactor($row['id'])) {
                 return;
             }
@@ -77,7 +76,6 @@ class Controller extends AppUtils
             $response['error'] = false;
             $response['redirect'] = $this->config->get('App.login_redirect');
             $this->json->render($response);
-
         } else {
             throw new JSONException(Lang::translate('Wrong email or password. Or your account has not been activated.'));
         }
@@ -176,7 +174,7 @@ class Controller extends AppUtils
         $this->auth->create($_POST['email'], $_POST['password']);
         $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
         $row = $this->auth->getByWhere(['email' => $_POST['email']]);
-        
+
         if ($this->config->get('Account.no_email_verify')) {
             $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
             $message = Lang::translate('Account has been created. You may log in');
@@ -271,7 +269,7 @@ class Controller extends AppUtils
     public function post_recover(): void
     {
         $captcha = new Captcha();
-        
+
         $this->csrf->validateTokenJSON();
 
         $row = $this->auth->getByWhere(['email' => $_POST['email']]);
@@ -303,10 +301,9 @@ class Controller extends AppUtils
             $response['redirect'] = '/account/signin';
 
             $this->json->render($response);
-
         } else {
             throw new JSONException(Lang::translate('E-mail could not be sent. Try again later.'));
-        } 
+        }
     }
 
     /**
@@ -337,7 +334,7 @@ class Controller extends AppUtils
         $this->csrf->validateTokenJSON();
 
         $row = $this->auth->getByWhere(['random' => $_POST['key']]);
-        
+
         if (empty($row)) {
             throw new JSONException(Lang::translate('No such account connected to supplied key'), 404);
         }
@@ -357,7 +354,6 @@ class Controller extends AppUtils
         $response['redirect'] = '/account/signin';
 
         $this->json->render($response);
-        
     }
 
     /**

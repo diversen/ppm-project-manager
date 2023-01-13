@@ -55,7 +55,6 @@ class Validate extends AppUtils
      */
     public function postSignup(): void
     {
-
         if ($this->emailExists($_POST['email'])) {
             throw new JSONException(Lang::translate('E-mail does already exists'));
         }
@@ -84,7 +83,6 @@ class Validate extends AppUtils
      */
     public function passwords(): void
     {
-
         $res = $this->passwordsMatch($_POST['password'], $_POST['password_2']);
         if (!$res) {
             throw new JSONException(Lang::translate('Passwords does not match'));

@@ -116,4 +116,4 @@ if (isset($inactive_link)) {
     render_projects_inactive_link();
 } else {
     render_projects_active_link();
-}   
+}
