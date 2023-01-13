@@ -118,7 +118,11 @@ $is_selected = function ($value, $current_state) {
             const res = await Pebble.asyncPost('/task/delete/' + task_id, data);
 
             if (res.error === false) {
-                Pebble.redirect(res.redirect);
+                if (return_to) {
+                    Pebble.redirect(return_to);
+                } else {
+                    Pebble.redirect(res.redirect);
+                }
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }

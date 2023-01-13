@@ -3,13 +3,12 @@
 declare(strict_types=1);
 
 use Diversen\Lang;
-use Pebble\CSRF;
 use App\AppMAin;
 
-$csrf_token = (new CSRF())->getToken();
-
 ?>
-<h3 class="sub-menu"><?= Lang::translate('Add project') ?></h3>
+<h3 class="sub-menu">
+    <?= Lang::translate('Add project') ?>
+</h3>
 
 <form id="project_add" name="project_add" method="post">
     <label for="title"><?= Lang::translate('Title') ?> *</label>
