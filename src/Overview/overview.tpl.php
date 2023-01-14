@@ -92,7 +92,6 @@ function render_week($week_data, $week_state, $week_user_day_times)
 {
     $date_utils = new DateUtils();
 
-
     $current_day_state = $week_state['current_day_state'];
     foreach ($week_data as $ts => $day_data) :
 

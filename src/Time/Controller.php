@@ -83,9 +83,8 @@ class Controller extends AppUtils
             $post['project_id'] = $task['project_id'];
             $this->time_model->create($post);
 
-            $response['error'] = false;
             $response['redirect'] = '/project/view/' . $task['project_id'];
-            $this->json->render($response);
+            $this->json->renderSuccess($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -104,9 +103,7 @@ class Controller extends AppUtils
             $time = $this->app_acl->getTime($params['id']);
             $this->app_acl->authUserIsProjectOwner($time['project_id']);
             $this->time_model->delete(['id' => $params['id']]);
-
-            $response['error'] = false;
-            $this->json->render($response);
+            $this->json->renderSuccess();
         } catch (Exception $e) {
             $this->log->error('Time.post.delete', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());

@@ -86,8 +86,7 @@ class Controller extends AppUtils
             if (isset($post['overview_current_day_state'])) {
                 $settings->setUserSetting($auth_id, 'overview_current_day_state', $post['overview_current_day_state']);
             }
-            $response['error'] = false;
-            $this->json->render($response);
+            $this->json->renderSuccess();
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException(Lang::translate('Your settings could not be saved. Check if you are logged in'));

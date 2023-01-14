@@ -120,9 +120,8 @@ class Controller extends AppUtils
 
             $response['redirect'] = "/project/view/" . $_POST['project_id'];
             $response['message'] = Lang::translate('Task created');
-            $response['error'] = false;
 
-            $this->json->render($response);
+            $this->json->renderSuccess($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -155,9 +154,8 @@ class Controller extends AppUtils
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
 
             $response['redirect'] = "/project/view/" . $task['project_id'];
-            $response['error'] = false;
+            $this->json->renderSuccess($response);
 
-            $this->json->render($response);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -177,8 +175,7 @@ class Controller extends AppUtils
             $this->app_acl->isAuthenticatedOrThrow();
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
             $response['redirect'] = '/overview';
-            $response['error'] = false;
-            $this->json->render($response);
+            $this->json->renderSuccess($response);
         } catch (Exception $e) {
             $this->log->error('Task.post.error', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());
@@ -197,8 +194,7 @@ class Controller extends AppUtils
 
             $this->task_model->delete($params['task_id']);
             $response['redirect'] = "/project/view/" . $task['project_id'];
-            $response['error'] = false;
-            $this->json->render($response);
+            $this->json->renderSuccess($response);
         } catch (Exception $e) {
             $this->log->error('Task.post.delete', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());

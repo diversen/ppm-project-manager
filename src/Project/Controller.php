@@ -132,9 +132,7 @@ class Controller extends AppUtils
             $_POST['auth_id'] = $this->app_acl->getAuthId();
 
             $this->project_model->create($_POST);
-            $response['redirect'] = "/project";
-            $response['error'] = false;
-            $this->json->render($response);
+            $this->json->renderSuccess(['redirect' => '/project']);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -155,9 +153,7 @@ class Controller extends AppUtils
             }
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
             $this->project_model->update($_POST, $params['project_id']);
-            $response['error'] = false;
-            $response['redirect'] = "/project";
-            $this->json->render($response);
+            $this->json->renderSuccess(['redirect' => '/project']);
         } catch (FormException $e) {
             throw new JSONException($e->getMessage());
         } catch (Exception $e) {
@@ -175,9 +171,7 @@ class Controller extends AppUtils
         try {
             $this->app_acl->authUserIsProjectOwner($params['project_id']);
             $this->project_model->delete($params['project_id']);
-            $response['error'] = false;
-            $response['redirect'] = "/project";
-            $this->json->render($response);
+            $this->json->renderSuccess(['redirect' => '/project']);
         } catch (Exception $e) {
             $this->log->error('Project.delete.exception', ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException($e->getMessage());

@@ -69,7 +69,7 @@ class Controller extends AppUtils
     {
         $error = $_POST['error'] ?? '';
         $this->log->error($error);
-        $this->json->render(['logged' => true]);
+        $this->json->renderSuccess(['logged' => true]);
     }
 
     private function baseError(string $title, string $error_message)
@@ -135,11 +135,10 @@ class Controller extends AppUtils
             $this->log->error('App.json.exception', ['exception' => ExceptionTrace::get($e)]);
 
             $response['message'] = $e->getMessage();
-            $response['error'] = true;
             $response['code'] = $error_code;
 
             $json = new JSON();
-            $json->render($response);
+            $json->renderError($response);
         } else {
             $this->log->error('App.internal.exception', ['exception' => ExceptionTrace::get($e)]);
             $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));

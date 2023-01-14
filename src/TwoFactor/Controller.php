@@ -122,9 +122,8 @@ class Controller extends AppUtils
             throw new JSONException(Lang::translate('The code could not be verified. Try again.'));
         } else {
             $this->twoFactorModel->verify($auth_id);
-            $res['error'] = false;
-            $res['message'] = Lang::translate('The code is verified. Two factor is enabled.');
-            $this->json->render($res);
+            $response['message'] = Lang::translate('The code is verified. Two factor is enabled.');
+            $this->json->renderSuccess($response);
         }
     }
 
@@ -164,11 +163,10 @@ class Controller extends AppUtils
             $this->log->info('TwoFactor.verify_post.success', ['auth_id' => $auth_id]);
             $this->flash->setMessage(Lang::translate('You are signed in.'), 'success', ['flash_remove' => true]);
 
-            $res['error'] = false;
-            $res['message'] = Lang::translate('The code is verified. You are logged in.');
-            $res['redirect'] = $this->config->get('App.login_redirect');
+            $response['message'] = Lang::translate('The code is verified. You are logged in.');
+            $response['redirect'] = $this->config->get('App.login_redirect');
 
-            $this->json->render($res);
+            $this->json->renderSuccess($response);
         }
     }
 

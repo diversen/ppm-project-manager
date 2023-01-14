@@ -72,10 +72,7 @@ class Controller extends AppUtils
 
             $this->log->info('Account.post_login.success', ['auth_id' => $row['id']]);
             $this->flash->setMessage(Lang::translate('You are logged in'), 'success', ['flash_remove' => true]);
-
-            $response['error'] = false;
-            $response['redirect'] = $this->config->get('App.login_redirect');
-            $this->json->render($response);
+            $this->json->renderSuccess(['redirect' => $this->config->get('App.login_redirect')]);
         } else {
             throw new JSONException(Lang::translate('Wrong email or password. Or your account has not been activated.'));
         }
@@ -122,9 +119,7 @@ class Controller extends AppUtils
         if ($this->config->get('TwoFactor.enabled')) {
             $two_factor = new TwoFactorModel();
             if ($two_factor->shouldRedirect($auth_id)) {
-                $response['error'] = false;
-                $response['redirect'] = '/twofactor/verify';
-                $this->json->render($response);
+                $this->json->renderSuccess(['redirect' => '/twofactor/verify']);
                 return true;
             }
         }
@@ -206,9 +201,7 @@ class Controller extends AppUtils
             $this->db->commit();
             $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
             $this->flash->setMessage($message, 'success');
-            $response['error'] = false;
-            $response['redirect'] = '/account/signin';
-            $this->json->render($response);
+            $this->json->renderSuccess(['redirect' => '/account/signin']);
         }
     }
 
@@ -302,10 +295,7 @@ class Controller extends AppUtils
                 'success',
                 ['flash_remove' => true]
             );
-            $response['error'] = false;
-            $response['redirect'] = '/account/signin';
-
-            $this->json->render($response);
+            $this->json->renderSuccess(['redirect' => '/account/signin']);
         } else {
             throw new JSONException(Lang::translate('E-mail could not be sent. Try again later.'));
         }
@@ -354,11 +344,7 @@ class Controller extends AppUtils
 
         $this->log->info('Account.newpassword.success', ['auth_id' => $row['id']]);
         $this->flash->setMessage(Lang::translate('Your password has been updated'), 'success', ['flash_remove' => true]);
-
-        $response['error'] = false;
-        $response['redirect'] = '/account/signin';
-
-        $this->json->render($response);
+        $this->json->renderSuccess(['redirect' => '/account/signin']);
     }
 
     /**

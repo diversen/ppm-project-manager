@@ -9,6 +9,7 @@ use JasonGrimes\Paginator;
 use Pebble\Pagination\PaginationUtils;
 use Pebble\Pager;
 use App\Admin\TableUtils as DBUtils;
+use Pebble\Exception\JSONException;
 use Exception;
 
 class Controller extends AppUtils
@@ -178,12 +179,10 @@ class Controller extends AppUtils
         try {
             $this->db->update($table_name, $_POST, [$primary_key => $params['id']]);
             $response['message'] = 'Row updated';
-            $response['error'] = false;
+            $this->json->renderSuccess($response);
         } catch (Exception $e) {
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage(), 400);
         }
-
-        echo $this->json->response($response);
     }
 
     /**
@@ -199,13 +198,11 @@ class Controller extends AppUtils
 
         try {
             $this->db->delete($table_name, [$primary_key => $params['id']]);
-            $response['error'] = false;
             $this->flash->setMessage('Row deleted', 'success', ['flash_remove' => true]);
+            $this->json->renderSuccess();
         } catch (Exception $e) {
-            $response['message'] = $e->getMessage();
+            throw new JSONException($e->getMessage(), 400);   
         }
-
-        echo $this->json->response($response);
     }
 
     /**

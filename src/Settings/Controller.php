@@ -66,8 +66,7 @@ class Controller extends AppUtils
             $auth_id = $this->acl->getAuthId();
             $settings->setProfileSetting($auth_id, 'profile', $post);
             $this->flash->setMessage(Lang::translate('Settings have been updated'), 'success', ['flash_remove' => true]);
-            $response['error'] = false;
-            $this->json->render($response);
+            $this->json->renderSuccess();
         } catch (Exception $e) {
             $this->log->error($e->getMessage(), ['exception' => ExceptionTrace::get($e)]);
             throw new JSONException(Lang::translate('Your settings could not be saved. Check if you are logged in'));
