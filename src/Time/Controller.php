@@ -12,6 +12,7 @@ use Pebble\Pager;
 use Pebble\Pagination\PaginationUtils;
 use Pebble\ExceptionTrace;
 use Pebble\Exception\JSONException;
+use Diversen\Lang;
 
 class Controller extends AppUtils
 {
@@ -78,11 +79,12 @@ class Controller extends AppUtils
             $task = $this->app_acl->getTask($_POST['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
 
-            // POST time
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
+            
             $this->time_model->create($post);
-
+            $this->flash->setMessage(Lang::translate('Time added'), 'success', ['flash_remove' => true]);
+            
             $response['redirect'] = '/project/view/' . $task['project_id'];
             $this->json->renderSuccess($response);
         } catch (FormException $e) {
@@ -103,6 +105,7 @@ class Controller extends AppUtils
             $time = $this->app_acl->getTime($params['id']);
             $this->app_acl->authUserIsProjectOwner($time['project_id']);
             $this->time_model->delete(['id' => $params['id']]);
+            $this->flash->setMessage(Lang::translate('Time deleted'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess();
         } catch (Exception $e) {
             $this->log->error('Time.post.delete', ['exception' => ExceptionTrace::get($e)]);

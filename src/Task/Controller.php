@@ -152,6 +152,7 @@ class Controller extends AppUtils
             // Is a new project chosen for the task
             $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
+            $this->flash->setMessage(Lang::translate('Task updated'), 'success', ['flash_remove' => true]);
 
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $this->json->renderSuccess($response);
@@ -174,6 +175,7 @@ class Controller extends AppUtils
         try {
             $this->app_acl->isAuthenticatedOrThrow();
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
+            $this->flash->setMessage(Lang::translate('Tasks moved to today'), 'success', ['flash_remove' => true]);
             $response['redirect'] = '/overview';
             $this->json->renderSuccess($response);
         } catch (Exception $e) {
@@ -191,8 +193,8 @@ class Controller extends AppUtils
         try {
             $task = $this->app_acl->getTask($params['task_id']);
             $this->app_acl->authUserIsProjectOwner($task['project_id']);
-
             $this->task_model->delete($params['task_id']);
+            $this->flash->setMessage(Lang::translate('Task deleted'), 'success', ['flash_remove' => true]);
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $this->json->renderSuccess($response);
         } catch (Exception $e) {
