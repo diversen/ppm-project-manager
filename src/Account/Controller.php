@@ -175,33 +175,34 @@ class Controller extends AppUtils
         $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
         $row = $this->auth->getByWhere(['email' => $_POST['email']]);
 
+        // Auto verification
         if ($this->config->get('Account.no_email_verify')) {
             $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
-            $message = Lang::translate('Account has been created. You may log in');
-            $mail_success = true;
-        } else {
-            $mail = new Mail();
-
-            try {
-                $mail_success = true;
-                $mail->sendSignupMail($row);
-            } catch (Exception $e) {
-                $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
-                $mail_success = false;
-            }
-
-            $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
+            $this->db->commit();
+            $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
+            $this->flash->setMessage(Lang::translate('Account has been created. You may log in'), 'success');
+            $this->json->renderSuccess(['redirect' => '/account/signin']);
+            return;
         }
+        
+        // Send verification mail
+        $mail = new Mail();
 
-        if (!$mail_success) {
-            $this->db->rollback();
-            $this->log->info('Account.post_signup.rollback');
-            throw new JSONException(Lang::translate('The system could not create an account. Please try again another time'));
-        } else {
+        try {
+            
+            $mail->sendSignupMail($row);
+            $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
+            
             $this->db->commit();
             $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
             $this->flash->setMessage($message, 'success');
             $this->json->renderSuccess(['redirect' => '/account/signin']);
+
+        } catch (Exception $e) {
+            $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
+            $this->db->rollback();
+            $this->log->info('Account.post_signup.rollback');
+            throw new Exception(Lang::translate('The system could not create an account. Please try again another time'));
         }
     }
 
