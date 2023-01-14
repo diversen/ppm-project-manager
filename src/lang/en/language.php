@@ -154,7 +154,6 @@ $LANG['500 Internal Server Error'] = '500 Internal Server Error';
 $LANG['Error trying to signin using Google'] = 'Error trying to signin using Google';
 $LANG['No ID token. Try again later'] = 'No ID token. Try again later';
 $LANG['You are signed in.'] = 'You are signed in.';
-$LANG['Verify your login.'] = 'Verify your login.';
 
 // Translation of file src/Google/sign_in.tpl.php
 
@@ -218,6 +217,9 @@ $LANG['All active projects'] = 'All active projects';
 $LANG['View project'] = 'View project';
 $LANG['Add project'] = 'Add project';
 $LANG['Edit project'] = 'Edit project';
+$LANG['Project created'] = 'Project created';
+$LANG['Project updated'] = 'Project updated';
+$LANG['Project deleted'] = 'Project deleted';
 
 // Translation of file src/Project/ProjectModel.php
 
@@ -306,6 +308,9 @@ $LANG['No user info'] = 'No user info';
 
 $LANG['Please choose a project'] = 'Please choose a project';
 $LANG['Task created'] = 'Task created';
+$LANG['Task updated'] = 'Task updated';
+$LANG['Tasks moved to today'] = 'Tasks moved to today';
+$LANG['Task deleted'] = 'Task deleted';
 
 // Translation of file src/Task/TaskModel.php
 
@@ -421,6 +426,11 @@ $LANG['Reject'] = 'Reject';
 
 $LANG['Activity this week: <span class="notranslate">{week_user_total}</span>'] = 'Activity this week: <span class="notranslate">{week_user_total}</span>';
 
+// Translation of file src/Time/Controller.php
+
+$LANG['Time added'] = 'Time added';
+$LANG['Time deleted'] = 'Time deleted';
+
 // Translation of file src/Time/TimeModel.php
 
 $LANG['Not a valid time input'] = 'Not a valid time input';
@@ -450,8 +460,8 @@ $LANG['Two factor is enabled'] = 'Two factor is enabled';
 $LANG['The code could not be verified. Try again.'] = 'The code could not be verified. Try again.';
 $LANG['The code is verified. Two factor is enabled.'] = 'The code is verified. Two factor is enabled.';
 $LANG['You were to slow to enter two factor code. You will need to login again.'] = 'You were to slow to enter two factor code. You will need to login again.';
-$LANG['The code is verified. You are logged in.'] = 'The code is verified. You are logged in.';
 $LANG['You are signed in.'] = 'You are signed in.';
+$LANG['The code is verified. You are logged in.'] = 'The code is verified. You are logged in.';
 $LANG['Verify two factor'] = 'Verify two factor';
 
 // Translation of file src/TwoFactor/TwoFactorModel.php
