@@ -169,27 +169,27 @@ class Controller extends AppUtils
      */
     private function createAndSendVerificationKey(): void
     {
-        $this->db->beginTransaction();
-
-        $this->auth->create($_POST['email'], $_POST['password']);
-        $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
-        $row = $this->auth->getByWhere(['email' => $_POST['email']]);
-
-        // Auto verification
+        
+        // Auto verification without email
         if ($this->config->get('Account.no_email_verify')) {
-            $this->db->update('auth', ['verified' => 1], ['email' => $_POST['email']]);
-            $this->db->commit();
+            $this->auth->createAndVerify($_POST['email'], $_POST['password']);
+            $row = $this->auth->getByWhere(['email' => $_POST['email']]);
             $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
             $this->flash->setMessage(Lang::translate('Account has been created. You may log in'), 'success');
             $this->json->renderSuccess(['redirect' => '/account/signin']);
             return;
         }
         
-        // Send verification mail
-        $mail = new Mail();
-
+        // Verification using email
         try {
+
+            $this->db->beginTransaction();
+
+            $this->auth->create($_POST['email'], $_POST['password']);
+            $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
+            $row = $this->auth->getByWhere(['email' => $_POST['email']]);
             
+            $mail = new Mail();
             $mail->sendSignupMail($row);
             $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
             
