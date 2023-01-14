@@ -169,7 +169,7 @@ class Controller extends AppUtils
      */
     private function createAndSendVerificationKey(): void
     {
-        
+
         // Auto verification without email
         if ($this->config->get('Account.no_email_verify')) {
             $this->auth->createAndVerify($_POST['email'], $_POST['password']);
@@ -179,25 +179,23 @@ class Controller extends AppUtils
             $this->json->renderSuccess(['redirect' => '/account/signin']);
             return;
         }
-        
+
         // Verification using email
         try {
-
             $this->db->beginTransaction();
 
             $this->auth->create($_POST['email'], $_POST['password']);
             $this->log->info('Account.post_signup.success', ['email' => $_POST['email']]);
             $row = $this->auth->getByWhere(['email' => $_POST['email']]);
-            
+
             $mail = new Mail();
             $mail->sendSignupMail($row);
             $message = Lang::translate('User created. An activation link has been sent to your email. Press the link and your account will be activated');
-            
+
             $this->db->commit();
             $this->log->info('Account.post_signup.commit', ['auth_id' => $row['id']]);
             $this->flash->setMessage($message, 'success');
             $this->json->renderSuccess(['redirect' => '/account/signin']);
-
         } catch (Exception $e) {
             $this->log->error('Account.post_signup.exception', ['exception' => ExceptionTrace::get($e)]);
             $this->db->rollback();

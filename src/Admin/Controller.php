@@ -201,7 +201,7 @@ class Controller extends AppUtils
             $this->flash->setMessage('Row deleted', 'success', ['flash_remove' => true]);
             $this->json->renderSuccess();
         } catch (Exception $e) {
-            throw new JSONException($e->getMessage(), 400);   
+            throw new JSONException($e->getMessage(), 400);
         }
     }
 

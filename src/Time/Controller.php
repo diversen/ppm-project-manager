@@ -81,10 +81,10 @@ class Controller extends AppUtils
 
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
-            
+
             $this->time_model->create($post);
             $this->flash->setMessage(Lang::translate('Time added'), 'success', ['flash_remove' => true]);
-            
+
             $response['redirect'] = '/project/view/' . $task['project_id'];
             $this->json->renderSuccess($response);
         } catch (FormException $e) {
