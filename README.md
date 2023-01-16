@@ -43,11 +43,14 @@ The `config-locale` dir will override settings in `config`.
 
 ## Load MySQL DB
 
-Create a database and change the settings in `config/DB.php` 
+Create a database and change the settings in `config-locale/DB.php`
 
-Check if you can connect:
+    cp config/DB.php config-locale/DB.php
 
-    ./cli.sh db --connect
+Check if you can connect to the server and create the database:
+
+    ./cli.sh db --server-connect
+    create database ppm;
     exit
 
 You can look at the other `config/` files, but you don't need to change these in order to run the system local now: 
@@ -60,7 +63,7 @@ Load the sql files found in `migration` into a database.
 
 Runs the built-in PHP server:
 
-    ./serv
+    ./serv.sh
 
 On an apache2 server you will need something like the following added to your configuration, e.g. in a  `.htaccess` file placed in `www` 
 
@@ -91,41 +94,29 @@ Google login using OAuth:
 
 # Docker commands
 
-## MySQL
+## Build PHP-8.1-cli and MySQL images
 
-Install (run) a MySQL image that will work (for development maybe):
+    ./tools/docker/build.sh
 
-    docker run -p 3306:3306 --name mysql-server -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0
+## Run the images
 
-Connect using bash and create a database:
+    ./tools/docker/run.sh
 
-    docker exec -it mysql-server bash
-    mysql -uroot -ppassword
+## Remove the images
+
+    ./tools/docker/rm.sh
+
+## Run a cli.sh command
+
+    ./docker-cli.sh -h
+
+## Docker install
+
+    ./docker-cli.sh db --server-connect
     create database ppm;
-    exit; # exit from mysql-server 
     exit; # exit from container
-
-Or:
-
-    ./cli.sh db --server-connect
-    create database ppm;
-    exit; # exit from mysql-server
-
-List containers 
-
-    docker container ls
-
-Stop container (mysql-server):
-
-    docker stop mysql-server
-
-Start container (mysql-server) again:
-
-    docker start mysql-server
-
-Remove container (you will need run 'run' command again):
-
-    docker rm mysql-server
+    rm .migration # remove migration file if it exists from previous install
+    ./docker-cli.sh migrate --up
 
 # CSS
 
