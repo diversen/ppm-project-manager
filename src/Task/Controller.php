@@ -166,7 +166,6 @@ class Controller extends AppUtils
      */
     public function move_exceeded_today()
     {
-        $response['error'] = true;
         try {
             $this->app_acl->isAuthenticatedOrThrow();
             $this->task_model->setExceededUserTasksToday($this->app_acl->getAuthId());
