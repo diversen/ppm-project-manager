@@ -27,6 +27,7 @@ class ProjectModel extends AppUtils
     private $date_utils;
     private $time_model;
     private $default_order_by = ['p.updated' => 'DESC', 'p.title' => 'DESC', 'project_time_total' => 'DESC'];
+    private $pagination_utils;
 
     public function __construct()
     {
