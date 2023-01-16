@@ -40,7 +40,7 @@ class Controller extends AppUtils
             $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()], ['title' => 'ASC']);
             $template_vars['project'] = null;
         } else {
-            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+            $this->app_acl->isProjectOwner($params['project_id']);
             $project = $this->project_model->getOne(['id' => $params['project_id']]);
             $template_vars['project'] = $project;
         }
@@ -57,9 +57,7 @@ class Controller extends AppUtils
      */
     public function edit($params)
     {
-        $task = $this->app_acl->getTask($params['task_id']);
-        $this->app_acl->authUserIsProjectOwner($task['project_id']);
-
+        $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
         $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['title' => 'ASC']);
 
@@ -81,8 +79,7 @@ class Controller extends AppUtils
      */
     public function view($params)
     {
-        $task = $this->app_acl->getTask($params['task_id']);
-        $this->app_acl->authUserIsProjectOwner($task['project_id']);
+        $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
         $template_vars = [
@@ -108,7 +105,7 @@ class Controller extends AppUtils
                 throw new FormException(Lang::translate('Please choose a project'));
             }
 
-            $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
+            $this->app_acl->isProjectOwner($_POST['project_id']);
             $_POST['auth_id'] = $this->app_acl->getAuthId();
 
             $task_model = new TaskModel();
@@ -137,8 +134,7 @@ class Controller extends AppUtils
     public function put($params)
     {
         try {
-            $task = $this->app_acl->getTask($params['task_id']);
-            $this->app_acl->authUserIsProjectOwner($task['project_id']);
+            $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
 
             // 'now' updates a tasks begin_date to 'today'
             // Used on overview page
@@ -150,7 +146,7 @@ class Controller extends AppUtils
             }
 
             // Is a new project chosen for the task
-            $this->app_acl->authUserIsProjectOwner($_POST['project_id']);
+            $this->app_acl->isProjectOwner($_POST['project_id']);
             $this->task_model->update($_POST, ['id' => $params['task_id']]);
             $this->flash->setMessage(Lang::translate('Task updated'), 'success', ['flash_remove' => true]);
 
@@ -190,8 +186,7 @@ class Controller extends AppUtils
     public function delete($params)
     {
         try {
-            $task = $this->app_acl->getTask($params['task_id']);
-            $this->app_acl->authUserIsProjectOwner($task['project_id']);
+            $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
             $this->task_model->delete($params['task_id']);
             $this->flash->setMessage(Lang::translate('Task deleted'), 'success', ['flash_remove' => true]);
             $response['redirect'] = "/project/view/" . $task['project_id'];

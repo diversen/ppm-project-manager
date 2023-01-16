@@ -72,7 +72,7 @@ class Controller extends AppUtils
      */
     public function view(array $params)
     {
-        $this->app_acl->authUserIsProjectOwner($params['project_id']);
+        $this->app_acl->isProjectOwner($params['project_id']);
 
         $template_data = $this->project_model->getViewData($params);
         $template_data['title'] = Lang::translate('View project');
@@ -107,7 +107,7 @@ class Controller extends AppUtils
      */
     public function edit($params)
     {
-        $this->app_acl->authUserIsProjectOwner($params['project_id']);
+        $this->app_acl->isProjectOwner($params['project_id']);
         $project = $this->project_model->getOne(['id' => $params['project_id']]);
 
         $form_vars = [
@@ -152,7 +152,7 @@ class Controller extends AppUtils
             if (!isset($_POST['status'])) {
                 $_POST['status'] = ProjectModel::PROJECT_CLOSED;
             }
-            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+            $this->app_acl->isProjectOwner($params['project_id']);
             $this->project_model->update($_POST, $params['project_id']);
             $this->flash->setMessage(Lang::translate('Project updated'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess(['redirect' => '/project']);
@@ -171,7 +171,7 @@ class Controller extends AppUtils
     public function delete($params)
     {
         try {
-            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+            $this->app_acl->isProjectOwner($params['project_id']);
             $this->project_model->delete($params['project_id']);
             $this->flash->setMessage(Lang::translate('Project deleted'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess(['redirect' => '/project']);
@@ -189,7 +189,7 @@ class Controller extends AppUtils
     {
         $data = ['error' => false];
         try {
-            $this->app_acl->authUserIsProjectOwner($params['project_id']);
+            $this->app_acl->isProjectOwner($params['project_id']);
             $data = $this->project_model->getTasksData($params);
         } catch (Exception $e) {
             $this->log->error('Project.tasks.exception', ['exception' => ExceptionTrace::get($e)]);

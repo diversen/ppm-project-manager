@@ -35,9 +35,7 @@ class Controller extends AppUtils
      */
     public function add($params)
     {
-        $task = $this->app_acl->getTask($params['task_id']);
-        $this->app_acl->authUserIsProjectOwner($task['project_id']);
-
+        $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
         $where = ['task_id' => $task['id']];
@@ -76,8 +74,7 @@ class Controller extends AppUtils
     public function post()
     {
         try {
-            $task = $this->app_acl->getTask($_POST['task_id']);
-            $this->app_acl->authUserIsProjectOwner($task['project_id']);
+            $task = $this->app_acl->isProjectOwnerGetTask($_POST['task_id']);
 
             $post = $_POST;
             $post['project_id'] = $task['project_id'];
@@ -102,8 +99,7 @@ class Controller extends AppUtils
     public function delete($params)
     {
         try {
-            $time = $this->app_acl->getTime($params['id']);
-            $this->app_acl->authUserIsProjectOwner($time['project_id']);
+            $this->app_acl->isProjectOwnerGetTime($params['id']);
             $this->time_model->delete(['id' => $params['id']]);
             $this->flash->setMessage(Lang::translate('Time deleted'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess();
