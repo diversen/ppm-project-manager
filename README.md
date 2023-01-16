@@ -94,29 +94,43 @@ Google login using OAuth:
 
 # Docker commands
 
+I have played a bit with docker. I am using Ubuntu 22.04. 
+I prefer just to install the php8.1-cli and a docker MySQL image on my machine.
+
+You may run it without both php or the mysql-server installed on your machine. But
+then you will need to have docker on your machine. 
+
 ## Build PHP-8.1-cli and MySQL images
 
     ./tools/docker/build.sh
+
+## Remove the images
+    
+    ./tools/docker/rm.sh
 
 ## Run the images
 
     ./tools/docker/run.sh
 
-## Remove the images
+## Install vendor packages
 
-    ./tools/docker/rm.sh
+    docker exec -it cli-server bash
+    composer install
+    exit
 
 ## Run a cli.sh command
 
     ./docker-cli.sh -h
 
-## Docker install
+## MySQL database creation and migration
 
     ./docker-cli.sh db --server-connect
     create database ppm;
     exit; # exit from container
     rm .migration # remove migration file if it exists from previous install
     ./docker-cli.sh migrate --up
+
+Then you go to http://localhost:8000 and create an account.
 
 # CSS
 
