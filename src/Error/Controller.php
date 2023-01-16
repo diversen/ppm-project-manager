@@ -132,7 +132,7 @@ class Controller extends AppUtils
                 $error_vars
             );
         } elseif ($class === JSONException::class) {
-            $this->log->error('App.json.exception', ['exception' => ExceptionTrace::get($e)]);
+            // JSONException is not logged. Should be logged in a controller class
 
             $response['message'] = $e->getMessage();
             $response['code'] = $error_code;
