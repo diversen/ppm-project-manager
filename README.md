@@ -94,13 +94,12 @@ Google login using OAuth:
 
 # Docker commands
 
-I have played a bit with docker. I am using Ubuntu 22.04. 
-I prefer just to install the php8.1-cli and a docker MySQL image on my machine.
+I prefer just to install the php8.1-cli on my ubuntu-22.04 and a docker mysql-server image on my machine.
 
-You may run it without both php or the mysql-server installed on your machine. But
-then you will need to have docker on your machine. 
+You may run it without both php or the mysql-server, and
+the following docker images can be built and used for this purpose. 
 
-## Build PHP-8.1-cli and MySQL images
+## Build php-8.1-cli and mysql-server images
 
     ./tools/docker/build.sh
 
@@ -132,7 +131,41 @@ then you will need to have docker on your machine.
 
 Then you go to http://localhost:8000 and create an account.
 
-# CSS
+# Docker mysql-server
+
+Install (run) a MySQL image that will work (for development maybe):
+
+    docker run -p 3306:3306 --name mysql-server -e MYSQL_ROOT_PASSWORD=password -d mysql:8.0
+
+Connect using bash and create a database:
+
+    docker exec -it mysql-server bash
+    mysql -uroot -ppassword
+    create database ppm;
+    exit; # exit from mysql-server 
+    exit; # exit from container
+
+Or:
+
+    ./cli.sh db --server-connect
+    create database ppm;
+    exit; # exit from mysql-server
+
+List containers 
+
+    docker container ls
+
+Stop container (mysql-server):
+
+    docker stop mysql-server
+
+Start container (mysql-server) again:
+
+    docker start mysql-server
+
+Remove container (you will need run 'run' command again):
+
+    docker rm mysql-server
 
 [water.css](https://watercss.kognise.dev/) (A drop-in collection of CSS styles)
 
