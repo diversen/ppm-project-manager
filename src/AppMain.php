@@ -17,7 +17,16 @@ class AppMain extends AppBase
     use \Pebble\Trait\CSP;
     use \Pebble\Trait\CSRF;
 
-    public const VERSION = "v2.1.6";
+    public const VERSION = "v2.1.7-dev";
+
+    /**
+     * Empty constructor to prevent parent constructor from being called
+     * AppMain inherits from AppBase that inherits from StdUtils
+     * The StdUtils class has a constructor that init all services
+     */
+    public function __construct()
+    {
+    }
 
     public function run()
     {
@@ -30,7 +39,7 @@ class AppMain extends AppBase
         $this->sendCSPHeaders();
         $this->sessionStart();
         $this->setDebug();
-        $this->setCSRFToken(verbs:['GET'], exclude_paths: ['/account/captcha']);
+        $this->setCSRFToken(verbs: ['GET'], exclude_paths: ['/account/captcha']);
 
         (new SetupIntl())->setupIntl();
         $router = new Router();
