@@ -24,6 +24,9 @@
 
 ## MySQL database creation and migration
 
+Presuming you have run `./tools/docker/build.sh` and `./tools/docker/run.sh` commands.
+You can open a new terminal and run the following commands: 
+
     ./docker-cli.sh db --server-connect
     create database ppm;
     exit; # exit from container
