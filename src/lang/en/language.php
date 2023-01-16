@@ -135,7 +135,7 @@ $LANG['Are you sure you want to delete this row?'] = 'Are you sure you want to d
 
 $LANG['You are not logged in. Please log in.'] = 'You are not logged in. Please log in.';
 $LANG['You are not the owner of this project.'] = 'You are not the owner of this project.';
-$LANG['There is no such task ID'] = 'There is no such task ID';
+$LANG['You do not have access to this task ID'] = 'You do not have access to this task ID';
 $LANG['There is no such time ID'] = 'There is no such time ID';
 
 // Translation of file src/AppUtils.php
@@ -316,7 +316,6 @@ $LANG['Task deleted'] = 'Task deleted';
 
 $LANG['Title is required'] = 'Title is required';
 $LANG['The end date can not be before the begin date'] = 'The end date can not be before the begin date';
-$LANG['There is no such task'] = 'There is no such task';
 
 // Translation of file src/Task/views/task_add.tpl.php
 
