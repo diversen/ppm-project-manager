@@ -1,6 +1,7 @@
 #!/bin/sh
 # Remove php-cli-server image
-docker rmi php-cli-server
+docker rm php-cli-server
 
 # Remove mysql-server container
-# docker rm mysql-server
+docker stop mysql-server
+docker rm mysql-server
