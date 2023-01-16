@@ -73,6 +73,8 @@ On an apache2 server you will need something like the following added to your co
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 
+
+
 ## Login
 
 Point a browser to http://localhost:8000, create an account and log in. There is no verification of email address.
@@ -92,7 +94,13 @@ Google login using OAuth:
 * Set `google` in `config-locale/Account.php` to `true`.
 * Setup google OAuth in `config-locale/Google.php`.
 
-I you want to run everything on docker, see [docs/docker.md](docs/docker.md)
+# Docker commands
+
+If you want to run the system on docker you may look at the following document for more information:
+
+[docs/docker.md](docs/docker.md)
+
+# CSS 
 
 [water.css](https://watercss.kognise.dev/) (A drop-in collection of CSS styles)
 
@@ -105,7 +113,6 @@ Favicon:
 Convert favicon_io/android-chrome-192x192.png to 70x70 logo:
 
     cd www && convert favicon_io/android-chrome-192x192.png -scale "70x70" assets/logo.png
-	
 
 # License
 
