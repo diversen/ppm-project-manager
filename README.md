@@ -96,7 +96,7 @@ Google login using OAuth:
 
 # Docker commands
 
-If you want the system to run on docker you may look at the [the docker instructions](docs/docker.md)
+If you want the system to run on docker you may look at the [the docker instructions](docs/docker.md).
 
 # CSS 
 

@@ -14,6 +14,9 @@
 
 ## Install vendor packages
 
+When you run `./tools/docker/run.sh` you will get a container named `cli-server`.
+You can connect to this container and run `composer install`:
+
     docker exec -it cli-server bash
     composer install
     exit
@@ -24,7 +27,6 @@
 
 ## MySQL database creation and migration
 
-Presuming you have run `./tools/docker/build.sh` and `./tools/docker/run.sh` commands.
 You can open a new terminal and run the following commands: 
 
     ./docker-cli.sh db --server-connect
