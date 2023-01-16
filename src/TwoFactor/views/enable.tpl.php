@@ -12,8 +12,7 @@ use App\AppMain;
     <p><?= Lang::translate('1. Scan the QR code to get started') ?></p>
 
 </div>
-<img src="<?= $qr_image ?>">
-
+<?=$qr_image?>
 <form id="two-factor-form">
     <label for="code"><?= Lang::translate('2. Enter code as seen on your phone') ?></label>
     <input id="code" type="code" type="text" name="code">

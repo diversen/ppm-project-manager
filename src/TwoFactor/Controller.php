@@ -6,7 +6,7 @@ namespace App\TwoFactor;
 
 use OTPHP\TOTP;
 use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 
@@ -37,12 +37,11 @@ class Controller extends AppUtils
     {
         $renderer = new ImageRenderer(
             new RendererStyle(300),
-            new ImagickImageBackEnd()
+            new SvgImageBackEnd,
         );
         $writer = new Writer($renderer);
-        $png_str = $writer->writeString($totp_auth_url);
-        $base64_png = 'data:image/png;base64,' . base64_encode($png_str);
-        return $base64_png;
+        $svg_str = $writer->writeString($totp_auth_url);
+        return $svg_str;
     }
 
     /**
@@ -91,7 +90,7 @@ class Controller extends AppUtils
 
             $this->renderPage(
                 'TwoFactor/views/enable.tpl.php',
-                $vars
+                $vars, ['raw' => true]
             );
         } else {
             $vars = [
