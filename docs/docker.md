@@ -39,7 +39,7 @@ Then you go to http://localhost:8000 and create an account.
 
 # Docker mysql-server
 
-I personally prefer to use the php8.1-cli from my own machine, and then just
+I personally prefer to use the php8-1-cli running on my own ubuntu machine, and then just
 use a docker container for the mysql-server.
 
 Install (run) a MySQL image that will work:

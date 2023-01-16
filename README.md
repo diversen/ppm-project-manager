@@ -61,7 +61,7 @@ Load the sql files found in `migration` into a database.
 
 ## Run
 
-Runs the built-in PHP server:
+Run the built-in PHP server:
 
     ./serv.sh
 
@@ -72,8 +72,6 @@ On an apache2 server you will need something like the following added to your co
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
-
-
 
 ## Login
 
