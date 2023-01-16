@@ -137,7 +137,7 @@ if (!empty($time_rows)) {
                         Pebble.redirect(res.redirect);
                     }
                 } else {
-                    Pebble.setFlashMessage(res.error, 'error');
+                    Pebble.setFlashMessage(res.message, 'error');
                 }
             } catch (e) {
                 Pebble.asyncPostError('/error/log', e.stack)
@@ -168,7 +168,7 @@ if (!empty($time_rows)) {
                         location.reload();
 
                     } else {
-                        Pebble.setFlashMessage(res.error, 'error');
+                        Pebble.setFlashMessage(res.message, 'error');
                     }
 
                 } catch (e) {
