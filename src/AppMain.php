@@ -17,7 +17,7 @@ class AppMain extends AppBase
     use \Pebble\Trait\CSP;
     use \Pebble\Trait\CSRF;
 
-    public const VERSION = "v2.1.7";
+    public const VERSION = "v2.1.8";
 
     /**
      * Empty constructor to prevent parent constructor from being called
