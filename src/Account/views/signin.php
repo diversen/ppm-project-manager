@@ -13,9 +13,8 @@ use App\AppMain;
     <a href="/account/terms/privacy-policy"><?=Lang::translate('Privacy policy')?></a>
     <a href="/account/terms/disclaimer"><?=Lang::translate('Disclaimer')?></a>
 </div>
-
-<form id="login-form">
-
+<div class="clear"></div><form id="login-form">
+    
     <?=AppMain::getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
@@ -31,15 +30,15 @@ use App\AppMain;
     <input type="checkbox" value="1" id="keep_login" name="keep_login" checked="checked">
         
     <br />
-    <button id="login"><?= Lang::translate('Submit') ?></button>
+    <button id="login"><?= Lang::translate('Send') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
 
 <script type="module" nonce="<?=AppMain::getNonce()?>">
-    
+
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     
-    const spinner = document.querySelector('.loadingspinner');
+    var spinner = document.querySelector('.loadingspinner');
 
     document.getElementById('login').addEventListener("click", async function(e) {
 
@@ -51,20 +50,19 @@ use App\AppMain;
         const data = new FormData(form);
 
         try {
-
             const res = await Pebble.asyncPost('/account/post_signin', data);
+            
             if (res.error === false) {
                 Pebble.redirect(res.redirect);
             } else {
                 Pebble.setFlashMessage(res.message, 'error');
             }
+
         } catch (e) {
             await Pebble.asyncPostError('/error/log', e.stack);
         } finally {
             spinner.classList.toggle('hidden');
         }
-
-        
     });
 
 </script>
