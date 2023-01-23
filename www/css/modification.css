@@ -1,8 +1,94 @@
 /**
- * Weird bug on some pages and some devices where the menu 
- * get's enlarged. This fixes it.
- */
+ * modification.css
+ * Site specific styles 
+*/
+.priority {
+    padding-right: 16px;
+    margin-right: 5px;
+}
 
-.text p {
-    display: flex;
+.priority-low {
+    background-color: #b1e8fd;
+}
+
+.priority-minor {
+    background-color: #55d0db;
+}
+
+.priority-normal {
+    background-color: #cef2ac;
+}
+
+.priority-high {
+    background-color: #dcacf2;
+}
+
+.priority-urgent {
+    background-color: #f0440b;
+}
+
+.priority-done {
+    background-color: #eee;
+}
+
+
+.task-done,
+.task-done>a {
+    color: grey;
+    font-style: oblique;
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 767px) {
+
+    td>.action-links>a {
+        padding: 1px;
+    }
+
+    .xs-hide {
+        display: none;
+
+    }
+}
+
+.td-overflow {
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.timer {
+    margin-top: 8px;
+}
+
+.width-35 {
+    width: 35%;
+}
+
+.width-50 {
+    width: 50%;
+}
+
+#timer {
+    display: none;
+}
+
+#timer_display {
+    padding: 4px;
+    float: left;
+    min-width: 80px;
+}
+
+#timer_toggle:hover {
+    background-color: var(--background-alt);
+    cursor: pointer;
+}
+
+#timer_start,
+#timer_pause,
+#timer_reset {
+    cursor: pointer;
+}
+
+.button-timer {
+    background-color: var(--background) !important;
 }

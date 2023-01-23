@@ -187,7 +187,6 @@ class Controller extends AppUtils
      */
     public function tasks(array $params)
     {
-        $data = ['error' => false];
         try {
             $this->app_acl->isProjectOwner($params['project_id']);
             $data = $this->project_model->getTasksData($params);
