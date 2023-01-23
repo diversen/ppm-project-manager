@@ -72,7 +72,6 @@ endif;
             if (res.error === false) {
                 Pebble.redirect(res.redirect);
             } else {
-                console.log(res)
                 Pebble.setFlashMessage(res.message, 'error');
             }
 

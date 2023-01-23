@@ -13,7 +13,8 @@ use App\AppMain;
     <a href="/account/terms/privacy-policy"><?=Lang::translate('Privacy policy')?></a>
     <a href="/account/terms/disclaimer"><?=Lang::translate('Disclaimer')?></a>
 </div>
-<div class="clear"></div><form id="login-form">
+<div class="clear"></div>
+<form id="login-form">
     
     <?=AppMain::getCSRFFormField()?>
     
