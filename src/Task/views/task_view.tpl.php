@@ -22,13 +22,13 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
     <?=$task['title']?>
 </h3>
 
+<p><?= Lang::translate('Total time used on task') ?>: <strong><?= $task['task_time_total'] ?></strong></p>
 
 <table>
 	<thead>
 		<tr>
 			<td class="width-35"><?=Lang::translate('Task')?></td>
 			<td><?=Lang::translate('Project')?></td>
-			<td class='xs-hide'><?=Lang::translate('Time')?></td>
 			<td></td>
 		</tr>
 	</thead>
@@ -54,8 +54,6 @@ $begin_date = date('Y-m-d', strtotime($task['begin_date']));
         <td class='td-overflow'>
             <a title="<?=$project['title']?>" href='/project/view/<?=$task['project_id']?>'><?=$project['title']?></a>
         </td>
-
-        <td class='xs-hide'><?=$task['task_time_total']?></td>
 
         <td>
         <div class="action-links">

@@ -162,9 +162,9 @@ class ProjectModel extends AppUtils
         $tasks_completed = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
         $tasks_completed_count = $this->task_model->getNumRows(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
 
-        $timeModel = new TimeModel();
-        $total = $timeModel->sumTime(['project_id' => $params['project_id']]);
-        $total_time = $timeModel->minutesToHoursMinutes($total);
+        $time_model = new TimeModel();
+        $total = $time_model->sumTime(['project_id' => $params['project_id']]);
+        $total_time = $time_model->minutesToHoursMinutes($total);
 
         $data = [
             'project' => $project,
@@ -214,7 +214,7 @@ class ProjectModel extends AppUtils
         $template_data['total_time_human'] = 0;
         $template_data['default_order_by'] = $this->default_order_by;
 
-        if ($where['status'] === ProjectModel::PROJECT_OPEN) {
+        if ($where['status'] === self::PROJECT_OPEN) {
             $template_data['inactive_link'] = 1;
             $url = '/project';
         } else {

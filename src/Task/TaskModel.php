@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Task;
 
 use Pebble\App\AppBase;
-use Pebble\Exception\NotFoundException;
-
 use App\Time\TimeModel;
 use App\Exception\FormException;
 use App\Utils\DateUtils;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Time;
 
 use Diversen\Lang;
-
 use App\AppUtils;
 use App\Task\TaskModel;
 use App\Exception\FormException;
@@ -90,6 +89,12 @@ class TimeModel extends AppUtils
         }
 
         return (int)$total;
+    }
+
+    public function sumTimeToMinutesHours(array $where): string
+    {
+        $total = $this->sumTime($where);
+        return $this->minutesToHoursMinutes($total);
     }
 
     public function getNumTime(array $where): int

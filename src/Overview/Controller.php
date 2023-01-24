@@ -51,11 +51,11 @@ class Controller extends AppUtils
             'current_day_state' =>      $current_day_state,
         ];
 
-        $timeModel = new TimeModel();
+        $time_model = new TimeModel();
 
         $week_ts = $cal->getCurrentWeekDays($week_delta_current);
-        $week_data = $timeModel->getWeekData($week_ts);
-        $week_time = $timeModel->getWeekTimes($week_ts);
+        $week_data = $time_model->getWeekData($week_ts);
+        $week_time = $time_model->getWeekTimes($week_ts);
 
         $template_data = [
             'week_data' =>              $week_data,
