@@ -97,7 +97,7 @@ $LANG['Disclaimer'] = 'Disclaimer';
 $LANG['E-mail'] = 'E-mail';
 $LANG['Password'] = 'Password';
 $LANG['Keep me signed in'] = 'Keep me signed in';
-$LANG['Submit'] = 'Submit';
+$LANG['Send'] = 'Send';
 
 // Translation of file src/Account/views/signin_ext.php
 
@@ -390,9 +390,9 @@ $LANG['One month. First day same day name.'] = 'One month. First day same day na
 // Translation of file src/Task/views/task_view.tpl.php
 
 $LANG['Projects'] = 'Projects';
+$LANG['Total time used on task'] = 'Total time used on task';
 $LANG['Task'] = 'Task';
 $LANG['Project'] = 'Project';
-$LANG['Time'] = 'Time';
 $LANG['Edit task'] = 'Edit task';
 $LANG['Add new task to project'] = 'Add new task to project';
 $LANG['Add time to task'] = 'Add time to task';
