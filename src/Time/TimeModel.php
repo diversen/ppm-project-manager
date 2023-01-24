@@ -91,12 +91,6 @@ class TimeModel extends AppUtils
         return (int)$total;
     }
 
-    public function sumTimeToMinutesHours(array $where): string
-    {
-        $total = $this->sumTime($where);
-        return $this->minutesToHoursMinutes($total);
-    }
-
     public function getNumTime(array $where): int
     {
         return $this->db->getTableNumRows('time', 'id', $where);

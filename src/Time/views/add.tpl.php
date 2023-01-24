@@ -13,6 +13,8 @@ use App\Utils\HTMLUtils;
 
 <p><?= Lang::translate('Project') ?>: <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a></p>
 
+<p><?= Lang::translate('Total time used on task') ?>: <strong><?= $task['task_time_total'] ?></strong></p>
+
 <form id="time_add" name="time_add" method="post">
     <label for="minutes"><?= Lang::translate('Time used. Valid time input (hh:mm), e.g. 1:10 or 0:15') ?> *</label>
     <input id="minutes" type="text" name="minutes" placeholder="<?= Lang::translate('Time used') ?>" value="">
