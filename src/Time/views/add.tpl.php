@@ -9,9 +9,12 @@ use App\Utils\HTMLUtils;
 
 ?>
 
-<h3><?= Lang::translate('Add time') ?>: <?= $task['title'] ?></h3>
-
-<p><?= Lang::translate('Project') ?>: <a href="/project/view/<?= $project['id'] ?>"><?= $project['title'] ?></a></p>
+<h3 class="sub-menu">
+    <a href="/project"><?=Lang::translate('Projects')?></a><?=HTMLUtils::getMenuSeparator()?>
+    <a href="/project/view/<?=$project['id']?>"><?=$project['title']?></a><?=HTMLUtils::getMenuSeparator()?>
+    <a href="/task/view/<?=$task['id']?>"><?=$task['title']?></a><?=HTMLUtils::getMenuSeparator()?>
+    <?=Lang::translate('Time')?>
+</h3>
 
 <p><?= Lang::translate('Total time used on task') ?>: <strong><?= $task['task_time_total'] ?></strong></p>
 

@@ -6,12 +6,8 @@ use Diversen\Lang;
 
 ?>  
         <hr>
-        <!-- <div class="footer">
-            <ul>
-                <li><a href="/test">Test</a></li>
-                <li><a href="/test">Another Test</a></li>
-            </ul>
-        </div> -->
+        <div class="footer">
+        </div>
     </div>
     <div id="cookie-consent">
         <p class="block">

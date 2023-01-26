@@ -21,6 +21,7 @@ body {
     position: fixed;
     max-width: 95%;
     width: 800px;
+    z-index: 1000;
 }
 
 .flash {
@@ -145,13 +146,34 @@ a:focus {
 .page {
     display: block;
     min-width: 100%;
-    min-height: calc(100vh - 100px);
+
 }
 
 .footer {
-    background-color: var(--background-alt);
+    box-sizing: border-box;
+    padding-top: 40px;
+    position: relative;
+    bottom: 0;
 
 }
+
+.footer>ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    right: 0
+
+}
+
+.footer>ul>li {
+    padding-right: 40px;
+}
+
+
 
 .clear {
     padding: 5px;
