@@ -215,7 +215,6 @@ class ProjectModel extends AppUtils
         $template_data['default_order_by'] = $this->default_order_by;
 
         if ($where['status'] === self::PROJECT_OPEN) {
-            $template_data['inactive_link'] = 1;
             $url = '/project';
         } else {
             $url = '/project/inactive';
@@ -233,5 +232,21 @@ class ProjectModel extends AppUtils
 
         $template_data['paginator'] = $paginator;
         return $template_data;
+    }
+
+    public function getNumProjectsOpen()
+    {
+        return $this->getNumProjects([
+            'auth_id' => $this->app_acl->getAuthId(),
+            'status' => ProjectModel::PROJECT_OPEN,
+        ]);
+    }
+
+    public function getNumProjectsClosed()
+    {
+        return $this->getNumProjects([
+            'auth_id' => $this->app_acl->getAuthId(),
+            'status' => ProjectModel::PROJECT_CLOSED,
+        ]);
     }
 }

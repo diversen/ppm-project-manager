@@ -43,7 +43,7 @@ function render_projects($projects, $default_order_by)
     $pagination_utils = new PaginationUtils($default_order_by, 'project');
 
     if (empty($projects)) { ?>
-        <p><?= Lang::translate('Your have no projects yet') ?></p>
+        <p><?= Lang::translate('Your have no open projects') ?></p>
     <?php
     } else { ?>
         <table>
@@ -112,8 +112,9 @@ render_projects($projects, $default_order_by);
 $pagination = new AppPagination();
 $pagination->render($paginator);
 
-if (isset($inactive_link)) {
+if (isset($num_projects_closed) && $num_projects_closed !== '0') {
     render_projects_inactive_link();
-} else {
+}
+if (isset($num_projects_open) && $num_projects_open !== '0') {
     render_projects_active_link();
 }
