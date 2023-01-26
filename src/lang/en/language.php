@@ -252,7 +252,7 @@ $LANG['Add new project'] = 'Add new project';
 $LANG['Add project'] = 'Add project';
 $LANG['Edit project'] = 'Edit project';
 $LANG['Add new task to project'] = 'Add new task to project';
-$LANG['Your have no projects yet'] = 'Your have no projects yet';
+$LANG['Your have no open projects'] = 'Your have no open projects';
 $LANG['Title'] = 'Title';
 $LANG['Updated'] = 'Updated';
 $LANG['Time used'] = 'Time used';
@@ -437,8 +437,9 @@ $LANG['No note'] = 'No note';
 
 // Translation of file src/Time/views/add.tpl.php
 
-$LANG['Add time'] = 'Add time';
-$LANG['Project'] = 'Project';
+$LANG['Projects'] = 'Projects';
+$LANG['Time'] = 'Time';
+$LANG['Total time used on task'] = 'Total time used on task';
 $LANG['Time used. Valid time input (hh:mm), e.g. 1:10 or 0:15'] = 'Time used. Valid time input (hh:mm), e.g. 1:10 or 0:15';
 $LANG['Time used'] = 'Time used';
 $LANG['Note'] = 'Note';
@@ -447,7 +448,6 @@ $LANG['Pick date'] = 'Pick date';
 $LANG['Submit'] = 'Submit';
 $LANG['Submit and stay'] = 'Submit and stay';
 $LANG['Submit and close task'] = 'Submit and close task';
-$LANG['Time'] = 'Time';
 $LANG['Complete this task?'] = 'Complete this task?';
 $LANG['Are you sure you want to delete time entry?'] = 'Are you sure you want to delete time entry?';
 
