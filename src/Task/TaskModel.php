@@ -40,6 +40,7 @@ class TaskModel extends AppUtils
 
     public function __construct()
     {
+        parent::__construct();
         $this->time_model = new TimeModel();
         $this->date_utils = new DateUtils();
     }
