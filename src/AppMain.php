@@ -6,6 +6,7 @@ namespace App;
 
 use Pebble\Router;
 use App\Settings\SetupIntl;
+use App\AppUtils;
 
 /**
  * AppMain class. This is the main class for the app.
