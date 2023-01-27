@@ -17,7 +17,7 @@ class AppMain extends AppUtils
     use \Pebble\Trait\CSRF;
     use \Pebble\Trait\MainUtils;
 
-    public const VERSION = "v2.1.9-rc1";
+    public const VERSION = "v2.1.9";
 
     public function run()
     {
