@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Task;
 
-use Pebble\App\AppBase;
 use App\Time\TimeModel;
+use App\AppUtils;
 use App\Exception\FormException;
 use App\Utils\DateUtils;
 use Diversen\Lang;
 use DateTime;
 
-class TaskModel
+class TaskModel extends AppUtils
 {
     public const TASK_CLOSED = 0;
     public const TASK_OPEN = 1;
@@ -35,14 +35,11 @@ class TaskModel
     public const PRIORITY_LOW = 0;
 
 
-    private $db;
     private $time_model;
     private $date_utils;
 
     public function __construct()
     {
-        $app_base = new AppBase();
-        $this->db = $app_base->getDB();
         $this->time_model = new TimeModel();
         $this->date_utils = new DateUtils();
     }

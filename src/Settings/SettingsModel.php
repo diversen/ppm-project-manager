@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace App\Settings;
 
-use Pebble\DBCache;
 use Pebble\Cookie;
-use App\AppMain;
+use App\AppUtils;
 
-class SettingsModel
+class SettingsModel extends AppUtils
 {
-    private $cache = null;
-    private $config = null;
-
     private $allowed = ['company', 'name', 'bio', 'timezone', 'language', 'theme_dark_mode'];
     private $set_cookies = ['language', 'timezone', 'theme_dark_mode'];
     public function __construct()
     {
-        $db = (new AppMain())->getDB();
-        $this->config = (new AppMain())->getConfig();
-        $this->cache = new DBCache($db);
+
+        parent::__construct();
     }
 
     /**
@@ -28,7 +23,7 @@ class SettingsModel
     public function getUserSetting(int $auth_id, string $setting): mixed
     {
         $key = $auth_id . '_settings_' . $setting;
-        return $this->cache->get($key);
+        return $this->db_cache->get($key);
     }
 
     /**
@@ -37,7 +32,7 @@ class SettingsModel
     public function setUserSetting(int $auth_id, string $setting, string $value): mixed
     {
         $key = (string)$auth_id . '_settings_' . $setting;
-        return $this->cache->set($key, $value);
+        return $this->db_cache->set($key, $value);
     }
 
     /**
@@ -65,7 +60,7 @@ class SettingsModel
         }
 
         $key = $auth_id . '_settings_' . $setting;
-        $this->cache->set($key, $values);
+        $this->db_cache->set($key, $values);
     }
 
     /**

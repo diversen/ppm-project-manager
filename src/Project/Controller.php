@@ -34,7 +34,6 @@ class Controller extends AppUtils
             'status' => ProjectModel::PROJECT_CLOSED,
         ];
 
-    
         $template_data = $this->project_model->getProjectData($where);
         $template_data['title'] = Lang::translate('All inactive projects');
         $template_data['num_projects_open'] = $this->project_model->getNumProjectsOpen();

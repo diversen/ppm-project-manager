@@ -5,28 +5,19 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\Router;
-use Pebble\App\AppBase;
 use App\Settings\SetupIntl;
 
 /**
  * AppMain class. This is the main class for the app.
  * It is used in www/index.php
  */
-class AppMain extends AppBase
+class AppMain extends AppUtils
 {
     use \Pebble\Trait\CSP;
     use \Pebble\Trait\CSRF;
+    use \Pebble\Trait\MainUtils;
 
-    public const VERSION = "v2.1.8";
-
-    /**
-     * Empty constructor to prevent parent constructor from being called
-     * AppMain inherits from AppBase that inherits from StdUtils
-     * The StdUtils class has a constructor that init all services
-     */
-    public function __construct()
-    {
-    }
+    public const VERSION = "v2.1.9-rc1";
 
     public function run()
     {
