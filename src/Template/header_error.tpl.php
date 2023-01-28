@@ -22,6 +22,7 @@ $use_dark_mode = $_COOKIE['theme_dark_mode'] ?? false;
     <?php endif; ?>
 
     <link rel="stylesheet" href="/css/default.css?v=<?= AppMain::VERSION ?>">
+    <link rel="stylesheet" href="/css/modification.css?v=<?= AppMain::VERSION ?>">
     <link rel="stylesheet" href="/css/cookie-consent.css?v=<?= AppMain::VERSION ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?v=<?=AppMain::VERSION?>">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?v=<?=AppMain::VERSION?>">
