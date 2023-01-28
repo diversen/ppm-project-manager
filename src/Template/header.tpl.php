@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Template\TemplateUtils;
-use App\Template\TemplateMenu;
+use App\Template\Overrides\TemplateMenu;
 use App\AppMain;
 
 $template_utils = new TemplateUtils();
@@ -42,8 +42,9 @@ $use_dark_mode = $template_utils->useDarkMode();
 
     <?php
 
-    if (file_exists('../src/Template/parts/head_scripts.tpl.php')) {
-        require 'Template/parts/head_scripts.tpl.php';
+    $body_begin = $template_utils->getTemplatePath()  . '/Overrides/head_scripts.tpl.php';
+    if (file_exists($body_begin)) {
+        require $body_begin;
     }
 
     ?>
@@ -51,8 +52,9 @@ $use_dark_mode = $template_utils->useDarkMode();
 <body>
 <?php
 
-    if (file_exists('../src/Template/parts/body_begin.tpl.php')) {
-        require 'Template/parts/body_begin.tpl.php';
+    $body_begin = $template_utils->getTemplatePath()  . '/Overrides/body_begin.tpl.php';
+    if (file_exists($body_begin)) {
+        require $body_begin;
     }
 
     ?>

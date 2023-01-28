@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Template;
 
+use Pebble\Path;
 use App\AppUtils;
 use App\AppMain;
 use App\Settings\SettingsModel;
+
 
 /**
  * Template utils
@@ -68,5 +70,10 @@ class TemplateUtils extends AppUtils
             $use_dark_mode = $profile['theme_dark_mode'] ?? null;
         }
         return $use_dark_mode;
+    }
+
+    public function getTemplatePath(): string
+    {
+        return Path::getBasePath() . '/src/Template';
     }
 }

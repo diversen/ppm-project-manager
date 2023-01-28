@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Template;
+namespace App\Template\Overrides;
 
 use App\Template\TemplateUtils;
 use Diversen\Lang;
