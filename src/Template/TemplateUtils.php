@@ -79,7 +79,7 @@ class TemplateUtils extends AppUtils
      * May contain anything
      * @return \App\Template\MetaData
      */
-    public function getMetaData() {
+    public function getMetaContainer() {
         $container = new Container();
         if (!$container->has('meta_data')) {
             $meta_data = new MetaData();

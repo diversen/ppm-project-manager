@@ -24,7 +24,7 @@ $use_dark_mode = $template_utils->useDarkMode();
 
     <?php
 
-    $meta_data = $template_utils->getMetaData();
+    $meta_data = $template_utils->getMetaContainer();
     $head_elements = $meta_data->getHeadElements();
     foreach ($head_elements as $element) {
         echo $element . "\n";
