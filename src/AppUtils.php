@@ -15,6 +15,7 @@ use Diversen\Lang;
  */
 class AppUtils extends StdUtils
 {
+    use \App\Template\Trait\Render;
     /**
      * @var \App\AppACL
      */
@@ -39,26 +40,5 @@ class AppUtils extends StdUtils
             $container->set('app_acl', $app_acl);
         }
         return $container->get('app_acl');
-    }
-
-
-    /**
-     * Render a template as HTML including a header and footer
-     */
-    public function renderPage(string $template, array $data = [], $options = [])
-    {
-        $title = $data['title'] ?? null;
-        if (!$title) {
-            $data['title'] = $this->config->get('App.site_name');
-        }
-
-        $description = $data['description'] ?? null;
-        if (!$description) {
-            $data['description'] = $title;
-        }
-
-        $this->template->render('Template/header.tpl.php', $data, $options);
-        $this->template->render($template, $data, $options);
-        $this->template->render('Template/footer.tpl.php', $data, $options);
     }
 }

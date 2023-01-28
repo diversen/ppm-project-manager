@@ -8,7 +8,8 @@ use Pebble\Path;
 use App\AppUtils;
 use App\AppMain;
 use App\Settings\SettingsModel;
-
+use App\Template\MetaData;
+use Pebble\Service\Container;
 
 /**
  * Template utils
@@ -70,6 +71,21 @@ class TemplateUtils extends AppUtils
             $use_dark_mode = $profile['theme_dark_mode'] ?? null;
         }
         return $use_dark_mode;
+    }
+
+
+    /**
+     * Just a container for the app's meta data
+     * May contain anything
+     * @return \App\Template\MetaData
+     */
+    public function getMetaData() {
+        $container = new Container();
+        if (!$container->has('meta_data')) {
+            $meta_data = new MetaData();
+            $container->set('meta_data', $meta_data);
+        }
+        return $container->get('meta_data');
     }
 
     public function getTemplatePath(): string

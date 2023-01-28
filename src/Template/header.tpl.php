@@ -24,6 +24,12 @@ $use_dark_mode = $template_utils->useDarkMode();
 
     <?php
 
+    $meta_data = $template_utils->getMetaData();
+    $head_elements = $meta_data->getHeadElements();
+    foreach ($head_elements as $element) {
+        echo $element . "\n";
+    }
+
     if ($use_dark_mode) : ?>
         <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/dark.min.css?v=<?= AppMain::VERSION ?>">
     <?php else : ?>
