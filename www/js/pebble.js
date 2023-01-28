@@ -1,8 +1,5 @@
 class Pebble {
 
-    /**
-     * Sets a flash message
-     */
     static setFlashMessage(str, type, remove_after) {
         var messageElem = document.querySelector(".flash-messages");
         messageElem.innerHTML = '';
@@ -27,9 +24,6 @@ class Pebble {
         messageElem.scrollIntoView();
     }
 
-    /**
-     * Toggle visibility of an element between visible and hidden
-     */
     static toggleVisible(elem) {
         if (elem.style.visibility === 'visible') {
             elem.style.visibility = 'hidden';
@@ -38,9 +32,6 @@ class Pebble {
         }
     }
 
-    /**
-     * Toggle display of en element between 'none' and 'block' 
-     */
     static toggleHide(elem) {
         if (elem.style.display === "none") {
             elem.style.display = "block";
@@ -49,9 +40,6 @@ class Pebble {
         }
     }
 
-    /**
-     * Logs FormData object
-     */
     static logFormdata(data) {
         for (var p of data) {
             let name = p[0];
@@ -60,22 +48,16 @@ class Pebble {
         }
     }
 
-    /**
-     * Set elem display to block
-     */
     static show(elem) {
         elem.style.display = 'block';
     };
 
-    /**
-     * Set elem display to hide
-     */
     static hide(elem) {
         elem.style.display = 'none';
     };
 
     /**
-     * Path a segment of the window.location.pathname
+     * Get a Path segment of the window.location.pathname
      */
     static getPathPart(num, path) {
         if (!path) {
@@ -167,6 +149,7 @@ class Pebble {
 
     static redirect(url) {
         // Add to window history
+        // Another option is
         // window.location.assign(url)
         window.location.replace(url)
     }

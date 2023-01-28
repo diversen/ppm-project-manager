@@ -35,7 +35,7 @@ $is_authenticated = $app_main->isAuthenticated();
 
 if ($is_authenticated): ?>
 <script type="module" nonce="<?= AppMain::getNonce() ?>">
-    import { Timer } from '/js/timer.js?version=<?=AppMain::VERSION?>';
+    import { Timer } from '/js/app/timer.js?version=<?=AppMain::VERSION?>';
     const timer = new Timer();
 </script>
 <?php endif; ?>
