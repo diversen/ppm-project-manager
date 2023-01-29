@@ -7,6 +7,7 @@ namespace App;
 use Pebble\App\StdUtils;
 use Pebble\Service\Container;
 use App\AppACL;
+use App\Template\TemplateUtils;
 use Diversen\Lang;
 
 /**
@@ -15,23 +16,26 @@ use Diversen\Lang;
  */
 class AppUtils extends StdUtils
 {
-    use \App\Template\Trait\Render;
+
     /**
      * @var \App\AppACL
      */
     protected $app_acl;
+
+    /**
+     * @var \App\Template\TemplateUtils
+     */
+    protected $template_utils;
 
     public function __construct()
     {
         parent::__construct();
         $this->csrf->setErrorMessage(Lang::translate('Invalid Request. We will look in to this'));
         $this->app_acl = $this->getAppACL();
+        $this->template_utils = new TemplateUtils();
     }
 
-    /**
-     * @return \App\AppACL
-     */
-    public function getAppACL()
+    public function getAppACL(): \App\AppACL
     {
         $container = new Container();
         if (!$container->has('app_acl')) {
@@ -40,5 +44,13 @@ class AppUtils extends StdUtils
             $container->set('app_acl', $app_acl);
         }
         return $container->get('app_acl');
+    }
+
+    /**
+     * Render a template as HTML including a header and footer
+     */
+    public function renderPage(string $template_path, array $data = [], $options = [])
+    {
+        $this->template_utils->renderPage($template_path, $data, $options);
     }
 }

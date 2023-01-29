@@ -74,15 +74,16 @@ class Controller extends AppUtils
 
     private function baseError(string $title, string $error_message)
     {
+        $meta_container = $this->getDataContainer();
         $data = [
             'title' => $title,
             'description' => $title,
             'message' => $error_message,
         ];
 
-        $this->template->render('Template/header_error.tpl.php', $data);
-        $this->template->render('Error/error.tpl.php', $data);
-        $this->template->render('Template/footer.tpl.php', $data);
+        $content = $this->template->getOutput('Error/error.tpl.php', $data);
+        $meta_container->setData('content', $content);
+        $this->template->render('Template/page_error.tpl.php', $data);
     }
 
     private function getEnv()
