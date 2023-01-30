@@ -99,7 +99,7 @@ if (!empty($time_rows)) {
 }
 
 ?>
-<script type="module" nonce="<?=AppMain::getNonce()?>">
+<script type="module" nonce="<?=(new AppMain())->getNonce();?>">
     import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     const minutes = document.getElementById('minutes');

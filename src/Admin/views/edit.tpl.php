@@ -56,7 +56,7 @@ endif;
     <button id="delete" type="submit" name="delete" value="delete"><?= Lang::translate('Delete') ?></button>
     <div class="loadingspinner hidden"></div>
 </form>
-<script type="module" nonce="<?=AppMain::getNonce()?>">
+<script type="module" nonce="<?=(new AppMain())->getNonce();?>">
     import {
         Pebble
     } from '/js/pebble.js?v=<?=AppMain::VERSION?>';

@@ -81,9 +81,9 @@ class Controller extends AppUtils
             'message' => $error_message,
         ];
 
-        $content = $this->template->getOutput('Error/error.tpl.php', $data);
+        $content = $this->template->getOutput('../src/Error/error.tpl.php', $data);
         $meta_container->setData('content', $content);
-        $this->template->render('Template/page_error.tpl.php', $data);
+        $this->template->render('../src/Template/page_error.tpl.php', $data);
     }
 
     private function getEnv()

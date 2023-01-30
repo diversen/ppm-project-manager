@@ -8,7 +8,7 @@ use App\AppMain;
 
 <p><?=Lang::translate('Two factor is already enabled')?></p>
 <p><a id="new-qr" href="/twofactor/recreate"><?=Lang::translate('Get a new QR code')?></p>
-<script type="module" nonce="<?=AppMain::getNonce()?>">
+<script type="module" nonce="<?=(new AppMain())->getNonce();?>">
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\App\StdUtils;
+
 use Pebble\Service\Container;
 use App\AppACL;
 use App\Template\TemplateUtils;
@@ -12,7 +13,7 @@ use Diversen\Lang;
 
 /**
  * App spcific utils that extends StdUtils
- * Extend this class and you can use the methods in your controllers or models
+ * Add some App specific methods to AppUtils
  */
 class AppUtils extends StdUtils
 {
@@ -21,6 +22,7 @@ class AppUtils extends StdUtils
      * @var \App\AppACL
      */
     protected $app_acl;
+
 
     /**
      * @var \App\Template\TemplateUtils
@@ -33,9 +35,10 @@ class AppUtils extends StdUtils
         $this->csrf->setErrorMessage(Lang::translate('Invalid Request. We will look in to this'));
         $this->app_acl = $this->getAppACL();
         $this->template_utils = new TemplateUtils();
+
     }
 
-    public function getAppACL(): \App\AppACL
+    private function getAppACL(): \App\AppACL
     {
         $container = new Container();
         if (!$container->has('app_acl')) {
@@ -44,6 +47,11 @@ class AppUtils extends StdUtils
             $container->set('app_acl', $app_acl);
         }
         return $container->get('app_acl');
+    }
+
+    public function getVersion()
+    {
+        return $this->config->get('App.version');
     }
 
     /**

@@ -68,7 +68,7 @@ if (!empty($tasks_completed)) { ?>
 }
 
 ?>
-<script type="module" nonce="<?=AppMain::getNonce()?>">
+<script type="module" nonce="<?=(new AppMain())->getNonce();?>">
 
     async function loadHtml(url) {
         return fetch(url)

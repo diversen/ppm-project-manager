@@ -6,7 +6,6 @@ use Diversen\Lang;
 use App\AppMain;
 
 ?>
-
 <h3 class="sub-menu"><?=$title?></h3>
 
 <p><?=Lang::translate('By signing in you agree to the following terms of service, privacy policy, and disclaimer')?></p>
@@ -32,7 +31,7 @@ endif;
 
 <form id="login-form">
     
-    <?=AppMain::getCSRFFormField()?>
+    <?=(new AppMain())->getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
@@ -51,7 +50,7 @@ endif;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=AppMain::getNonce()?>">
+<script type="module" nonce="<?=(new AppMain())->getNonce()?>">
 
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     
