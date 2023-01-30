@@ -16,7 +16,7 @@ use App\AppUtils;
 class AppMain extends AppUtils
 {
 
-    public const VERSION = "v2.2.0";
+    public const VERSION = "v2.2.1";
 
     /**
      * Constructor
