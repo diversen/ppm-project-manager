@@ -14,7 +14,7 @@ $use_dark_mode = $template_utils->useDarkMode();
 
 $app_main = new AppMain();
 $data_container = $app_main->getDataContainer();
-$head_elements = $data_container->getData('head_elements') ?? [];
+$head_elements = $data_container->getArrayData('head_elements');
 
 ?>
 <!DOCTYPE html>
@@ -77,9 +77,11 @@ $head_elements = $data_container->getData('head_elements') ?? [];
 
         $template_utils->renderFlashMessages();
 
-        print($data_container->getData('content'));
+        
 
         ?>
+
+        <?=$data_container->getData('content')?>
 
         <hr>
         <div class="footer">
