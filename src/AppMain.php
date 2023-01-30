@@ -20,7 +20,7 @@ class AppMain extends AppUtils
 
     public function __construct() {}
 
-    public const VERSION = "v2.1.9";
+    public const VERSION = "v2.2.0";
 
     public function run()
     {
