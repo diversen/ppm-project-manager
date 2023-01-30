@@ -22,7 +22,6 @@ class AppUtils extends StdUtils
      */
     protected $app_acl;
 
-
     /**
      * @var \App\Template\TemplateUtils
      */
