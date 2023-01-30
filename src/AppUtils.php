@@ -47,11 +47,6 @@ class AppUtils extends StdUtils
         return $container->get('app_acl');
     }
 
-    public function getVersion()
-    {
-        return $this->config->get('App.version');
-    }
-
     /**
      * Render a template as HTML including a header and footer
      */
