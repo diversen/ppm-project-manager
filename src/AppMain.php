@@ -17,11 +17,12 @@ class AppMain extends AppUtils
 {
 
     public const VERSION = "v2.2.1";
+    public static $nonce = '';
+    public static $csrf_form_field = '';
 
-    /**
-     * Constructor
-     */
-    public function __construct(){ }
+    public function __construct()
+    {
+    }
 
     public function run()
     {
@@ -37,7 +38,10 @@ class AppMain extends AppUtils
         parent::__construct();
 
         $this->csp->sendCSPHeaders();
+        self::$nonce = $this->csp->getNonce();
+
         $this->csrf->setCSRFToken(verbs: ['GET'], exclude_paths: ['/account/captcha']);
+        self::$csrf_form_field = $this->csrf->getCSRFFormField();
 
         (new SetupIntl())->setupIntl();
         $router = new Router();
@@ -60,11 +64,13 @@ class AppMain extends AppUtils
         $router->run();
     }
 
-    public function getNonce() {
-        return $this->csp->getNonce();
+    public static function getNonce()
+    {
+        return self::$nonce;
     }
 
-    public function getCSRFFormField() {
-        return $this->csrf->getCSRFFormField();
+    public static function getCSRFFormField()
+    {
+        return self::$csrf_form_field;
     }
 }

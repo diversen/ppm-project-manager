@@ -33,7 +33,7 @@ if ($project['status'] == 1) {
 </form>
 
 
-<script type="module" nonce="<?=(new AppMain())->getNonce();?>">
+<script type="module" nonce="<?=AppMain::getNonce();?>">
     import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     const title = document.getElementById('title');

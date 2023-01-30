@@ -10,7 +10,7 @@ if (!$has_error): ?>
 <h3 class="sub-menu"><?= Lang::translate('Create new password')?></h3>
 <form id="newpassword-form" method="post" action="#">
 
-    <?=(new AppMain())->getCSRFFormField()?>
+    <?=AppMain::getCSRFFormField()?>
     <input type="hidden" name="key" value="<?=$key?>">
     
     <label for="password"><?=Lang::translate('New password')?></label>
@@ -23,7 +23,7 @@ if (!$has_error): ?>
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=(new AppMain())->getNonce();?>">
+<script type="module" nonce="<?=AppMain::getNonce();?>">
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     

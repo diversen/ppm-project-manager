@@ -14,8 +14,8 @@ if (!$analytics_tag) {
 
 ?>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=<?=$analytics_tag?>" nonce="<?= (new AppMain())->getNonce(); ?>"></script>
-<script type="module" nonce="<?= (new AppMain())->getNonce(); ?>">
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?=$analytics_tag?>" nonce="<?= AppMain::getNonce(); ?>"></script>
+<script type="module" nonce="<?= AppMain::getNonce(); ?>">
     import Cookies from '/js/js.cookie.min.js?v=<?= AppMain::VERSION ?>';
 
     var cookieConsentAnswer = Cookies.get('cookie-consent');

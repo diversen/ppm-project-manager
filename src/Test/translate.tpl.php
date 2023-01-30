@@ -5,7 +5,7 @@ use App\AppMain;
 ?>
 <h1>Translate</h1>
 <p id="message"></p>
-<script type="module" nonce="<?= (new AppMain())->getNonce(); ?>">
+<script type="module" nonce="<?= AppMain::getNonce(); ?>">
 
     import {Lang} from '/js/lang.js';
     await Lang.load();

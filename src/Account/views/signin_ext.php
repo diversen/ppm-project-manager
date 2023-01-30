@@ -31,7 +31,7 @@ endif;
 
 <form id="login-form">
     
-    <?=(new AppMain())->getCSRFFormField()?>
+    <?=AppMain::getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
@@ -50,7 +50,7 @@ endif;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=(new AppMain())->getNonce()?>">
+<script type="module" nonce="<?=AppMain::getNonce()?>">
 
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     

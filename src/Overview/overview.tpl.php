@@ -197,7 +197,7 @@ render_week($week_data, $week_state, $week_user_day_times);
 
 ?>
 
-<script type="module" nonce="<?= (new AppMain())->getNonce(); ?>">
+<script type="module" nonce="<?= AppMain::getNonce(); ?>">
     import {
         Pebble
     } from '/js/pebble.js?v=<?= AppMain::VERSION ?>';
