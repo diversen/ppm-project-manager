@@ -77,7 +77,7 @@ $head_elements = $data_container->getArrayData('head_elements');
 
         $template_utils->renderFlashMessages();
 
-        
+
 
         ?>
 

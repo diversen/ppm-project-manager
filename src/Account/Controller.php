@@ -149,7 +149,6 @@ class Controller extends AppUtils
      */
     public function post_signup(): void
     {
-        
         usleep(100000);
 
         $this->csrf->validateTokenJSON();

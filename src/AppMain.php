@@ -15,7 +15,6 @@ use App\AppUtils;
  */
 class AppMain extends AppUtils
 {
-
     public const VERSION = "v2.2.2";
     public static $nonce = '';
     public static $csrf_form_field = '';
@@ -26,7 +25,6 @@ class AppMain extends AppUtils
 
     public function run()
     {
-
         $common_utils = new CommonUtils();
         $common_utils->addBaseToIncudePath();
         $common_utils->addSrcToIncludePath();
@@ -60,5 +58,4 @@ class AppMain extends AppUtils
         $router->addClass(\App\TwoFactor\Controller::class);
         $router->run();
     }
-
 }

@@ -13,7 +13,6 @@ class SettingsModel extends AppUtils
     private $set_cookies = ['language', 'timezone', 'theme_dark_mode'];
     public function __construct()
     {
-
         parent::__construct();
     }
 

@@ -65,9 +65,8 @@ class AppACL extends ACL
      */
     public function isProjectOwnerGetTask($task_id): array
     {
-  
         $this->isAuthenticatedOrThrow(Lang::translate('You are not logged in. Please log in.'));
-        
+
         // Check if there is a task
         $task = (new TaskModel())->getOne(['id' => (int)$task_id]);
         if (empty($task)) {

@@ -17,7 +17,6 @@ use Diversen\Lang;
  */
 class AppUtils extends StdUtils
 {
-
     /**
      * @var \App\AppACL
      */
@@ -35,7 +34,6 @@ class AppUtils extends StdUtils
         $this->csrf->setErrorMessage(Lang::translate('Invalid Request. We will look in to this'));
         $this->app_acl = $this->getAppACL();
         $this->template_utils = new TemplateUtils();
-
     }
 
     private function getAppACL(): \App\AppACL

@@ -48,9 +48,9 @@ class TemplateUtils extends StdUtils
 
             foreach ($flash_messages as $message) :
                 $remove_class = '';
-                if (isset($message['options']['flash_remove'])) {
-                    $remove_class = ' flash-remove ';
-                } ?>
+        if (isset($message['options']['flash_remove'])) {
+            $remove_class = ' flash-remove ';
+        } ?>
                 <div class="flash flash-<?= $message['type'] ?> <?= $remove_class ?>"><?= $message['message'] ?></div>
             <?php endforeach; ?>
         </div>
@@ -96,6 +96,5 @@ class TemplateUtils extends StdUtils
         $content = $this->template->getOutput($template_path, $data, $options);
         $meta_container->setData('content', $content);
         $this->template->render('Template/page.tpl.php', $data, $options);
-
     }
 }

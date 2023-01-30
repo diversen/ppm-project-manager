@@ -105,7 +105,9 @@ class TaskModel extends AppUtils
     public function getOne($where)
     {
         $task = $this->db->getOne('task', $where);
-        if (empty($task)) return [];
+        if (empty($task)) {
+            return [];
+        }
         $task_time_total = $this->time_model->sumTime(['task_id' => $task['id']]);
         $task['task_time_total'] = $this->time_model->minutesToHoursMinutes($task_time_total);
         return $task;

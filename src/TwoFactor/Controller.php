@@ -37,7 +37,7 @@ class Controller extends AppUtils
     {
         $renderer = new ImageRenderer(
             new RendererStyle(300),
-            new SvgImageBackEnd,
+            new SvgImageBackEnd(),
         );
         $writer = new Writer($renderer);
         $svg_str = $writer->writeString($totp_auth_url);
@@ -90,7 +90,8 @@ class Controller extends AppUtils
 
             $this->renderPage(
                 'TwoFactor/views/enable.tpl.php',
-                $vars, ['raw' => true]
+                $vars,
+                ['raw' => true]
             );
         } else {
             $vars = [
