@@ -1,11 +1,12 @@
 <?php
 
 use App\AppMain;
+use App\AppUtils;
 
 ?>
 <h1>Translate</h1>
 <p id="message"></p>
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
 
     import {Lang} from '/js/lang.js';
     await Lang.load();

@@ -2,6 +2,7 @@
 
 use Diversen\Lang;
 use App\AppMain;
+use App\AppUtils;
 
 $has_error = $error ?? null;
 
@@ -10,7 +11,7 @@ if (!$has_error): ?>
 <h3 class="sub-menu"><?= Lang::translate('Create new password')?></h3>
 <form id="newpassword-form" method="post" action="#">
 
-    <?=AppMain::getCSRFFormField()?>
+    <?=(new AppUtils())->getCSRF()->getCSRFFormField()?>
     <input type="hidden" name="key" value="<?=$key?>">
     
     <label for="password"><?=Lang::translate('New password')?></label>
@@ -23,7 +24,7 @@ if (!$has_error): ?>
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     

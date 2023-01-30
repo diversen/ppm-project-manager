@@ -7,6 +7,7 @@ use Diversen\Lang;
 use App\AppMain;
 use App\Utils\DateUtils;
 use App\Utils\HTMLUtils;
+use App\AppUtils;
 
 /**
  * Render a single task
@@ -197,7 +198,7 @@ render_week($week_data, $week_state, $week_user_day_times);
 
 ?>
 
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
     import {
         Pebble
     } from '/js/pebble.js?v=<?= AppMain::VERSION ?>';

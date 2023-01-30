@@ -2,6 +2,7 @@
 
 use Diversen\Lang;
 use App\AppMain;
+use App\AppUtils;
 
 ?>
 
@@ -16,7 +17,7 @@ use App\AppMain;
 <div class="clear"></div>
 <form id="login-form">
     
-    <?=AppMain::getCSRFFormField()?>
+    <?=(new AppUtils())->getCSRF()->getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
@@ -35,7 +36,7 @@ use App\AppMain;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
 
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     

@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use App\AppMain;
+use App\AppUtils;
 
 $app_main = (new AppMain())->getAuth();
 
 ?>
-<script type="importmap" nonce="<?= AppMain::getNonce(); ?>">
+<script type="importmap" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
     {
       "imports": {
         "/js/pebble.js": "/js/pebble.js?v=<?= AppMain::VERSION ?>",
@@ -15,7 +16,7 @@ $app_main = (new AppMain())->getAuth();
       }
     }
 </script>
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
     
     import {} from '/js/online_offline.js?v=<?= AppMain::VERSION ?>';
     import {FlashEvents} from '/js/flash_events.js?v=<?= AppMain::VERSION ?>';
@@ -34,7 +35,7 @@ $app_main = (new AppMain())->getAuth();
 $is_authenticated = $app_main->isAuthenticated();
 
 if ($is_authenticated): ?>
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
     import { Timer } from '/js/app/timer.js?version=<?=AppMain::VERSION?>';
     const timer = new Timer();
 </script>

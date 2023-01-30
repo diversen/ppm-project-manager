@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Diversen\Lang;
 use App\AppMain;
 use App\Utils\HTMLUtils;
+use App\AppUtils;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -68,7 +69,7 @@ if (!empty($tasks_completed)) { ?>
 }
 
 ?>
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
 
     async function loadHtml(url) {
         return fetch(url)

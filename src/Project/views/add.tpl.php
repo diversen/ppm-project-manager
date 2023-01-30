@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\AppMAin;
+use App\AppUtils;
 
 ?>
 <h3 class="sub-menu">
@@ -20,7 +21,7 @@ use App\AppMAin;
 </form>
 
 
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
     import {
         Pebble
     } from '/js/pebble.js?v=<?=AppMain::VERSION?>';

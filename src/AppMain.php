@@ -38,10 +38,7 @@ class AppMain extends AppUtils
         parent::__construct();
 
         $this->csp->sendCSPHeaders();
-        self::$nonce = $this->csp->getNonce();
-
         $this->csrf->setCSRFToken(verbs: ['GET'], exclude_paths: ['/account/captcha']);
-        self::$csrf_form_field = $this->csrf->getCSRFFormField();
 
         (new SetupIntl())->setupIntl();
         $router = new Router();
@@ -64,13 +61,4 @@ class AppMain extends AppUtils
         $router->run();
     }
 
-    public static function getNonce()
-    {
-        return self::$nonce;
-    }
-
-    public static function getCSRFFormField()
-    {
-        return self::$csrf_form_field;
-    }
 }

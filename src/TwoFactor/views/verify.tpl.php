@@ -2,6 +2,7 @@
 
 use Diversen\Lang;
 use App\AppMain;
+use App\AppUtils;
 
 ?>
 <h3 class="sub-menu"><?=Lang::translate('Verify login using two factor authentication')?></h3>
@@ -15,7 +16,7 @@ use App\AppMain;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
     
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 

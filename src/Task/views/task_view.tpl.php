@@ -6,6 +6,7 @@ use Diversen\Lang;
 use Pebble\URL;
 use App\AppMain;
 use App\Utils\HTMLUtils;
+use App\AppUtils;
 
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
@@ -80,7 +81,7 @@ endif;
 echo $note_markdown;
 
 ?>
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
 
 import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 

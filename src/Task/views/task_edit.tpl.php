@@ -6,6 +6,7 @@ use Diversen\Lang;
 use App\AppMain;
 use App\Task\TaskModel;
 use App\Utils\HTMLUtils;
+use App\AppUtils;
 
 $begin_date = date('Y-m-d', strtotime($task['begin_date']));
 $end_date = date('Y-m-d', strtotime($task['end_date']));
@@ -95,7 +96,7 @@ $is_selected = function ($value, $current_state) {
 
 </form>
 
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
     import {Pebble} from '/js/pebble.js?v=<?= AppMain::VERSION ?>';
     import {addMultipleEventListener} from '/js/event.js?v=<?= AppMain::VERSION ?>'
 

@@ -1,13 +1,14 @@
 <?php
 
 use App\AppMain;
+use App\AppUtils;
 
 ?>
 
 <h3>Worker</h3>
 
 <p id="message"></p>
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
 
     const message = document.getElementById('message');
     if (window.SharedWorker) {

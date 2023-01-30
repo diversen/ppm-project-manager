@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 use Diversen\Lang;
 use App\AppMain;
+use App\AppUtils;
+
+(new AppUtils())->getCSP()->getNonce();
 
 ?>
 <h3 class="sub-menu"><?=$title?></h3>
@@ -31,7 +34,7 @@ endif;
 
 <form id="login-form">
     
-    <?=AppMain::getCSRFFormField()?>
+    <?=(new AppUtils())->getCSRF()->getCSRFFormField()?>
     
     <label for="email"><?= Lang::translate('E-mail') ?></label>
     <input id="email" type="text" name="email">
@@ -50,7 +53,7 @@ endif;
     <div class="loadingspinner hidden"></div>
 </form>
 
-<script type="module" nonce="<?=AppMain::getNonce()?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce()?>">
 
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     

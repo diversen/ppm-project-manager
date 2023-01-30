@@ -1,11 +1,12 @@
 <?php
 
 use App\AppMain;
+use App\AppUtils;
 
 ?>
 <div id="app"></div>
 
-<script type="module" nonce="<?= AppMain::getNonce(); ?>">
+<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
 
     import {NotificationUtils} from '/js/app/notification_utils.js';
     import {html, render} from '/js/lit-html.js';

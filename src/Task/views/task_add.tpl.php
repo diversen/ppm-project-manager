@@ -6,6 +6,7 @@ use App\AppMain;
 use App\Task\TaskModel;
 use App\Utils\HTMLUtils;
 use Diversen\Lang;
+use App\AppUtils;
 
 ?>
 
@@ -75,7 +76,7 @@ use Diversen\Lang;
     <div class="loadingspinner hidden"></div>
 
 </form>
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
 
     import {Pebble} from '/js/pebble.js?v=<?=AppMain::VERSION?>';
     import {addMultipleEventListener} from '/js/event.js?v=<?=AppMain::VERSION?>'

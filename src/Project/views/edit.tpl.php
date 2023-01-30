@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Diversen\Lang;
 use App\AppMain;
 use App\Utils\HTMLUtils;
+use App\AppUtils;
 
 $checked = '';
 if ($project['status'] == 1) {
@@ -33,7 +34,7 @@ if ($project['status'] == 1) {
 </form>
 
 
-<script type="module" nonce="<?=AppMain::getNonce();?>">
+<script type="module" nonce="<?=(new AppUtils())->getCSP()->getNonce();?>">
     import { Pebble } from '/js/pebble.js?v=<?=AppMain::VERSION?>';
 
     const title = document.getElementById('title');
