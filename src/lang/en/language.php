@@ -399,7 +399,7 @@ $LANG['Add time to task'] = 'Add time to task';
 $LANG['Move to today'] = 'Move to today';
 $LANG['Note'] = 'Note';
 
-// Translation of file src/Template/TemplateMenu.php
+// Translation of file src/Template/Overrides/TemplateMenu.php
 
 $LANG['Sign in'] = 'Sign in';
 $LANG['Email sign up'] = 'Email sign up';
@@ -412,7 +412,16 @@ $LANG['Toggle timer'] = 'Toggle timer';
 $LANG['Timer'] = 'Timer';
 $LANG['Admin'] = 'Admin';
 
-// Translation of file src/Template/footer.tpl.php
+// Translation of file src/Template/page.tpl.php
+
+$LANG['Notice'] = 'Notice';
+$LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
+$LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
+$LANG['Read out privacy policy for more information'] = 'Read out privacy policy for more information';
+$LANG['Accept'] = 'Accept';
+$LANG['Reject'] = 'Reject';
+
+// Translation of file src/Template/page_error.tpl.php
 
 $LANG['Notice'] = 'Notice';
 $LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
