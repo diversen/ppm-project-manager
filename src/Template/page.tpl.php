@@ -93,7 +93,7 @@ $head_elements = $data_container->getArrayData('head_elements');
             <?= Lang::translate('This website may use non-essential cookies for statistical usage and improving experience.'); ?> 
             <br>
             <?=Lang::translate('You may accept or reject any non-essential cookies.') ?> 
-            <a href="/account/terms/privacy-policy" target="_blank"><?= Lang::translate('Read out privacy policy for more information') ?></a>.
+            <a href="/account/terms/privacy-policy" target="_blank"><?= Lang::translate('Read our privacy policy for more information') ?></a>.
         </p>
         <p class="block">
             <button id="cookie-accept" class="accept" type="button"><?=Lang::translate('Accept')?></button>

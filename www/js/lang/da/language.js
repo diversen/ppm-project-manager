@@ -194,7 +194,7 @@ const Translation =
     "Notice": "Varsel",
     "This website may use non-essential cookies for statistical usage and improving experience.": "Denne hjemmeside kan bruge ikke-essentielle cookies til statistisk brug og forbedring af oplevelsen.",
     "You may accept or reject any non-essential cookies.": "Du kan acceptere eller afvise alle ikke-v\u00e6sentlige cookies.",
-    "Read out privacy policy for more information": "L\u00e6s privatlivspolitikken for mere information",
+    "Read our privacy policy for more information": "L\u00e6s vores privatlivspolitik for mere information",
     "Accept": "Accepter",
     "Reject": "Afvis",
     "Read more": "L\u00e6s mere",

@@ -417,7 +417,7 @@ $LANG['Admin'] = 'Admin';
 $LANG['Notice'] = 'Notice';
 $LANG['This website may use non-essential cookies for statistical usage and improving experience.'] = 'This website may use non-essential cookies for statistical usage and improving experience.';
 $LANG['You may accept or reject any non-essential cookies.'] = 'You may accept or reject any non-essential cookies.';
-$LANG['Read out privacy policy for more information'] = 'Read out privacy policy for more information';
+$LANG['Read our privacy policy for more information'] = 'Read our privacy policy for more information';
 $LANG['Accept'] = 'Accept';
 $LANG['Reject'] = 'Reject';
 

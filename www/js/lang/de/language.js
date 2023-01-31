@@ -194,7 +194,7 @@ const Translation =
     "Notice": "Notiz",
     "This website may use non-essential cookies for statistical usage and improving experience.": "Diese Website kann nicht unbedingt erforderliche Cookies f\u00fcr statistische Zwecke und zur Verbesserung der Erfahrung verwenden.",
     "You may accept or reject any non-essential cookies.": "Sie k\u00f6nnen alle nicht wesentlichen Cookies akzeptieren oder ablehnen.",
-    "Read out privacy policy for more information": "Lesen Sie die Datenschutzerkl\u00e4rung f\u00fcr weitere Informationen",
+    "Read our privacy policy for more information": "Lesen Sie unsere Datenschutzerkl\u00e4rung f\u00fcr weitere Informationen",
     "Accept": "Annehmen",
     "Reject": "Ablehnen",
     "Read more": "Weiterlesen",

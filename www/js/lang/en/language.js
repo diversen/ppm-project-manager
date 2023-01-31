@@ -194,7 +194,7 @@ const Translation =
     "Notice": "Notice",
     "This website may use non-essential cookies for statistical usage and improving experience.": "This website may use non-essential cookies for statistical usage and improving experience.",
     "You may accept or reject any non-essential cookies.": "You may accept or reject any non-essential cookies.",
-    "Read out privacy policy for more information": "Read out privacy policy for more information",
+    "Read our privacy policy for more information": "Read our privacy policy for more information",
     "Accept": "Accept",
     "Reject": "Reject",
     "Read more": "Read more",
