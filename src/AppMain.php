@@ -14,7 +14,7 @@ use App\AppUtils;
  */
 class AppMain extends AppUtils
 {
-    public const VERSION = "v2.2.2";
+    public const VERSION = "v2.2.3";
 
     public function __construct()
     {
