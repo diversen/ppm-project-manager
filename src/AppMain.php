@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\Router;
-use Pebble\App\CommonUtils;
 use App\Settings\SetupIntl;
 use App\AppUtils;
 
@@ -16,8 +15,6 @@ use App\AppUtils;
 class AppMain extends AppUtils
 {
     public const VERSION = "v2.2.2";
-    public static $nonce = '';
-    public static $csrf_form_field = '';
 
     public function __construct()
     {
@@ -25,16 +22,21 @@ class AppMain extends AppUtils
 
     public function run()
     {
-        $common_utils = new CommonUtils();
-        $common_utils->addBaseToIncudePath();
-        $common_utils->addSrcToIncludePath();
-        $common_utils->setErrorHandler();
-        $common_utils->sendSSLHeaders();
-        $common_utils->sessionStart();
-        $common_utils->setDebug();
+        // Set up include_path and some other stuff before we construct all services
+        // Doing this here means we will catch all errors in a nice way
+        $utils = $this->getUtils();
+        $utils->addBaseToIncudePath();
+        $utils->addBaseToIncudePath();
+        $utils->addSrcToIncludePath();
+        $utils->setErrorHandler();
+        $utils->sendSSLHeaders();
+        $utils->sessionStart();
+        $utils->setDebug();
 
+        // Construct all other services
         parent::__construct();
 
+        // Now we can use the extends the AppUtils services in the app
         $this->csp->sendCSPHeaders();
         $this->csrf->setCSRFToken(verbs: ['GET'], exclude_paths: ['/account/captcha']);
 

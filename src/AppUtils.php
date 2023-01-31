@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\App\StdUtils;
-
 use Pebble\Service\Container;
 use App\AppACL;
 use App\Template\TemplateUtils;
