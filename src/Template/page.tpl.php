@@ -15,10 +15,11 @@ $use_dark_mode = $template_utils->useDarkMode();
 $app_main = new AppMain();
 $data_container = $app_main->getDataContainer();
 $head_elements = $data_container->getArrayData('head_elements');
+$lang = $data_container->getData('lang') ?? 'en';
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?=$lang?>">
 
 <head>
     <meta charset="UTF-8">
