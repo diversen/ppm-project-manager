@@ -42,7 +42,8 @@ class AppMain extends AppUtils
         $this->csrf->setCSRFToken(verbs: ['GET'], exclude_paths: ['/account/captcha']);
 
         (new SetupIntl())->setupIntl();
-        $router = new Router(ParseAttributes::class);
+
+        $router = new Router(new ParseAttributes());
 
         $router->setFasterRouter();
         $router->addClass(\App\Test\Controller::class);
