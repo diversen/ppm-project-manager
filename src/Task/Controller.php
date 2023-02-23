@@ -11,6 +11,7 @@ use App\AppUtils;
 use App\Exception\FormException;
 use Diversen\Lang;
 use Pebble\Exception\JSONException;
+use Pebble\Attributes\Route;
 
 use Exception;
 
@@ -26,10 +27,7 @@ class Controller extends AppUtils
         $this->task_model = new TaskModel();
     }
 
-    /**
-     * @route /task/add/:project_id
-     * @verbs GET
-     */
+    #[Route(path: '/task/add/:project_id', verbs: ['GET'])]
     public function add(array $params)
     {
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
@@ -51,10 +49,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /task/edit/:task_id
-     * @verbs GET
-     */
+    #[Route(path: '/task/edit/:task_id', verbs: ['GET'])]
     public function edit($params)
     {
         $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
@@ -73,10 +68,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /task/view/:task_id
-     * @verbs GET
-     */
+    #[Route(path: '/task/view/:task_id', verbs: ['GET'])]
     public function view($params)
     {
         $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
@@ -93,11 +85,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /task/post
-     * @verbs POST
-     *
-     */
+    #[Route(path: '/task/post', verbs: ['POST'])]
     public function post()
     {
         try {
@@ -127,10 +115,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /task/put/:task_id
-     * @verbs POST
-     */
+    #[Route(path: '/task/put/:task_id', verbs: ['POST'])]
     public function put($params)
     {
         try {
@@ -160,10 +145,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /task/put/exceeded/today
-     * @verbs POST
-     */
+    #[Route(path: '/task/put/exceeded/today', verbs: ['POST'])]
     public function move_exceeded_today()
     {
         try {
@@ -178,10 +160,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /task/delete/:task_id
-     * @verbs POST
-     */
+    #[Route(path: '/task/delete/:task_id', verbs: ['POST'])]
     public function delete($params)
     {
         try {

@@ -15,6 +15,7 @@ use Pebble\SessionTimed;
 use App\AppUtils;
 use App\TwoFactor\TwoFactorModel;
 use Pebble\Exception\JSONException;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -44,10 +45,7 @@ class Controller extends AppUtils
         return $svg_str;
     }
 
-    /**
-     * @route /twofactor/recreate
-     * @verbs GET
-     */
+    #[Route(path: '/twofactor/recreate', verbs: ['GET'])]
     public function recreate()
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -59,10 +57,7 @@ class Controller extends AppUtils
         header('Location: /twofactor/enable', true);
     }
 
-    /**
-     * @route /twofactor/enable
-     * @verbs GET
-     */
+    #[Route(path: '/twofactor/enable', verbs: ['GET'])]
     public function enable()
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -105,10 +100,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /twofactor/put
-     * @verbs POST
-     */
+    #[Route(path: '/twofactor/put', verbs: ['POST'])]
     public function put()
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -127,10 +119,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /twofactor/verify/post
-     * @verbs POST
-     */
+    #[Route(path: '/twofactor/verify/post', verbs: ['POST'])]
     public function verify_post()
     {
         usleep(1000000);
@@ -170,10 +159,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /twofactor/verify
-     * @verbs GET
-     */
+    #[Route(path: '/twofactor/verify', verbs: ['GET'])]
     public function verify()
     {
         $vars = ['title' => Lang::translate('Verify two factor')];

@@ -11,6 +11,7 @@ use Pebble\Pager;
 use App\Admin\TableUtils as DBUtils;
 use Pebble\Exception\JSONException;
 use Exception;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -63,15 +64,14 @@ class Controller extends AppUtils
      * @route /admin/
      * @verbs GET
      */
+
+    #[Route(path: '/admin/', verbs: ['GET'])]
     public function index()
     {
         $this->renderPage('Admin/views/index.tpl.php', ['tables' => $this->tables]);
     }
 
-    /**
-     * @route /admin/table/:table
-     * @verbs GET
-     */
+    #[Route(path: '/admin/table/:table', verbs: ['GET'])]
     public function table(array $params)
     {
 
@@ -123,10 +123,7 @@ class Controller extends AppUtils
         return $table;
     }
 
-    /**
-     * @route /admin/table/:table/edit/:id
-     * @verbs GET
-     */
+    #[Route(path: '/admin/table/:table/edit/:id', verbs: ['GET'])]
     public function edit(array $params)
     {
         $table = $this->getTableWithColumnTypes($params['table']);
@@ -144,10 +141,7 @@ class Controller extends AppUtils
         $this->renderPage('Admin/views/edit.tpl.php', $template_data);
     }
 
-    /**
-     * @route /admin/table/:table/add
-     * @verbs GET
-     */
+    #[Route(path: '/admin/table/:table/add', verbs: ['GET'])]
     public function create(array $params)
     {
         $table = $this->getTableWithColumnTypes($params['table']);
@@ -159,10 +153,7 @@ class Controller extends AppUtils
         $this->renderPage('Admin/views/add.tpl.php', $template_data);
     }
 
-    /**
-     * @route /admin/table/:table/put/:id
-     * @verbs POST
-     */
+    #[Route(path: '/admin/table/:table/put/:id', verbs: ['POST'])]
     public function put(array $params)
     {
         $response['error'] = true;
@@ -185,10 +176,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /admin/table/:table/delete/:id
-     * @verbs POST
-     */
+    #[Route(path: '/admin/table/:table/delete/:id', verbs: ['POST'])]
     public function delete(array $params)
     {
         $response['error'] = true;
@@ -205,10 +193,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /admin/table/:table/view/:id
-     * @verbs GET
-     */
+    #[Route(path: '/admin/table/:table/view/:id', verbs: ['GET'])]
     public function view(array $params)
     {
         $table = $this->getTableWithColumnTypes($params['table']);

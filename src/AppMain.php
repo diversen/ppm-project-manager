@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\Router;
+use Pebble\Router\ParseAttributes;
 use App\Settings\SetupIntl;
 use App\AppUtils;
 
@@ -41,7 +42,7 @@ class AppMain extends AppUtils
         $this->csrf->setCSRFToken(verbs: ['GET'], exclude_paths: ['/account/captcha']);
 
         (new SetupIntl())->setupIntl();
-        $router = new Router();
+        $router = new Router(ParseAttributes::class);
 
         $router->setFasterRouter();
         $router->addClass(\App\Test\Controller::class);

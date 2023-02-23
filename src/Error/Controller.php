@@ -15,6 +15,7 @@ use Pebble\Exception\NotFoundException;
 use Pebble\Exception\ForbiddenException;
 use Pebble\Exception\TemplateException;
 use Pebble\Exception\JSONException;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -60,11 +61,8 @@ class Controller extends AppUtils
             exit();
         }
     }
-    /**
-     * A route for logging e.g. JS errors using a POST request
-     * @route /error/log
-     * @verbs POST
-     */
+
+    #[Route(path: '/error/log', verbs: ['POST'])]
     public function ajaxError()
     {
         $error = $_POST['error'] ?? '';

@@ -14,6 +14,7 @@ use App\Project\ProjectModel;
 use Diversen\Lang;
 use Exception;
 use Pebble\Exception\JSONException;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -26,10 +27,7 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    /**
-     * @route /overview
-     * @verbs GET
-     */
+    #[Route(path: '/overview', verbs: ['GET'])]
     public function index()
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -70,10 +68,7 @@ class Controller extends AppUtils
         $this->renderPage('Overview/overview.tpl.php', $template_data);
     }
 
-    /**
-     * @route /overview/settings/put
-     * @verbs POST
-     */
+    #[Route(path: '/overview/settings/put', verbs: ['POST'])]
     public function setSettings()
     {
         $settings = new SettingsModel();

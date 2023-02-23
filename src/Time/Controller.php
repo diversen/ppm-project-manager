@@ -13,6 +13,7 @@ use Pebble\Pagination\PaginationUtils;
 use Pebble\ExceptionTrace;
 use Pebble\Exception\JSONException;
 use Diversen\Lang;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -29,10 +30,7 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    /**
-     * @route /time/add/:task_id
-     * @verbs GET
-     */
+    #[Route(path: '/time/add/:task_id', verbs: ['GET'])]
     public function add($params)
     {
         $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
@@ -67,10 +65,8 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /time/post
-     * @verbs POST
-     */
+
+    #[Route(path: '/time/post', verbs: ['POST'])]
     public function post()
     {
         try {
@@ -92,10 +88,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /time/delete/:id
-     * @verbs POST
-     */
+    #[Route(path: '/time/delete/:id', verbs: ['POST'])]
     public function delete($params)
     {
         try {

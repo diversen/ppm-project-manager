@@ -8,6 +8,7 @@ use App\AppUtils;
 use Pebble\Exception\NotFoundException;
 use App\Cron\MoveTasks;
 use PDO;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -19,37 +20,25 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /worker
-     * @verbs GET
-     */
+    #[Route(path: '/worker', verbs: ['GET'])]
     public function worker()
     {
         $this->renderPage('Test/worker.tpl.php');
     }
 
-    /**
-     * @route /translate
-     * @verbs GET
-     */
+    #[Route(path: '/translate', verbs: ['GET'])]
     public function translate()
     {
         $this->template->render('Test/translate.tpl.php');
     }
 
-    /**
-     * @route /test/template/exception
-     * @verbs GET
-     */
+    #[Route(path: '/test/template/exception', verbs: ['GET'])]
     public function templateException()
     {
         $this->template->render('Test/template_exception.tpl.php');
     }
 
-    /**
-     * @route /test
-     * @verbs GET
-     */
+    #[Route(path: '/test', verbs: ['GET'])]
     public function test()
     {
         $move_tasks = new MoveTasks();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Info;
 
 use App\AppUtils;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -17,6 +18,7 @@ class Controller extends AppUtils
      * @route /info/phpinfo
      * @verbs GET
      */
+    #[Route(path: '/info/phpinfo', verbs: ['GET'])]
     public function phpinfo()
     {
         header("Content-Security-Policy: script-src: 'self' 'unsafe-inline'");

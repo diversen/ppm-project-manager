@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Home;
 
 use App\AppUtils;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -15,10 +16,7 @@ class Controller extends AppUtils
         $this->auth_id = $this->auth->getAuthId();
     }
 
-    /**
-     * @route /
-     * @verbs GET
-     */
+    #[Route(path: '/', verbs: ['GET'])]
     public function index()
     {
         if ($this->auth_id) {

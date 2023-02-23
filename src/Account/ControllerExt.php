@@ -8,6 +8,7 @@ use Diversen\Lang;
 use App\Google\GoogleUtils;
 use App\Account\Controller;
 use Exception;
+use Pebble\Attributes\Route;
 
 /**
  * Extends the normal controler to include google auth
@@ -19,10 +20,7 @@ class ControllerExt extends Controller
         parent::__construct();
     }
 
-    /**
-     * @route /account/signin
-     * @verbs GET
-     */
+    #[Route(path: '/account/signin', verbs: ['GET'])]
     public function signin(): void
     {
         if ($this->config->get('Account.google')) {

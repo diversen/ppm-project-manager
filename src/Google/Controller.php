@@ -8,6 +8,7 @@ use App\AppUtils;
 use Diversen\Lang;
 use App\Google\GoogleUtils;
 use App\TwoFactor\TwoFactorModel;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -21,10 +22,8 @@ class Controller extends AppUtils
         $this->logout_redirect = $this->config->get('App.logout_redirect');
     }
 
-    /**
-     * @route /google/signout
-     * @verbs GET
-     */
+
+    #[Route(path: '/google/signout', verbs: ['GET'])]
     public function signout(): void
     {
         $this->auth->unlinkCurrentCookie();
@@ -32,10 +31,7 @@ class Controller extends AppUtils
         header($location);
     }
 
-    /**
-     * @route /google
-     * @verbs GET
-     */
+    #[Route(path: '/google', verbs: ['GET'])]
     public function index(): void
     {
         if ($this->auth->isAuthenticated()) {

@@ -16,6 +16,7 @@ use App\TwoFactor\TwoFactorModel;
 use Exception;
 use Parsedown;
 use Pebble\Exception\JSONException;
+use Pebble\Attributes\Route;
 
 class Controller extends AppUtils
 {
@@ -24,10 +25,7 @@ class Controller extends AppUtils
         parent::__construct();
     }
 
-    /**
-     * @route /account/signin
-     * @verbs GET
-     */
+    #[Route(path: '/account/signin', verbs: ['GET'])]
     public function signin(): void
     {
         $template_vars = [];
@@ -46,11 +44,7 @@ class Controller extends AppUtils
         }
     }
 
-
-    /**
-     * @route /account/post_signin
-     * @verbs POST
-     */
+    #[Route(path: '/account/post_signin', verbs: ['POST'])]
     public function post_signin(): void
     {
         usleep(100000);
@@ -78,11 +72,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * Log the user out and redirect
-     * @route /account/logout
-     * @verbs GET
-     */
+    #[Route(path: '/account/logout', verbs: ['GET'])]
     public function logout(): void
     {
         $auth_id = $this->auth->getAuthId();
@@ -99,11 +89,7 @@ class Controller extends AppUtils
         header("Location: $redirect");
     }
 
-    /**
-     * Page with link to logout route
-     * @route /account/signout
-     * @verbs GET
-     */
+    #[Route(path: '/account/signout', verbs: ['GET'])]
     public function signout(): void
     {
         $this->renderPage('Account/views/signout.php', ['title' => Lang::translate('Sign out')]);
@@ -126,10 +112,7 @@ class Controller extends AppUtils
         return false;
     }
 
-    /**
-     * @route /account/signup
-     * @verbs GET
-     */
+    #[Route(path: '/account/signup', verbs: ['GET'])]
     public function signup(): void
     {
         $template_vars = [
@@ -142,11 +125,7 @@ class Controller extends AppUtils
         );
     }
 
-
-    /**
-     * @route /account/post_signup
-     * @verbs POST
-     */
+    #[Route(path: '/account/post_signup', verbs: ['POST'])]
     public function post_signup(): void
     {
         usleep(100000);
@@ -204,10 +183,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /account/verify
-     * @verbs GET
-     */
+    #[Route(path: '/account/verify', verbs: ['GET'])]
     public function verify(): void
     {
         $key = $_GET['key'] ?? '';
@@ -232,21 +208,14 @@ class Controller extends AppUtils
         header("Location: /account/signin");
     }
 
-    /**
-     * @route /account/captcha
-     * @verbs GET
-     */
+    #[Route(path: '/account/captcha', verbs: ['GET'])]
     public function captcha(): void
     {
         $captcha = new Captcha();
         $captcha->outputImage();
     }
 
-
-    /**
-     * @route /account/recover
-     * @verbs GET
-     */
+    #[Route(path: '/account/recover', verbs: ['GET'])]
     public function recover(): void
     {
         $template_vars = [
@@ -259,10 +228,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /account/post_recover
-     * @verbs POST
-     */
+    #[Route(path: '/account/post_recover', verbs: ['POST'])]
     public function post_recover(): void
     {
         $captcha = new Captcha();
@@ -300,10 +266,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /account/newpassword
-     * @verbs GET
-     */
+    #[Route(path: '/account/newpassword', verbs: ['GET'])]
     public function newpassword(): void
     {
         $key = $_GET['key'] ?? null;
@@ -319,10 +282,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /account/post_newpassword
-     * @verbs POST
-     */
+    #[Route(path: '/account/post_newpassword', verbs: ['POST'])]
     public function post_newpassword(): void
     {
         $this->csrf->validateTokenJSON();
@@ -346,10 +306,7 @@ class Controller extends AppUtils
         $this->json->renderSuccess(['redirect' => '/account/signin']);
     }
 
-    /**
-     * @route /account/terms/:document
-     * @verbs GET,POST
-     */
+    #[Route(path: '/account/terms/:document', verbs: ['GET', 'POST'])]
     public function terms($params): void
     {
         $terms_dir = '../src/Account/views/terms/';

@@ -11,6 +11,8 @@ use App\Exception\FormException;
 use App\Project\ProjectModel;
 use Exception;
 use Pebble\Exception\JSONException;
+use Pebble\Attributes\Route;
+
 
 class Controller extends AppUtils
 {
@@ -21,10 +23,7 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    /**
-     * @route /project/inactive
-     * @verbs GET
-     */
+    #[Route(path: '/project/inactive', verbs: ['GET'])]
     public function inactive()
     {
         $this->app_acl->isAuthenticatedOrThrow();
@@ -44,11 +43,7 @@ class Controller extends AppUtils
         );
     }
 
-
-    /**
-     * @route /project
-     * @verbs GET
-     */
+    #[Route(path: '/project', verbs: ['GET'])]
     public function active()
     {
         $this->app_acl->isAuthenticatedOrThrow();
@@ -68,10 +63,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /project/view/:project_id
-     * @verbs GET
-     */
+    #[Route(path: '/project/view/:project_id', verbs: ['GET'])]
     public function view(array $params)
     {
         $this->app_acl->isProjectOwner($params['project_id']);
@@ -85,10 +77,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /project/add
-     * @verbs GET
-     */
+    #[Route(path: '/project/add', verbs: ['GET'])]
     public function add()
     {
         $this->app_acl->isAuthenticatedOrThrow();
@@ -103,10 +92,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /project/edit/:project_id
-     * @verbs GET
-     */
+    #[Route(path: '/project/edit/:project_id', verbs: ['GET'])]
     public function edit($params)
     {
         $this->app_acl->isProjectOwner($params['project_id']);
@@ -123,10 +109,7 @@ class Controller extends AppUtils
         );
     }
 
-    /**
-     * @route /project/post
-     * @verbs POST
-     */
+    #[Route(path: '/project/post', verbs: ['POST'])]
     public function post()
     {
         try {
@@ -144,10 +127,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /project/put/:project_id
-     * @verbs POST
-     */
+    #[Route(path: '/project/put/:project_id', verbs: ['POST'])]
     public function put($params)
     {
         try {
@@ -166,10 +146,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /project/delete/:project_id
-     * @verbs POST
-     */
+    #[Route(path: '/project/delete/:project_id', verbs: ['POST'])]
     public function delete($params)
     {
         try {
@@ -183,10 +160,7 @@ class Controller extends AppUtils
         }
     }
 
-    /**
-     * @route /project/tasks/:project_id
-     * @verbs GET
-     */
+    #[Route(path: '/project/tasks/:project_id', verbs: ['GET'])]
     public function tasks(array $params)
     {
         try {

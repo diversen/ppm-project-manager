@@ -9,7 +9,7 @@ use Diversen\Lang;
 use Pebble\Exception\NotFoundException;
 use Pebble\Exception\JSONException;
 use Pebble\ExceptionTrace;
-
+use Pebble\Attributes\Route;
 use App\AppUtils;
 use App\Settings\SettingsModel;
 use Exception;
@@ -20,10 +20,8 @@ class Controller extends AppUtils
     {
         parent::__construct();
     }
-    /**
-     * @route /settings
-     * @verbs GET
-     */
+
+    #[Route(path: '/settings', verbs: ['GET'])]
     public function index(): void
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -36,11 +34,7 @@ class Controller extends AppUtils
         $this->renderPage('Settings/views/settings.tpl.php', $vars);
     }
 
-    /**
-     * Public route
-     * @route /user/:auth_id
-     * @verbs GET
-     */
+    #[Route(path: '/user/:auth_id', verbs: ['GET'])]
     public function user(array $params): void
     {
         if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {
@@ -53,10 +47,7 @@ class Controller extends AppUtils
         $this->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
     }
 
-    /**
-     * @route /settings/put
-     * @verbs POST
-     */
+    #[Route(path: '/settings/put', verbs: ['POST'])]
     public function put(): void
     {
         $settings = new SettingsModel();
