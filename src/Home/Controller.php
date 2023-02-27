@@ -16,7 +16,7 @@ class Controller extends AppUtils
         $this->auth_id = $this->auth->getAuthId();
     }
 
-    #[Route(path: '/', verbs: ['GET'])]
+    #[Route(path: '/')]
     public function index()
     {
         if ($this->auth_id) {

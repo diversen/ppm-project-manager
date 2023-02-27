@@ -65,13 +65,13 @@ class Controller extends AppUtils
      * @verbs GET
      */
 
-    #[Route(path: '/admin/', verbs: ['GET'])]
+    #[Route(path: '/admin/')]
     public function index()
     {
         $this->renderPage('Admin/views/index.tpl.php', ['tables' => $this->tables]);
     }
 
-    #[Route(path: '/admin/table/:table', verbs: ['GET'])]
+    #[Route(path: '/admin/table/:table')]
     public function table(array $params)
     {
 
@@ -123,7 +123,7 @@ class Controller extends AppUtils
         return $table;
     }
 
-    #[Route(path: '/admin/table/:table/edit/:id', verbs: ['GET'])]
+    #[Route(path: '/admin/table/:table/edit/:id')]
     public function edit(array $params)
     {
         $table = $this->getTableWithColumnTypes($params['table']);
@@ -141,7 +141,7 @@ class Controller extends AppUtils
         $this->renderPage('Admin/views/edit.tpl.php', $template_data);
     }
 
-    #[Route(path: '/admin/table/:table/add', verbs: ['GET'])]
+    #[Route(path: '/admin/table/:table/add')]
     public function create(array $params)
     {
         $table = $this->getTableWithColumnTypes($params['table']);
@@ -193,7 +193,7 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/admin/table/:table/view/:id', verbs: ['GET'])]
+    #[Route(path: '/admin/table/:table/view/:id')]
     public function view(array $params)
     {
         $table = $this->getTableWithColumnTypes($params['table']);

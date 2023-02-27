@@ -30,7 +30,7 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    #[Route(path: '/time/add/:task_id', verbs: ['GET'])]
+    #[Route(path: '/time/add/:task_id')]
     public function add($params)
     {
         $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);

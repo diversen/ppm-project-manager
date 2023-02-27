@@ -45,7 +45,7 @@ class Controller extends AppUtils
         return $svg_str;
     }
 
-    #[Route(path: '/twofactor/recreate', verbs: ['GET'])]
+    #[Route(path: '/twofactor/recreate')]
     public function recreate()
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -57,7 +57,7 @@ class Controller extends AppUtils
         header('Location: /twofactor/enable', true);
     }
 
-    #[Route(path: '/twofactor/enable', verbs: ['GET'])]
+    #[Route(path: '/twofactor/enable')]
     public function enable()
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -159,7 +159,7 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/twofactor/verify', verbs: ['GET'])]
+    #[Route(path: '/twofactor/verify')]
     public function verify()
     {
         $vars = ['title' => Lang::translate('Verify two factor')];

@@ -27,7 +27,7 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    #[Route(path: '/overview', verbs: ['GET'])]
+    #[Route(path: '/overview')]
     public function index()
     {
         $this->acl->isAuthenticatedOrThrow();

@@ -25,7 +25,7 @@ class Controller extends AppUtils
         parent::__construct();
     }
 
-    #[Route(path: '/account/signin', verbs: ['GET'])]
+    #[Route(path: '/account/signin')]
     public function signin(): void
     {
         $template_vars = [];
@@ -72,7 +72,7 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/account/logout', verbs: ['GET'])]
+    #[Route(path: '/account/logout')]
     public function logout(): void
     {
         $auth_id = $this->auth->getAuthId();
@@ -89,7 +89,7 @@ class Controller extends AppUtils
         header("Location: $redirect");
     }
 
-    #[Route(path: '/account/signout', verbs: ['GET'])]
+    #[Route(path: '/account/signout')]
     public function signout(): void
     {
         $this->renderPage('Account/views/signout.php', ['title' => Lang::translate('Sign out')]);
@@ -112,7 +112,7 @@ class Controller extends AppUtils
         return false;
     }
 
-    #[Route(path: '/account/signup', verbs: ['GET'])]
+    #[Route(path: '/account/signup')]
     public function signup(): void
     {
         $template_vars = [
@@ -183,7 +183,7 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/account/verify', verbs: ['GET'])]
+    #[Route(path: '/account/verify')]
     public function verify(): void
     {
         $key = $_GET['key'] ?? '';
@@ -208,14 +208,14 @@ class Controller extends AppUtils
         header("Location: /account/signin");
     }
 
-    #[Route(path: '/account/captcha', verbs: ['GET'])]
+    #[Route(path: '/account/captcha')]
     public function captcha(): void
     {
         $captcha = new Captcha();
         $captcha->outputImage();
     }
 
-    #[Route(path: '/account/recover', verbs: ['GET'])]
+    #[Route(path: '/account/recover')]
     public function recover(): void
     {
         $template_vars = [
@@ -266,7 +266,7 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/account/newpassword', verbs: ['GET'])]
+    #[Route(path: '/account/newpassword')]
     public function newpassword(): void
     {
         $key = $_GET['key'] ?? null;

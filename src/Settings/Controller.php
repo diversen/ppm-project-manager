@@ -21,7 +21,7 @@ class Controller extends AppUtils
         parent::__construct();
     }
 
-    #[Route(path: '/settings', verbs: ['GET'])]
+    #[Route(path: '/settings')]
     public function index(): void
     {
         $this->acl->isAuthenticatedOrThrow();
@@ -34,7 +34,7 @@ class Controller extends AppUtils
         $this->renderPage('Settings/views/settings.tpl.php', $vars);
     }
 
-    #[Route(path: '/user/:auth_id', verbs: ['GET'])]
+    #[Route(path: '/user/:auth_id')]
     public function user(array $params): void
     {
         if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {

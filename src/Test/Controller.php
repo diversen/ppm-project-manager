@@ -20,25 +20,25 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/worker', verbs: ['GET'])]
+    #[Route(path: '/worker')]
     public function worker()
     {
         $this->renderPage('Test/worker.tpl.php');
     }
 
-    #[Route(path: '/translate', verbs: ['GET'])]
+    #[Route(path: '/translate')]
     public function translate()
     {
         $this->template->render('Test/translate.tpl.php');
     }
 
-    #[Route(path: '/test/template/exception', verbs: ['GET'])]
+    #[Route(path: '/test/template/exception')]
     public function templateException()
     {
         $this->template->render('Test/template_exception.tpl.php');
     }
 
-    #[Route(path: '/test', verbs: ['GET'])]
+    #[Route(path: '/test')]
     public function test()
     {
         $move_tasks = new MoveTasks();

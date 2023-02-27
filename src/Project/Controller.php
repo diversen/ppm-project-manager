@@ -23,7 +23,7 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    #[Route(path: '/project/inactive', verbs: ['GET'])]
+    #[Route(path: '/project/inactive')]
     public function inactive()
     {
         $this->app_acl->isAuthenticatedOrThrow();
@@ -43,7 +43,7 @@ class Controller extends AppUtils
         );
     }
 
-    #[Route(path: '/project', verbs: ['GET'])]
+    #[Route(path: '/project')]
     public function active()
     {
         $this->app_acl->isAuthenticatedOrThrow();
@@ -63,7 +63,7 @@ class Controller extends AppUtils
         );
     }
 
-    #[Route(path: '/project/view/:project_id', verbs: ['GET'])]
+    #[Route(path: '/project/view/:project_id')]
     public function view(array $params)
     {
         $this->app_acl->isProjectOwner($params['project_id']);
@@ -77,7 +77,7 @@ class Controller extends AppUtils
         );
     }
 
-    #[Route(path: '/project/add', verbs: ['GET'])]
+    #[Route(path: '/project/add')]
     public function add()
     {
         $this->app_acl->isAuthenticatedOrThrow();
@@ -92,7 +92,7 @@ class Controller extends AppUtils
         );
     }
 
-    #[Route(path: '/project/edit/:project_id', verbs: ['GET'])]
+    #[Route(path: '/project/edit/:project_id')]
     public function edit($params)
     {
         $this->app_acl->isProjectOwner($params['project_id']);
@@ -160,7 +160,7 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/project/tasks/:project_id', verbs: ['GET'])]
+    #[Route(path: '/project/tasks/:project_id')]
     public function tasks(array $params)
     {
         try {

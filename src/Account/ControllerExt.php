@@ -20,7 +20,7 @@ class ControllerExt extends Controller
         parent::__construct();
     }
 
-    #[Route(path: '/account/signin', verbs: ['GET'])]
+    #[Route(path: '/account/signin')]
     public function signin(): void
     {
         if ($this->config->get('Account.google')) {

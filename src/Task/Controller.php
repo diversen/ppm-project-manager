@@ -27,7 +27,7 @@ class Controller extends AppUtils
         $this->task_model = new TaskModel();
     }
 
-    #[Route(path: '/task/add/:project_id', verbs: ['GET'])]
+    #[Route(path: '/task/add/:project_id')]
     public function add(array $params)
     {
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
@@ -49,7 +49,7 @@ class Controller extends AppUtils
         );
     }
 
-    #[Route(path: '/task/edit/:task_id', verbs: ['GET'])]
+    #[Route(path: '/task/edit/:task_id')]
     public function edit($params)
     {
         $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
@@ -68,7 +68,7 @@ class Controller extends AppUtils
         );
     }
 
-    #[Route(path: '/task/view/:task_id', verbs: ['GET'])]
+    #[Route(path: '/task/view/:task_id')]
     public function view($params)
     {
         $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);

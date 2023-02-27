@@ -23,7 +23,7 @@ class Controller extends AppUtils
     }
 
 
-    #[Route(path: '/google/signout', verbs: ['GET'])]
+    #[Route(path: '/google/signout')]
     public function signout(): void
     {
         $this->auth->unlinkCurrentCookie();
@@ -31,7 +31,7 @@ class Controller extends AppUtils
         header($location);
     }
 
-    #[Route(path: '/google', verbs: ['GET'])]
+    #[Route(path: '/google')]
     public function index(): void
     {
         if ($this->auth->isAuthenticated()) {
