@@ -181,9 +181,8 @@ class ProjectModel extends AppUtils
     /**
      * Get tasks data ['tasks' => $tasks, 'more' => '/links/ot/more/tasks]
      */
-    public function getTasksData(array $params): array
+    public function getTasksData(string $project_id): array
     {
-        $project_id = $params['project_id'];
         $status = URL::getQueryPart('status');
         $where['project_id'] = $project_id;
         if (isset($status)) {
