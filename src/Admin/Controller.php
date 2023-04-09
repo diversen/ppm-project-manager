@@ -12,6 +12,7 @@ use App\Admin\TableUtils as DBUtils;
 use Pebble\Exception\JSONException;
 use Exception;
 use Pebble\Attributes\Route;
+use Pebble\Router\Request;
 
 class Controller extends AppUtils
 {
@@ -72,11 +73,10 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/admin/table/:table')]
-    public function table(array $params)
+    public function table(Request $request)
     {
-
         // Get table definition
-        $table = $this->tables[$params['table']];
+        $table = $this->tables[$request->param('table')];
         $table_name = $table['table'];
         $primary_key = $table['primary_key'];
 
@@ -124,14 +124,14 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/admin/table/:table/edit/:id')]
-    public function edit(array $params)
+    public function edit(Request $request)
     {
-        $table = $this->getTableWithColumnTypes($params['table']);
+        $table = $this->getTableWithColumnTypes($request->param('table'));
         $table_name = $table['table'];
         $primary_key = $table['primary_key'];
 
-        $row = $this->db->getOne($table_name, [$primary_key => $params['id']]);
-        $error = $this->validateRow($row, $table_name, $params['id']);
+        $row = $this->db->getOne($table_name, [$primary_key => $request->param('id')]);
+        $error = $this->validateRow($row, $table_name, $request->param('id'));
         $template_data = [
             'table' => $table,
             'row' => $row,
@@ -142,9 +142,9 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/admin/table/:table/add')]
-    public function create(array $params)
+    public function create(Request $request)
     {
-        $table = $this->getTableWithColumnTypes($params['table']);
+        $table = $this->getTableWithColumnTypes($request->param('table'));
         $template_data = [
             'table' => $table,
             'error' => null,
@@ -154,10 +154,10 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/admin/table/:table/put/:id', verbs: ['POST'])]
-    public function put(array $params)
+    public function put(Request $request)
     {
         $response['error'] = true;
-        $table = $this->getTableWithColumnTypes($params['table']);
+        $table = $this->getTableWithColumnTypes($request->param('table'));
         foreach ($table['columns_type'] as $column => $type) {
             if ($type === 'tinyint' && !isset($_POST[$column])) {
                 $_POST[$column] = '0';
@@ -168,7 +168,7 @@ class Controller extends AppUtils
         $primary_key = $table['primary_key'];
 
         try {
-            $this->db->update($table_name, $_POST, [$primary_key => $params['id']]);
+            $this->db->update($table_name, $_POST, [$primary_key => $request->param('id')]);
             $response['message'] = 'Row updated';
             $this->json->renderSuccess($response);
         } catch (Exception $e) {
@@ -177,15 +177,15 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/admin/table/:table/delete/:id', verbs: ['POST'])]
-    public function delete(array $params)
+    public function delete(Request $request)
     {
         $response['error'] = true;
-        $table = $this->getTableWithColumnTypes($params['table']);
+        $table = $this->getTableWithColumnTypes($request->param('table'));
         $table_name = $table['table'];
         $primary_key = $table['primary_key'];
 
         try {
-            $this->db->delete($table_name, [$primary_key => $params['id']]);
+            $this->db->delete($table_name, [$primary_key => $request->param('id')]);
             $this->flash->setMessage('Row deleted', 'success', ['flash_remove' => true]);
             $this->json->renderSuccess();
         } catch (Exception $e) {
@@ -194,14 +194,14 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/admin/table/:table/view/:id')]
-    public function view(array $params)
+    public function view(Request $request)
     {
-        $table = $this->getTableWithColumnTypes($params['table']);
+        $table = $this->getTableWithColumnTypes($request->param('table'));
         $table_name = $table['table'];
         $primary_key = $table['primary_key'];
 
-        $row = $this->db->getOne($table_name, [$primary_key => $params['id']]);
-        $error = $this->validateRow($row, $table_name, $params['id']);
+        $row = $this->db->getOne($table_name, [$primary_key => $request->param('id')]);
+        $error = $this->validateRow($row, $table_name, $request->param('id'));
 
         $template_data = [
             'table' => $table,

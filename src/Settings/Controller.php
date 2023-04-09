@@ -10,6 +10,7 @@ use Pebble\Exception\NotFoundException;
 use Pebble\Exception\JSONException;
 use Pebble\ExceptionTrace;
 use Pebble\Attributes\Route;
+use Pebble\Router\Request;
 use App\AppUtils;
 use App\Settings\SettingsModel;
 use Exception;
@@ -35,14 +36,14 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/user/:auth_id')]
-    public function user(array $params): void
+    public function user(Request $request): void
     {
-        if (!filter_var($params['auth_id'], FILTER_VALIDATE_INT)) {
+        if (!filter_var($request->param('auth_id'), FILTER_VALIDATE_INT)) {
             throw new NotFoundException();
         }
 
         $settings = new SettingsModel();
-        $user = $settings->getUserSetting((int)$params['auth_id'], 'profile');
+        $user = $settings->getUserSetting((int)$request->param('auth_id'), 'profile');
 
         $this->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
     }

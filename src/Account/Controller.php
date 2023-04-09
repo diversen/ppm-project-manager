@@ -17,6 +17,7 @@ use Exception;
 use Parsedown;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
+use Pebble\Router\Request;
 
 class Controller extends AppUtils
 {
@@ -307,16 +308,16 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/account/terms/:document', verbs: ['GET', 'POST'])]
-    public function terms($params): void
+    public function terms(Request $request): void
     {
         $terms_dir = '../src/Account/views/terms/';
         $allowed_files = File::dirToArray($terms_dir);
 
-        if (!in_array($params['document'] . '.php', $allowed_files)) {
+        if (!in_array($request->param('document') . '.php', $allowed_files)) {
             throw new NotFoundException(Lang::translate('Page not found'));
         }
 
-        $markdown_file = '../src/Account/views/terms/' . $params['document'] . '.php';
+        $markdown_file = '../src/Account/views/terms/' . $request->param('document') . '.php';
         $markdown_text = file_get_contents($markdown_file);
 
         $data['server_url'] = $this->config->get('App.server_url');

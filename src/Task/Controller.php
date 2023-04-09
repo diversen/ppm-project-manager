@@ -12,7 +12,7 @@ use App\Exception\FormException;
 use Diversen\Lang;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
-
+use Pebble\Router\Request;
 use Exception;
 
 class Controller extends AppUtils
@@ -28,18 +28,18 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/task/add/:project_id')]
-    public function add(array $params)
+    public function add(Request $request)
     {
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
         $template_vars = ['task' => $task];
 
-        if ($params['project_id'] === 'project-unknown') {
+        if ($request->param('project_id') === 'project-unknown') {
             $this->app_acl->isAuthenticatedOrThrow();
             $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()], ['title' => 'ASC']);
             $template_vars['project'] = null;
         } else {
-            $this->app_acl->isProjectOwner($params['project_id']);
-            $project = $this->project_model->getOne(['id' => $params['project_id']]);
+            $this->app_acl->isProjectOwner($request->param('project_id'));
+            $project = $this->project_model->getOne(['id' => $request->param('project_id')]);
             $template_vars['project'] = $project;
         }
 
@@ -50,9 +50,9 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/task/edit/:task_id')]
-    public function edit($params)
+    public function edit(Request $request)
     {
-        $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
+        $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
         $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['title' => 'ASC']);
 
@@ -69,9 +69,9 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/task/view/:task_id')]
-    public function view($params)
+    public function view(Request $request)
     {
-        $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
+        $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
         $template_vars = [
@@ -116,10 +116,10 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/task/put/:task_id', verbs: ['POST'])]
-    public function put($params)
+    public function put(Request $request)
     {
         try {
-            $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
+            $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
 
             // 'now' updates a tasks begin_date to 'today'
             // Used on overview page
@@ -132,7 +132,7 @@ class Controller extends AppUtils
 
             // Is a new project chosen for the task
             $this->app_acl->isProjectOwner($_POST['project_id']);
-            $this->task_model->update($_POST, ['id' => $params['task_id']]);
+            $this->task_model->update($_POST, ['id' => $request->param('task_id')]);
             $this->flash->setMessage(Lang::translate('Task updated'), 'success', ['flash_remove' => true]);
 
             $response['redirect'] = "/project/view/" . $task['project_id'];
@@ -161,11 +161,11 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/task/delete/:task_id', verbs: ['POST'])]
-    public function delete($params)
+    public function delete(Request $request)
     {
         try {
-            $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
-            $this->task_model->delete($params['task_id']);
+            $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
+            $this->task_model->delete($request->param('task_id'));
             $this->flash->setMessage(Lang::translate('Task deleted'), 'success', ['flash_remove' => true]);
             $response['redirect'] = "/project/view/" . $task['project_id'];
             $this->json->renderSuccess($response);

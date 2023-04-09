@@ -14,6 +14,7 @@ use Pebble\ExceptionTrace;
 use Pebble\Exception\JSONException;
 use Diversen\Lang;
 use Pebble\Attributes\Route;
+use Pebble\Router\Request;
 
 class Controller extends AppUtils
 {
@@ -31,9 +32,9 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/time/add/:task_id')]
-    public function add($params)
+    public function add(Request $request)
     {
-        $task = $this->app_acl->isProjectOwnerGetTask($params['task_id']);
+        $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
         $where = ['task_id' => $task['id']];
@@ -89,11 +90,11 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/time/delete/:id', verbs: ['POST'])]
-    public function delete($params)
+    public function delete(Request $request)
     {
         try {
-            $this->app_acl->isProjectOwnerGetTime($params['id']);
-            $this->time_model->delete(['id' => $params['id']]);
+            $this->app_acl->isProjectOwnerGetTime($request->param('id'));
+            $this->time_model->delete(['id' => $request->param('id')]);
             $this->flash->setMessage(Lang::translate('Time deleted'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess();
         } catch (Exception $e) {

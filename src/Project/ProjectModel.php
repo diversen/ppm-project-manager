@@ -154,16 +154,16 @@ class ProjectModel extends AppUtils
     /**
      * Get project data for '/project/view/:id'
      */
-    public function getViewData($params)
+    public function getViewData($project_id)
     {
-        $project = $this->getOne(['id' => $params['project_id']]);
+        $project = $this->getOne(['id' => $project_id]);
         $tasks = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
         $tasks_count = $this->task_model->getNumRows(['project_id' => $project['id'], 'status' => TaskModel::TASK_OPEN]);
         $tasks_completed = $this->task_model->getAll(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
         $tasks_completed_count = $this->task_model->getNumRows(['project_id' => $project['id'], 'status' => TaskModel::TASK_CLOSED]);
 
         $time_model = new TimeModel();
-        $total = $time_model->sumTime(['project_id' => $params['project_id']]);
+        $total = $time_model->sumTime(['project_id' => $project_id]);
         $total_time = $time_model->minutesToHoursMinutes($total);
 
         $data = [

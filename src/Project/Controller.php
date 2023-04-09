@@ -12,7 +12,7 @@ use App\Project\ProjectModel;
 use Exception;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
-
+use Pebble\Router\Request;
 
 class Controller extends AppUtils
 {
@@ -24,7 +24,7 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/project/inactive')]
-    public function inactive()
+    public function inactive(Request $request)
     {
         $this->app_acl->isAuthenticatedOrThrow();
 
@@ -64,11 +64,11 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/project/view/:project_id')]
-    public function view(array $params)
+    public function view(Request $request)
     {
-        $this->app_acl->isProjectOwner($params['project_id']);
+        $this->app_acl->isProjectOwner($request->param('project_id'));
 
-        $template_data = $this->project_model->getViewData($params);
+        $template_data = $this->project_model->getViewData($request->param('project_id'));
         $template_data['title'] = Lang::translate('View project');
 
         $this->renderPage(
@@ -93,10 +93,10 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/project/edit/:project_id')]
-    public function edit($params)
+    public function edit(Request $request)
     {
-        $this->app_acl->isProjectOwner($params['project_id']);
-        $project = $this->project_model->getOne(['id' => $params['project_id']]);
+        $this->app_acl->isProjectOwner($request->param('project_id'));
+        $project = $this->project_model->getOne(['id' => $request->param('project_id')]);
 
         $form_vars = [
             'title' => Lang::translate('Edit project'),
@@ -128,14 +128,14 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/project/put/:project_id', verbs: ['POST'])]
-    public function put($params)
+    public function put(Request $request)
     {
         try {
             if (!isset($_POST['status'])) {
                 $_POST['status'] = ProjectModel::PROJECT_CLOSED;
             }
-            $this->app_acl->isProjectOwner($params['project_id']);
-            $this->project_model->update($_POST, $params['project_id']);
+            $this->app_acl->isProjectOwner($request->param('project_id'));
+            $this->project_model->update($_POST, $request->param('project_id'));
             $this->flash->setMessage(Lang::translate('Project updated'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess(['redirect' => '/project']);
         } catch (FormException $e) {
@@ -147,11 +147,11 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/project/delete/:project_id', verbs: ['POST'])]
-    public function delete($params)
+    public function delete(Request $request)
     {
         try {
-            $this->app_acl->isProjectOwner($params['project_id']);
-            $this->project_model->delete($params['project_id']);
+            $this->app_acl->isProjectOwner($request->param('project_id'));
+            $this->project_model->delete($request->param('project_id'));
             $this->flash->setMessage(Lang::translate('Project deleted'), 'success', ['flash_remove' => true]);
             $this->json->renderSuccess(['redirect' => '/project']);
         } catch (Exception $e) {
@@ -161,11 +161,11 @@ class Controller extends AppUtils
     }
 
     #[Route(path: '/project/tasks/:project_id')]
-    public function tasks(array $params)
+    public function tasks(Request $request)
     {
         try {
-            $this->app_acl->isProjectOwner($params['project_id']);
-            $data = $this->project_model->getTasksData($params);
+            $this->app_acl->isProjectOwner($request->param('project_id'));
+            $data = $this->project_model->getTasksData($request->param('project_id'));
         } catch (Exception $e) {
             $this->log->error('Project.tasks.exception', ['exception' => ExceptionTrace::get($e)]);
             $data['error'] = $e->getMessage();

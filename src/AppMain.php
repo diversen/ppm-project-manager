@@ -43,7 +43,7 @@ class AppMain extends AppUtils
 
         (new SetupIntl())->setupIntl();
 
-        $router = new Router(new ParseAttributes());
+        $router = new Router();
 
         $router->setFasterRouter();
         $router->addClass(\App\Test\Controller::class);
