@@ -15,6 +15,7 @@ const Translation =
     "Forgotten password": "Passwort vergessen",
     "No such email in our system": "Keine solche E-Mail in unserem System",
     "The image text does not match your submission": "Der Bildtext stimmt nicht mit Ihrer Einreichung \u00fcberein",
+    "You have already requested a recovery email. Please wait one hour before requesting a new one. Please check your spam folder.": "Sie haben bereits eine Wiederherstellungs-E-Mail angefordert. Bitte warten Sie eine Stunde, bevor Sie eine neue anfordern. Bitte \u00fcberpr\u00fcfen Sie Ihren Spam-Ordner.",
     "A notification email has been sent with instructions to create a new password": "Es wurde eine Benachrichtigungs-E-Mail mit Anweisungen zum Erstellen eines neuen Passworts gesendet",
     "E-mail could not be sent. Try again later.": "E-Mail konnte nicht gesendet werden. Versuchen Sie es sp\u00e4ter noch einmal.",
     "New password": "Neues Kennwort",

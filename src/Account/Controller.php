@@ -21,6 +21,8 @@ use Pebble\Router\Request;
 
 class Controller extends AppUtils
 {
+    const RECOVERY_TIME_OUT = 3600;
+
     public function __construct()
     {
         parent::__construct();
@@ -229,20 +231,43 @@ class Controller extends AppUtils
         );
     }
 
+    private function shouldSendRecoveryEmail(string $email)
+    {
+        $exists = $this->db_cache->get($email . '_recovery', self::RECOVERY_TIME_OUT);
+        if (!$exists) {
+            return true;
+        }
+        return false;
+    }
+
+    private function setRecoveryEmailSent(string $email)
+    {
+        return $this->db_cache->set($email . '_recovery', true);
+    }
+
+
     #[Route(path: '/account/post_recover', verbs: ['POST'])]
     public function post_recover(): void
     {
+        $email = $_POST['email'];
+
         $captcha = new Captcha();
 
         $this->csrf->validateTokenJSON();
 
-        $row = $this->auth->getByWhere(['email' => $_POST['email']]);
+        $row = $this->auth->getByWhere(['email' => $email]);
         if (empty($row)) {
             throw new JSONException(Lang::translate('No such email in our system'));
         }
 
         if (!$captcha->validate($_POST['captcha'])) {
             throw new JSONException(Lang::translate('The image text does not match your submission'));
+        }
+
+        if (!$this->shouldSendRecoveryEmail($email)) {
+            throw new JSONException(
+                Lang::translate('You have already requested a recovery email. Please wait one hour before requesting a new one. Please check your spam folder.')
+            );
         }
 
         $mail = new mail();
@@ -255,6 +280,7 @@ class Controller extends AppUtils
         }
 
         if ($mail_success) {
+            $this->setRecoveryEmailSent($email);
             $this->log->info('Account.post_recover.success', ['auth_id' => $row['id']]);
             $this->flash->setMessage(
                 Lang::translate('A notification email has been sent with instructions to create a new password'),

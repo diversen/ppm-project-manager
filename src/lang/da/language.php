@@ -16,6 +16,7 @@ $LANG['The key supplied has already been used'] = 'Den medfølgende nøgle er al
 $LANG['Forgotten password'] = 'Glemt adgangskode';
 $LANG['No such email in our system'] = 'Ingen sådan e-mail i vores system';
 $LANG['The image text does not match your submission'] = 'Billedteksten matcher ikke din indsendelse';
+$LANG['You have already requested a recovery email. Please wait one hour before requesting a new one. Please check your spam folder.'] = 'Du har allerede anmodet om en gendannelses-e-mail. Vent venligst en time, før du anmoder om en ny. Tjek venligst din spam-mappe.';
 $LANG['A notification email has been sent with instructions to create a new password'] = 'Der er sendt en e-mail med instruktioner om at oprette en ny adgangskode';
 $LANG['E-mail could not be sent. Try again later.'] = 'E-mail kunne ikke sendes. Prøv igen senere.';
 $LANG['New password'] = 'Ny adgangskode';

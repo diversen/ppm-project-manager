@@ -16,6 +16,7 @@ $LANG['The key supplied has already been used'] = 'Der mitgelieferte Schlüssel 
 $LANG['Forgotten password'] = 'Passwort vergessen';
 $LANG['No such email in our system'] = 'Keine solche E-Mail in unserem System';
 $LANG['The image text does not match your submission'] = 'Der Bildtext stimmt nicht mit Ihrer Einreichung überein';
+$LANG['You have already requested a recovery email. Please wait one hour before requesting a new one. Please check your spam folder.'] = 'Sie haben bereits eine Wiederherstellungs-E-Mail angefordert. Bitte warten Sie eine Stunde, bevor Sie eine neue anfordern. Bitte überprüfen Sie Ihren Spam-Ordner.';
 $LANG['A notification email has been sent with instructions to create a new password'] = 'Es wurde eine Benachrichtigungs-E-Mail mit Anweisungen zum Erstellen eines neuen Passworts gesendet';
 $LANG['E-mail could not be sent. Try again later.'] = 'E-Mail konnte nicht gesendet werden. Versuchen Sie es später noch einmal.';
 $LANG['New password'] = 'Neues Kennwort';
