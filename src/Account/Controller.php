@@ -34,13 +34,13 @@ class Controller extends AppUtils
         $template_vars = [];
         if ($this->auth->isAuthenticated()) {
             $template_vars['title'] = Lang::translate('Sign out');
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'Account/views/signout.php',
                 $template_vars
             );
         } else {
             $template_vars['title'] = Lang::translate('Sign in');
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'Account/views/signin.php',
                 $template_vars
             );
@@ -95,7 +95,7 @@ class Controller extends AppUtils
     #[Route(path: '/account/signout')]
     public function signout(): void
     {
-        $this->renderPage('Account/views/signout.php', ['title' => Lang::translate('Sign out')]);
+        $this->template_utils->renderPage('Account/views/signout.php', ['title' => Lang::translate('Sign out')]);
     }
 
     /**
@@ -122,7 +122,7 @@ class Controller extends AppUtils
             'title' => Lang::translate('Email sign up'),
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Account/views/signup.php',
             $template_vars
         );
@@ -225,7 +225,7 @@ class Controller extends AppUtils
             'title' => Lang::translate('Forgotten password'),
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Account/views/recover.php',
             $template_vars
         );
@@ -303,7 +303,7 @@ class Controller extends AppUtils
             'key' => $key
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Account/views/newpassword.php',
             $template_vars
         );
@@ -359,6 +359,6 @@ class Controller extends AppUtils
         $parsedown->setSafeMode(false);
         $data['note_markdown'] = $parsedown->text($markdown_text);
 
-        $this->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
+        $this->template_utils->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
     }
 }

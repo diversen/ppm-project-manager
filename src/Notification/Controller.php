@@ -17,6 +17,6 @@ class Controller extends AppUtils
     #[Route(path: '/notification', verbs: ['GET'])]
     public function notificaton()
     {
-        $this->renderPage('Notification/notification.tpl.php');
+        $this->template_utils->renderPage('Notification/notification.tpl.php');
     }
 }

@@ -24,6 +24,6 @@ class Controller extends AppUtils
         }
 
         $data = ['title' => 'PPM'];
-        $this->renderPage('Home/views/home.tpl.php', $data);
+        $this->template_utils->renderPage('Home/views/home.tpl.php', $data);
     }
 }

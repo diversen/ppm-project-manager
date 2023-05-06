@@ -78,8 +78,6 @@ $lang = $data_container->getData('lang') ?? 'en';
 
         $template_utils->renderFlashMessages();
 
-
-
         ?>
 
         <?=$data_container->getData('content')?>

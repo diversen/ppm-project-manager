@@ -37,7 +37,7 @@ class Controller extends AppUtils
         $template_data['title'] = Lang::translate('All inactive projects');
         $template_data['num_projects_open'] = $this->project_model->getNumProjectsOpen();
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Project/views/index.tpl.php',
             $template_data
         );
@@ -57,7 +57,7 @@ class Controller extends AppUtils
         $template_data['title'] = Lang::translate('All active projects');
         $template_data['num_projects_closed'] = $this->project_model->getNumProjectsClosed();
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Project/views/index.tpl.php',
             $template_data
         );
@@ -71,7 +71,7 @@ class Controller extends AppUtils
         $template_data = $this->project_model->getViewData($request->param('project_id'));
         $template_data['title'] = Lang::translate('View project');
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Project/views/view.tpl.php',
             $template_data
         );
@@ -86,7 +86,7 @@ class Controller extends AppUtils
             'title' => Lang::translate('Add project'),
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Project/views/add.tpl.php',
             $form_vars
         );
@@ -103,7 +103,7 @@ class Controller extends AppUtils
             'project' => $project,
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Project/views/edit.tpl.php',
             $form_vars
         );

@@ -77,7 +77,7 @@ class TemplateUtils extends StdUtils
     }
 
     /**
-     * Render a template as HTML including a header and footer
+     * Render a template as HTML
      */
     public function renderPage(string $template_path, array $data = [], $options = [])
     {

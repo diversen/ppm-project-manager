@@ -69,7 +69,7 @@ class Controller extends AppUtils
     #[Route(path: '/admin/')]
     public function index()
     {
-        $this->renderPage('Admin/views/index.tpl.php', ['tables' => $this->tables]);
+        $this->template_utils->renderPage('Admin/views/index.tpl.php', ['tables' => $this->tables]);
     }
 
     #[Route(path: '/admin/table/:table')]
@@ -106,7 +106,7 @@ class Controller extends AppUtils
             'title' => 'Admin :: ' . $table['table_human'],
         ];
 
-        $this->renderPage('Admin/views/table.tpl.php', $template_data);
+        $this->template_utils->renderPage('Admin/views/table.tpl.php', $template_data);
     }
 
 
@@ -138,7 +138,7 @@ class Controller extends AppUtils
             'error' => $error,
         ];
 
-        $this->renderPage('Admin/views/edit.tpl.php', $template_data);
+        $this->template_utils->renderPage('Admin/views/edit.tpl.php', $template_data);
     }
 
     #[Route(path: '/admin/table/:table/add')]
@@ -150,7 +150,7 @@ class Controller extends AppUtils
             'error' => null,
         ];
 
-        $this->renderPage('Admin/views/add.tpl.php', $template_data);
+        $this->template_utils->renderPage('Admin/views/add.tpl.php', $template_data);
     }
 
     #[Route(path: '/admin/table/:table/put/:id', verbs: ['POST'])]
@@ -209,7 +209,7 @@ class Controller extends AppUtils
             'error' => $error,
         ];
 
-        $this->renderPage('Admin/views/view.tpl.php', $template_data);
+        $this->template_utils->renderPage('Admin/views/view.tpl.php', $template_data);
     }
 
     /**

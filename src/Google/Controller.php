@@ -36,7 +36,7 @@ class Controller extends AppUtils
     {
         if ($this->auth->isAuthenticated()) {
             $vars = [];
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'Google/sign_out.tpl.php',
                 $vars
             );
@@ -68,7 +68,7 @@ class Controller extends AppUtils
         } else {
             $authUrl = $client->createAuthUrl();
             $vars = ['auth_url' => $authUrl];
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'Google/sign_in.tpl.php',
                 $vars,
                 ['raw' => true]

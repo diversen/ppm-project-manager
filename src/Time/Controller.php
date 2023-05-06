@@ -60,7 +60,7 @@ class Controller extends AppUtils
             'paginator' => $paginator,
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Time/views/add.tpl.php',
             $time_vars
         );

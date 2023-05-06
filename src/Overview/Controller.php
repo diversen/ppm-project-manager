@@ -65,7 +65,7 @@ class Controller extends AppUtils
             'has_projects' => $this->project_model->userHasProjects($this->auth_id),
         ];
 
-        $this->renderPage('Overview/overview.tpl.php', $template_data);
+        $this->template_utils->renderPage('Overview/overview.tpl.php', $template_data);
     }
 
     #[Route(path: '/overview/settings/put', verbs: ['POST'])]

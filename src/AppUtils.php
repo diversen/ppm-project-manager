@@ -44,12 +44,4 @@ class AppUtils extends StdUtils
         }
         return $container->get('app_acl');
     }
-
-    /**
-     * Render a template as HTML including a header and footer
-     */
-    public function renderPage(string $template_path, array $data = [], $options = [])
-    {
-        $this->template_utils->renderPage($template_path, $data, $options);
-    }
 }

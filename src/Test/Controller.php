@@ -23,7 +23,7 @@ class Controller extends AppUtils
     #[Route(path: '/worker')]
     public function worker()
     {
-        $this->renderPage('Test/worker.tpl.php');
+        $this->template_utils->renderPage('Test/worker.tpl.php');
     }
 
     #[Route(path: '/translate')]

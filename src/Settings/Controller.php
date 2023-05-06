@@ -32,7 +32,7 @@ class Controller extends AppUtils
 
         $vars['user_settings'] = $user_settings;
 
-        $this->renderPage('Settings/views/settings.tpl.php', $vars);
+        $this->template_utils->renderPage('Settings/views/settings.tpl.php', $vars);
     }
 
     #[Route(path: '/user/:auth_id')]
@@ -45,7 +45,7 @@ class Controller extends AppUtils
         $settings = new SettingsModel();
         $user = $settings->getUserSetting((int)$request->param('auth_id'), 'profile');
 
-        $this->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
+        $this->template_utils->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
     }
 
     #[Route(path: '/settings/put', verbs: ['POST'])]

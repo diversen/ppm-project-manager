@@ -83,7 +83,7 @@ class Controller extends AppUtils
                 'title' => Lang::translate('Enable two factor')
             ];
 
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'TwoFactor/views/enable.tpl.php',
                 $vars,
                 ['raw' => true]
@@ -93,7 +93,7 @@ class Controller extends AppUtils
                 'enabled' => true,
                 'title' => Lang::translate('Two factor is enabled'),
             ];
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'TwoFactor/views/is_enabled.tpl.php',
                 $vars
             );
@@ -163,7 +163,7 @@ class Controller extends AppUtils
     public function verify()
     {
         $vars = ['title' => Lang::translate('Verify two factor')];
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'TwoFactor/views/verify.tpl.php',
             $vars
         );

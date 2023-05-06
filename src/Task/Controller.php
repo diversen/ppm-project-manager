@@ -43,7 +43,7 @@ class Controller extends AppUtils
             $template_vars['project'] = $project;
         }
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Task/views/task_add.tpl.php',
             $template_vars
         );
@@ -62,7 +62,7 @@ class Controller extends AppUtils
             'all_projects' => $projects,
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Task/views/task_edit.tpl.php',
             $template_vars
         );
@@ -79,7 +79,7 @@ class Controller extends AppUtils
             'project' => $project
         ];
 
-        $this->renderPage(
+        $this->template_utils->renderPage(
             'Task/views/task_view.tpl.php',
             $template_vars
         );

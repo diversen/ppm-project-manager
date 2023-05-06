@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use Pebble\Router;
-use Pebble\Router\ParseAttributes;
 use App\Settings\SetupIntl;
 use App\AppUtils;
 

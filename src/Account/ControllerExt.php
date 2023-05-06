@@ -32,7 +32,7 @@ class ControllerExt extends Controller
 
         $template_vars = ['title' => Lang::translate('Sign out')];
         if ($this->auth->isAuthenticated()) {
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'Account/views/signout.php',
                 $template_vars,
             );
@@ -42,7 +42,7 @@ class ControllerExt extends Controller
                 'title' => Lang::translate('Sign in'),
             ];
 
-            $this->renderPage(
+            $this->template_utils->renderPage(
                 'Account/views/signin_ext.php',
                 $template_vars
             );
