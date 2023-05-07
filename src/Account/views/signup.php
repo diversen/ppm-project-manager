@@ -7,6 +7,14 @@ use App\AppUtils;
 ?>
 <h3 class="sub-menu"><?= Lang::translate('Email sign up') ?></h3>
 
+<p><?=Lang::translate('By signing up you agree to the following terms of service, privacy policy, and disclaimer')?></p>
+<div class="action-links">
+    <a href="/account/terms/terms-of-service"><?=Lang::translate('Terms of service')?></a>
+    <a href="/account/terms/privacy-policy"><?=Lang::translate('Privacy policy')?></a>
+    <a href="/account/terms/disclaimer"><?=Lang::translate('Disclaimer')?></a>
+</div>
+<div class="clear"></div>
+
 <form id="signup-form">
     
     <?=(new AppUtils())->getCSRF()->getCSRFFormField()?>
