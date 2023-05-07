@@ -119,6 +119,10 @@ $LANG['Sign out of all devices'] = 'Sign out of all devices';
 // Translation of file src/Account/views/signup.php
 
 $LANG['Email sign up'] = 'Email sign up';
+$LANG['By signing up you agree to the following terms of service, privacy policy, and disclaimer'] = 'By signing up you agree to the following terms of service, privacy policy, and disclaimer';
+$LANG['Terms of service'] = 'Terms of service';
+$LANG['Privacy policy'] = 'Privacy policy';
+$LANG['Disclaimer'] = 'Disclaimer';
 $LANG['E-mail'] = 'E-mail';
 $LANG['Password'] = 'Password';
 $LANG['Repeat password'] = 'Repeat password';

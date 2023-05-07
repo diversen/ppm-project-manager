@@ -52,6 +52,7 @@ const Translation =
     "Password": "Passwort",
     "Keep me signed in": "Ich möchte angemeldet bleiben",
     "Sign out of all devices": "Melden Sie sich von allen Geräten ab",
+    "By signing up you agree to the following terms of service, privacy policy, and disclaimer": "Durch die Anmeldung stimmen Sie den folgenden Nutzungsbedingungen, Datenschutzrichtlinien und Haftungsausschlüssen zu",
     "Repeat password": "Passwort wiederholen",
     "Update": "Aktualisieren",
     "Delete": "Löschen",

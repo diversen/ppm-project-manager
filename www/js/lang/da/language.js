@@ -52,6 +52,7 @@ const Translation =
     "Password": "Adgangskode",
     "Keep me signed in": "Hold mig logget ind",
     "Sign out of all devices": "Log ud af alle enheder",
+    "By signing up you agree to the following terms of service, privacy policy, and disclaimer": "Ved at tilmelde dig accepterer du følgende servicevilkår, privatlivspolitik og ansvarsfraskrivelse",
     "Repeat password": "Gentag adgangskode",
     "Update": "Opdater",
     "Delete": "Slet",

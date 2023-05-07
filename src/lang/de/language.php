@@ -53,6 +53,7 @@ $LANG['Disclaimer'] = 'Haftungsausschluss';
 $LANG['Password'] = 'Passwort';
 $LANG['Keep me signed in'] = 'Ich möchte angemeldet bleiben';
 $LANG['Sign out of all devices'] = 'Melden Sie sich von allen Geräten ab';
+$LANG['By signing up you agree to the following terms of service, privacy policy, and disclaimer'] = 'Durch die Anmeldung stimmen Sie den folgenden Nutzungsbedingungen, Datenschutzrichtlinien und Haftungsausschlüssen zu';
 $LANG['Repeat password'] = 'Passwort wiederholen';
 $LANG['Update'] = 'Aktualisieren';
 $LANG['Delete'] = 'Löschen';

@@ -52,6 +52,7 @@ const Translation =
     "Password": "Password",
     "Keep me signed in": "Keep me signed in",
     "Sign out of all devices": "Sign out of all devices",
+    "By signing up you agree to the following terms of service, privacy policy, and disclaimer": "By signing up you agree to the following terms of service, privacy policy, and disclaimer",
     "Repeat password": "Repeat password",
     "Update": "Update",
     "Delete": "Delete",

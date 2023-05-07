@@ -53,6 +53,7 @@ $LANG['Disclaimer'] = 'Ansvarsfraskrivelse';
 $LANG['Password'] = 'Adgangskode';
 $LANG['Keep me signed in'] = 'Hold mig logget ind';
 $LANG['Sign out of all devices'] = 'Log ud af alle enheder';
+$LANG['By signing up you agree to the following terms of service, privacy policy, and disclaimer'] = 'Ved at tilmelde dig accepterer du følgende servicevilkår, privatlivspolitik og ansvarsfraskrivelse';
 $LANG['Repeat password'] = 'Gentag adgangskode';
 $LANG['Update'] = 'Opdater';
 $LANG['Delete'] = 'Slet';
