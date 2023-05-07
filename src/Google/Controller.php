@@ -78,7 +78,10 @@ class Controller extends AppUtils
 
     private function verifyPayload(array $payload): void
     {
-        if (isset($payload['email_verified']) && isset($payload['email'])) {
+
+        // Check if email is verified
+        if (isset($payload['email_verified']) && $payload['email_verified'] === true) {
+            $this->log->info('Google.verify_payload.email_verified', ['payload' => $payload]);
             $row = $this->auth->getByWhere(['email' => $payload['email']]);
             if (empty($row)) {
                 $this->createUser($payload);
