@@ -11,6 +11,9 @@ $logger = new Logger('base');
 $base_path = Path::getBasePath();
 $logger->pushHandler(new StreamHandler($base_path . '/logs/main.log', Logger::DEBUG));
 
+// Add log to stdout.
+// $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+
 return [
     'logger' => $logger,
 ];
