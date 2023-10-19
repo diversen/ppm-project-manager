@@ -31,19 +31,13 @@ class Controller extends AppUtils
     #[Route(path: '/account/signin')]
     public function signin(): void
     {
-        $template_vars = [];
+        $context = [];
         if ($this->auth->isAuthenticated()) {
-            $template_vars['title'] = Lang::translate('Sign out');
-            $this->template_utils->renderPage(
-                'Account/views/signout.php',
-                $template_vars
-            );
+            $context['title'] = Lang::translate('Sign out');
+            echo $this->twig->render('account/signout.twig', $this->getContext($context));
         } else {
-            $template_vars['title'] = Lang::translate('Sign in');
-            $this->template_utils->renderPage(
-                'Account/views/signin.php',
-                $template_vars
-            );
+            $context['title'] = Lang::translate('Sign in');
+            echo $this->twig->render('account/signin.twig', $this->getContext($context));
         }
     }
 
@@ -95,7 +89,8 @@ class Controller extends AppUtils
     #[Route(path: '/account/signout')]
     public function signout(): void
     {
-        $this->template_utils->renderPage('Account/views/signout.php', ['title' => Lang::translate('Sign out')]);
+        $context['title'] = Lang::translate('Sign out');
+        echo $this->twig->render('account/signout.twig', $this->getContext($context));
     }
 
     /**
@@ -118,14 +113,11 @@ class Controller extends AppUtils
     #[Route(path: '/account/signup')]
     public function signup(): void
     {
-        $template_vars = [
+        $context = [
             'title' => Lang::translate('Email sign up'),
         ];
 
-        $this->template_utils->renderPage(
-            'Account/views/signup.php',
-            $template_vars
-        );
+        echo $this->twig->render('account/signup.twig', $this->getContext($context));
     }
 
     #[Route(path: '/account/post_signup', verbs: ['POST'])]
@@ -221,14 +213,11 @@ class Controller extends AppUtils
     #[Route(path: '/account/recover')]
     public function recover(): void
     {
-        $template_vars = [
+        $context = [
             'title' => Lang::translate('Forgotten password'),
         ];
 
-        $this->template_utils->renderPage(
-            'Account/views/recover.php',
-            $template_vars
-        );
+        echo $this->twig->render('account/recover.twig', $this->getContext($context));
     }
 
     private function shouldSendRecoveryEmail(string $email)
@@ -296,17 +285,12 @@ class Controller extends AppUtils
     #[Route(path: '/account/newpassword')]
     public function newpassword(): void
     {
-        $key = $_GET['key'] ?? null;
-
-        $template_vars = [
+        $context = [
             'title' => Lang::translate('New password'),
-            'key' => $key
+            'key' => $_GET['key'] ?? null,
         ];
 
-        $this->template_utils->renderPage(
-            'Account/views/newpassword.php',
-            $template_vars
-        );
+        echo $this->twig->render('account/new_password.twig', $this->getContext($context));
     }
 
     #[Route(path: '/account/post_newpassword', verbs: ['POST'])]
@@ -336,29 +320,27 @@ class Controller extends AppUtils
     #[Route(path: '/account/terms/:document', verbs: ['GET', 'POST'])]
     public function terms(Request $request): void
     {
-        $terms_dir = '../src/Account/views/terms/';
+        $terms_dir = '../templates/account/terms/';
         $allowed_files = File::dirToArray($terms_dir);
 
-        if (!in_array($request->param('document') . '.php', $allowed_files)) {
+        if (!in_array($request->param('document') . '.twig', $allowed_files)) {
             throw new NotFoundException(Lang::translate('Page not found'));
         }
 
-        $markdown_file = '../src/Account/views/terms/' . $request->param('document') . '.php';
-        $markdown_text = file_get_contents($markdown_file);
+        $twig_template = 'account/terms/' . $request->param('document') . '.twig';
 
-        $data['server_url'] = $this->config->get('App.server_url');
-        $data['site_name'] = $this->config->get('App.site_name');
-        $data['title'] = Lang::translate('Terms of service');
-        $data['contact_email'] = $this->config->get('App.contact_email');
-        $data['company_name'] = $this->config->get('App.company_name');
+        $context['server_url'] = $this->config->get('App.server_url');
+        $context['site_name'] = $this->config->get('App.site_name');
+        $context['title'] = Lang::translate('Terms of service');
+        $context['contact_email'] = $this->config->get('App.contact_email');
+        $context['company_name'] = $this->config->get('App.company_name');
 
-        // Add veriables into markdown text
-        $markdown_text = $this->template->getOutput($markdown_file, $data);
+        $markdown_text = $this->twig->render($twig_template, $this->getContext($context));
 
         $parsedown = new Parsedown();
         $parsedown->setSafeMode(false);
-        $data['note_markdown'] = $parsedown->text($markdown_text);
+        $context['markdown_document'] = $parsedown->text($markdown_text);
 
-        $this->template_utils->renderPage('Account/views/terms.tpl.php', $data, ['raw' => true]);
+        echo $this->twig->render('account/terms.twig', $this->getContext($context));
     }
 }

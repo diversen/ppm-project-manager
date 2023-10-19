@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace App\Account;
 
 use Pebble\Server;
-use Pebble\Template;
 use Pebble\SMTP;
 use Diversen\Lang;
-use App\AppMain;
+use App\AppUtils;
 
-class Mail
+class Mail extends AppUtils
 {
-    private $config = null;
     public function __construct()
     {
-        $this->config = (new AppMain())->getConfig();
+        parent::__construct();
     }
 
     /**
@@ -25,11 +23,11 @@ class Mail
      */
     public function sendSignupMail(array $row): void
     {
-        $vars = $this->config->getSection('App');
+        $context = $this->config->getSection('App');
         $activation_url = (new Server())->getSchemeAndHost() . '/account/verify?key=' . $row['random'];
-        $vars['activation_url'] = $activation_url;
+        $context['activation_url'] = $activation_url;
 
-        $text = Template::getOutput('Account/views/mails/signup_email.php', $vars);
+        $text = $this->twig->render('account/mails/signup.twig', $this->getContext($context));
         $smtp = new SMTP($this->config->getSection('SMTP'));
         $smtp->sendMarkdown($row['email'], Lang::translate('Activation link'), $text);
     }
@@ -41,11 +39,11 @@ class Mail
      */
     public function sendRecoverMail(array $row): void
     {
-        $vars = $this->config->getSection('App');
+        $context = $this->config->getSection('App');
         $activation_url = (new Server())->getSchemeAndHost() . '/account/newpassword?key=' . $row['random'];
-        $vars['activation_url'] = $activation_url;
+        $context['activation_url'] = $activation_url;
 
-        $text = Template::getOutput('Account/views/mails/recover_email.php', $vars);
+        $text = $this->twig->render('account/mails/recover_password.twig', $this->getContext($context));
         $smtp = new SMTP($this->config->getSection('SMTP'));
         $smtp->sendMarkdown($row['email'], Lang::translate('Recover your account'), $text);
     }

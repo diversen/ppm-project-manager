@@ -30,22 +30,16 @@ class ControllerExt extends Controller
         }
 
 
-        $template_vars = ['title' => Lang::translate('Sign out')];
+        $context = ['title' => Lang::translate('Sign out')];
         if ($this->auth->isAuthenticated()) {
-            $this->template_utils->renderPage(
-                'Account/views/signout.php',
-                $template_vars,
-            );
+            echo $this->twig->render('account/signout.twig', $this->getContext($context));
         } else {
-            $template_vars = [
+            $context = [
                 'google_auth_url' => $google_auth_url,
                 'title' => Lang::translate('Sign in'),
             ];
-
-            $this->template_utils->renderPage(
-                'Account/views/signin_ext.php',
-                $template_vars
-            );
+            echo $this->twig->render('account/signin_ext.twig', $this->getContext($context));
+            
         }
     }
 
