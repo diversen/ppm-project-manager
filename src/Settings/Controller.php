@@ -14,6 +14,7 @@ use Pebble\Router\Request;
 use App\AppUtils;
 use App\Settings\SettingsModel;
 use Exception;
+use Parsedown;
 
 class Controller extends AppUtils
 {
@@ -30,22 +31,33 @@ class Controller extends AppUtils
         $settings = new SettingsModel();
         $user_settings = $settings->getUserSetting($this->acl->getAuthId(), 'profile');
 
-        $vars['user_settings'] = $user_settings;
+        $context['user_settings'] = $user_settings;
+        $context['timezones'] = timezone_identifiers_list();
+        $context['languages'] = $this->config->get('Language.enabled');
+        
+        echo $this->twig->render('settings/update.twig', $this->getContext($context));
 
-        $this->template_utils->renderPage('Settings/views/settings.tpl.php', $vars);
     }
 
-    #[Route(path: '/user/:auth_id')]
+    #[Route(path: '/settings/profile')]
     public function user(Request $request): void
     {
-        if (!filter_var($request->param('auth_id'), FILTER_VALIDATE_INT)) {
+        $auth_id = $this->auth->getAuthId();
+        if (!$auth_id) {
             throw new NotFoundException();
         }
-
+         
         $settings = new SettingsModel();
-        $user = $settings->getUserSetting((int)$request->param('auth_id'), 'profile');
+        $user = $settings->getUserSetting( $auth_id, 'profile');
 
-        $this->template_utils->renderPage('Settings/views/user.tpl.php', ['user' => $user]);
+        $context['name'] = $user['name'] ?? '';
+        $context['bio'] = $user['bio'] ?? '';
+        
+        $md = new Parsedown();
+        $md->setSafeMode(true);
+        $context['bio'] = $md->parse($context['bio']);
+
+        echo $this->twig->render('settings/profile.twig', $this->getContext($context));
     }
 
     #[Route(path: '/settings/put', verbs: ['POST'])]
