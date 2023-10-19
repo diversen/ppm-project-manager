@@ -1,0 +1,75 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">{{ translate('Email sign up') }}</h3>
+
+<p>{{ translate('By signing up you agree to the following terms of service, privacy policy, and disclaimer')}}</p>
+<div class="action-links">
+    <a href="/account/terms/terms-of-service">{{ translate('Terms of service')}}</a>
+    <a href="/account/terms/privacy-policy">{{ translate('Privacy policy')}}</a>
+    <a href="/account/terms/disclaimer">{{ translate('Disclaimer')}}</a>
+</div>
+<div class="clear"></div>
+
+<form id="signup-form">
+    
+    {{ csrf_field()|raw }}
+    
+    <label for="email">{{ translate('E-mail') }}</label>
+    <input id="email" type="text" name="email">
+
+    <label for="password">{{ translate('Password') }}</label>
+    <input id="password" type="password" name="password">
+
+    <label for="password_2">{{ translate('Repeat password') }}</label>
+    <input id="password_2" type="password" name="password_2">
+
+    <img id="captcha" title="{{ translate('Click to get a new image') }}" src="/account/captcha">
+    <br />
+
+    <label for="captcha">{{ translate('Enter above image text (click to get a new image). Case of the text does not matter') }}:</label>
+    <input id="captcha" autocomplete="off" type="text" name="captcha">
+
+    <button id="submit" class="btn btn-primary">{{ translate('Send') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+
+<script type="module" nonce="{{ get_nonce() }}">
+    
+    import {Pebble} from '/js/pebble.js?v={{ get_version() }}';
+
+    document.getElementById('captcha').addEventListener('click', function() {
+        this.src = '/account/captcha?' + Math.random();
+    });
+
+    const spinner = document.querySelector('.loadingspinner');
+
+    document.getElementById('submit').addEventListener("click", async function(e) {
+
+        e.preventDefault();
+
+        spinner.classList.toggle('hidden');
+
+        const form = document.getElementById('signup-form');
+        const data = new FormData(form);
+
+        try {
+
+            const res = await Pebble.asyncPost('/account/post_signup', data);
+            if (res.error === false) {
+                Pebble.redirect(res.redirect);
+            } else {
+                
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% macro select(name, select_options, selected = null) %}
+    <select id="{{ name }}" name="{{ name }}">
+        {% for key, option in select_options %}
+            <option value="{{ option }}" {% if option == selected %}selected{% endif %}>{{ option }}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+
+{% import _self as macros %}
+
+<h3 class="sub-menu">{{ translate('Settings') }}</h3>
+<div class="action-links">
+    {# Logic to generate settings links should be moved to the controller and passed here as a variable #}
+    {# { settings_links|raw } #}
+</div>
+<div class="clear"></div>
+<form name="settings" id="seetings" method="post">
+    <label for="name">{{ translate('Your name') }}</label>
+    <input id="name" type="text" name="name" value="{{ user_settings['name'] ?? '' }}" placeholder="{{ translate('Your name') }}">
+
+    <label for="bio">{{ translate('Bio') }}</label>
+    <textarea id="bio" name="bio" placeholder="{{ translate('Add a bio') }}">{{ user_settings['bio'] ?? '' }}</textarea>
+
+    <label for="timezone">{{ translate('Select your timezone') }}</label>
+    {{ macros.select('timezone', timezones, user_settings['timezone'] ?? get_config('App.timezone')) }}
+
+    <label for="language">{{ translate('Select language') }}</label>
+    {{ macros.select('language', languages, user_settings['language'] ?? get_config('Language.default')) }}
+
+    <input id="theme_dark_mode" type="checkbox" name="theme_dark_mode" value="1" {% if user_settings['theme_dark_mode'] ?? null %}checked{% endif %}>
+    <label for="theme_dark_mode">{{ translate('Theme. Use dark mode') }}</label><br>
+
+    <button id="settings_submit" type="submit" name="submit" class="update_settings">{{ translate('Update') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+<script type="module" nonce="{{ get_nonce() }}">
+    
+    import {Pebble} from '/js/pebble.js?v={{ get_version() }}';
+    import {addMultipleEventListener} from '/js/event.js?v={{ get_version() }}';
+
+    document.getElementById('name').focus();
+
+        let spinner = document.querySelector('.loadingspinner');
+        let submitElem = document.getElementById('settings_submit');
+        addMultipleEventListener(submitElem, ['click', 'touchstart'], async function(event) {
+
+            event.preventDefault();
+            spinner.classList.toggle('hidden');
+
+            let formData = new FormData(document.getElementById('seetings'));
+            if (!formData.get('theme_dark_mode')) {
+                formData.set('theme_dark_mode', '0');
+            }
+            
+            try {
+                const res = await Pebble.asyncPost('/settings/put/', formData);
+                if (res.error === false) {
+                    location.reload();
+                } else {
+                    Pebble.setFlashMessage(res.message, 'error');
+                }
+            } catch (e) {
+                await Pebble.asyncPostError('/error/log', e.stack);
+            } finally {
+                spinner.classList.toggle('hidden');
+            }
+        });
+</script>
+
+{% endblock content %}

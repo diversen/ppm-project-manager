@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% block content %}
+
+{% if name is empty %}
+    {% set title = translate('User has not entered any user info yet') %}
+{% else %}
+    {% set title = translate('User') ~ ' ' ~ name %}
+{% endif %}
+
+<h3>{{ title }}</h3>
+
+{% if bio is empty %}
+    <p>{{ translate('No user info') }}</p>
+{% else %}
+    {{ bio|raw }}
+{% endif %}
+
+{% endblock %}

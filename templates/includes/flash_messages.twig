@@ -1,0 +1,9 @@
+<div class="flash-messages">
+    {% for message in flash_messages %}
+        {% set remove_class = '' %}
+        {% if message.options.flash_remove is defined %}
+            {% set remove_class = ' flash-remove ' %}
+        {% endif %}
+        <div class="flash flash-{{ message.type }} {{ remove_class }}">{{ message.message }}</div>
+    {% endfor %}
+</div>

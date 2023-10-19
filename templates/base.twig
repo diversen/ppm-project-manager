@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}">
+    <meta name="theme-color" content="#ffffff">
+
+
+    {% if dark_mode %}
+        <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/dark.min.css?v={{ get_version() }}">
+    {% else %}
+        <link rel="stylesheet" id="js-startup-stylesheet" href="/css/water/light.min.css?v={{ get_version() }}">
+    {% endif %}
+
+    <link rel="stylesheet" href="/css/default.css?v={{ get_version() }}">
+    <link rel="stylesheet" href="/css/modification.css?v={{ get_version() }}">
+    <link rel="stylesheet" href="/css/cookie-consent.css?v={{ get_version() }}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png?v={{ get_version() }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png?v={{ get_version() }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png?v={{ get_version() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css?v={{ get_version() }}" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="manifest" href="/assets/manifest.json?v={{ get_version() }}">
+    <script type="importmap" nonce="{{ get_nonce() }}">
+        {
+        "imports": {
+            "/js/pebble.js": "/js/pebble.js?v={{ get_version() }}",
+            "/js/js.cookie.min.js": "/js/js.cookie.min.js?v={{ get_version() }}"
+        }
+        }
+    </script>
+    <script type="module" nonce="{{ get_nonce() }}">
+        
+        import {} from '/js/online_offline.js?v={{ get_version() }}';
+        import {FlashEvents} from '/js/flash_events.js?v={{ get_version() }}';
+        import {setActiveClass} from '/js/set_active_class.js?v={{ get_version() }}';
+        import {serviceWorker} from '/js/service_worker.js?v={{ get_version() }}';
+        import {} from '/js/cookie_consent.js?v={{ get_version()}}';
+        
+        // set active class on menu links
+        setActiveClass();
+
+        // Loads service worker
+        serviceWorker();
+    </script>
+
+{% if is_authenticated() %}
+    <script type="module" nonce="{{ get_nonce() }}">
+        import { Timer } from '/js/app/timer.js?version={{ get_version()}}';
+        const timer = new Timer();
+    </script>
+{% endif %}
+
+    {% if get_config('Analytics.tag') %}
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ get_config('Analytics.tag')}}" nonce="{{ get_nonce() }}"></script>
+    <script type="module" nonce="{{ get_nonce() }}">
+        import Cookies from '/js/js.cookie.min.js?v={{ get_version() }}';
+
+        var cookieConsentAnswer = Cookies.get('cookie-consent');
+        if (cookieConsentAnswer === 'enabled') {
+
+            // Almost anyone serves google analytics without consent,
+            // but this is not doing it
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', '{{ get_config('Analytics.tag') }}');
+        }
+        
+    </script>
+    {% endif %}
+</head>
+<body>
+
+    <div class="page">
+
+
+        {% include 'includes/logo.twig' %}
+        {% include 'includes/main_menu.twig' %}
+        {% include 'includes/flash_messages.twig' %}
+
+        {% block content %}
+        {% endblock content %}
+
+        <hr>
+        <div class="footer">
+        </div>
+    </div>
+    <div id="cookie-consent">
+        <p class="block">
+            <span><b>{{ translate('Notice') }}</b></span>:
+            {{ translate('This website may use non-essential cookies for statistical usage and improving experience.') }} 
+            <br>
+            {{ translate('You may accept or reject any non-essential cookies.') }} 
+            <a href="/account/terms/privacy-policy" target="_blank">{{ translate('Read our privacy policy for more information') }}</a>.
+        </p>
+        <p class="block">
+            <button id="cookie-accept" class="accept" type="button">{{ translate('Accept') }}</button>
+            <button id="cookie-reject" class="reject" type="button">{{ translate('Reject') }}</button>
+        </p>
+    </div>
+</body>
+</html>

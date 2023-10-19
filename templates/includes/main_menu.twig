@@ -1,0 +1,30 @@
+<div class="app-menu">
+    {% if is_authenticated() %}
+        <a href="/overview" data-path="/overview">{{ translate('Home') }}</a>
+        <a href="/project" data-path="/project">{{ translate('Projects') }}</a>
+        <a href="/settings" data-path="/settings">{{ translate('Settings') }}</a>
+        <a href="/account/signout" data-path="/account/signout">{{ translate('Sign out') }}</a>
+        <a id="timer_toggle" title="{{ translate('Toggle timer') }}">&#128337; {{ translate('Timer') }}</a>
+        
+    {% else %}
+        <a href="/account/signin" data-path="/account/signin">{{ translate('Sign in') }}</a>
+        <a href="/account/signup" data-path="/account/signup">{{ translate('Email sign up') }}</a>
+        <a href="/account/recover" data-path="/account/recover">{{ translate('Lost password') }}</a>
+        
+    {% endif %}
+</div>
+
+{% if has_role('admin') %}
+    <div class="app-menu app-menu-admin">
+        <a href="/admin" data-path="/admin">{{ translate('Admin') }}</a>
+    </div>
+{% endif %}
+
+{% if is_authenticated() %}
+    <div id="timer" class="timer">
+        <span id="timer_display"></span>
+        <button id="timer_start" class="button-timer button-small">Start</button>
+        <button id="timer_pause" class="button-timer button-small">Pause</button>
+        <button id="timer_reset" class="button-timer button-small">Reset</button>
+    </div>
+{% endif %}

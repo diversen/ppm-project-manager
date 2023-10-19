@@ -1,0 +1,11 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">{{ translate('Sign out') }}</h3>
+<div class="action-links">
+    <a href="/account/logout">{{ translate('Sign out') }}</a>
+    <a href="/account/logout?all_devices=1">{{ translate('Sign out of all devices') }}</a>
+</div>
+
+{% endblock %}

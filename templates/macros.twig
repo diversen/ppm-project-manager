@@ -1,0 +1,8 @@
+{% macro select(name, select_options, selected = null) %}
+  <select id="{{ name }}" name="{{ name }}">
+    {% for key, option in select_options %}
+      <option value="{{ option }}" {% if option == selected %}selected{% endif %}>{{ option }}</option>
+    {% endfor %}
+  </select>
+{% endmacro %}
+

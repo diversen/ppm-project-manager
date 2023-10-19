@@ -1,0 +1,58 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">{{ translate('Lost password') }}</h3>
+
+<form id="signup-form">
+
+    {{ csrf_field()|raw }}
+    
+    <label for="email">{{ translate('E-mail') }}</label>
+    <input id="email" type="text" name="email">
+
+    <img id="captcha" title="{{ translate('Click to get a new image') }}" src="/account/captcha">
+    <br />
+
+    <label for="captcha">{{ translate('Enter above image text (click to get a new image). Case of the text does not matter') }}:</label>
+    <input  autocomplete="off" type="text" name="captcha">
+
+    <button id="submit" class="btn btn-primary">{{ translate('Send') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+
+<script type="module" nonce="{{ get_nonce() }}">
+    import {Pebble} from '/js/pebble.js?v={{ get_version() }}';
+
+    document.getElementById('captcha').addEventListener('click', function() {
+        this.src = '/account/captcha?' + Math.random();
+    });
+
+    const spinner = document.querySelector('.loadingspinner');
+
+    document.getElementById('submit').addEventListener("click", async function(e) {
+
+        e.preventDefault();
+        spinner.classList.toggle('hidden');
+
+        const form = document.getElementById('signup-form');
+        const data = new FormData(form);
+
+        try {
+
+            const res = await Pebble.asyncPost('/account/post_recover', data);
+            if (res.error === false) {
+                Pebble.redirect('/account/signin');
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    });
+</script>
+
+{% endblock %}
