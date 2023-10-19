@@ -6,6 +6,7 @@ namespace App\Home;
 
 use App\AppUtils;
 use Pebble\Attributes\Route;
+use Parsedown;
 
 class Controller extends AppUtils
 {
@@ -23,7 +24,14 @@ class Controller extends AppUtils
             header('Location: /overview');
         }
 
-        $data = ['title' => 'PPM'];
-        $this->template_utils->renderPage('Home/views/home.tpl.php', $data);
+        $context = ['title' => 'PPM'];
+
+        $parsedown = new Parsedown();
+        $parsedown->setSafeMode(false);
+        $markdown = $this->twig->render('home/home.md', $this->getContext($context));
+
+        $context['markdown'] = $parsedown->parse($markdown);
+
+        echo $this->twig->render('home/home.twig', $this->getContext($context));
     }
 }

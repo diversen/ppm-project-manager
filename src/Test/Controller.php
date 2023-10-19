@@ -20,23 +20,19 @@ class Controller extends AppUtils
         }
     }
 
-    #[Route(path: '/worker')]
+    #[Route(path: '/test/worker')]
     public function worker()
     {
-        $this->template_utils->renderPage('Test/worker.tpl.php');
+        echo $this->twig->render('test/worker.twig', $this->getContext());
+
     }
 
-    #[Route(path: '/translate')]
+    #[Route(path: '/test/translate')]
     public function translate()
     {
-        $this->template->render('Test/translate.tpl.php');
+        echo $this->twig->render('test/translate.twig', $this->getContext());
     }
 
-    #[Route(path: '/test/template/exception')]
-    public function templateException()
-    {
-        $this->template->render('Test/template_exception.tpl.php');
-    }
 
     #[Route(path: '/test')]
     public function test()

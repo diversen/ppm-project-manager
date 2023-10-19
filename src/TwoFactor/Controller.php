@@ -77,26 +77,19 @@ class Controller extends AppUtils
 
             $this->twoFactorModel->create($this->acl->getAuthId(), $secret);
 
-            $vars = [
+            $context = [
                 'qr_image' => $qr_image,
                 'enabled' => false,
                 'title' => Lang::translate('Enable two factor')
             ];
 
-            $this->template_utils->renderPage(
-                'TwoFactor/views/enable.tpl.php',
-                $vars,
-                ['raw' => true]
-            );
+            echo $this->twig->render('twofactor/enable.twig', $this->getContext($context));
         } else {
-            $vars = [
+            $context = [
                 'enabled' => true,
                 'title' => Lang::translate('Two factor is enabled'),
             ];
-            $this->template_utils->renderPage(
-                'TwoFactor/views/is_enabled.tpl.php',
-                $vars
-            );
+            echo $this->twig->render('twofactor/is_enabled.twig', $this->getContext($context));
         }
     }
 
@@ -162,10 +155,7 @@ class Controller extends AppUtils
     #[Route(path: '/twofactor/verify')]
     public function verify()
     {
-        $vars = ['title' => Lang::translate('Verify two factor')];
-        $this->template_utils->renderPage(
-            'TwoFactor/views/verify.tpl.php',
-            $vars
-        );
+        $context = ['title' => Lang::translate('Verify two factor')];
+        echo $this->twig->render('twofactor/verify.twig', $this->getContext($context));
     }
 }

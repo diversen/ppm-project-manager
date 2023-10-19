@@ -1,0 +1,67 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">{{ translate('Enable two factor authentication') }}</h3>
+
+<div class="text">
+    <p>{{ translate('You will need a two factor app on your mobile phone') }}</p>
+    <p>{{ translate('Download a two factor app in your app store') }}</p>
+    <p>{{ translate('1. Scan the QR code to get started') }}</p>
+
+</div>
+{{ qr_image|raw }}
+<form id="two-factor-form">
+    <label for="code">{{ translate('2. Enter code as seen on your phone') }}</label>
+    <input id="code" type="code" type="text" name="code">
+    <br>
+    <button id="check">{{ translate('Submit') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+
+<div class="text">
+    <p>{{ translate('You can use the following apps and many others') }}</p>
+    <ul>
+        <li>Google Authenticator.</li>
+        <li>Lastpass.</li>
+        <li>Microsoft Authenticator.</li>
+        <li>Authy by Twilio.</li>
+        <li>2FA Authenticator.</li>
+        <li>Duo Mobile.</li>
+        <li>Aegis Authenticator.</li>
+    </ul>
+    </p>
+</div>
+
+<script type="module" nonce="{{ get_nonce() }}">
+    import { Pebble } from '/js/pebble.js?v={{ get_version() }}';
+
+    let spinner = document.querySelector('.loadingspinner');
+    let submitElem = document.getElementById('check');
+    submitElem.addEventListener('click', async function(event) {
+
+        event.preventDefault();
+
+        spinner.classList.toggle('hidden');
+        let formData = new FormData(document.getElementById('two-factor-form'));
+        let res;
+
+        try {
+            res = await Pebble.asyncPost('/twofactor/put', formData);
+            if (res.error) {
+                Pebble.setFlashMessage(res.message, 'error');
+            } else {
+                Pebble.setFlashMessage(res.message, 'success');
+            }
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+
+
+    });
+
+</script>
+
+{% endblock %}

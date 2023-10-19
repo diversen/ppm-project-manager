@@ -17,6 +17,7 @@ use Twig\TwigFunction;
 use Pebble\Service\AuthService;
 use Pebble\Service\ACLRoleService;
 use App\AppMain;
+use Parsedown;
 
 function get_config($setting)
 {
@@ -141,6 +142,12 @@ class AppUtils extends StdUtils
 
             $twig->addFunction(new TwigFunction('csrf_field', function () {
                 return $this->csrf->getCSRFFormField();
+            }));
+
+            $twig->addFunction(new TwigFunction('render_markdown', function ($content, $safe = true) {
+                $parsedown = new Parsedown();
+                $parsedown->setSafeMode($safe);
+                return $parsedown->text($content);
             }));
 
             $container->set('twig', $twig);

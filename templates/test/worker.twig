@@ -1,14 +1,11 @@
-<?php
+{% extends 'base.twig' %}
 
-use App\AppMain;
-use App\AppUtils;
-
-?>
+{% block content %}
 
 <h3>Worker</h3>
 
 <p id="message"></p>
-<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
+<script type="module" nonce="{{ get_nonce() }}">
 
     const message = document.getElementById('message');
     if (window.SharedWorker) {
@@ -21,3 +18,5 @@ use App\AppUtils;
     }
 
 </script>
+
+{% endblock %}

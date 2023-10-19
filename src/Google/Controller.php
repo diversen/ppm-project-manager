@@ -35,12 +35,8 @@ class Controller extends AppUtils
     public function index(): void
     {
         if ($this->auth->isAuthenticated()) {
-            $vars = [];
-            $this->template_utils->renderPage(
-                'Google/sign_out.tpl.php',
-                $vars
-            );
-
+            $context = [];
+            echo $this->twig->render('google/sign_out.twig', $context);
             return;
         }
 
@@ -67,12 +63,8 @@ class Controller extends AppUtils
             }
         } else {
             $authUrl = $client->createAuthUrl();
-            $vars = ['auth_url' => $authUrl];
-            $this->template_utils->renderPage(
-                'Google/sign_in.tpl.php',
-                $vars,
-                ['raw' => true]
-            );
+            $context = ['auth_url' => $authUrl];
+            echo $this->twig->render('google/sign_in.twig', $context);
         }
     }
 

@@ -1,0 +1,11 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3>{{ translate('Click the image and sign-in using google') }}</h3>
+
+<div class="row">
+    <p><a href="{{ auth_url }}"><img src="/assets/google-signin.png" /></a></p>
+</div>
+
+{% endblock %}

@@ -1,12 +1,10 @@
-<?php
+{% extends 'base.twig' %}
 
-use App\AppMain;
-use App\AppUtils;
+{% block content %}
 
-?>
 <h1>Translate</h1>
 <p id="message"></p>
-<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
+<script type="module" nonce="{{ get_nonce() }}">
 
     import {Lang} from '/js/lang.js';
     await Lang.load();
@@ -18,3 +16,5 @@ use App\AppUtils;
     console.log(translated_str);
     
 </script>
+
+{% endblock %}

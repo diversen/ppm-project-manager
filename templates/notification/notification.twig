@@ -1,16 +1,14 @@
-<?php
+{% extends 'base.twig' %}
 
-use App\AppMain;
-use App\AppUtils;
+{% block content %}
 
-?>
 <div id="app"></div>
 
-<script type="module" nonce="<?= (new AppUtils())->getCSP()->getNonce(); ?>">
+<script type="module" nonce="{{ get_nonce() }}">
 
-    import {NotificationUtils} from '/js/app/notification_utils.js';
-    import {html, render} from '/js/lit-html.js';
-    import {Lang} from '/js/lang.js';
+    import {NotificationUtils} from '/js/app/notification_utils.js?v={{ get_version()}}';
+    import {html, render} from '/js/lit-html.js?v={{ get_version()}}';
+    import {Lang} from '/js/lang.js?v={{ get_version()}}';
     await Lang.load();
 
     const notify = new NotificationUtils();
@@ -103,5 +101,6 @@ use App\AppUtils;
 
     renderApp();
 
-
 </script>
+
+{% endblock %}

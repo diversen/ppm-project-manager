@@ -1,0 +1,23 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">{{ translate('Enable two factor authentication') }}</h3>
+
+<p>{{ translate('Two factor is already enabled') }}</p>
+<p><a id="new-qr" href="/twofactor/recreate">{{ translate('Get a new QR code') }}</p>
+<script type="module" nonce="{{ get_nonce() }}">
+    
+    import {Pebble} from '/js/pebble.js?v={{ get_version() }}';
+
+    let elem = document.getElementById('new-qr')
+    elem.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('{{ translate('If you create a new QR code then the old code will be deleted') }}')) {
+            Pebble.redirect('/twofactor/recreate');
+        }
+    })
+
+</script>
+
+{% endblock %}
