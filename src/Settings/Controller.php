@@ -15,6 +15,7 @@ use App\AppUtils;
 use App\Settings\SettingsModel;
 use Exception;
 use Parsedown;
+use Pebble\HTML\Tag;
 
 class Controller extends AppUtils
 {
@@ -31,6 +32,15 @@ class Controller extends AppUtils
         $settings = new SettingsModel();
         $user_settings = $settings->getUserSetting($this->acl->getAuthId(), 'profile');
 
+        $links = [];
+        if ($this->config->get('TwoFactor.enabled')) {
+            $links[] = Tag::getTag('a', Lang::translate('Two factor authentication'), ['href' => '/twofactor/enable']);
+        }
+        if ($this->config->get('Notification.enabled')) {
+            $links[] = Tag::getTag('a', Lang::translate('Notifications'), ['href' => '/notification']);
+        }
+
+        $context['links'] = $links;
         $context['user_settings'] = $user_settings;
         $context['timezones'] = timezone_identifiers_list();
         $context['languages'] = $this->config->get('Language.enabled');

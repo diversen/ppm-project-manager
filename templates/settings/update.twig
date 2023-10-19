@@ -14,8 +14,9 @@
 
 <h3 class="sub-menu">{{ translate('Settings') }}</h3>
 <div class="action-links">
-    {# Logic to generate settings links should be moved to the controller and passed here as a variable #}
-    {# { settings_links|raw } #}
+    {% for link in links %}
+        {{ link|raw }}
+    {% endfor %}
 </div>
 <div class="clear"></div>
 <form name="settings" id="seetings" method="post">
