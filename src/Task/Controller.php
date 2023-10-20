@@ -31,22 +31,21 @@ class Controller extends AppUtils
     public function add(Request $request)
     {
         $task = ['begin_date' => date('Y-m-d'), 'end_date' => date('Y-m-d')];
-        $template_vars = ['task' => $task];
+        $context = ['task' => $task];
 
         if ($request->param('project_id') === 'project-unknown') {
             $this->app_acl->isAuthenticatedOrThrow();
-            $template_vars['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()], ['title' => 'ASC']);
-            $template_vars['project'] = null;
+            $context['projects'] = $this->project_model->getAll(['auth_id' => $this->auth->getAuthId()], ['title' => 'ASC']);
+            $context['project'] = null;
         } else {
             $this->app_acl->isProjectOwner($request->param('project_id'));
             $project = $this->project_model->getOne(['id' => $request->param('project_id')]);
-            $template_vars['project'] = $project;
+            $context['project'] = $project;
         }
 
-        $this->template_utils->renderPage(
-            'Task/views/task_add.tpl.php',
-            $template_vars
-        );
+        $context = $this->getContext($context);
+        echo $this->twig->render('task/add.twig', $context);
+
     }
 
     #[Route(path: '/task/edit/:task_id')]
@@ -56,16 +55,14 @@ class Controller extends AppUtils
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
         $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['title' => 'ASC']);
 
-        $template_vars = [
+        $context = [
             'task' => $task,
             'project' => $project,
             'all_projects' => $projects,
         ];
 
-        $this->template_utils->renderPage(
-            'Task/views/task_edit.tpl.php',
-            $template_vars
-        );
+        $context = $this->getContext($context);
+        echo $this->twig->render('task/edit.twig', $context);
     }
 
     #[Route(path: '/task/view/:task_id')]
@@ -74,15 +71,13 @@ class Controller extends AppUtils
         $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
 
-        $template_vars = [
+        $context = [
             'task' => $task,
             'project' => $project
         ];
 
-        $this->template_utils->renderPage(
-            'Task/views/task_view.tpl.php',
-            $template_vars
-        );
+        $context = $this->getContext($context);
+        echo $this->twig->render('task/view.twig', $context);
     }
 
     #[Route(path: '/task/post', verbs: ['POST'])]

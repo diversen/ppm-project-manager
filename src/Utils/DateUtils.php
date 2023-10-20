@@ -59,7 +59,8 @@ class DateUtils extends AppUtils
     }
 
     /**
-     * Get a DateTime object from a unix timestamp and implicit the script's timezone
+     * Get a DateTime object from a unix timestamp. The timezone corresponds to the user's timezone 
+     * as this is implicit set in AppMain
      * (which is the user's timezone)
      */
     public function getUserDateTimeFromUnixTs($timestamp): DateTime
@@ -68,5 +69,12 @@ class DateUtils extends AppUtils
         $date_time = new DateTime('now');
         $date_time->setTimestamp($timestamp);
         return $date_time;
+    }
+
+    public function getUserDateTimeFormatted($timestamp, $format): string
+    {
+        // User timezone is implicit set by date_default_timezone_set() in AppMain
+        $date_time = $this->getUserDateTimeFromUnixTs($timestamp);
+        return $date_time->format($format);
     }
 }

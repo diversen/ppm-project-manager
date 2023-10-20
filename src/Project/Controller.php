@@ -13,6 +13,8 @@ use Exception;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
 use Pebble\Router\Request;
+use Pebble\Pagination\PaginationUtils;
+use Parsedown;
 
 class Controller extends AppUtils
 {
@@ -26,6 +28,7 @@ class Controller extends AppUtils
     #[Route(path: '/project/inactive')]
     public function inactive(Request $request)
     {
+
         $this->app_acl->isAuthenticatedOrThrow();
 
         $where = [
@@ -33,14 +36,16 @@ class Controller extends AppUtils
             'status' => ProjectModel::PROJECT_CLOSED,
         ];
 
-        $template_data = $this->project_model->getProjectData($where);
-        $template_data['title'] = Lang::translate('All inactive projects');
-        $template_data['num_projects_open'] = $this->project_model->getNumProjectsOpen();
+        $context = $this->project_model->getProjectData($where);
+        $context['title'] = Lang::translate('All inactive projects');
+        $context['num_projects_open'] = $this->project_model->getNumProjectsOpen();
 
-        $this->template_utils->renderPage(
-            'Project/views/index.tpl.php',
-            $template_data
-        );
+        $pagination_utils = new PaginationUtils($context["default_order_by"], 'project');
+        $sorting = $pagination_utils->getSortingURLPaths(['p.title', 'p.updated', 'project_time_total']);        
+        $context['sorting'] = $sorting;
+
+        $context = $this->getContext($context);
+        echo $this->twig->render('project/index.twig', $context);
     }
 
     #[Route(path: '/project')]
@@ -53,14 +58,18 @@ class Controller extends AppUtils
             'status' => ProjectModel::PROJECT_OPEN,
         ];
 
-        $template_data = $this->project_model->getProjectData($where);
-        $template_data['title'] = Lang::translate('All active projects');
-        $template_data['num_projects_closed'] = $this->project_model->getNumProjectsClosed();
+        $context = $this->project_model->getProjectData($where);
+        $context['title'] = Lang::translate('All active projects');
+        $context['num_projects_closed'] = $this->project_model->getNumProjectsClosed();
 
-        $this->template_utils->renderPage(
-            'Project/views/index.tpl.php',
-            $template_data
-        );
+        $pagination_utils = new PaginationUtils($context["default_order_by"], 'project');
+        $sorting = $pagination_utils->getSortingURLPaths(['p.title', 'p.updated', 'project_time_total']);        
+        $context['sorting'] = $sorting;
+
+        $context = $this->getContext($context);
+        echo $this->twig->render('project/index.twig', $context);
+
+
     }
 
     #[Route(path: '/project/view/:project_id')]
@@ -68,13 +77,11 @@ class Controller extends AppUtils
     {
         $this->app_acl->isProjectOwner($request->param('project_id'));
 
-        $template_data = $this->project_model->getViewData($request->param('project_id'));
-        $template_data['title'] = Lang::translate('View project');
+        $context = $this->project_model->getViewData($request->param('project_id'));
+        $context['title'] = Lang::translate('View project');
 
-        $this->template_utils->renderPage(
-            'Project/views/view.tpl.php',
-            $template_data
-        );
+        $context = $this->getContext($context);
+        echo $this->twig->render('project/view.twig', $context);
     }
 
     #[Route(path: '/project/add')]
@@ -82,14 +89,14 @@ class Controller extends AppUtils
     {
         $this->app_acl->isAuthenticatedOrThrow();
 
-        $form_vars = [
+        $context = [
             'title' => Lang::translate('Add project'),
         ];
 
-        $this->template_utils->renderPage(
-            'Project/views/add.tpl.php',
-            $form_vars
-        );
+        $context = $this->getContext($context);
+
+        echo $this->twig->render('project/add.twig', $context);
+
     }
 
     #[Route(path: '/project/edit/:project_id')]
@@ -98,15 +105,13 @@ class Controller extends AppUtils
         $this->app_acl->isProjectOwner($request->param('project_id'));
         $project = $this->project_model->getOne(['id' => $request->param('project_id')]);
 
-        $form_vars = [
+        $context = [
             'title' => Lang::translate('Edit project'),
             'project' => $project,
         ];
 
-        $this->template_utils->renderPage(
-            'Project/views/edit.tpl.php',
-            $form_vars
-        );
+        $context = $this->getContext($context);
+        echo $this->twig->render('project/edit.twig', $context);
     }
 
     #[Route(path: '/project/post', verbs: ['POST'])]
@@ -165,15 +170,13 @@ class Controller extends AppUtils
     {
         try {
             $this->app_acl->isProjectOwner($request->param('project_id'));
-            $data = $this->project_model->getTasksData($request->param('project_id'));
+            $context = $this->project_model->getTasksData($request->param('project_id'));
         } catch (Exception $e) {
             $this->log->error('Project.tasks.exception', ['exception' => ExceptionTrace::get($e)]);
-            $data['error'] = $e->getMessage();
+            $context['error'] = $e->getMessage();
         }
 
-        $this->template->render(
-            'Project/views/task_list.tpl.php',
-            $data
-        );
+        $context = $this->getContext($context);
+        echo $this->twig->render('project/task_list.twig', $context);
     }
 }

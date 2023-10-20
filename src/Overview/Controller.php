@@ -27,6 +27,16 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
+    private function isToday($ts)
+    {
+        $today_ts = strtotime('today');
+        $is_today = false;
+        if ($today_ts == $ts) {
+            $is_today = true;
+        }
+        return $is_today;
+    }
+
     #[Route(path: '/overview')]
     public function index()
     {
@@ -53,10 +63,26 @@ class Controller extends AppUtils
 
         $week_ts = $cal->getCurrentWeekDays($week_delta_current);
         $week_data = $time_model->getWeekData($week_ts);
+
+        $week_data_cleaned = [];
+        foreach ($week_data as $ts => $day_data) {
+
+            if (empty($day_data)) {
+                continue;
+            }
+
+            $is_today = $this->isToday($ts);
+            if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
+                continue;
+            }
+
+            $week_data_cleaned[$ts] = $day_data;
+        }
+
         $week_time = $time_model->getWeekTimes($week_ts);
 
-        $template_data = [
-            'week_data' =>              $week_data,
+        $context = [
+            'week_data' =>              $week_data_cleaned,
             'week_state' =>             $week_state,
             'week_user_day_times' =>    $week_time['week_user_day_times'],
             'week_user_total' =>        $week_time['week_user_total'],
@@ -65,7 +91,9 @@ class Controller extends AppUtils
             'has_projects' => $this->project_model->userHasProjects($this->auth_id),
         ];
 
-        $this->template_utils->renderPage('Overview/overview.tpl.php', $template_data);
+        $context = $this->getContext($context);
+
+        echo $this->twig->render('overview/overview.twig', $context);
     }
 
     #[Route(path: '/overview/settings/put', verbs: ['POST'])]

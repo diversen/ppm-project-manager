@@ -53,17 +53,19 @@ class Controller extends AppUtils
             session_key : 'time',
         );
 
-        $time_vars = [
+        $context = [
             'task' => $task,
             'project' => $project,
             'time_rows' => $time_rows,
             'paginator' => $paginator,
         ];
 
-        $this->template_utils->renderPage(
-            'Time/views/add.tpl.php',
-            $time_vars
-        );
+        $pagination_utils = new PaginationUtils(['begin_date' => 'DESC'], 'time'); 
+        $sorting = $pagination_utils->getSortingURLPaths(['begin_date']);        
+        $context['sorting'] = $sorting;
+
+        $context = $this->getContext($context);
+        echo $this->twig->render('time/add.twig', $context);
     }
 
 

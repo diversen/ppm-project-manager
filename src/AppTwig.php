@@ -79,7 +79,7 @@ class AppTwig extends StdUtils
         }));
 
         $twig->addFunction(new TwigFunction('is_today', function ($ts) {
-            return HTMLUtils::isToday($ts);
+            return $this->isToday($ts);
         }));
 
         $twig->addFunction(new TwigFunction('pagination', function ($paginator) {
@@ -95,35 +95,20 @@ class AppTwig extends StdUtils
 
 
 
-        // $twig->addFunction(new TwigFunction('menu_speparator', function () {
-        //     return HTMLUtils::getMenuSeparator();
-        // }));
-
-        
-
-        // $twig->addFunction(new TwigFunction('task_priority_class', function ($task) {
-        //     return HTMLUtils::getTaskPriorityClass($task);
-        // }));
-
-        // $twig->addFunction(new TwigFunction('is_today', function ($ts) {
-        //     return HTMLUtils::isToday($ts);
-        // }));
-
-        // $twig->addFunction(new TwigFunction('get_icon', function ($icon) {
-        //     return HTMLUtils::getIcon($icon);
-        // }));
-
-        // $twig->addFunction(new TwigFunction('get_date_name', function ($day_num) {
-        //     return HTMLUtils::getDayName($day_num);
-        // }));
-
-        // $twig->addFunction(new TwigFunction('get_date', function ($ts) {
-        //     return HTMLUtils::getDate($ts);
-        // }));
-
-        
-
         return $twig;
+    }
+
+    /**
+     * Get is today as boolean from a unix timestamp
+     */
+    public function isToday($ts)
+    {
+        $today_ts = strtotime('today');
+        $is_today = false;
+        if ($today_ts == $ts) {
+            $is_today = true;
+        }
+        return $is_today;
     }
 
     /**

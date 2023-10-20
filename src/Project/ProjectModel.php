@@ -146,6 +146,8 @@ class ProjectModel extends AppUtils
             }
             $project_time = (int)$project['project_time_total'];
             $project['project_time_total_human'] = $this->time_model->minutesToHoursMinutes($project_time);
+            $updated = $this->date_utils->getUserDateFormatFromUTC($project['updated'], 'd/m/Y');
+            $project['updated_human'] = $updated;
         }
 
         return $projects;
