@@ -8,3 +8,4 @@ config-locale
 composer.lock
 start-project.sh
 local_notes.md
+cache
