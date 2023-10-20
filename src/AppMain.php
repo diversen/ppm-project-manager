@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * AppMain class. This is the main class for the app.
+ * It is used in the entry point www/index.php
+ */
+
 declare(strict_types=1);
 
 namespace App;
@@ -8,13 +13,10 @@ use Pebble\Router;
 use App\Settings\SetupIntl;
 use App\AppUtils;
 
-/**
- * AppMain class. This is the main class for the app.
- * It is used in www/index.php
- */
+
 class AppMain extends AppUtils
 {
-
+    public const VERSION = "v2.2.4";
     public function __construct()
     {
     }
