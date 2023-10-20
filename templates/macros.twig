@@ -1,8 +1,155 @@
-{% macro select(name, select_options, selected = null) %}
-  <select id="{{ name }}" name="{{ name }}">
-    {% for key, option in select_options %}
-      <option value="{{ option }}" {% if option == selected %}selected{% endif %}>{{ option }}</option>
-    {% endfor %}
-  </select>
+{% macro menu_separator() %}
+  :: 
 {% endmacro %}
 
+{% macro get_day_name(day_num) %}
+    {% set days = {
+        '1': translate('monday'),
+        '2': translate('tuesday'),
+        '3': translate('wednesday'),
+        '4': translate('thursday'),
+        '5': translate('friday'),
+        '6': translate('saturday'),
+        '7': translate('sunday')
+    } %}
+    {{ days[day_num]|capitalize }}
+{% endmacro %}
+
+{% macro get_date(ts) %}
+    {{ ts|date("M d, Y") }}
+{% endmacro %}
+
+{% macro get_priority_class(task) %}
+  {% set priorities = ['low', 'minor', 'normal', 'high', 'urgent'] %}
+  {% if task.status == '0' %}
+    {{ 'priority-done' }}
+  {% else %}
+    {{ 'priority-' ~ priorities[task.priority] }}
+  {% endif %}
+{% endmacro %}
+
+{% macro get_icon(icon) %}
+  {% if icon == 'edit' %}
+    <i class="fa-solid fa-edit"></i>
+  {% elseif icon == 'add' %}
+    <i class="fa-solid fa-plus"></i>
+  {% elseif icon == 'clock' %}
+    <i class="fa-solid fa-clock"></i>
+  {% elseif icon == 'today' %}
+    {{ translate('Today') }}
+  {% elseif icon == 'delete' %}
+    {{ translate('Delete') }}
+  {% endif %}
+{% endmacro %}
+
+{% macro render_task(task, today) %}
+    {% set task_title = task.status == '0' ? "<s>" ~ task.title ~ "</s>" : task.title %}
+    {% set task_box_class = task.status == '0' ? 'task-done' : '' %}
+    {% set project_title = task.project_title ~ "\n" ~ translate('Total time used on project:') ~ " " ~ task.project_time_total %}
+  
+    {% set titles = {
+        'add_new_task_title': translate('Add new task to') ~ " '" ~ task.project_title ~ "'",
+        'add_time_title': translate('Add time to') ~ " '" ~ task.title ~ "'",
+        'edit_task_title': translate('Edit task') ~ " '" ~ task.title ~ "'",
+        'move_to_today_title': translate('Move to today')
+    } %}
+
+    <tr>
+        <td class="td-overflow {{ task_box_class }}" title="{{ task.title }}">
+            <span class="priority {{ _self.get_priority_class(task) }}"></span>
+            <a href="/task/view/{{ task.id }}">{{ task_title }}</a>
+        </td>
+        <td class='td-overflow'>
+            <a title="{{ project_title }}" href='/project/view/{{ task.project_id }}'>{{ task.project_title }}</a>
+        </td>
+        <td class='xs-hide'>{{ task.task_time_total }}</td>
+        <td>
+            <div class="action-links">
+                <a title="{{ titles.edit_task_title }}" href="{{ return_to_url('/task/edit/' ~ task.id) }}">
+                    {{ _self.get_icon('edit') }}
+                </a>
+                <a title="{{ titles.add_new_task_title }}" href="{{ return_to_url('/task/add/' ~ task.project_id) }}">
+                    {{ _self.get_icon('add') }}
+                </a>
+                <a title="{{ titles.add_time_title }}" href="{{ return_to_url('/time/add/' ~ task.id) }}">
+                    {{ _self.get_icon('clock') }}
+                </a>
+                {% if not today %}
+                    <a title="{{ titles.move_to_today_title }}" class="move_to_today xs-hide" href="#" data-id="{{ task.id }}">
+                        {{ _self.get_icon('today') }}
+                    </a>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+{% endmacro %}
+
+
+{% macro render_week(week_data, week_state, week_user_day_times) %}
+    {% for ts, day_data in week_data %}
+
+        {% set day_number = user_date_format(ts, "N") %}
+        {% set is_today = is_today(ts) %}
+
+        {# Determine class for today #}
+        {% set day_class = is_today ? ' class="today" ' : '' %}
+        {% set date = user_date_format(ts, 'M d, Y') %}
+
+        <p>
+            <strong {{ day_class }}>{{ _self.get_day_name(day_number) }}.</strong> {{ date }}.
+            {{ translate('Your activity:') }} {{ week_user_day_times[ts] }}
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <td class="width-35">{{ translate('Task') }}</td>
+                    <td>{{ translate('Project') }}</td>
+                    <td class='xs-hide'>{{ translate('Time') }}</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in day_data %}
+                    {{ _self.render_task(task, is_today) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_overview_navigation(week_state, week_user_total, has_projects) %}
+    <h3 class="sub-menu">{{ translate('Week') }} {{ week_state['week_number_delta'] }}</h3>
+    <div class="action-links">
+        <a href="/overview?week_delta={{ week_state['prev'] }}">
+            {{ translate('Week') }} {{ week_state['week_number_delta_prev'] }}
+        </a>
+        <a href="/overview?week_delta={{ week_state['next'] }}">{{ translate('Week') }}
+            {{ week_state['week_number_delta_next'] }}
+        </a>
+        {% if week_state['current'] != '0' %}
+            <a href="/overview">{{ translate('Current week') }}</a>
+        {% endif %}
+    </div>
+
+    {% set current_day_state_text = week_state['current_day_state'] == '1' ? translate('Show full week') : translate('Show today') %}
+    
+    <div class="clear"></div>
+    <div class="action-links">
+        <a href="/overview" class="move_exceeded_today">
+            {{ translate('Move exceeded to today') }}
+        </a>
+        {% if week_state['current'] == '0' %}
+            <a href="/overview" class="toggle_current_day" data-current-day-state="{{ week_state['current_day_state'] }}">
+                {{ current_day_state_text }}
+            </a>
+        {% endif %}
+        {% if has_projects %}
+            <a href="{{ return_to_url('/task/add/project-unknown') }}" class="add_new_task">
+                {{ translate('New task') }}
+            </a>
+        {% endif %}
+    </div>
+    <p>
+        {{ translate('Activity this week:') }} {{ week_user_total }}
+    </p>
+{% endmacro %}

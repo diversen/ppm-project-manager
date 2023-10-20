@@ -1,0 +1,178 @@
+{% import 'macros.twig' as macros %}
+
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">
+    <a href="/project">{{ translate('Projects') }}</a>{{ macros.menu_separator() }}
+    <a href="/project/view/{{ project.id }}">{{ project.title }}</a>{{ macros.menu_separator() }}
+    {{ translate('Edit task') }}
+</h3>
+
+<form id="task_edit" name="task_edit" method="post">
+    <label for="title">{{ translate('Title') }} *</label>
+    <input class="input-large" id="title" type="text" name="title" placeholder="{{ translate('Enter title') }}" value="{{ task.title }}">
+
+    <label for="note">{{ translate('Add note') }}</label>
+    <textarea name="note" placeholder="{{ translate('Add an optional task note') }}">{{ task.note }}</textarea>
+
+    <label for="project_id">{{ translate('Project') }}</label>
+    <select name="project_id">
+        {% for _project in all_projects %}
+            <option value="{{ _project.id }}" {% if _project.id == project.id %}selected{% endif %}>{{ _project.title }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="priority">{{ translate('Priority') }}</label>
+    <select name="priority">
+        {% for priority_value, priority_text in {4: 'Urgent', 3: 'High', 2: 'Normal', 1: 'Minor', 0: 'Low'} %}
+            <option value="{{ priority_value }}" {% if priority_value == task.priority %}selected{% endif %}>{{ translate(priority_text) }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="auto_move">{{ translate('Repeatable task. Will auto-move the task to a new date when the end date of the task is exceeded.') }}</label>
+    <select name="auto_move">
+        {% for auto_move_value, auto_move_text in {0: 'Deactivated', 5: 'Next day', 1: 'One week', 2: 'Four weeks', 3: 'One month. First day', 4: 'One month. Last day', 6: 'One month. First day same day name.', 7: 'One month. Last day same day name', 8: 'Close task after end date'} %}
+            <option value="{{ auto_move_value }}" {% if auto_move_value == task.auto_move %}selected{% endif %}>{{ translate(auto_move_text) }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="begin_date">{{ translate('Task begin date') }} *</label>
+    <input id="begin_date" type="date" name="begin_date" placeholder="{{ translate('Pick begin date') }}" value="{{ task.begin_date|date('Y-m-d') }}">
+
+    <label for="end_date">{{ translate('Task end date') }}</label>
+    <input id="end_date" type="date" name="end_date" placeholder="{{ translate('Pick end date') }}" value="{{ task.end_date|date('Y-m-d') }}">
+
+    <input id="id" type="hidden" name="id" value="{{ task.id }}">
+    <input id="status" type="hidden" name="status" value="{{ task.status }}">
+
+    <button id="task_update" type="submit">{{ translate('Submit') }}</button>
+
+    {% if task.status == '1' %}
+        <button id="task_complete" type="submit">{{ translate('Complete') }}</button>
+    {% endif %}
+
+    {% if task.status == '0' %}
+        <button id="task_open" type="submit">{{ translate('Open') }}</button>
+    {% endif %}
+
+    <button id="task_delete" type="submit">{{ translate('Delete') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+
+<script type="module" nonce="{{ get_nonce() }}">
+    import {Pebble} from '/js/pebble.js?v={{ get_version() }}';
+    import {addMultipleEventListener} from '/js/event.js?v={{ get_version() }}'
+
+    const return_to = Pebble.getQueryVariable('return_to');
+    const title = document.getElementById('title');
+    title.focus();
+
+    const spinner = document.querySelector('.loadingspinner');
+
+    async function deleteTask(status) {
+
+        const form = document.getElementById('task_edit');
+        const data = new FormData(form);
+        const task_id = document.getElementById('id').value;
+        const return_to = Pebble.getQueryVariable('return_to');
+
+        try {
+
+            spinner.classList.toggle('hidden');
+            const res = await Pebble.asyncPost('/task/delete/' + task_id, data);
+
+            if (res.error === false) {
+                if (return_to) {
+                    Pebble.redirect(return_to);
+                } else {
+                    Pebble.redirect(res.redirect);
+                }
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+        } catch (e) {
+            Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    }
+
+
+    async function updateTask(status) {
+
+        const form = document.getElementById('task_edit');
+        const data = new FormData(form);
+
+        if (status == 'complete') {
+            data.append('status', '0')
+        }
+
+        if (status == 'open') {
+            data.append('status', '1')
+        }
+
+        const task_id = document.getElementById('id').value;
+
+        try {
+            spinner.classList.toggle('hidden');
+            const res = await Pebble.asyncPost('/task/put/' + task_id, data);
+
+            if (res.error === false) {
+                if (return_to) {
+                    Pebble.redirect(return_to);
+                } else {
+                    Pebble.redirect(res.redirect);
+                }
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+        } catch (e) {
+            Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    }
+
+    const task_update = document.getElementById('task_update');
+    addMultipleEventListener(task_update, ['click', 'touchstart'], async function(e) {
+        e.preventDefault();
+        updateTask();
+    })
+
+    const task_complete = document.getElementById('task_complete');
+    if (task_complete) {
+        addMultipleEventListener(task_complete, ['click', 'touchstart'], async function(e) {
+            e.preventDefault();
+            const complete_confirm = confirm('{{ translate('Complete this task?') }}')
+            if (complete_confirm) {
+                updateTask('complete');
+            }
+        })
+    }
+
+    const task_delete = document.getElementById('task_delete');
+    if (task_delete) {
+        addMultipleEventListener(task_delete, ['click', 'touchstart'], async function(e) {
+            e.preventDefault();
+            const complete_confirm = confirm('{{ translate('Delete this task. Registered time entries will be removed?') }}')
+            if (complete_confirm) {
+                deleteTask();
+            }
+        })
+    }
+
+    const task_open = document.getElementById('task_open');
+    if (task_open) {
+        addMultipleEventListener(task_open, ['click', 'touchstart'], async function(e) {
+            e.preventDefault();
+            const complete_confirm = confirm('{{ translate('Open this task?') }}')
+            if (complete_confirm) {
+                updateTask('open');
+            }
+        })
+    }
+</script>
+
+{% endblock %}

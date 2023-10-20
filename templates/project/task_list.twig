@@ -1,0 +1,53 @@
+{% import 'macros.twig' as macros %}
+
+{% if error is defined %}
+    <p class="error">{{ error }}</p>
+{% else %}
+    {% for task in tasks %}
+        {% set task_attributes = {
+            title: task.title,
+            box_class: task.status == '0' ? ' task-done ' : '',
+            is_today: "now"|date('Y-m-d 00:00:00') == task.begin_date,
+            edit_url: return_to_url("/task/edit/" ~ task.id|e, "/project/view/" ~ task.project_id|e),
+            time_url: return_to_url("/time/add/" ~ task.id|e, "/project/view/" ~ task.project_id|e)
+        } %}
+
+        <tr>
+            <td class="td-overflow {{ task_attributes.box_class }}">
+                <span class="priority {{ macros.get_priority_class(task) }}"></span>
+                <a title="{{ task_attributes.title }}" href="/task/view/{{ task.id }}">
+                    {% if task.status == '0' %}
+                        <s>{{ task_attributes.title }}</s>
+                    {% else %}
+                        {{ task_attributes.title }}
+                    {% endif %}
+                </a>
+            </td>
+            <td>{{ task.begin_date|date("d/m/Y") }}</td>
+            <td class="xs-hide">{{ task.time_used }}</td>
+            <td>
+                <div class="action-links">
+                    <a title="{{ translate('Edit task') }}" href="{{ task_attributes.edit_url }}">{{ macros.get_icon('edit') }}</a>
+                    <a title="{{ translate('Add time to task') }}" href="{{ task_attributes.time_url }}">{{ macros.get_icon('clock') }}</a>
+                    {% if not task_attributes.is_today %}
+                        <a 
+                            title="{{ translate('Move to today') }}"
+                            class="move_to_today"
+                            href="#"
+                            data-id="{{ task.id }}">{{ macros.get_icon('today') }}
+                        </a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    
+    {% if next is defined %}
+        <tr>
+            <td><a class="more" href="{{ next }}">{{ translate('Show more') }}</a></td>
+            <td></td>
+            <td class="xs-hide"></td>
+            <td></td>
+        </tr>
+    {% endif %}
+{% endif %}

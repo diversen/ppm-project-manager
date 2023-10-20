@@ -1,0 +1,166 @@
+{% import 'macros.twig' as macros %}
+
+{% extends 'base.twig' %}
+
+{% block content %}
+
+
+<h3 class="sub-menu">
+    <a href="/project">{{ translate('Projects') }}</a>{{ macros.menu_separator() }}
+    <a href="/project/view/{{ project.id }}">{{ project.title }}</a>{{ macros.menu_separator() }}
+    <a href="/task/view/{{ task.id }}">{{ task.title }}</a>{{ macros.menu_separator() }}
+    {{ translate('Time') }}
+</h3>
+
+<p>{{ translate('Total time used on task') }}: <strong>{{ task.task_time_total }}</strong></p>
+
+<form id="time_add" name="time_add" method="post">
+    <label for="minutes">{{ translate('Time used. Valid time input (hh:mm), e.g. 1:10 or 0:15') }} *</label>
+    <input id="minutes" type="text" name="minutes" placeholder="{{ translate('Time used') }}" value="">
+
+    <label for="note">{{ translate('Note') }}</label>
+    <textarea name="note" placeholder="{{ translate('Add an optional note') }}"></textarea>
+
+    <label for="begin_data">Date</label>
+    <input id="begin_date" type="date" name="begin_date" placeholder="{{ translate('Pick date') }}" value="{{ "now"|date('Y-m-d') }}">
+
+    <input id="task_id" type="hidden" name="task_id" value="{{ task.id }}">
+
+    <button id="time_add_submit" type="submit" name="submit" value="submit">{{ translate('Submit') }}</button>
+    <button id="time_add_submit_and_stay" type="submit" name="submit" value="submit">{{ translate('Submit and stay') }}</button>
+    <button id="time_add_submit_and_close" type="submit" name="submit" value="submit">{{ translate('Submit and close task') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+
+{% macro output_time_table(time_rows, sorting) %}
+    <div id="time-entries">
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        {{ translate('Time') }}
+                    </td>
+                    <td>
+                        <a href="{{ sorting.begin_date.path }}#time-entries">
+                            {{ translate('Date') }} {{ sorting.begin_date.arrow }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ translate('Note') }}
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for val in time_rows %}
+                    <tr>
+                        <td class="td-overflow">{{ val.minutes_hours }}</td>
+                        <td class="td-overflow">{{ val.begin_date|date("d/m/Y") }}</td>
+                        <td title="{{ val.note }}" class="td-overflow">{{ val.note }}</td>
+                        <td>
+                            <div class="action-links">
+                                <a class='time_delete' data-id="{{ val.id }}" href="#">{{ macros.get_icon('delete') }}</a>
+                            </div>
+                        <td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
+
+{% if time_rows is not empty %}
+    {{ _self.output_time_table(time_rows, sorting) }}
+    {{ pagination.render(paginator) }}
+{% endif %}
+
+<script type="module" nonce="{{ get_nonce() }}">
+
+    import { Pebble } from '/js/pebble.js?v={{ get_version() }}';
+
+    const minutes = document.getElementById('minutes');
+    minutes.focus();
+
+    const spinner = document.querySelector('.loadingspinner');
+
+    document.addEventListener('click', async function(event) {
+
+        if (event.target.matches('#time_add_submit') || event.target.matches('#time_add_submit_and_stay') || event.target.matches('#time_add_submit_and_close')) {
+
+            event.preventDefault();
+
+            if (event.target.matches('#time_add_submit_and_close')) {
+                if (!confirm('{{ translate('Complete this task?') }}')) {
+                    return;
+                }
+            }
+
+            spinner.classList.toggle('hidden');
+
+            const form = document.getElementById('time_add');
+            const data = new FormData(form);
+            const return_to = Pebble.getQueryVariable('return_to');
+
+            if (event.target.matches('#time_add_submit_and_close')) {
+                data.append('close', 'true');
+            }
+
+            try {
+                const res = await Pebble.asyncPost('/time/post', data);
+                if (res.error === false) {
+                    if (event.target.matches('#time_add_submit_and_stay')) {
+                        location.reload();
+                        return;
+                    }
+                    if (return_to) {
+                        Pebble.redirect(return_to);
+                    } else {
+                        Pebble.redirect(res.redirect);
+                    }
+                } else {
+                    Pebble.setFlashMessage(res.message, 'error');
+                }
+            } catch (e) {
+                Pebble.asyncPostError('/error/log', e.stack)
+            } finally {
+                spinner.classList.toggle('hidden');
+            }
+
+            
+        }
+
+        if (event.target.matches('.time_delete')) {
+
+            event.preventDefault();
+
+            const item = event.target;
+            const data = new FormData();
+            const id = item.getAttribute('data-id')
+            const return_to = Pebble.getQueryVariable('return_to');
+            const confirm_res = confirm('{{ translate('Are you sure you want to delete time entry?') }}');
+            
+            if (confirm_res) {
+
+                spinner.classList.toggle('hidden');
+                try {
+                    const res = await Pebble.asyncPost('/time/delete/' + id, data);
+
+                    if (res.error === false) {
+                        location.reload();
+
+                    } else {
+                        Pebble.setFlashMessage(res.message, 'error');
+                    }
+
+                } catch (e) {
+                    Pebble.asyncPostError('/error/log', e.stack)
+                } finally {
+                    spinner.classList.toggle('hidden');
+                }
+                
+            }
+        }
+    });
+</script>
+
+{% endblock %}

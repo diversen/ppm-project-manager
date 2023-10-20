@@ -1,0 +1,140 @@
+{% import 'macros.twig' as macros %}
+
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">
+    {% if project %}
+        <a href="/project">{{ translate('Projects') }}</a>{{ macros.menu_separator() }}
+        <a href="/project/view/{{ project.id }}">{{ project.title }}</a>{{ macros.menu_separator() }}
+    {% endif %}
+    {{ translate('Add task') }}
+</h3>
+
+<form id="task_form_add" name="task_add" method="post">
+    <label for="title">{{ translate('Title') }} *</label>
+    <input id="title" class="input-large" type="text" name="title" placeholder="{{ translate('Enter title') }}" value="">
+
+    <label for="note">{{ translate('Add note') }}</label>
+    <textarea name="note" placeholder="{{ translate('Add an optional task note') }}"></textarea>
+
+    {% if project %}
+        <input id="project_id" type="hidden" name="project_id" value="{{ project.id }}">
+    {% else %}
+        <label for="project_id">{{ translate('Project') }} *</label>
+        <select name="project_id">
+            <option value="0">{{ translate('Select project') }}</option>
+            {% for project in projects %}
+                <option value="{{ project.id }}">{{ project.title }}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
+
+    <label for="priority">{{ translate('Priority') }}</label>
+    <select name="priority">
+        <option value="4">{{ translate('Urgent') }}</option>
+        <option value="3">{{ translate('High') }}</option>
+        <option value="2" selected>{{ translate('Normal') }}</option>
+        <option value="1">{{ translate('Minor') }}</option>
+        <option value="0">{{ translate('Low') }}</option>
+    </select>
+
+    <label for="auto_move">{{ translate('Repeatable task. Will auto-move the task to a new date when the end date of the task is exceeded.') }}</label>
+    <select name="auto_move">
+        <option value="0">{{ translate('Deactivated') }}</option>
+        <option value="5" selected>{{ translate('Next day') }}</option>
+        <option value="1">{{ translate('One week') }}</option>
+        <option value="2">{{ translate('Four weeks') }}</option>
+        <option value="3">{{ translate('One month. First day') }}</option>
+        <option value="4">{{ translate('One month. Last day') }}</option>
+        <option value="6">{{ translate('One month. First day same day name.') }}</option>
+        <option value="7">{{ translate('One month. Last day same day name') }}</option>
+        <option value="8">{{ translate('Close task after end date') }}</option>
+    </select>
+
+    <label for="begin_date">{{ translate('Task begin date') }} *</label>
+    <input id="begin_date" type="date" name="begin_date" placeholder="{{ translate('Pick begin date') }}" value="{{ task.begin_date }}">
+
+    <label for="end_date">{{ translate('Task end date') }}</label>
+    <input id="end_date" type="date" name="end_date" placeholder="{{ translate('Pick end date') }}" value="{{ task.end_date }}">
+
+    <button id="task_add" type="submit" name="submit" value="task_add">{{ translate('Submit') }}</button>
+    <button id="task_add_another" type="submit" name="submit" value="task_add_another">{{ translate('Submit and stay') }}</button>
+    <div class="loadingspinner hidden"></div>
+</form>
+<script type="module" nonce="{{ get_nonce() }}">
+
+    import {Pebble} from '/js/pebble.js?v={{ get_version() }}';
+    import {addMultipleEventListener} from '/js/event.js?v={{ get_version() }}'
+
+    const title = document.getElementById('title');
+    title.focus();
+
+    const spinner = document.querySelector('.loadingspinner');
+    const returnTo = Pebble.getQueryVariable('return_to');
+    const task_add = document.getElementById('task_add');
+
+    addMultipleEventListener(task_add, ['click', 'touchstart'], async function (e) {
+        
+        e.preventDefault();
+
+        const form = document.getElementById('task_form_add');
+        const data = new FormData(form);
+        
+        data.append('status', '1');
+        data.append('session_flash', true);
+
+        spinner.classList.toggle('hidden');
+
+        try {
+            const res = await Pebble.asyncPost('/task/post', data);
+            
+            if (res.error === false) {
+                if (returnTo) {
+                    Pebble.redirect(returnTo);
+                } else {
+                    Pebble.redirect(res.redirect);
+                }
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    });
+
+    const task_add_another = document.getElementById('task_add_another');
+    addMultipleEventListener(task_add_another, ['click', 'touchstart'], async function (e) {
+
+        e.preventDefault();
+
+        var form = document.getElementById('task_form_add');
+        var data = new FormData(form);
+
+        data.append('status', '1');
+        data.append('session_flash', true);  
+
+        spinner.classList.toggle('hidden');
+
+        let res;
+        
+        try {
+            res = await Pebble.asyncPost('/task/post', data);
+            if (res.error === false) {
+                location.reload();
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+        } catch (e) {
+            await Pebble.asyncPostError('/error/log', e.stack);
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    });
+
+</script>
+
+{% endblock %}

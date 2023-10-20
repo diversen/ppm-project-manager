@@ -1,0 +1,85 @@
+{% import 'macros.twig' as macros %}
+
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">{{ translate('Projects') }}</h3>
+
+<div class="action-links">
+    <a href="/project/add" title="{{ translate('Add new project') }}">{{ translate('Add project') }}</a>
+</div>
+
+{% macro render_project(project) %}
+
+    <tr>
+        <td class="td-overflow"><a title="{{ project.note }}" href="/project/view/{{ project.id }}">{{ project.title }}</a></td>
+        <td>{{ project.updated_human }}</td>
+        <td class="xs-hide">{{ project.project_time_total_human }}</td>
+        <td>
+            <div class="action-links">
+                <a href="/project/edit/{{ project.id }}" title="{{ translate('Edit project') }}">{{ macros.get_icon('edit') }}</a>
+                <a href="/task/add/{{ project.id }}" title="{{ translate('Add new task to project') }}">{{ macros.get_icon('add') }}</a>
+            </div>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% macro render_projects(projects, sorting) %}
+    {% if projects is empty %}
+        <p>{{ translate('You have no open projects') }}</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        <a href="{{ sorting['p.title'].path }}">
+                            {{ translate('Title') }} {{ sorting['p.title'].arrow }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ sorting['p.updated'].path }}">
+                            {{ translate('Updated') }} {{ sorting['p.updated'].arrow }}
+                        </a>
+                    </td>
+                    <td class="xs-hide">
+                        <a href="{{ sorting['project_time_total'].path }}">
+                            {{ translate('Time used') }} {{ sorting['project_time_total'].arrow }}
+                        </a>
+                    </td>
+                    <td>
+                        <!-- Empty Column -->
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    {{ _self.render_project(project) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endmacro %}
+
+
+{# Render the projects #}
+{{ _self.render_projects(projects, sorting) }}
+
+{# render pagination #}
+{{ pagination(paginator)}}
+
+{# Conditionally render projects_inactive_link #}
+{% if num_projects_closed is defined and num_projects_closed != '0' %}
+    <div class="action-links">
+        <a href="/project/inactive">{{ translate('View inactive projects') }}</a>
+    </div>
+{% endif %}
+
+{# Conditionally render projects_active_link #}
+{% if num_projects_open is defined and num_projects_open != '0' %}
+    <div class="action-links">
+        <a href='/project'>{{ translate('View active projects') }}</a>
+    </div>
+{% endif %}
+
+{% endblock %}
