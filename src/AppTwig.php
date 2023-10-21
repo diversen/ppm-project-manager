@@ -15,13 +15,11 @@ use App\Settings\SettingsModel;
 use Diversen\Lang;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
-use Pebble\Path;
 use Twig\TwigFunction;
+use Pebble\Path;
 use App\AppMain;
-use App\Utils\HTMLUtils;
 use Pebble\URL;
 use App\Utils\DateUtils;
-use App\Utils\AppPagination;
 use Parsedown;
 
 class AppTwig extends StdUtils
@@ -88,10 +86,10 @@ class AppTwig extends StdUtils
             return $parsedown->text($content);
         }));
 
-
-
         return $twig;
     }
+
+
 
     /**
      * Get is today as boolean from a unix timestamp

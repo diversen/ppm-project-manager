@@ -13,8 +13,6 @@ use Exception;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
 use Pebble\Router\Request;
-use Pebble\Pagination\PaginationUtils;
-use Parsedown;
 
 class Controller extends AppUtils
 {

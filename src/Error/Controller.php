@@ -5,7 +5,6 @@ namespace App\Error;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Pebble\Path;
-use Diversen\Lang;
 use Pebble\ExceptionTrace;
 use Pebble\JSON;
 use Exception;
@@ -13,9 +12,15 @@ use App\AppUtils;
 use Throwable;
 use Pebble\Exception\NotFoundException;
 use Pebble\Exception\ForbiddenException;
-use Pebble\Exception\TemplateException;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
+use Twig\TwigFunction;
+use App\AppTwig;
+use App\AppMain;
+use Diversen\Lang;
+
 
 class Controller extends AppUtils
 {
@@ -35,6 +40,7 @@ class Controller extends AppUtils
      */
     public function __construct()
     {
+
         try {
             $this->json = $this->getJSON();
             $this->log = $this->getLog();
@@ -53,8 +59,6 @@ class Controller extends AppUtils
 
             exit();
         }
-
-        parent::__construct();
     }
 
     #[Route(path: '/error/log', verbs: ['POST'])]
@@ -65,17 +69,42 @@ class Controller extends AppUtils
         $this->json->renderSuccess(['logged' => true]);
     }
 
+    private function getTwigSimple(): \Twig\Environment
+    {
+
+        $base_path = Path::getBasePath();
+        $loader = new FilesystemLoader([$base_path . '/templates']);
+        $twig_config = $this->config->getSection('Twig');
+        $twig = new Environment($loader, $twig_config);
+
+        $twig->addFunction(new TwigFunction('translate', function ($sentence, $substitute = array(), $options = array()) {
+            return Lang::translate($sentence, $substitute, $options);
+        }));
+
+        $twig->addFunction(new TwigFunction('get_version', function () {
+            return AppMain::VERSION;
+        }));
+
+
+        $twig->addFunction(new TwigFunction('get_config', function ($config) {
+            return $this->config->get($config);
+        }));
+
+        return $twig;
+    }
+
     private function baseError(string $title, string $error_message)
     {
 
+        $twig = $this->getTwigSimple();
         $context = [
+            'dark_mode' => $_COOKIE['theme_dark_mode'] ?? false,
             'title' => $title,
             'description' => $title,
             'message' => $error_message,
         ];
 
-        $context = $this->getContext($context);
-        echo $this->twig->render('error/error.twig', $context);
+        echo $twig->render('error/error.twig', $context);
     }
 
     private function getEnv()
@@ -104,6 +133,7 @@ class Controller extends AppUtils
 
     public function render(Throwable $e)
     {
+
         $error_code = $this->getErrorCode($e);
         $class = get_class($e);
 
@@ -115,7 +145,6 @@ class Controller extends AppUtils
             $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
         } elseif ($class === JSONException::class) {
             // JSONException is not logged. Should be logged in a controller class
-
             $response['message'] = $e->getMessage();
             $response['code'] = $error_code;
 
@@ -123,7 +152,7 @@ class Controller extends AppUtils
             $json->renderError($response);
         } else {
             $this->log->error('App.internal.exception', ['exception' => ExceptionTrace::get($e)]);
-            $this->baseError(Lang::translate('500 Internal Server Error'), $this->getErrorMessage($e));
+            $this->baseError('500 Internal Server Error', $this->getErrorMessage($e));
         }
     }
 }
