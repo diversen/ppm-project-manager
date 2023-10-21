@@ -153,3 +153,43 @@
         {{ translate('Activity this week:') }} {{ week_user_total }}
     </p>
 {% endmacro %}
+
+{% macro render_pagination(paginator) %}
+    <div class="pagination">
+        {% set num_pages = paginator.getPages|length %}
+
+        {% if num_pages > 0 %}
+            
+            {# Previous Page Link #}
+            {% if paginator.getPrevUrl %}
+                <a class='pagination-links' href='{{ paginator.getPrevUrl }}'>&lt;&lt;</a>
+            {% else %}
+                <span class='pagination-links'>&lt;&lt;</span>
+            {% endif %}
+
+            {# Page Numbers #}
+            {% for page in paginator.getPages %}
+                {% set css_class = 'pagination-links' %}
+
+                {% if page.url %}
+                    {% if page.isCurrent %}
+                        {% set css_class = 'pagination-links pagination-current' %}
+                    {% endif %}
+                    <a class="{{ css_class }}" href="{{ page.url }}">{{ page.num }}</a>
+                {% else %}
+                    <span class="{{ css_class }}" disabled>{{ page.num }}</span>
+                {% endif %}
+
+            {% endfor %}
+
+            {# Next Page Link #}
+            {% if paginator.getNextUrl %}
+                <a class='pagination-links' href='{{ paginator.getNextUrl }}'>&gt;&gt;</a>
+            {% else %}
+                <span class='pagination-links'>&gt;&gt;</span>
+            {% endif %}
+
+        {% endif %}
+    </div>
+{% endmacro %}
+
