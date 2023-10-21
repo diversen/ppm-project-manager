@@ -1,0 +1,20 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">
+    <a href="/admin">Admin</a> :: 
+    <a href="{{ parent_url }}">{{ table.table_human }}</a> :: 
+    {{ title }}
+</h3>
+{% if error %}
+    <div class="error">{{ error }}</div>
+{% else %}
+<div>
+    {% for key, value in row_human %}
+        <p><b>{{ key }}</b>: {{ value|raw }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

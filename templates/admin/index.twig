@@ -1,0 +1,16 @@
+{% import 'macros.twig' as macros %}
+
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">
+  Admin
+</h3>
+<ul>
+  {% for key, table in tables %}
+    <li><a href="/admin/table/{{ key }}">{{ table.table_human }}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

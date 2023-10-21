@@ -1,0 +1,91 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+<h3 class="sub-menu">
+    <a href="/admin">Admin</a> :: 
+    <a href="{{ parent_url }}">{{ table.table_human }}</a> :: 
+    {{ title }}
+</h3>
+
+{% if error %}
+    <div class="error">{{ error }}</div>
+{% else %}
+    <form id="form" method="post">
+        {% for html_element in html_elements %}
+            {{ html_element|raw }}
+        {% endfor %}
+        <button id="submit" type="submit" name="submit" value="submit">{{ translate('Update') }}</button>
+        <button id="delete" type="submit" name="delete" value="delete">{{ translate('Delete') }}</button>
+        <div class="loadingspinner hidden"></div>
+    </form>
+{% endif %}
+<script type="module" nonce="{{ get_nonce() }}">
+    import {
+        Pebble
+    } from '/js/pebble.js?v={{ get_version() }}';
+
+    const table = Pebble.getPathPart(2);
+    const id = Pebble.getPathPart(4);
+    const spinner = document.querySelector('.loadingspinner');
+
+    var submitElem = document.getElementById('submit');
+    
+    submitElem.addEventListener('click', async function(e) {
+        e.preventDefault();
+
+        spinner.classList.toggle('hidden');
+
+        const form = document.getElementById('form');
+        const putAction = `/admin/table/{{ table.table }}/put/{{ row.id }}`;
+        const data = new FormData(form);
+
+        try {
+            const res = await Pebble.asyncPost(putAction, data);
+            if (res.error === false) {
+                Pebble.setFlashMessage(res.message, 'success');
+                
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+        } catch (e) {
+            Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    })
+
+    var deleteElem = document.getElementById('delete');
+    deleteElem.addEventListener('click', async function(e) {
+        e.preventDefault();
+
+        if (!confirm('{{ translate('Are you sure you want to delete this row?') }}')) {
+            return;
+        }
+
+        spinner.classList.toggle('hidden');
+
+        const form = document.getElementById('form');
+        const deleteAction = `/admin/table/{{ table.table }}/delete/{{ row.id }}`;
+        const data = new FormData(form);
+
+        try {
+
+            const res = await Pebble.asyncPost(deleteAction, data);
+
+            if (res.error === false) {
+                
+                Pebble.redirect('{{ parent_url }}');
+            } else {
+                Pebble.setFlashMessage(res.message, 'error');
+            }
+        } catch (e) {
+            Pebble.asyncPostError('/error/log', e.stack)
+        } finally {
+            spinner.classList.toggle('hidden');
+        }
+    })
+
+</script>
+
+{% endblock %}

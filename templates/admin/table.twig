@@ -1,0 +1,44 @@
+{% import 'macros.twig' as macros %}
+
+{% extends 'base.twig' %}
+
+{% block content %}
+<h3 class="sub-menu"><a href="/admin">Admin</a> :: {{ table.table_human }}</h3>
+
+<table class="admin">
+    <thead>
+        <tr>
+            {% for key, column in table.columns %}
+                <th>
+                    <a href="{{ sorting[column].path }}">
+                        {{ table.columns_human[key] }} {{ sorting[column].arrow }}
+                    </a>
+                </th>
+            {% endfor %}
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr>
+                {% for col in table.columns %}
+                    <td>{{ row[col]|raw }}</td>
+                {% endfor %}
+                <td>
+                    <div class="action-links">
+                        <a 
+                            title="View row"
+                            href="/admin/table/{{ table.table }}/view/{{ row[table.primary_key] }}"><i class="fa-sharp fa-solid fa-eye"></i></a>
+                        <a 
+                            title="Edit row"
+                            href="/admin/table/{{ table.table }}/edit/{{ row[table.primary_key] }}"><i class="fa-solid fa-edit"></i></a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{{ macros.render_pagination(paginator) }}
+
+{% endblock %}
