@@ -82,11 +82,6 @@ class AppTwig extends StdUtils
             return $this->isToday($ts);
         }));
 
-        $twig->addFunction(new TwigFunction('pagination', function ($paginator) {
-            $pagination = new AppPagination();
-            $pagination->render($paginator);
-        }));
-
         $twig->addFunction(new TwigFunction('render_markdown', function ($content, $safe = true) {
             $parsedown = new Parsedown();
             $parsedown->setSafeMode($safe);
