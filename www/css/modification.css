@@ -37,6 +37,7 @@
     color: grey;
     font-style: oblique;
     text-decoration: none;
+    text-decoration: line-through;
 }
 
 @media only screen and (max-width: 767px) {
