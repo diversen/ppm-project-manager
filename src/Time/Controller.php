@@ -44,13 +44,11 @@ class Controller extends AppUtils
         $order_by = $this->pagination_utils->getOrderByFromQuery();
         $time_rows = $this->time_model->getAll($where, $order_by, [$pager->offset, $pager->limit]);
 
-        $paginator = PaginationUtils::getPaginator(
+        $paginator = $this->pagination_utils->getPaginator(
             total_items: $total,
             items_per_page: $this->config->get('App.pager_limit'),
             current_page: $pager->page,
             url: '/time/add/' . $task['id'],
-            default_order: ['begin_date' => 'DESC'],
-            session_key : 'time',
         );
 
         $context = [
@@ -60,8 +58,7 @@ class Controller extends AppUtils
             'paginator' => $paginator,
         ];
 
-        $pagination_utils = new PaginationUtils(['begin_date' => 'DESC'], 'time'); 
-        $sorting = $pagination_utils->getSortingURLPaths(['begin_date']);        
+        $sorting = $this->pagination_utils->getSortingURLPaths();        
         $context['sorting'] = $sorting;
 
         $context = $this->getContext($context);

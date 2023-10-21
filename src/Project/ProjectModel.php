@@ -35,7 +35,7 @@ class ProjectModel extends AppUtils
         $this->task_model = new TaskModel();
         $this->time_model = new TimeModel();
         $this->date_utils = new DateUtils();
-        $this->pagination_utils = new PaginationUtils($this->default_order_by, 'project');
+        $this->pagination_utils = new PaginationUtils(order_by_default: $this->default_order_by, session_key: 'project');
     }
 
     /**
@@ -181,7 +181,7 @@ class ProjectModel extends AppUtils
     }
 
     /**
-     * Get tasks data ['tasks' => $tasks, 'more' => '/links/ot/more/tasks]
+     * Get tasks data ['tasks' => $tasks, 'more' => '/links/to/more/tasks]
      */
     public function getTasksData(string $project_id): array
     {
@@ -204,16 +204,20 @@ class ProjectModel extends AppUtils
 
     public function getProjectData(array $where)
     {
-        $order_by = $this->pagination_utils->getOrderByFromRequest('project');
+        $context = [];
+        
+        // ORDER BY
+        $order_by = $this->pagination_utils->getOrderBy();
 
+        // Project count
         $project_count = $this->getNumProjects($where);
-        $pager = new Pager($project_count, $this->config->get('App.pager_limit'));
+        
+        // Get Pager
+        $pager = $this->pagination_utils->getPager($project_count, $this->config->get('App.pager_limit'));
 
+        // Get projects
         $projects = $this->getIndexData($where, $order_by, [$pager->offset, $pager->limit]);
-
-        $template_data['projects'] = $projects;
-        $template_data['total_time_human'] = 0;
-        $template_data['default_order_by'] = $this->default_order_by;
+        $context['projects'] = $projects;
 
         if ($where['status'] === self::PROJECT_OPEN) {
             $url = '/project';
@@ -221,18 +225,21 @@ class ProjectModel extends AppUtils
             $url = '/project/inactive';
         }
 
-        $paginator = PaginationUtils::getPaginator(
+        // Paginator
+        $paginator = $this->pagination_utils->getPaginator(
             total_items: $project_count,
             items_per_page: $this->config->get('App.pager_limit'),
             current_page: $pager->page,
             url: $url,
-            default_order: $this->default_order_by,
-            session_key : 'project',
             max_pages: 10,
         );
+        $context['paginator'] = $paginator;
 
-        $template_data['paginator'] = $paginator;
-        return $template_data;
+        // Sorting
+        $sorting = $this->pagination_utils->getSortingURLPaths();   
+        $context['sorting'] = $sorting;
+
+        return $context;
     }
 
     public function getNumProjectsOpen()

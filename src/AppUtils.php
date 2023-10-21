@@ -1,11 +1,12 @@
 <?php
 
 /**
- * Setup all utils from stdUtils which are available in the app
+ * Setup all utils which can then be used in the App
  * 
  * Add app specific utils here: 
- * - AppACL
- * - Twig
+ * - App specific ACL
+ * - App specific Twig functions
+ * - App specific default Twig Context 
  */
 
 declare(strict_types=1);

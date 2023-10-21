@@ -40,10 +40,6 @@ class Controller extends AppUtils
         $context['title'] = Lang::translate('All inactive projects');
         $context['num_projects_open'] = $this->project_model->getNumProjectsOpen();
 
-        $pagination_utils = new PaginationUtils($context["default_order_by"], 'project');
-        $sorting = $pagination_utils->getSortingURLPaths(['p.title', 'p.updated', 'project_time_total']);        
-        $context['sorting'] = $sorting;
-
         $context = $this->getContext($context);
         echo $this->twig->render('project/index.twig', $context);
     }
@@ -60,11 +56,7 @@ class Controller extends AppUtils
 
         $context = $this->project_model->getProjectData($where);
         $context['title'] = Lang::translate('All active projects');
-        $context['num_projects_closed'] = $this->project_model->getNumProjectsClosed();
-
-        $pagination_utils = new PaginationUtils($context["default_order_by"], 'project');
-        $sorting = $pagination_utils->getSortingURLPaths(['p.title', 'p.updated', 'project_time_total']);        
-        $context['sorting'] = $sorting;
+        $context['num_projects_closed'] = $this->project_model->getNumProjectsClosed();        
 
         $context = $this->getContext($context);
         echo $this->twig->render('project/index.twig', $context);
