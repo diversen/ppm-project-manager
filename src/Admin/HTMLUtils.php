@@ -40,18 +40,6 @@ class HTMLUtils
     }
 
     /**
-     * Get a HTML breadcrumb for edit / view / delete pages
-     */
-    public static function getBreadcrumb(string $action, string $table_human): string
-    {
-        $return_to_link = $_SERVER['HTTP_REFERER'] ?? '/admin';
-        $str = "<a href='/admin'>Admin</a> " . ADMIN_SUB_MENU_SEP . ' ';
-        $str .= "<a href='$return_to_link'>$table_human</a> " . ADMIN_SUB_MENU_SEP . ' ';
-        $str .= $action;
-        return $str;
-    }
-
-    /**
      * Get html attr disabled from a column name and a disabled array
      */
     public static function isDisabled(string $column, array $disabled): ?string

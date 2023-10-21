@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\AppUtils;
-use JasonGrimes\Paginator;
 use Pebble\Pagination\PaginationUtils;
 use Pebble\Pager;
 use App\Admin\TableUtils as DBUtils;
@@ -13,6 +12,8 @@ use Pebble\Exception\JSONException;
 use Exception;
 use Pebble\Attributes\Route;
 use Pebble\Router\Request;
+use Pebble\Special;
+
 
 class Controller extends AppUtils
 {
@@ -69,7 +70,8 @@ class Controller extends AppUtils
     #[Route(path: '/admin/')]
     public function index()
     {
-        $this->template_utils->renderPage('Admin/views/index.tpl.php', ['tables' => $this->tables]);
+        $context = $this->getContext(['tables' => $this->tables]);
+        echo $this->twig->render('admin/index.twig', $context);
     }
 
     #[Route(path: '/admin/table/:table')]
@@ -88,17 +90,29 @@ class Controller extends AppUtils
 
         $session_key = "admin_$table_name";
         $pagination_utils = new PaginationUtils($default_order_by, $session_key);
-        $order_by = $pagination_utils->getOrderByFromRequest($session_key);
+        $order_by = $pagination_utils->getOrderBy();
 
         $num_rows = $this->db->getTableNumRows($table_name, $primary_key);
         $url_pattern = $pagination_utils->getPaginationURLPattern("/admin/table/$table_name");
+
         $pager = new Pager($num_rows, 10);
-
-        $paginator = new Paginator($num_rows, $pager->limit, $pager->page, $url_pattern);
         $rows = $this->db->getAll($table_name, [], $order_by, [$pager->offset, $pager->limit]);
+        $rows = Special::encodeAry($rows);
 
-        $template_data = [
+        $paginator = $pagination_utils->getPaginator($num_rows, $pager->limit, $pager->page, $url_pattern);
+        $sorting = $pagination_utils->getSortingURLPaths();
+
+        // Alter column fields to reference links or values
+        foreach ($rows as $key => $row) {
+            foreach ($table['columns'] as $col) {
+                $display_value = HTMLUtils::getReferenceLinkHTMLOrValue($col, $table['references'], $row[$col]);
+                $rows[$key][$col] = $display_value;
+            }
+        }
+
+        $context = [
             'paginator' => $paginator,
+            'sorting' => $sorting,
             'rows' => $rows,
             'table' => $table,
             'order_by' => $default_order_by,
@@ -106,7 +120,9 @@ class Controller extends AppUtils
             'title' => 'Admin :: ' . $table['table_human'],
         ];
 
-        $this->template_utils->renderPage('Admin/views/table.tpl.php', $template_data);
+        $context = $this->getContext($context);
+        echo $this->twig->render('admin/table.twig', $context);
+
     }
 
 
@@ -132,25 +148,54 @@ class Controller extends AppUtils
 
         $row = $this->db->getOne($table_name, [$primary_key => $request->param('id')]);
         $error = $this->validateRow($row, $table_name, $request->param('id'));
-        $template_data = [
+        $row = Special::encodeAry($row);
+
+        $disabled = $table['disabled'] ?? [];
+        $references = $table['references'] ?? [];
+
+        $html_elements = [];
+        foreach ($table['columns'] as $key => $column) {
+
+            $attr = [];
+            $attr['class'] = 'form-control';
+            $attr['id'] = $column;
+            $attr['name'] = $column;
+
+            if (HTMLUtils::isDisabled($column, $disabled)) {
+                $attr['disabled'] = 'disabled';
+            }
+
+            $value = (string)$row[$column];
+            $column_type = $table['columns_type'][$column];
+            $label = $table['columns_human'][$key];
+
+            $reference_link = HTMLUtils::getReferenceLinkHTML($column, $references, $value, true);
+            if ($reference_link) {
+                $label .= " ($reference_link) ";
+            }
+
+            $html_elements[] = HTMLUtils::getHTMLElement($column_type, $value, $attr, $label);
+        }
+
+        $this->log->debug("table", $table);
+
+        $context = [
             'table' => $table,
             'row' => $row,
             'error' => $error,
+            'title' => 'Edit row',
+            'html_elements' => $html_elements,
+            'parent_url' => '/admin/table/' . $table_name,
         ];
 
-        $this->template_utils->renderPage('Admin/views/edit.tpl.php', $template_data);
+        $context = $this->getContext($context);
+        echo $this->twig->render('admin/edit.twig', $context);
     }
 
     #[Route(path: '/admin/table/:table/add')]
     public function create(Request $request)
     {
-        $table = $this->getTableWithColumnTypes($request->param('table'));
-        $template_data = [
-            'table' => $table,
-            'error' => null,
-        ];
-
-        $this->template_utils->renderPage('Admin/views/add.tpl.php', $template_data);
+        // TODO
     }
 
     #[Route(path: '/admin/table/:table/put/:id', verbs: ['POST'])]
@@ -201,21 +246,36 @@ class Controller extends AppUtils
         $primary_key = $table['primary_key'];
 
         $row = $this->db->getOne($table_name, [$primary_key => $request->param('id')]);
+        $row = Special::encodeAry($row);
         $error = $this->validateRow($row, $table_name, $request->param('id'));
 
-        $template_data = [
+        $row_human = [];
+        foreach ($table['columns'] as $key => $column) {
+            $reference_link = HTMLUtils::getReferenceLink($column, $table['references'], $row[$column]);
+            $link = $row[$column];
+            if ($reference_link) {
+                $link = "<a href='$reference_link'>$row[$column]</a>";
+            }
+            $row_human[$table['columns_human'][$key]] = $link;
+        }
+
+        $context = [
             'table' => $table,
             'row' => $row,
+            'row_human' => $row_human,
             'error' => $error,
+            'title' => 'View row',
+            'parent_url' => '/admin/table/' . $table_name,
         ];
 
-        $this->template_utils->renderPage('Admin/views/view.tpl.php', $template_data);
+        $context = $this->getContext($context);
+        echo $this->twig->render('admin/view.twig', $context);
     }
 
     /**
      * Validate row and return error message
      */
-    public function validateRow(array $row, string $table_name, string $id): ?string
+    private function validateRow(array $row, string $table_name, string $id): ?string
     {
         if (empty($row)) {
             $error_message = "The row with the primary id {$id} could not be found in the table `$table_name`. Maybe it was deleted?";
