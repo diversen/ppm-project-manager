@@ -3,7 +3,7 @@
 {% block content %}
 
 {% if name is empty %}
-    {% set title = translate('User has not entered any user info yet') %}
+    {% set title = translate('Username is empty') %}
 {% else %}
     {% set title = translate('User') ~ ' ' ~ name %}
 {% endif %}
@@ -13,7 +13,7 @@
 {% if bio is empty %}
     <p>{{ translate('No user info') }}</p>
 {% else %}
-    {{ bio|raw }}
+    {{ render_markdown(bio)|raw }}
 {% endif %}
 
 {% endblock %}

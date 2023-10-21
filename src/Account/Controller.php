@@ -14,7 +14,6 @@ use App\Account\Mail;
 use App\Account\Validate;
 use App\TwoFactor\TwoFactorModel;
 use Exception;
-use Parsedown;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
 use Pebble\Router\Request;
@@ -327,20 +326,17 @@ class Controller extends AppUtils
             throw new NotFoundException(Lang::translate('Page not found'));
         }
 
-        $twig_template = 'account/terms/' . $request->param('document') . '.twig';
-
         $context['server_url'] = $this->config->get('App.server_url');
         $context['site_name'] = $this->config->get('App.site_name');
         $context['title'] = Lang::translate('Terms of service');
         $context['contact_email'] = $this->config->get('App.contact_email');
         $context['company_name'] = $this->config->get('App.company_name');
 
-        $markdown_text = $this->twig->render($twig_template, $this->getContext($context));
+        $twig_template = '../templates/account/terms/' . $request->param('document') . '.twig';
+        $markdown_document = file_get_contents($twig_template);
+        $context['markdown_document'] = $markdown_document;
 
-        $parsedown = new Parsedown();
-        $parsedown->setSafeMode(false);
-        $context['markdown_document'] = $parsedown->text($markdown_text);
-
-        echo $this->twig->render('account/terms.twig', $this->getContext($context));
+        $context = $this->getContext($context);
+        echo $this->twig->render('account/terms.twig', $context);
     }
 }

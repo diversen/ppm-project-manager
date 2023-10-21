@@ -14,7 +14,6 @@ use Pebble\Router\Request;
 use App\AppUtils;
 use App\Settings\SettingsModel;
 use Exception;
-use Parsedown;
 use Pebble\HTML\Tag;
 
 class Controller extends AppUtils
@@ -62,10 +61,6 @@ class Controller extends AppUtils
 
         $context['name'] = $user['name'] ?? '';
         $context['bio'] = $user['bio'] ?? '';
-        
-        $md = new Parsedown();
-        $md->setSafeMode(true);
-        $context['bio'] = $md->parse($context['bio']);
 
         echo $this->twig->render('settings/profile.twig', $this->getContext($context));
     }

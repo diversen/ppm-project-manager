@@ -89,8 +89,6 @@ class AppTwig extends StdUtils
         return $twig;
     }
 
-
-
     /**
      * Get is today as boolean from a unix timestamp
      */

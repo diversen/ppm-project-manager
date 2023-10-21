@@ -2,6 +2,6 @@
 
 {% block content %}
 
-{{ markdown|raw }}
+{{ render_markdown(markdown_home, false)|raw }}
 
 {% endblock %}

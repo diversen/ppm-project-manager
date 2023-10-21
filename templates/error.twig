@@ -28,9 +28,16 @@
 <body>
 
     <div class="page">
-
-
-        {% include 'includes/logo.twig' %}
+        <div class="logo">
+            <a  href="/">
+                <img 
+                    src="/assets/logo.png?version={{ get_version() }}" 
+                    alt="{{ get_config('App.site_name') }}" 
+                    title=" {{ get_config('App.site_name') }}" 
+                    width="70" height="70"
+                >
+            </a>
+        </div>
         {% include 'includes/flash_messages.twig' %}
 
         {% block content %}
