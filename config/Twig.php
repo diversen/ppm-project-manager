@@ -7,6 +7,6 @@ use Pebble\Path;
 
 return [
     'cache' => Path::getBasePath() . '/cache/twig',
-    'auto_reload' => false,
+    'auto_reload' => true,
     'debug' => false,
 ];

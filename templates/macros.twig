@@ -43,7 +43,7 @@
 {% endmacro %}
 
 {% macro render_task(task, today) %}
-    {% set task_title = task.status == '0' ? "<s>" ~ task.title ~ "</s>" : task.title %}
+    {% set task_title = task.title %}
     {% set task_box_class = task.status == '0' ? 'task-done' : '' %}
     {% set project_title = task.project_title ~ "\n" ~ translate('Total time used on project:') ~ " " ~ task.project_time_total %}
   
