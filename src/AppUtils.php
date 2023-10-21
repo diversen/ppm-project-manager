@@ -16,7 +16,6 @@ namespace App;
 use Pebble\App\StdUtils;
 use Pebble\Service\Container;
 use App\AppACL;
-use App\Template\TemplateUtils;
 use Diversen\Lang;
 use App\AppTwig;
 
@@ -27,11 +26,6 @@ class AppUtils extends StdUtils
      * @var \App\AppACL
      */
     protected $app_acl;
-
-    /**
-     * @var \App\Template\TemplateUtils
-     */
-    protected $template_utils;
 
     /**
      * @var \Twig\Environment
@@ -48,7 +42,6 @@ class AppUtils extends StdUtils
         parent::__construct();
         $this->csrf->setErrorMessage(Lang::translate('Invalid Request. We will look in to this'));
         $this->app_acl = $this->getAppACL();
-        $this->template_utils = new TemplateUtils();
         $this->app_twig = new AppTwig();
         $this->twig = $this->getTwig();
         

@@ -30,18 +30,12 @@ class Controller extends AppUtils
     protected $config;
 
     /**
-     * @var \Pebble\Template
-     */
-    protected $template;
-
-    /**
      * Notice that there is no parent::__construct() call here.
      * This is because we want to initialize as few services as possible.
      */
     public function __construct()
     {
         try {
-            $this->template = $this->getTemplate();
             $this->json = $this->getJSON();
             $this->log = $this->getLog();
             $this->config = $this->getConfig();
@@ -51,7 +45,6 @@ class Controller extends AppUtils
             // This will throw an exception
             // But can not be logged using the normal LogService
             // Because the normal log service uses Config
-            echo $e->getMessage();
 
             $base_path = Path::getBasePath();
             $log = new Logger('base');
@@ -60,6 +53,8 @@ class Controller extends AppUtils
 
             exit();
         }
+
+        parent::__construct();
     }
 
     #[Route(path: '/error/log', verbs: ['POST'])]
@@ -72,16 +67,15 @@ class Controller extends AppUtils
 
     private function baseError(string $title, string $error_message)
     {
-        $meta_container = $this->getDataContainer();
-        $data = [
+
+        $context = [
             'title' => $title,
             'description' => $title,
             'message' => $error_message,
         ];
 
-        $content = $this->template->getOutput('../src/Error/error.tpl.php', $data);
-        $meta_container->setData('content', $content);
-        $this->template->render('../src/Template/page_error.tpl.php', $data);
+        $context = $this->getContext($context);
+        echo $this->twig->render('error/error.twig', $context);
     }
 
     private function getEnv()
@@ -119,17 +113,6 @@ class Controller extends AppUtils
         } elseif ($class === ForbiddenException::class) {
             $this->log->notice("App.forbidden.exception", ['url' => $_SERVER['REQUEST_URI']]);
             $this->baseError(Lang::translate('403 Forbidden'), $this->getErrorMessage($e));
-        } elseif ($class === TemplateException::class) {
-            $error_vars = [
-                'title' => Lang::translate('510 Template error'),
-                'message' => ExceptionTrace::get($e),
-            ];
-
-            $this->log->error('App.template.exception', ['exception' => ExceptionTrace::get($e)]);
-            $this->template->render(
-                'Error/error.tpl.php',
-                $error_vars
-            );
         } elseif ($class === JSONException::class) {
             // JSONException is not logged. Should be logged in a controller class
 
