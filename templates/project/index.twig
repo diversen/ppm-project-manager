@@ -10,6 +10,8 @@
     <a href="/project/add" title="{{ translate('Add new project') }}">{{ translate('Add project') }}</a>
 </div>
 
+
+
 {% macro render_project(project) %}
 
     <tr>
@@ -66,7 +68,7 @@
 {{ _self.render_projects(projects, sorting) }}
 
 {# render pagination #}
-{{ pagination(paginator)}}
+{{ macros.render_pagination(paginator)}}
 
 {# Conditionally render projects_inactive_link #}
 {% if num_projects_closed is defined and num_projects_closed != '0' %}

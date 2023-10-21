@@ -8,8 +8,8 @@
             title: task.title,
             box_class: task.status == '0' ? ' task-done ' : '',
             is_today: "now"|date('Y-m-d 00:00:00') == task.begin_date,
-            edit_url: return_to_url("/task/edit/" ~ task.id|e, "/project/view/" ~ task.project_id|e),
-            time_url: return_to_url("/time/add/" ~ task.id|e, "/project/view/" ~ task.project_id|e)
+            edit_url: return_to_url("/task/edit/" ~ task.id, "/project/view/" ~ task.project_id),
+            time_url: return_to_url("/time/add/" ~ task.id, "/project/view/" ~ task.project_id)
         } %}
 
         <tr>
