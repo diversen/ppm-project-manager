@@ -27,16 +27,6 @@ class Controller extends AppUtils
         $this->project_model = new ProjectModel();
     }
 
-    private function isToday($ts)
-    {
-        $today_ts = strtotime('today');
-        $is_today = false;
-        if ($today_ts == $ts) {
-            $is_today = true;
-        }
-        return $is_today;
-    }
-
     #[Route(path: '/overview')]
     public function index()
     {
@@ -71,7 +61,7 @@ class Controller extends AppUtils
                 continue;
             }
 
-            $is_today = $this->isToday($ts);
+            $is_today = $cal->isToday($ts);
             if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
                 continue;
             }

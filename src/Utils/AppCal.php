@@ -69,4 +69,15 @@ class AppCal
         $week_delta_str = $this->getWeekDeltaStr($week_delta);
         return date('W', strtotime("today $week_delta_str"));
     }
+
+
+    public function isToday($ts)
+    {
+        $today_ts = strtotime('today');
+        $is_today = false;
+        if ($today_ts == $ts) {
+            $is_today = true;
+        }
+        return $is_today;
+    }
 }
