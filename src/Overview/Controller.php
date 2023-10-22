@@ -55,14 +55,18 @@ class Controller extends AppUtils
         $week_data = $time_model->getWeekData($week_ts);
 
         $week_data_cleaned = [];
+
         foreach ($week_data as $ts => $day_data) {
 
+            // Ignore days without data
             if (empty($day_data)) {
                 continue;
             }
 
             $is_today = $cal->isToday($ts);
-            if ($current_day_state == '1' && !$is_today && $week_state['current'] == '0') {
+            $is_showing_only_today = ($current_day_state == '1');
+            $is_current_week = ($week_state['current'] == '0');
+            if (!$is_today && $is_showing_only_today && $is_current_week) {
                 continue;
             }
 

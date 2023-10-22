@@ -73,6 +73,8 @@ class AppCal
 
     public function isToday($ts)
     {
+        //'strtotime' takes into account the timezone
+        // set by the user
         $today_ts = strtotime('today');
         $is_today = false;
         if ($today_ts == $ts) {
