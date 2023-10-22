@@ -30,14 +30,13 @@
         {% set task_box_class = '' %}
         
         {% if task.status == '0' %}
-            {% set task_title = "<s>" ~ task_title ~ "</s>" %}
             {% set task_box_class = ' task-done ' %}
         {% endif %}
         
         <tr>
             <td class="td-overflow {{ task_box_class }}" title="{{ title_attr }}">
                 <span class="priority {{ macros.get_priority_class(task) }}"></span>
-                <span>{{ task_title|raw }}</span>
+                <span>{{ task_title }}</span>
             </td>
             <td class="td-overflow">
                 <a title="{{ project.title }}" href="/project/view/{{ task.project_id }}">{{ project.title }}</a>
