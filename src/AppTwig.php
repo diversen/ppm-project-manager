@@ -31,7 +31,7 @@ class AppTwig extends StdUtils
     public function getTwig(): \Twig\Environment
     {
         $base_path = Path::getBasePath();
-        $loader = new FilesystemLoader([$base_path . '/templates']);
+        $loader = new FilesystemLoader([$base_path . '/src/templates']);
         $twig_config = $this->config->getSection('Twig');
         $twig = new Environment($loader, $twig_config);
 
