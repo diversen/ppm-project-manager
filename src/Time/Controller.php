@@ -8,7 +8,6 @@ use App\Project\ProjectModel;
 use App\Time\TimeModel;
 use App\Exception\FormException;
 use App\AppUtils;
-use Pebble\Pager;
 use Pebble\Pagination\PaginationUtils;
 use Pebble\ExceptionTrace;
 use Pebble\Exception\JSONException;
@@ -40,7 +39,7 @@ class Controller extends AppUtils
         $where = ['task_id' => $task['id']];
         $total = $this->time_model->getNumTime($where);
 
-        $pager = new Pager($total, $this->config->get('App.pager_limit'));
+        $pager = $this->pagination_utils->getPager($total, $this->config->get('App.pager_limit'));
         $order_by = $this->pagination_utils->getOrderByFromQuery();
         $time_rows = $this->time_model->getAll($where, $order_by, [$pager->offset, $pager->limit]);
 
