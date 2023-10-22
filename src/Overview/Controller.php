@@ -55,7 +55,6 @@ class Controller extends AppUtils
         $week_data = $time_model->getWeekData($week_ts);
 
         $week_data_cleaned = [];
-
         foreach ($week_data as $ts => $day_data) {
 
             // Ignore days without data

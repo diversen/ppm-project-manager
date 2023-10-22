@@ -20,6 +20,7 @@ use Pebble\Path;
 use App\AppMain;
 use Pebble\URL;
 use App\Utils\DateUtils;
+use App\Utils\AppCal;
 use Parsedown;
 
 class AppTwig extends StdUtils
@@ -71,35 +72,22 @@ class AppTwig extends StdUtils
             return URL::returnTo($link, $return_to);
         }));
 
-        $twig->addFunction(new TwigFunction('user_date_format', function ($ts, $format) {
-            $date_utils = new DateUtils();
-            return $date_utils->getUserDateTimeFormatted($ts, $format);
-        }));
-
-        $twig->addFunction(new TwigFunction('is_today', function ($ts) {
-            return $this->isToday($ts);
-        }));
-
         $twig->addFunction(new TwigFunction('render_markdown', function ($content, $safe = true) {
             $parsedown = new Parsedown();
             $parsedown->setSafeMode($safe);
             return $parsedown->text($content);
         }));
 
-        return $twig;
-    }
+        $twig->addFunction(new TwigFunction('user_date_format', function ($ts, $format) {
+            $date_utils = new DateUtils();
+            return $date_utils->getUserDateTimeFormatted($ts, $format);
+        }));
 
-    /**
-     * Get is today as boolean from a unix timestamp
-     */
-    public function isToday($ts)
-    {
-        $today_ts = strtotime('today');
-        $is_today = false;
-        if ($today_ts == $ts) {
-            $is_today = true;
-        }
-        return $is_today;
+        $twig->addFunction(new TwigFunction('is_today', function ($ts) {
+            return (new AppCal())->isToday($ts);
+        }));
+
+        return $twig;
     }
 
     /**
