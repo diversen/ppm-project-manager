@@ -6,6 +6,7 @@ namespace App\Home;
 
 use App\AppUtils;
 use Pebble\Attributes\Route;
+use Pebble\Path;
 
 class Controller extends AppUtils
 {
@@ -24,7 +25,8 @@ class Controller extends AppUtils
         }
 
         $context = ['title' => 'PPM'];
-        $markdown_home = file_get_contents('../templates/home/home.md');
+        $base_path = Path::getBasePath();
+        $markdown_home = file_get_contents($base_path . '/src/templates/home/home.md');
         $context['markdown_home'] = $markdown_home;
 
         $context = $this->getContext($context);

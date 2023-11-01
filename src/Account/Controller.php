@@ -17,6 +17,7 @@ use Exception;
 use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
 use Pebble\Router\Request;
+use Pebble\Path;
 
 class Controller extends AppUtils
 {
@@ -319,10 +320,13 @@ class Controller extends AppUtils
     #[Route(path: '/account/terms/:document', verbs: ['GET', 'POST'])]
     public function terms(Request $request): void
     {
-        $terms_dir = '../templates/account/terms/';
-        $allowed_files = File::dirToArray($terms_dir);
 
-        if (!in_array($request->param('document') . '.twig', $allowed_files)) {
+        $base_path = Path::getBasePath();
+        $terms_dir = $base_path . '/src/templates/account/terms';
+        $allowed_files = File::dirToArray($terms_dir);
+        
+        $request_file = $request->param('document') . '.twig';
+        if (!in_array($request_file, $allowed_files)) {
             throw new NotFoundException(Lang::translate('Page not found'));
         }
 
@@ -332,7 +336,7 @@ class Controller extends AppUtils
         $context['contact_email'] = $this->config->get('App.contact_email');
         $context['company_name'] = $this->config->get('App.company_name');
 
-        $twig_template = '../templates/account/terms/' . $request->param('document') . '.twig';
+        $twig_template = $terms_dir . "/" . $request->param('document') . '.twig';
         $markdown_document = file_get_contents($twig_template);
         $context['markdown_document'] = $markdown_document;
 
