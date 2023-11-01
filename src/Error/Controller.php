@@ -85,7 +85,6 @@ class Controller extends AppUtils
             return AppMain::VERSION;
         }));
 
-
         $twig->addFunction(new TwigFunction('get_config', function ($config) {
             return $this->config->get($config);
         }));
