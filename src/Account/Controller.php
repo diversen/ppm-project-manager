@@ -18,6 +18,7 @@ use Pebble\Exception\JSONException;
 use Pebble\Attributes\Route;
 use Pebble\Router\Request;
 use Pebble\Path;
+use Pebble\Template;
 
 class Controller extends AppUtils
 {
@@ -335,9 +336,9 @@ class Controller extends AppUtils
         $context['title'] = Lang::translate('Terms of service');
         $context['contact_email'] = $this->config->get('App.contact_email');
         $context['company_name'] = $this->config->get('App.company_name');
-
-        $twig_template = $terms_dir . "/" . $request->param('document') . '.twig';
-        $markdown_document = file_get_contents($twig_template);
+        
+        $twig_template = 'account/terms/' . $request_file;
+        $markdown_document = $this->twig->render($twig_template, $this->getContext($context));
         $context['markdown_document'] = $markdown_document;
 
         $context = $this->getContext($context);
