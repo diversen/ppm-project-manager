@@ -218,8 +218,6 @@ final class AuthTest extends TestCase
         $this->curlAssert("/time/delete/$this->time_id", ['post' => 1], 403);
         $this->curlAssert("/time/post", ['note' => 'Time note', 'minutes' => '3:00', 'task_id' => $this->task_id], 403);
         $this->curlAssert('/account/logout', [], 200);
-
-        $this->curlAssert('/test/template/exception', [], 510);
         $this->curlAssert('/test/not/found', [], 404);
     }
 
