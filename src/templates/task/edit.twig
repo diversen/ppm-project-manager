@@ -77,6 +77,7 @@
         const data = new FormData(form);
         const task_id = document.getElementById('id').value;
         const return_to = Pebble.getQueryVariable('return_to');
+        const not_allowed_return_to = "/task/view/" + task_id;
 
         try {
 
@@ -84,7 +85,7 @@
             const res = await Pebble.asyncPost('/task/delete/' + task_id, data);
 
             if (res.error === false) {
-                if (return_to) {
+                if (return_to && return_to != not_allowed_return_to) {
                     Pebble.redirect(return_to);
                 } else {
                     Pebble.redirect(res.redirect);
