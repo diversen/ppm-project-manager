@@ -8,10 +8,11 @@
         "erusev/parsedown": "^1.7",
         "jasongrimes/paginator": "^1.0",
         "aidantwoods/secureheaders": "^2.0",
-        "diversen/captcha": "^2.0",
         "diversen/minimal-cli-framework": "^7.0",
         "diversen/simple-php-translation": "^3.1",
-        "diversen/pebble-framework": "^10.1"
+        "gregwar/captcha": "^1.2",
+        "diversen/pebble-framework": "^10.1",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
         "google/cloud-translate": "^1.6",
