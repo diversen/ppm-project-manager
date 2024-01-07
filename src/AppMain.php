@@ -27,7 +27,6 @@ class AppMain extends AppUtils
         // Doing this here means we will catch all errors in a nice way
         $utils = $this->getUtils();
         $utils->addBaseToIncudePath();
-        $utils->addBaseToIncudePath();
         $utils->addSrcToIncludePath();
         $utils->setErrorHandler();
         $utils->sendSSLHeaders();
