@@ -7,6 +7,7 @@ use Pebble\Service\DBService;
 use Pebble\Service\ACLRoleService;
 use Pebble\Service\LogService;
 use PHPUnit\Framework\TestCase;
+use Pebble\DB;
 
 /**
  * Authorize test case.
@@ -22,6 +23,10 @@ final class AuthTest extends TestCase
     private $user_password = 'password';
     private $user_password_2 = 'password_2';
     private $auth;
+
+    /**
+     * @var \Pebble\DB
+    */
     private $db;
     private $acl_role;
     private $cookie_file = '/tmp/cookie.txt';
@@ -99,7 +104,7 @@ final class AuthTest extends TestCase
 
     private function setTaskID()
     {
-        $row = $this->db->getOne('task', ['title' => 'Test task']);
+        $row = $this->db->getOne('task', ['title' => 'Test task'], ['id' => 'DESC']);
         $this->task_id = $row['id'];
     }
 
