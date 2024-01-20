@@ -71,8 +71,7 @@ class AppCal
     /**
      * Get the number of the week as a string from a week delta (e.g. -2 or +4)
      * It is calculated using 'today $week_delta_str', e.g. 'today -2 week'
-     * This takes into account current unix time of the user and 
-     * the timezone set by the user
+     * This takes into account the timezone set by the user because it uses strtotime
      */
     public function getWeekNumberFromDelta(int $week_delta)
     {
