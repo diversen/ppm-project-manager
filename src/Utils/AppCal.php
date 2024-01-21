@@ -14,11 +14,9 @@ class AppCal
      * Get an array containing the weekdays where the key is a unix timestamp
      * and the value is a date string formatted according to $format
      * 
-     * Every key is a unix timestamp for the start of the day according to the
-     * timezone set by the user (a date starts on a different unix timestamp 
-     * depending on the timezone set by the user). 
+     * A week will start on a different unix timestamp depending on the timezone set by the user). 
      * 
-     * As we are getting the current week days we are getting values like 
+     * The values are datetime strings formatted according to $format'
      * '2024-01-15 00:00:00' and '2024-01-16 00:00:00'. This corresponds to
      * UTC datetime strings used in the database, e.g. on 'task'. 
      */
