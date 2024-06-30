@@ -35,11 +35,7 @@ Install composer packages:
 
     composer install
 
-Create a `config-locale` dir were you can store different settings from machine to machine. 
-
 The `config-locale` dir will override settings in `config`.
-
-    mkdir config-locale
 
 ## Load MySQL DB
 
