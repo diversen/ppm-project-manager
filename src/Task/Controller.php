@@ -53,7 +53,7 @@ class Controller extends AppUtils
     {
         $task = $this->app_acl->isProjectOwnerGetTask($request->param('task_id'));
         $project = $this->project_model->getOne(['id' => $task['project_id']]);
-        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId()], ['title' => 'ASC']);
+        $projects = $this->project_model->getAll(['auth_id' => $this->app_acl->getAuthId(), 'status' => 1], ['title' => 'ASC']);
 
         $context = [
             'task' => $task,
