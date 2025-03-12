@@ -26,7 +26,7 @@
 
     <label for="priority">{{ translate('Priority') }}</label>
     <select name="priority">
-        {% for priority_value, priority_text in {4: 'Urgent', 3: 'High', 2: 'Normal', 1: 'Minor', 0: 'Low'} %}
+        {% for priority_value, priority_text in {"4": 'Urgent', "3": 'High', "2": 'Normal', "1": 'Minor', "0": 'Low'} %}
             <option value="{{ priority_value }}" {% if priority_value == task.priority %}selected{% endif %}>{{ translate(priority_text) }}</option>
         {% endfor %}
     </select>
